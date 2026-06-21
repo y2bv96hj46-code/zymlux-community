@@ -231,6 +231,7 @@ async function enterApp(user) {
   await initDashboard();
   initProfile();
   observeReveals();
+  loadLevel();
 }
 
 async function fetchProfile(id) {
@@ -248,7 +249,7 @@ function initNav() {
       b.classList.add("active");
       $$(".view").forEach((v) => v.classList.remove("active"));
       $("#view-" + b.dataset.view).classList.add("active");
-      if (b.dataset.view === "dash") loadBadges();
+      if (b.dataset.view === "dash") { loadBadges(); loadLevel(); }
       if (b.dataset.view === "feed") loadFeed();
     });
   });
@@ -488,6 +489,7 @@ async function initDashboard() {
   await loadRoadmap();
   await loadMood();
   await loadBadges();
+  await loadLevel();
   subscribeMood();
 
   // Fiche de route : ajout
@@ -987,4 +989,39 @@ async function loadComments(postId, listEl) {
     row.appendChild(av); row.appendChild(bub);
     listEl.appendChild(row);
   });
+}
+
+/* ============================================================
+   SYSTÈME DE NIVEAUX (XP selon l'activité)
+============================================================ */
+const LEVEL_TITLES = ["Nouvelle âme", "Présence", "Veilleur·se", "Confident·e", "Pilier", "Gardien·ne", "Lumière", "Phare", "Étoile", "Légende"];
+
+function levelFromXp(xp) {
+  let lvl = 1;
+  while (50 * (lvl + 1) * lvl <= xp) lvl++;
+  const cum = (L) => 50 * L * (L - 1);
+  const into = xp - cum(lvl);
+  const need = 100 * lvl;
+  return { lvl, into, need, pct: Math.min(100, Math.round((into / need) * 100)), remaining: Math.max(0, need - into) };
+}
+
+async function loadLevel() {
+  const uid = state.user.id;
+  const q = (t) => sb.from(t).select("*", { count: "exact", head: true }).eq("user_id", uid);
+  const [msg, posts, cmts, mood, ch, likes, reacts, rm] = await Promise.all([
+    q("messages"), q("posts"), q("post_comments"), q("mood_logs"), q("challenge_completions"), q("post_likes"), q("message_reactions"),
+    sb.from("roadmap_items").select("done").eq("user_id", uid),
+  ]);
+  const rmDone = ((rm.data) || []).filter((i) => i.done).length;
+  const xp = (msg.count || 0) * 5 + (posts.count || 0) * 15 + (cmts.count || 0) * 8 + (mood.count || 0) * 10
+           + (ch.count || 0) * 25 + rmDone * 20 + (likes.count || 0) * 2 + (reacts.count || 0) * 2;
+  const L = levelFromXp(xp);
+  const title = LEVEL_TITLES[Math.min(L.lvl - 1, LEVEL_TITLES.length - 1)];
+  const setT = (id, v) => { const e = $("#" + id); if (e) e.textContent = v; };
+  setT("lvl-num", L.lvl);
+  setT("lvl-title", title + " · niveau " + L.lvl);
+  setT("lvl-xp", xp + " XP");
+  const bar = $("#lvl-bar"); if (bar) bar.style.width = L.pct + "%";
+  setT("lvl-next", "Plus que " + L.remaining + " XP pour le niveau " + (L.lvl + 1));
+  const chip = $("#lvl-chip"); if (chip) chip.textContent = "Nv " + L.lvl;
 }

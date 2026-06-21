@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/app.css?v=12" />
-  <script src="assets/config.js?v=12"></script>
+  <link rel="stylesheet" href="assets/app.css?v=13" />
+  <script src="assets/config.js?v=13"></script>
 </head>
 <body>
 
@@ -100,7 +100,7 @@
         <button data-view="profil">Profil</button>
       </nav>
       <div class="top-right">
-        <div class="me-pill"><span class="av" id="me-av">🌙</span><span class="nm" id="me-name">…</span></div>
+        <div class="me-pill"><span class="av" id="me-av">🌙</span><span class="nm" id="me-name">…</span><span class="lvl-chip" id="lvl-chip">Nv 1</span></div>
       </div>
     </header>
 
@@ -165,6 +165,17 @@
           <div class="stat"><span class="s-n" id="stat-obj">0</span><span class="s-l">objectifs atteints</span></div>
         </div>
         <div class="grid">
+          <!-- Niveau -->
+          <div class="card level-card span">
+            <div class="level-ring"><span id="lvl-num">1</span></div>
+            <div class="level-info">
+              <div class="level-title" id="lvl-title">Nouvelle âme</div>
+              <div class="level-sub" id="lvl-xp">0 XP</div>
+              <div class="lvl-progress"><span id="lvl-bar" style="width:0%"></span></div>
+              <div class="level-next" id="lvl-next">Participe pour gagner de l'expérience.</div>
+            </div>
+          </div>
+
           <!-- Défi -->
           <div class="card challenge span">
             <div class="kicker">Défi de la semaine</div>
@@ -278,6 +289,6 @@
 
   <div class="toast" id="toast"></div>
 
-  <script type="module" src="assets/app.js?v=12"></script>
+  <script type="module" src="assets/app.js?v=13"></script>
 </body>
 </html>
