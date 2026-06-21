@@ -1,7 +1,7 @@
 /* Zymlux — Service Worker
    Met en cache UNIQUEMENT les fichiers statiques du site (même origine).
    Ne touche jamais aux données Supabase (confidentialité). */
-const CACHE = "zymlux-v27";
+const CACHE = "zymlux-v28";
 const STATIC = /\.(?:html|css|js|png|svg|webp|jpg|jpeg|gif|ico|woff2?|webmanifest)$/i;
 
 self.addEventListener("install", () => self.skipWaiting());

@@ -2,6 +2,9 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <!-- Sécurité : politique de contenu (anti-piratage / anti-injection).
+       N'autorise que nos propres fichiers + Supabase (base) + esm.sh (lib) + Google Fonts. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://esm.sh; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://esm.sh; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: https://*.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Zymlux — Mon espace</title>
   <meta name="robots" content="noindex" />
@@ -15,8 +18,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/app.css?v=31" />
-  <script src="assets/config.js?v=31"></script>
+  <link rel="stylesheet" href="assets/app.css?v=32" />
+  <script src="assets/config.js?v=32"></script>
 </head>
 <body>
 
@@ -409,7 +412,7 @@
 
   <div class="toast" id="toast"></div>
 
-  <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
-  <script type="module" src="assets/app.js?v=31"></script>
+  <script src="assets/sw-register.js?v=32"></script>
+  <script type="module" src="assets/app.js?v=32"></script>
 </body>
 </html>
