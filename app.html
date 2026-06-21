@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/app.css?v=8" />
-  <script src="assets/config.js?v=8"></script>
+  <link rel="stylesheet" href="assets/app.css?v=9" />
+  <script src="assets/config.js?v=9"></script>
 </head>
 <body>
 
@@ -95,6 +95,7 @@
       <div class="logo">Zymlux<span>.</span></div>
       <nav class="tabsnav">
         <button data-view="chat" class="active">Salons</button>
+        <button data-view="feed">Fil</button>
         <button data-view="dash">Mon espace</button>
         <button data-view="profil">Profil</button>
       </nav>
@@ -126,6 +127,24 @@
             </button>
           </form>
         </div>
+      </div>
+    </section>
+
+    <!-- FIL DE PUBLICATIONS -->
+    <section id="view-feed" class="view">
+      <div class="container" style="max-width:680px">
+        <div class="kicker">Le fil</div>
+        <div class="welcome">La communauté</div>
+        <div class="card post-composer">
+          <textarea id="post-input" class="field" rows="3" maxlength="2000" placeholder="Partage une pensée, une victoire, un moment difficile… On t'écoute. 🤍"></textarea>
+          <div id="post-preview" class="post-preview" hidden><img id="post-preview-img" alt="" /><button type="button" id="post-preview-del" aria-label="Retirer">×</button></div>
+          <div class="post-composer-actions">
+            <button class="btn btn-ghost btn-sm" id="post-photo-btn" type="button">📷 Photo</button>
+            <input type="file" id="post-photo-input" accept="image/*" hidden />
+            <button class="btn btn-gold btn-sm" id="post-send" type="button">Publier</button>
+          </div>
+        </div>
+        <div id="feed-list"></div>
       </div>
     </section>
 
@@ -259,6 +278,6 @@
 
   <div class="toast" id="toast"></div>
 
-  <script type="module" src="assets/app.js?v=8"></script>
+  <script type="module" src="assets/app.js?v=9"></script>
 </body>
 </html>

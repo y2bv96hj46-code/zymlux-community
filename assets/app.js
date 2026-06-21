@@ -208,6 +208,7 @@ async function enterApp(user) {
 
   initNav();
   await initChat();
+  initFeed();
   await initDashboard();
   initProfile();
   observeReveals();
@@ -229,6 +230,7 @@ function initNav() {
       $$(".view").forEach((v) => v.classList.remove("active"));
       $("#view-" + b.dataset.view).classList.add("active");
       if (b.dataset.view === "dash") loadBadges();
+      if (b.dataset.view === "feed") loadFeed();
     });
   });
 }
@@ -728,5 +730,174 @@ function initProfile() {
   $("#btn-logout").addEventListener("click", async () => {
     await sb.auth.signOut();
     location.href = "index.html";
+  });
+}
+
+/* ============================================================
+   FIL DE PUBLICATIONS
+============================================================ */
+let feedImageFile = null;
+
+function timeAgo(iso) {
+  const s = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
+  if (s < 60) return "à l'instant";
+  const m = Math.floor(s / 60); if (m < 60) return "il y a " + m + " min";
+  const h = Math.floor(m / 60); if (h < 24) return "il y a " + h + " h";
+  const d = Math.floor(h / 24); if (d < 7) return "il y a " + d + " j";
+  return new Date(iso).toLocaleDateString("fr-FR", { day: "numeric", month: "short" });
+}
+
+function initFeed() {
+  if (state.feedInit) return;
+  state.feedInit = true;
+  const input = $("#post-input"), photoBtn = $("#post-photo-btn"), photoInput = $("#post-photo-input"),
+        preview = $("#post-preview"), previewImg = $("#post-preview-img"), previewDel = $("#post-preview-del"),
+        sendBtn = $("#post-send");
+
+  photoBtn.addEventListener("click", () => photoInput.click());
+  photoInput.addEventListener("change", () => {
+    const f = photoInput.files && photoInput.files[0];
+    if (!f) return;
+    if (f.size > 5 * 1024 * 1024) { toast("Image trop lourde (5 Mo max)."); photoInput.value = ""; return; }
+    feedImageFile = f;
+    previewImg.src = URL.createObjectURL(f);
+    preview.hidden = false;
+  });
+  previewDel.addEventListener("click", () => {
+    feedImageFile = null; photoInput.value = ""; preview.hidden = true; previewImg.src = "";
+  });
+
+  sendBtn.addEventListener("click", async () => {
+    const content = input.value.trim();
+    if (!content && !feedImageFile) { toast("Écris quelque chose 🙂"); return; }
+    sendBtn.disabled = true;
+    let imageUrl = null;
+    if (feedImageFile) {
+      const ext = (feedImageFile.name.split(".").pop() || "jpg").toLowerCase();
+      const path = `${state.user.id}/post_${Date.now()}.${ext}`;
+      const { error: upErr } = await sb.storage.from("avatars").upload(path, feedImageFile, { upsert: true, contentType: feedImageFile.type || undefined });
+      if (!upErr) imageUrl = sb.storage.from("avatars").getPublicUrl(path).data.publicUrl;
+    }
+    const { error } = await sb.from("posts").insert({ user_id: state.user.id, content: content || " ", image_url: imageUrl });
+    sendBtn.disabled = false;
+    if (error) { toast("Publication impossible."); return; }
+    input.value = ""; feedImageFile = null; photoInput.value = ""; preview.hidden = true; previewImg.src = "";
+    toast("Publié ✦");
+    await loadFeed();
+  });
+
+  state.feedChannel = sb.channel("feed")
+    .on("postgres_changes", { event: "INSERT", schema: "public", table: "posts" }, () => {
+      if ($("#view-feed").classList.contains("active")) loadFeed();
+    })
+    .subscribe();
+
+  loadFeed();
+}
+
+async function loadFeed() {
+  const list = $("#feed-list");
+  const { data: posts } = await sb.from("posts")
+    .select("id,content,image_url,created_at,user_id,profiles(pseudo,avatar_url),post_likes(count),post_comments(count)")
+    .order("created_at", { ascending: false })
+    .limit(50);
+  const { data: myLikes } = await sb.from("post_likes").select("post_id").eq("user_id", state.user.id);
+  const liked = new Set((myLikes || []).map((l) => l.post_id));
+  list.innerHTML = "";
+  if (!posts || !posts.length) {
+    list.innerHTML = `<div class="feed-empty">Aucune publication pour l'instant.<br>Sois le premier à partager quelque chose. 🤍</div>`;
+    return;
+  }
+  posts.forEach((p) => list.appendChild(renderPost(p, liked.has(p.id))));
+}
+
+function renderPost(p, isLiked) {
+  const who = (p.profiles && p.profiles.pseudo) || "Membre";
+  const url = p.profiles && p.profiles.avatar_url;
+  const likeCount = (p.post_likes && p.post_likes[0] && p.post_likes[0].count) || 0;
+  const cmtCount = (p.post_comments && p.post_comments[0] && p.post_comments[0].count) || 0;
+  const art = document.createElement("article");
+  art.className = "post"; art.dataset.id = p.id;
+
+  const head = document.createElement("div"); head.className = "post-head";
+  const av = document.createElement("span"); av.className = "post-av"; applyAvatar(av, who, p.user_id, url);
+  const info = document.createElement("div");
+  const w = document.createElement("div"); w.className = "who"; w.textContent = p.user_id === state.user.id ? "Toi" : who;
+  const tm = document.createElement("div"); tm.className = "time"; tm.textContent = timeAgo(p.created_at);
+  info.appendChild(w); info.appendChild(tm);
+  head.appendChild(av); head.appendChild(info);
+  if (p.user_id === state.user.id) {
+    const del = document.createElement("button"); del.className = "post-del"; del.textContent = "×"; del.title = "Supprimer";
+    del.onclick = async () => { if (!confirm("Supprimer cette publication ?")) return; await sb.from("posts").delete().eq("id", p.id); await loadFeed(); };
+    head.appendChild(del);
+  }
+  art.appendChild(head);
+
+  if (p.content && p.content.trim()) {
+    const body = document.createElement("div"); body.className = "post-body"; body.textContent = p.content; art.appendChild(body);
+  }
+  if (p.image_url) {
+    const img = document.createElement("img"); img.className = "post-img"; img.loading = "lazy"; img.src = p.image_url; img.alt = "";
+    img.onerror = () => img.remove();
+    art.appendChild(img);
+  }
+
+  const actions = document.createElement("div"); actions.className = "post-actions";
+  const likeBtn = document.createElement("button"); likeBtn.className = "post-like" + (isLiked ? " liked" : "");
+  likeBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg><span class="lc">${likeCount}</span>`;
+  let liked = isLiked, lc = likeCount;
+  likeBtn.onclick = async () => {
+    liked = !liked;
+    likeBtn.classList.toggle("liked", liked);
+    lc += liked ? 1 : -1; likeBtn.querySelector(".lc").textContent = lc;
+    if (liked) await sb.from("post_likes").insert({ post_id: p.id, user_id: state.user.id });
+    else await sb.from("post_likes").delete().eq("post_id", p.id).eq("user_id", state.user.id);
+  };
+  const cmtBtn = document.createElement("button"); cmtBtn.className = "post-cmt";
+  cmtBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.6A8.4 8.4 0 1 1 21 11.5Z"/></svg><span class="cc">${cmtCount}</span>`;
+  actions.appendChild(likeBtn); actions.appendChild(cmtBtn);
+  art.appendChild(actions);
+
+  const cbox = document.createElement("div"); cbox.className = "post-comments";
+  const clist = document.createElement("div"); clist.className = "cmt-list";
+  const cform = document.createElement("form"); cform.className = "cmt-add";
+  const cin = document.createElement("input"); cin.className = "field"; cin.placeholder = "Écrire un commentaire…"; cin.maxLength = 1000;
+  const cbtn = document.createElement("button"); cbtn.type = "submit"; cbtn.textContent = "→";
+  cform.appendChild(cin); cform.appendChild(cbtn);
+  cbox.appendChild(clist); cbox.appendChild(cform);
+  art.appendChild(cbox);
+
+  let loaded = false;
+  cmtBtn.onclick = async () => {
+    cbox.classList.toggle("open");
+    if (cbox.classList.contains("open") && !loaded) { loaded = true; await loadComments(p.id, clist); }
+  };
+  cform.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const txt = cin.value.trim(); if (!txt) return; cin.value = "";
+    const { error } = await sb.from("post_comments").insert({ post_id: p.id, user_id: state.user.id, content: txt });
+    if (error) { toast("Commentaire impossible."); return; }
+    await loadComments(p.id, clist);
+    const cc = cmtBtn.querySelector(".cc"); cc.textContent = (parseInt(cc.textContent, 10) || 0) + 1;
+  });
+
+  return art;
+}
+
+async function loadComments(postId, listEl) {
+  const { data: cs } = await sb.from("post_comments")
+    .select("id,content,created_at,user_id,profiles(pseudo,avatar_url)")
+    .eq("post_id", postId)
+    .order("created_at", { ascending: true });
+  listEl.innerHTML = "";
+  (cs || []).forEach((c) => {
+    const who = (c.profiles && c.profiles.pseudo) || "Membre";
+    const row = document.createElement("div"); row.className = "cmt";
+    const av = document.createElement("span"); av.className = "cmt-av"; applyAvatar(av, who, c.user_id, c.profiles && c.profiles.avatar_url);
+    const bub = document.createElement("div"); bub.className = "cmt-bub";
+    const wn = document.createElement("span"); wn.className = "cmt-who"; wn.textContent = c.user_id === state.user.id ? "Toi" : who;
+    bub.appendChild(wn); bub.appendChild(document.createTextNode(c.content));
+    row.appendChild(av); row.appendChild(bub);
+    listEl.appendChild(row);
   });
 }
