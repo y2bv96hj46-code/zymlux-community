@@ -135,6 +135,7 @@ const state = {
     await enterApp(data.session.user);
   } else {
     $("#auth").style.display = "flex";
+    if (new URLSearchParams(location.search).has("signup")) $("#tab-signup").click();
   }
   sb.auth.onAuthStateChange((evt) => {
     if (evt === "SIGNED_OUT") location.href = "index.html";
