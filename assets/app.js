@@ -56,6 +56,25 @@ function observeReveals() {
   }, { threshold: 0.12 });
   els.forEach((e) => o.observe(e));
 }
+
+/* ---------- Icônes SVG (remplacent les emojis décoratifs) ---------- */
+const _svg = (p) => `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const ICONS = {
+  compass: _svg('<circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 13.5 13.5 8.5 15.5 10.5 10.5"/>'),
+  chart:   _svg('<path d="M4 4v16h16"/><path d="M8 14l3-3 3 2 4-6"/>'),
+  wind:    _svg('<path d="M4 9h9a2.5 2.5 0 1 0-2.5-2.5"/><path d="M4 13h12a2.5 2.5 0 1 1-2.5 2.5"/><path d="M4 17h6"/>'),
+  leaf:    _svg('<path d="M5 19c8 0 14-4 14-13 0 0-13-2-13 8 0 1 .3 3 2 5"/><path d="M5 19c3-5 6-7 10-9"/>'),
+  award:   _svg('<circle cx="12" cy="9" r="5"/><path d="M9 13l-1.5 8L12 18l4.5 3L15 13"/>'),
+  flame:   _svg('<path d="M12 3c.5 3 4 4 4 8a4 4 0 0 1-8 0c0-1.5.5-2.5 1.5-3.5 0 1.5 1 2.5 2.5 2.5C12 8 11 6.5 12 3Z"/>'),
+  door:    _svg('<path d="M4 21h16"/><path d="M6 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/><circle cx="13.5" cy="12" r=".7" fill="currentColor" stroke="none"/>'),
+  moon:    _svg('<path d="M21 12.5A8.5 8.5 0 1 1 11.5 3 6.5 6.5 0 0 0 21 12.5Z"/>'),
+  droplet: _svg('<path d="M12 3s6 5.5 6 10a6 6 0 0 1-12 0c0-4.5 6-10 6-10Z"/>'),
+  star:    _svg('<path d="M12 3l2.4 5.6L20 9.3l-4 3.9 1 5.8L12 16.8 7 19l1-5.8-4-3.9 5.6-.7Z"/>'),
+  heart:   _svg('<path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 1 0-7.1 7.1L12 21l8.8-8.3a5 5 0 0 0 0-7.1Z"/>'),
+  message: _svg('<path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.6A8.4 8.4 0 1 1 21 11.5Z"/>'),
+};
+const icon = (n) => ICONS[n] || ICONS.message;
+const roomIcon = (slug) => ({ accueil: ICONS.door, nuit: ICONS.moon, anxiete: ICONS.droplet, victoires: ICONS.star, entraide: ICONS.heart }[slug] || ICONS.message);
 const QUOTES = [
   "Respire. Tu as déjà survécu à 100 % de tes pires journées.",
   "Tu n'as pas besoin d'aller bien pour avoir ta place ici.",
@@ -248,7 +267,7 @@ async function initChat() {
     btn.className = "room-btn";
     btn.dataset.id = room.id;
     btn.innerHTML = `<span class="em"></span><span class="nm"></span>`;
-    btn.querySelector(".em").textContent = room.emoji || "💬";
+    btn.querySelector(".em").innerHTML = roomIcon(room.slug);
     btn.querySelector(".nm").textContent = room.name;
     btn.addEventListener("click", () => selectRoom(room));
     list.appendChild(btn);
@@ -282,7 +301,9 @@ async function initChat() {
 async function selectRoom(room) {
   state.currentRoom = room;
   $$(".room-btn").forEach((b) => b.classList.toggle("active", b.dataset.id === room.id));
-  $("#room-title").textContent = (room.emoji || "💬") + "  " + room.name;
+  const rt = $("#room-title");
+  rt.innerHTML = roomIcon(room.slug);
+  rt.appendChild(document.createTextNode(" " + room.name));
   $("#room-desc").textContent = room.description || "";
 
   const box = $("#messages");
@@ -297,7 +318,7 @@ async function selectRoom(room) {
 
   box.innerHTML = "";
   if (!msgs || !msgs.length) {
-    box.innerHTML = `<div class="chat-empty">Aucun message pour l'instant.<br>Sois la première voix douce de ce salon. 🌙</div>`;
+    box.innerHTML = `<div class="chat-empty">Aucun message pour l'instant.<br>Sois la première voix douce de ce salon.</div>`;
   } else {
     msgs.forEach(renderMessage);
     scrollChat();
@@ -499,7 +520,7 @@ async function initDashboard() {
     $("#mood-note").value = "";
     $$("#mood-pick button").forEach((x) => x.classList.remove("sel"));
     $("#mood-save").disabled = true;
-    toast("Humeur enregistrée 🌙");
+    toast("Humeur enregistrée ✦");
     await loadMood();
     await loadBadges();
   });
@@ -519,14 +540,14 @@ async function loadBadges() {
   const msgC = msg.count || 0, moodC = mood.count || 0, chC = ch.count || 0;
   const rmDone = (rm.data || []).filter((i) => i.done).length;
   const defs = [
-    { e: "👋", n: "Première parole", d: "1er message", ok: msgC >= 1 },
-    { e: "💬", n: "Voix de la nuit", d: "10 messages", ok: msgC >= 10 },
-    { e: "📈", n: "À l'écoute", d: "3 humeurs notées", ok: moodC >= 3 },
-    { e: "🌗", n: "Sept nuits", d: "7 humeurs notées", ok: moodC >= 7 },
-    { e: "🔥", n: "Premier défi", d: "1 défi relevé", ok: chC >= 1 },
-    { e: "🏆", n: "Persévérance", d: "5 défis relevés", ok: chC >= 5 },
-    { e: "🧭", n: "En route", d: "1 objectif atteint", ok: rmDone >= 1 },
-    { e: "🌙", n: "Présent·e", d: "Tu es là, ce soir", ok: true },
+    { ic: "message", n: "Première parole", d: "1er message", ok: msgC >= 1 },
+    { ic: "chart", n: "Voix de la nuit", d: "10 messages", ok: msgC >= 10 },
+    { ic: "heart", n: "À l'écoute", d: "3 humeurs notées", ok: moodC >= 3 },
+    { ic: "moon", n: "Sept nuits", d: "7 humeurs notées", ok: moodC >= 7 },
+    { ic: "flame", n: "Premier défi", d: "1 défi relevé", ok: chC >= 1 },
+    { ic: "award", n: "Persévérance", d: "5 défis relevés", ok: chC >= 5 },
+    { ic: "compass", n: "En route", d: "1 objectif atteint", ok: rmDone >= 1 },
+    { ic: "star", n: "Présent·e", d: "Tu es là, ce soir", ok: true },
   ];
   const box = $("#badges");
   box.innerHTML = "";
@@ -534,7 +555,7 @@ async function loadBadges() {
     const el = document.createElement("div");
     el.className = "badge " + (b.ok ? "earned" : "locked");
     el.innerHTML = `<span class="be"></span><span class="bn"></span><span class="bd"></span>`;
-    el.querySelector(".be").textContent = b.e;
+    el.querySelector(".be").innerHTML = icon(b.ic);
     el.querySelector(".bn").textContent = b.n;
     el.querySelector(".bd").textContent = b.d;
     box.appendChild(el);
@@ -678,7 +699,7 @@ async function loadRoadmap() {
   list.innerHTML = "";
   const arr = items || [];
   if (!arr.length) {
-    list.innerHTML = `<div class="chart-empty">Ajoute un premier objectif, même tout petit. 🌱</div>`;
+    list.innerHTML = `<div class="chart-empty">Ajoute un premier objectif, même tout petit.</div>`;
   }
   arr.forEach((it) => {
     const row = document.createElement("div");
@@ -725,7 +746,7 @@ async function loadMood() {
   if (!arr.length) {
     $("#mood-avg").innerHTML = "";
     const sm = $("#stat-mood"); if (sm) sm.textContent = "–";
-    chart.innerHTML = `<div class="chart-empty">Enregistre ton humeur pour voir ta courbe apparaître. 📈</div>`;
+    chart.innerHTML = `<div class="chart-empty">Enregistre ton humeur pour voir ta courbe apparaître.</div>`;
     return;
   }
   arr.forEach((l) => {
@@ -835,7 +856,7 @@ function initFeed() {
 
   sendBtn.addEventListener("click", async () => {
     const content = input.value.trim();
-    if (!content && !feedImageFile) { toast("Écris quelque chose 🙂"); return; }
+    if (!content && !feedImageFile) { toast("Écris quelque chose…"); return; }
     sendBtn.disabled = true;
     let imageUrl = null;
     if (feedImageFile) {
@@ -871,7 +892,7 @@ async function loadFeed() {
   const liked = new Set((myLikes || []).map((l) => l.post_id));
   list.innerHTML = "";
   if (!posts || !posts.length) {
-    list.innerHTML = `<div class="feed-empty">Aucune publication pour l'instant.<br>Sois le premier à partager quelque chose. 🤍</div>`;
+    list.innerHTML = `<div class="feed-empty">Aucune publication pour l'instant.<br>Sois le premier à partager quelque chose.</div>`;
     return;
   }
   posts.forEach((p) => list.appendChild(renderPost(p, liked.has(p.id))));

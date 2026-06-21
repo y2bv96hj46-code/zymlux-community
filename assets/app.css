@@ -429,3 +429,22 @@ body::before{
 /* Un peu plus d'air */
 .container{padding:clamp(22px,4vw,42px);}
 .card{padding:28px;}
+
+/* ============================================================
+   ICÔNES (remplacent les emojis)
+============================================================ */
+.ttl .ic{width:22px;height:22px;color:var(--gold-bright);flex:0 0 auto;}
+.streak .ic{width:18px;height:18px;color:var(--gold-bright);}
+.room-btn .em{display:inline-flex;align-items:center;justify-content:center;color:var(--gold-bright);width:24px;}
+.room-btn .em .ic{width:20px;height:20px;}
+.room-btn.active .em{color:var(--gold-bright);}
+.chat-head .t{display:flex;align-items:center;gap:9px;}
+.chat-head .t .ic{width:21px;height:21px;color:var(--gold-bright);flex:0 0 auto;}
+.badge .be{display:inline-flex;align-items:center;justify-content:center;height:30px;}
+.badge .be .ic{width:27px;height:27px;color:var(--gold-bright);}
+.badge.locked .be .ic{color:var(--cream-muted);}
+#post-photo-btn .ic{width:17px;height:17px;}
+.mood-pick button{display:flex;align-items:center;justify-content:center;}
+.mood-pick button .ic-face{width:30px;height:30px;color:var(--cream-muted);transition:color .25s var(--ease);}
+.mood-pick button:hover .ic-face{color:var(--cream);}
+.mood-pick button.sel .ic-face{color:var(--gold-bright);}
