@@ -579,6 +579,7 @@ async function initDashboard() {
   setQuote();
   initBreathing();
   initGrounding();
+  initSounds();
 
   await loadChallenge();
   await loadRoadmap();
@@ -937,37 +938,47 @@ function initFeed() {
   if (state.feedInit) return;
   state.feedInit = true;
   const input = $("#post-input"), photoBtn = $("#post-photo-btn"), photoInput = $("#post-photo-input"),
-        preview = $("#post-preview"), previewImg = $("#post-preview-img"), previewDel = $("#post-preview-del"),
+        preview = $("#post-preview"), previewMedia = $("#post-preview-media"), previewDel = $("#post-preview-del"),
         sendBtn = $("#post-send");
+
+  function clearPreview() {
+    feedImageFile = null; photoInput.value = ""; preview.hidden = true; previewMedia.innerHTML = "";
+  }
 
   photoBtn.addEventListener("click", () => photoInput.click());
   photoInput.addEventListener("change", () => {
     const f = photoInput.files && photoInput.files[0];
     if (!f) return;
-    if (f.size > 5 * 1024 * 1024) { toast("Image trop lourde (5 Mo max)."); photoInput.value = ""; return; }
+    const isVid = (f.type || "").startsWith("video/");
+    const maxMB = isVid ? 30 : 5;
+    if (f.size > maxMB * 1024 * 1024) { toast((isVid ? "Vidéo" : "Image") + " trop lourde (" + maxMB + " Mo max)."); photoInput.value = ""; return; }
     feedImageFile = f;
-    previewImg.src = URL.createObjectURL(f);
+    previewMedia.innerHTML = "";
+    const url = URL.createObjectURL(f);
+    const el = document.createElement(isVid ? "video" : "img");
+    el.src = url;
+    if (isVid) { el.controls = true; el.playsInline = true; }
+    previewMedia.appendChild(el);
     preview.hidden = false;
   });
-  previewDel.addEventListener("click", () => {
-    feedImageFile = null; photoInput.value = ""; preview.hidden = true; previewImg.src = "";
-  });
+  previewDel.addEventListener("click", clearPreview);
 
   sendBtn.addEventListener("click", async () => {
     const content = input.value.trim();
     if (!content && !feedImageFile) { toast("Écris quelque chose…"); return; }
     sendBtn.disabled = true;
-    let imageUrl = null;
+    let mediaUrl = null;
     if (feedImageFile) {
       const ext = (feedImageFile.name.split(".").pop() || "jpg").toLowerCase();
       const path = `${state.user.id}/post_${Date.now()}.${ext}`;
       const { error: upErr } = await sb.storage.from("avatars").upload(path, feedImageFile, { upsert: true, contentType: feedImageFile.type || undefined });
-      if (!upErr) imageUrl = sb.storage.from("avatars").getPublicUrl(path).data.publicUrl;
+      if (upErr) { sendBtn.disabled = false; toast("Envoi du fichier impossible."); return; }
+      mediaUrl = sb.storage.from("avatars").getPublicUrl(path).data.publicUrl;
     }
-    const { error } = await sb.from("posts").insert({ user_id: state.user.id, content: content || " ", image_url: imageUrl });
+    const { error } = await sb.from("posts").insert({ user_id: state.user.id, content: content || " ", image_url: mediaUrl });
     sendBtn.disabled = false;
     if (error) { toast("Publication impossible."); return; }
-    input.value = ""; feedImageFile = null; photoInput.value = ""; preview.hidden = true; previewImg.src = "";
+    input.value = ""; clearPreview();
     toast("Publié ✦");
     await loadFeed();
   });
@@ -1023,9 +1034,16 @@ function renderPost(p, isLiked) {
     const body = document.createElement("div"); body.className = "post-body"; body.textContent = p.content; art.appendChild(body);
   }
   if (p.image_url) {
-    const img = document.createElement("img"); img.className = "post-img"; img.loading = "lazy"; img.src = p.image_url; img.alt = "";
-    img.onerror = () => img.remove();
-    art.appendChild(img);
+    if (/\.(mp4|webm|mov|m4v|ogg)(\?|$)/i.test(p.image_url)) {
+      const vid = document.createElement("video"); vid.className = "post-img"; vid.src = p.image_url;
+      vid.controls = true; vid.playsInline = true; vid.preload = "metadata";
+      vid.onerror = () => vid.remove();
+      art.appendChild(vid);
+    } else {
+      const img = document.createElement("img"); img.className = "post-img"; img.loading = "lazy"; img.src = p.image_url; img.alt = "";
+      img.onerror = () => img.remove();
+      art.appendChild(img);
+    }
   }
 
   const actions = document.createElement("div"); actions.className = "post-actions";
@@ -1449,4 +1467,77 @@ async function sendDM(e) {
     input.value = content;
     toast("Message non envoyé.");
   } else loadConversations();
+}
+
+/* ============================================================
+   SONS D'AMBIANCE (générés via Web Audio API — libres de droits)
+============================================================ */
+const SOUNDS = [
+  { k: "pluie",  n: "Pluie" },
+  { k: "vent",   n: "Vent nocturne" },
+  { k: "ocean",  n: "Vagues" },
+  { k: "souffle",n: "Souffle" },
+];
+const sndState = { ctx: null, buf: null, nodes: null, key: null, gain: 0.55 };
+
+function sndNoiseBuffer(ctx) {
+  const len = ctx.sampleRate * 4;
+  const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+  const d = buf.getChannelData(0);
+  let last = 0;
+  for (let i = 0; i < len; i++) {
+    const white = Math.random() * 2 - 1;
+    last = (last + 0.02 * white) / 1.02;   // bruit brun (doux)
+    d[i] = last * 3.5;
+  }
+  return buf;
+}
+function sndStop() {
+  if (sndState.nodes) {
+    try { sndState.nodes.src.stop(); } catch (e) {}
+    try { if (sndState.nodes.lfo) sndState.nodes.lfo.stop(); } catch (e) {}
+    sndState.nodes = null;
+  }
+  sndState.key = null;
+  $$("#sounds .snd-btn").forEach((b) => b.classList.remove("active"));
+}
+function sndPlay(key) {
+  if (!sndState.ctx) { sndState.ctx = new (window.AudioContext || window.webkitAudioContext)(); sndState.buf = sndNoiseBuffer(sndState.ctx); }
+  const ctx = sndState.ctx;
+  ctx.resume && ctx.resume();
+  sndStop();
+  const src = ctx.createBufferSource(); src.buffer = sndState.buf; src.loop = true;
+  const filter = ctx.createBiquadFilter(); filter.type = "lowpass";
+  const gain = ctx.createGain(); gain.gain.value = sndState.gain;
+  let lfo = null, lfoGain = null;
+  if (key === "pluie")  { filter.frequency.value = 1400; }
+  if (key === "vent")   { filter.frequency.value = 520; lfo = ctx.createOscillator(); lfo.frequency.value = 0.08; lfoGain = ctx.createGain(); lfoGain.gain.value = 280; lfo.connect(lfoGain); lfoGain.connect(filter.frequency); lfo.start(); }
+  if (key === "ocean")  { filter.frequency.value = 700; lfo = ctx.createOscillator(); lfo.frequency.value = 0.12; lfoGain = ctx.createGain(); lfoGain.gain.value = sndState.gain * 0.5; lfo.connect(lfoGain); lfoGain.connect(gain.gain); lfo.start(); }
+  if (key === "souffle"){ filter.frequency.value = 380; }
+  src.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+  src.start();
+  sndState.nodes = { src, gain, lfo };
+  sndState.key = key;
+}
+function initSounds() {
+  if (state.soundsInit) return;
+  state.soundsInit = true;
+  const box = $("#sounds");
+  if (!box) return;
+  box.innerHTML = "";
+  SOUNDS.forEach((s) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "snd-btn"; b.dataset.k = s.k; b.textContent = s.n;
+    b.onclick = () => {
+      if (sndState.key === s.k) { sndStop(); return; }
+      sndPlay(s.k);
+      $$("#sounds .snd-btn").forEach((x) => x.classList.toggle("active", x.dataset.k === s.k));
+    };
+    box.appendChild(b);
+  });
+  const vol = $("#snd-vol");
+  if (vol) vol.addEventListener("input", () => {
+    sndState.gain = vol.value / 100;
+    if (sndState.nodes && sndState.nodes.gain) sndState.nodes.gain.gain.value = sndState.gain;
+  });
 }
