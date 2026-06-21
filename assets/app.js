@@ -255,15 +255,17 @@ async function fetchProfile(id) {
    Navigation entre vues
 ============================================================ */
 function initNav() {
-  $$(".tabsnav button").forEach((b) => {
+  const buttons = $$("[data-view]");
+  buttons.forEach((b) => {
     b.addEventListener("click", () => {
-      $$(".tabsnav button").forEach((x) => x.classList.remove("active"));
-      b.classList.add("active");
-      $$(".view").forEach((v) => v.classList.remove("active"));
-      $("#view-" + b.dataset.view).classList.add("active");
-      if (b.dataset.view === "dash") { loadBadges(); loadLevel(); loadLeaderboard(); }
-      if (b.dataset.view === "feed") loadFeed();
-      if (b.dataset.view === "dm") loadConversations();
+      const v = b.dataset.view;
+      buttons.forEach((x) => x.classList.toggle("active", x.dataset.view === v));
+      $$(".view").forEach((vw) => vw.classList.remove("active"));
+      $("#view-" + v).classList.add("active");
+      if (v === "dash") { loadBadges(); loadLevel(); loadLeaderboard(); }
+      if (v === "feed") loadFeed();
+      if (v === "dm") loadConversations();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   });
 }
