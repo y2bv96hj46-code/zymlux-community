@@ -6,6 +6,54 @@
   <title>Zymlux Community — Tu n'es pas seul</title>
   <meta name="description" content="Zymlux Community : un espace bienveillant et nocturne pour les personnes anxieuses, isolées ou incomprises. Ici, on en parle — sans jugement." />
   <meta name="theme-color" content="#0E0D0C" />
+  <meta name="author" content="Zymlux Community" />
+  <meta name="robots" content="index, follow" />
+  <meta name="keywords" content="communauté, anxiété, isolement, soutien, bienveillance, santé mentale, entraide, espace safe, nuit" />
+  <link rel="canonical" href="https://y2bv96hj46-code.github.io/zymlux-community/" />
+
+  <!-- Open Graph (aperçu Facebook, WhatsApp, Discord, LinkedIn…) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Zymlux Community" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:url" content="https://y2bv96hj46-code.github.io/zymlux-community/" />
+  <meta property="og:title" content="Zymlux Community — Tu n'es pas seul" />
+  <meta property="og:description" content="Un espace bienveillant et nocturne pour les personnes anxieuses, isolées ou incomprises. Ici, on en parle — sans jugement." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=1200&h=630&q=75" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Ciel étoilé au-dessus des montagnes, ambiance nocturne et apaisante" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Zymlux Community — Tu n'es pas seul" />
+  <meta name="twitter:description" content="Un espace bienveillant et nocturne pour les personnes anxieuses, isolées ou incomprises. Ici, on en parle — sans jugement." />
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=1200&h=630&q=75" />
+
+  <!-- Favicon (croissant de lune doré sur fond nuit) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230E0D0C'/%3E%3Cpath d='M41 14a22 22 0 1 0 0 36 18 18 0 0 1 0-36Z' fill='%23C9A24B'/%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230E0D0C'/%3E%3Cpath d='M41 14a22 22 0 1 0 0 36 18 18 0 0 1 0-36Z' fill='%23C9A24B'/%3E%3C/svg%3E" />
+
+  <!-- Données structurées -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "Zymlux Community",
+        "url": "https://y2bv96hj46-code.github.io/zymlux-community/",
+        "slogan": "Tu n'es pas seul. Ici, on en parle — sans jugement.",
+        "description": "Une communauté bienveillante et nocturne pour les personnes anxieuses, isolées ou incomprises."
+      },
+      {
+        "@type": "WebSite",
+        "name": "Zymlux Community",
+        "url": "https://y2bv96hj46-code.github.io/zymlux-community/",
+        "inLanguage": "fr-FR"
+      }
+    ]
+  }
+  </script>
 
   <!-- Google Fonts : Cormorant Garamond (serif titres) + Inter (sans-serif corps) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -80,6 +128,18 @@
       max-width: var(--maxw);
       margin: 0 auto;
       padding: 0 28px;
+    }
+
+    /* Barre de progression de lecture */
+    .progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0;
+      z-index: 60;
+      background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+      box-shadow: 0 0 12px rgba(201,162,75,0.6);
+      transition: width 0.08s linear;
     }
 
     /* Étoiles : canvas plein écran fixe */
@@ -637,6 +697,9 @@
 </head>
 <body>
 
+  <!-- Barre de progression -->
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
   <!-- Ciel étoilé -->
   <canvas id="stars" aria-hidden="true"></canvas>
 
@@ -694,7 +757,7 @@
         <div class="cards" id="cards">
           <article class="card reveal" data-delay="1">
             <div class="card-media">
-              <img class="photo" loading="lazy" decoding="async" alt=""
+              <img class="photo" loading="lazy" decoding="async" alt="Lueurs chaleureuses dans la nuit, symbole d'une communauté accueillante"
                    src="https://images.unsplash.com/photo-1488998427799-e3362cec87c3?auto=format&fit=crop&w=800&q=70" />
             </div>
             <div class="card-body">
@@ -713,7 +776,7 @@
 
           <article class="card reveal" data-delay="2">
             <div class="card-media">
-              <img class="photo" loading="lazy" decoding="async" alt=""
+              <img class="photo" loading="lazy" decoding="async" alt="Lac paisible au lever du jour, évoquant l'avancée et l'apaisement"
                    src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=70" />
             </div>
             <div class="card-body">
@@ -731,7 +794,7 @@
 
           <article class="card reveal" data-delay="3">
             <div class="card-media">
-              <img class="photo" loading="lazy" decoding="async" alt=""
+              <img class="photo" loading="lazy" decoding="async" alt="Sentier en forêt dans la brume, image d'un espace protégé et serein"
                    src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=70" />
             </div>
             <div class="card-body">
@@ -751,7 +814,7 @@
 
     <!-- ===== MANIFESTE ===== -->
     <section class="manifesto">
-      <img class="band-bg photo" loading="lazy" decoding="async" alt=""
+      <img class="band-bg photo" loading="lazy" decoding="async" alt="Ciel étoilé au-dessus des montagnes la nuit"
            src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=1600&q=70" />
       <div class="band-overlay" aria-hidden="true"></div>
       <div class="wrap">
@@ -763,7 +826,7 @@
 
     <!-- ===== CTA FINAL ===== -->
     <section class="cta" id="rejoindre">
-      <img class="cta-bg photo" loading="lazy" decoding="async" alt=""
+      <img class="cta-bg photo" loading="lazy" decoding="async" alt="Voie lactée dans un ciel nocturne profond"
            src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?auto=format&fit=crop&w=1600&q=70" />
       <div class="cta-overlay" aria-hidden="true"></div>
       <div class="wrap">
@@ -826,6 +889,41 @@
       };
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
+    })();
+
+    /* ---------- Barre de progression de lecture ---------- */
+    (function () {
+      var bar = document.getElementById('progress');
+      var update = function () {
+        var h = document.documentElement;
+        var max = h.scrollHeight - h.clientHeight;
+        var pct = max > 0 ? (h.scrollTop || window.scrollY) / max * 100 : 0;
+        bar.style.width = pct + '%';
+      };
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
+
+    /* ---------- Parallaxe douce du héro (lune + halos) ---------- */
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (!window.matchMedia('(hover: hover)').matches) return;
+      var hero = document.getElementById('top');
+      var moon = document.querySelector('.moon');
+      var auroras = document.querySelectorAll('.aurora');
+      if (!hero) return;
+      hero.addEventListener('pointermove', function (e) {
+        var r = hero.getBoundingClientRect();
+        var dx = (e.clientX - r.width / 2) / r.width;
+        var dy = (e.clientY - r.height / 2) / r.height;
+        if (moon) moon.style.transform = 'translate(' + (dx * -26) + 'px,' + (dy * -18) + 'px)';
+        auroras.forEach(function (a, i) {
+          var depth = (i + 1) * 10;
+          a.style.marginLeft = (dx * depth) + 'px';
+          a.style.marginTop = (dy * depth) + 'px';
+        });
+      });
     })();
 
     /* ---------- Halo des cartes qui suit la souris ---------- */
