@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/app.css?v=5" />
-  <script src="assets/config.js?v=5"></script>
+  <link rel="stylesheet" href="assets/app.css?v=6" />
+  <script src="assets/config.js?v=6"></script>
 </head>
 <body>
 
@@ -132,9 +132,19 @@
     <!-- MON ESPACE -->
     <section id="view-dash" class="view">
       <div class="container">
-        <div class="kicker">Mon espace</div>
-        <div class="welcome" id="dash-hello">Bonsoir.</div>
-        <div class="quote-day" id="quote-day"></div>
+        <div class="dash-hero reveal">
+          <div class="dash-hero-av" id="dash-av">🌙</div>
+          <div class="dash-hero-txt">
+            <div class="kicker">Mon espace</div>
+            <div class="welcome" id="dash-hello">Bonsoir.</div>
+          </div>
+        </div>
+        <div class="quote-day reveal" id="quote-day" data-delay="1"></div>
+        <div class="stats reveal" data-delay="1">
+          <div class="stat"><span class="s-n" id="stat-def">0</span><span class="s-l">défis relevés</span></div>
+          <div class="stat"><span class="s-n" id="stat-mood">–</span><span class="s-l">humeur moyenne</span></div>
+          <div class="stat"><span class="s-n" id="stat-obj">0</span><span class="s-l">objectifs atteints</span></div>
+        </div>
         <div class="grid">
           <!-- Défi -->
           <div class="card challenge span">
@@ -184,8 +194,19 @@
             <button class="btn btn-gold btn-block btn-sm" id="breathe-btn" type="button">Commencer</button>
           </div>
 
+          <!-- Ancrage 5-4-3-2-1 -->
+          <div class="card ground-card">
+            <div class="ttl">🌿 Ancrage 5-4-3-2-1</div>
+            <div class="sub">Reviens dans l'instant présent, en douceur.</div>
+            <div class="ground" id="ground">
+              <div class="ground-num" id="ground-num">5·4·3·2·1</div>
+              <div class="ground-txt" id="ground-txt">Une technique simple pour calmer une montée d'angoisse : nomme ce que tes sens perçoivent, ici et maintenant.</div>
+            </div>
+            <button class="btn btn-gold btn-block btn-sm" id="ground-btn" type="button">Commencer l'ancrage</button>
+          </div>
+
           <!-- Réussites -->
-          <div class="card">
+          <div class="card span">
             <div class="ttl">🏅 Mes réussites</div>
             <div class="sub">Chaque pas compte. Voici les tiens.</div>
             <div class="badges" id="badges"></div>
@@ -230,6 +251,6 @@
 
   <div class="toast" id="toast"></div>
 
-  <script type="module" src="assets/app.js?v=5"></script>
+  <script type="module" src="assets/app.js?v=6"></script>
 </body>
 </html>
