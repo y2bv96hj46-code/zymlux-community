@@ -29,7 +29,7 @@ function avatarGrad(id) {
   const h2 = (h + 45) % 360;
   return `linear-gradient(135deg, hsl(${h} 62% 60%), hsl(${h2} 58% 46%))`;
 }
-function applyAvatar(el, name, id, url) {
+function applyAvatar(el, name, id, url, level) {
   if (!el) return;
   el.classList.add("avatar");
   if (url) {
@@ -41,6 +41,10 @@ function applyAvatar(el, name, id, url) {
     el.style.backgroundImage = "none";
     el.style.background = avatarGrad(id);
     el.textContent = (name && name[0] ? name[0] : "?").toUpperCase();
+  }
+  if (level != null && typeof FRAME_TIERS !== "undefined") {
+    ALL_FRAME_CLS.forEach((c) => el.classList.remove(c));
+    el.classList.add(frameClassForLevel(level));
   }
 }
 function refreshMyAvatars() {
@@ -234,6 +238,7 @@ async function enterApp(user) {
   initNav();
   await initChat();
   initFeed();
+  initDM();
   await initDashboard();
   initProfile();
   observeReveals();
@@ -258,6 +263,7 @@ function initNav() {
       $("#view-" + b.dataset.view).classList.add("active");
       if (b.dataset.view === "dash") { loadBadges(); loadLevel(); loadLeaderboard(); }
       if (b.dataset.view === "feed") loadFeed();
+      if (b.dataset.view === "dm") loadConversations();
     });
   });
 }
@@ -319,7 +325,7 @@ async function selectRoom(room) {
 
   const { data: msgs } = await sb
     .from("messages")
-    .select("id, content, created_at, user_id, profiles(pseudo, avatar_emoji, avatar_url)")
+    .select("id, content, created_at, user_id, profiles(pseudo, avatar_emoji, avatar_url, level)")
     .eq("room_id", room.id)
     .order("created_at", { ascending: true })
     .limit(100);
@@ -343,15 +349,15 @@ async function selectRoom(room) {
       async (payload) => {
         const m = payload.new;
         // Récupère le profil de l'auteur
-        let pseudo = "Membre", emoji = "🌙", url = null;
+        let pseudo = "Membre", emoji = "🌙", url = null, lvl = 1;
         if (m.user_id === state.user.id) {
-          pseudo = state.profile.pseudo; emoji = state.profile.avatar_emoji; url = state.profile.avatar_url;
+          pseudo = state.profile.pseudo; emoji = state.profile.avatar_emoji; url = state.profile.avatar_url; lvl = state.level;
         } else {
-          const { data: p } = await sb.from("profiles").select("pseudo, avatar_emoji, avatar_url").eq("id", m.user_id).maybeSingle();
-          if (p) { pseudo = p.pseudo; emoji = p.avatar_emoji; url = p.avatar_url; }
+          const { data: p } = await sb.from("profiles").select("pseudo, avatar_emoji, avatar_url, level").eq("id", m.user_id).maybeSingle();
+          if (p) { pseudo = p.pseudo; emoji = p.avatar_emoji; url = p.avatar_url; lvl = p.level; }
         }
         if ($(".chat-empty", box)) box.innerHTML = "";
-        renderMessage({ ...m, profiles: { pseudo, avatar_emoji: emoji, avatar_url: url } });
+        renderMessage({ ...m, profiles: { pseudo, avatar_emoji: emoji, avatar_url: url, level: lvl } });
         scrollChat();
       }
     )
@@ -372,7 +378,7 @@ function renderMessage(m) {
   meta.className = "meta";
   const av = document.createElement("span");
   av.className = "av";
-  applyAvatar(av, who, m.user_id, m.profiles && m.profiles.avatar_url);
+  applyAvatar(av, who, m.user_id, m.profiles && m.profiles.avatar_url, m.profiles && m.profiles.level);
   const whoSpan = document.createElement("span");
   whoSpan.className = "who";
   whoSpan.textContent = mine ? "Toi" : who;
@@ -919,7 +925,7 @@ function initFeed() {
 async function loadFeed() {
   const list = $("#feed-list");
   const { data: posts } = await sb.from("posts")
-    .select("id,content,image_url,created_at,user_id,profiles(pseudo,avatar_url),post_likes(count),post_comments(count)")
+    .select("id,content,image_url,created_at,user_id,profiles(pseudo,avatar_url,level),post_likes(count),post_comments(count)")
     .order("created_at", { ascending: false })
     .limit(50);
   const { data: myLikes } = await sb.from("post_likes").select("post_id").eq("user_id", state.user.id);
@@ -941,7 +947,7 @@ function renderPost(p, isLiked) {
   art.className = "post"; art.dataset.id = p.id;
 
   const head = document.createElement("div"); head.className = "post-head";
-  const av = document.createElement("span"); av.className = "post-av"; applyAvatar(av, who, p.user_id, url);
+  const av = document.createElement("span"); av.className = "post-av"; applyAvatar(av, who, p.user_id, url, p.profiles && p.profiles.level);
   const info = document.createElement("div");
   const w = document.createElement("div"); w.className = "who"; w.textContent = p.user_id === state.user.id ? "Toi" : who;
   const tm = document.createElement("div"); tm.className = "time"; tm.textContent = timeAgo(p.created_at);
@@ -1007,14 +1013,14 @@ function renderPost(p, isLiked) {
 
 async function loadComments(postId, listEl) {
   const { data: cs } = await sb.from("post_comments")
-    .select("id,content,created_at,user_id,profiles(pseudo,avatar_url)")
+    .select("id,content,created_at,user_id,profiles(pseudo,avatar_url,level)")
     .eq("post_id", postId)
     .order("created_at", { ascending: true });
   listEl.innerHTML = "";
   (cs || []).forEach((c) => {
     const who = (c.profiles && c.profiles.pseudo) || "Membre";
     const row = document.createElement("div"); row.className = "cmt";
-    const av = document.createElement("span"); av.className = "cmt-av"; applyAvatar(av, who, c.user_id, c.profiles && c.profiles.avatar_url);
+    const av = document.createElement("span"); av.className = "cmt-av"; applyAvatar(av, who, c.user_id, c.profiles && c.profiles.avatar_url, c.profiles && c.profiles.level);
     const bub = document.createElement("div"); bub.className = "cmt-bub";
     const wn = document.createElement("span"); wn.className = "cmt-who"; wn.textContent = c.user_id === state.user.id ? "Toi" : who;
     bub.appendChild(wn); bub.appendChild(document.createTextNode(c.content));
@@ -1026,7 +1032,19 @@ async function loadComments(postId, listEl) {
 /* ============================================================
    SYSTÈME DE NIVEAUX (XP selon l'activité)
 ============================================================ */
-const LEVEL_TITLES = ["Nouvelle âme", "Présence", "Veilleur·se", "Confident·e", "Pilier", "Gardien·ne", "Lumière", "Phare", "Étoile", "Légende"];
+function titleForLevel(lvl) {
+  lvl = lvl || 1;
+  if (lvl >= 100) return "Légende";
+  if (lvl >= 90) return "Étoile";
+  if (lvl >= 70) return "Phare";
+  if (lvl >= 50) return "Lumière";
+  if (lvl >= 40) return "Gardien·ne";
+  if (lvl >= 30) return "Pilier";
+  if (lvl >= 20) return "Confident·e";
+  if (lvl >= 10) return "Veilleur·se";
+  if (lvl >= 5) return "Présence";
+  return "Nouvelle âme";
+}
 
 function levelFromXp(xp) {
   let lvl = 1;
@@ -1049,7 +1067,7 @@ async function loadLevel() {
            + (ch.count || 0) * 25 + rmDone * 20 + (likes.count || 0) * 2 + (reacts.count || 0) * 2
            + (state.profile.bonus_xp || 0);
   const L = levelFromXp(xp);
-  const title = LEVEL_TITLES[Math.min(L.lvl - 1, LEVEL_TITLES.length - 1)];
+  const title = titleForLevel(L.lvl);
   const setT = (id, v) => { const e = $("#" + id); if (e) e.textContent = v; };
   setT("lvl-num", L.lvl);
   setT("lvl-title", title + " · niveau " + L.lvl);
@@ -1058,6 +1076,11 @@ async function loadLevel() {
   setT("lvl-next", "Plus que " + L.remaining + " XP pour le niveau " + (L.lvl + 1));
   const chip = $("#lvl-chip"); if (chip) chip.textContent = "Nv " + L.lvl;
   state.level = L.lvl;
+  // Mémorise le niveau dans le profil pour que les autres voient ton cadre partout
+  if (state.profile.level !== L.lvl) {
+    state.profile.level = L.lvl;
+    sb.from("profiles").update({ level: L.lvl }).eq("id", state.user.id);
+  }
   applyHalo();
   loadRewards();
 }
@@ -1076,7 +1099,7 @@ async function loadLeaderboard() {
     const el = document.createElement("div");
     el.className = "lb-row" + (row.id === state.user.id ? " me" : "") + (i < 3 ? " top" : "");
     const rank = document.createElement("div"); rank.className = "lb-rank"; rank.textContent = (i + 1);
-    const av = document.createElement("span"); av.className = "lb-av"; applyAvatar(av, row.pseudo, row.id, row.avatar_url);
+    const av = document.createElement("span"); av.className = "lb-av"; applyAvatar(av, row.pseudo, row.id, row.avatar_url, lvl);
     const info = document.createElement("div"); info.style.flex = "1"; info.style.minWidth = "0";
     const nm = document.createElement("div"); nm.className = "lb-name"; nm.textContent = row.id === state.user.id ? (row.pseudo + " (toi)") : row.pseudo;
     const lv = document.createElement("div"); lv.className = "lb-lvl"; lv.textContent = "Niveau " + lvl;
@@ -1090,10 +1113,12 @@ async function loadLeaderboard() {
 
 const REWARDS = [
   { lvl: 2, name: "Pastille de niveau", desc: "Ton niveau affiché en permanence" },
-  { lvl: 3, name: "Titre de membre", desc: "Un titre qui évolue avec toi" },
-  { lvl: 5, name: "Halo doré", desc: "Une aura lumineuse sur ton avatar" },
-  { lvl: 8, name: "Salon privé « Cercle »", desc: "Un espace réservé (bientôt)" },
-  { lvl: 10, name: "Statut Légende", desc: "Le rang ultime de Zymlux" },
+  { lvl: 5, name: "Cadre « Halo doux »", desc: "Ton premier cadre d'avatar" },
+  { lvl: 10, name: "Titre « Veilleur·se »", desc: "Un titre qui évolue avec toi" },
+  { lvl: 20, name: "Cadre « Lueur dorée »", desc: "Un cadre lumineux distinctif" },
+  { lvl: 50, name: "Cadre « Dégradé royal »", desc: "Réservé aux membres dévoués" },
+  { lvl: 70, name: "Cadres animés", desc: "Des cadres qui tournent autour de ton avatar" },
+  { lvl: 100, name: "Statut Légende", desc: "Le rang ultime de Zymlux ✦" },
 ];
 
 function loadRewards() {
@@ -1132,12 +1157,13 @@ const FRAME_TIERS = [
   { lvl: 100, cls: "fr-12", name: "Légende" },
 ];
 const ALL_FRAME_CLS = FRAME_TIERS.map((t) => t.cls);
-function currentFrame() {
+function frameClassForLevel(level) {
   let cls = "fr-1";
-  const lvl = state.level || 1;
+  const lvl = level || 1;
   FRAME_TIERS.forEach((t) => { if (lvl >= t.lvl) cls = t.cls; });
   return cls;
 }
+function currentFrame() { return frameClassForLevel(state.level); }
 function applyHalo() {
   const cls = currentFrame();
   ["#me-av", "#dash-av", "#pf-av"].forEach((s) => {
@@ -1228,4 +1254,135 @@ async function loadAdmin() {
     row.appendChild(av); row.appendChild(info); row.appendChild(actions);
     box.appendChild(row);
   });
+}
+
+/* ============================================================
+   MESSAGES PRIVÉS (DM)
+============================================================ */
+function initDM() {
+  if (state.dmInit) return;
+  state.dmInit = true;
+  state.dmWith = null;
+  $("#dm-new").addEventListener("click", openMemberPicker);
+  const input = $("#dm-input");
+  input.addEventListener("input", () => { input.style.height = "48px"; input.style.height = Math.min(input.scrollHeight, 140) + "px"; });
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("#dm-composer").requestSubmit(); } });
+  $("#dm-composer").addEventListener("submit", sendDM);
+
+  state.dmInChannel = sb.channel("dm-in")
+    .on("postgres_changes", { event: "INSERT", schema: "public", table: "dms", filter: "recipient_id=eq." + state.user.id }, (payload) => {
+      const m = payload.new;
+      if (state.dmWith === m.sender_id && $("#view-dm").classList.contains("active")) appendDM(m);
+      else toast("Nouveau message privé ✦");
+      loadConversations();
+    })
+    .subscribe();
+
+  loadConversations();
+}
+
+async function loadConversations() {
+  const box = $("#dm-convos");
+  if (!box) return;
+  const uid = state.user.id;
+  const { data } = await sb.from("dms")
+    .select("id,sender_id,recipient_id,content,created_at")
+    .or(`sender_id.eq.${uid},recipient_id.eq.${uid}`)
+    .order("created_at", { ascending: false })
+    .limit(200);
+  const seen = {};
+  const others = [];
+  (data || []).forEach((m) => {
+    const other = m.sender_id === uid ? m.recipient_id : m.sender_id;
+    if (!seen[other]) { seen[other] = m; others.push(other); }
+  });
+  box.innerHTML = "";
+  if (!others.length) { box.innerHTML = `<div class="chart-empty" style="padding:20px">Aucune conversation.<br>Tape « Nouveau » pour écrire à quelqu'un.</div>`; return; }
+  const { data: profs } = await sb.from("profiles").select("id,pseudo,avatar_url,level").in("id", others);
+  const pmap = {}; (profs || []).forEach((p) => { pmap[p.id] = p; });
+  others.forEach((oid) => {
+    const p = pmap[oid] || { pseudo: "Membre" };
+    const last = seen[oid];
+    const row = document.createElement("button");
+    row.className = "room-btn dm-convo" + (state.dmWith === oid ? " active" : "");
+    const av = document.createElement("span"); av.className = "dm-cv-av"; applyAvatar(av, p.pseudo, oid, p.avatar_url, p.level);
+    const info = document.createElement("div"); info.style.flex = "1"; info.style.minWidth = "0";
+    const nm = document.createElement("div"); nm.className = "nm"; nm.textContent = p.pseudo;
+    const pv = document.createElement("div"); pv.className = "dm-cv-prev"; pv.textContent = (last.sender_id === uid ? "Toi : " : "") + last.content;
+    info.appendChild(nm); info.appendChild(pv);
+    row.appendChild(av); row.appendChild(info);
+    row.onclick = () => openConversation(oid, p);
+    box.appendChild(row);
+  });
+}
+
+async function openMemberPicker() {
+  state.dmWith = null;
+  $("#dm-title").textContent = "Nouveau message";
+  $("#dm-sub").textContent = "Choisis un membre";
+  $("#dm-composer").style.display = "none";
+  const box = $("#dm-messages");
+  box.innerHTML = `<div class="chart-empty">Chargement…</div>`;
+  const { data } = await sb.from("profiles").select("id,pseudo,avatar_url,level").neq("id", state.user.id).order("pseudo").limit(100);
+  box.innerHTML = "";
+  (data || []).forEach((p) => {
+    const row = document.createElement("button");
+    row.className = "room-btn dm-pick";
+    const av = document.createElement("span"); av.className = "dm-cv-av"; applyAvatar(av, p.pseudo, p.id, p.avatar_url, p.level);
+    const nm = document.createElement("span"); nm.className = "nm"; nm.textContent = p.pseudo;
+    row.appendChild(av); row.appendChild(nm);
+    row.onclick = () => openConversation(p.id, p);
+    box.appendChild(row);
+  });
+  if (!data || !data.length) box.innerHTML = `<div class="chart-empty">Aucun autre membre pour l'instant.</div>`;
+}
+
+async function openConversation(otherId, prof) {
+  state.dmWith = otherId;
+  const uid = state.user.id;
+  $("#dm-title").textContent = prof.pseudo;
+  $("#dm-sub").textContent = "Conversation privée";
+  $("#dm-composer").style.display = "flex";
+  $$(".dm-convo").forEach((b) => b.classList.remove("active"));
+  const box = $("#dm-messages");
+  box.innerHTML = `<div class="chat-empty">Chargement…</div>`;
+  const { data } = await sb.from("dms")
+    .select("*")
+    .or(`and(sender_id.eq.${uid},recipient_id.eq.${otherId}),and(sender_id.eq.${otherId},recipient_id.eq.${uid})`)
+    .order("created_at", { ascending: true })
+    .limit(200);
+  box.innerHTML = "";
+  if (!data || !data.length) box.innerHTML = `<div class="chat-empty">Aucun message. Dis bonjour 🤍</div>`;
+  else data.forEach((m) => appendDM(m));
+  loadConversations();
+}
+
+function appendDM(m) {
+  const box = $("#dm-messages");
+  if ($(".chat-empty", box)) box.innerHTML = "";
+  const mine = m.sender_id === state.user.id;
+  const wrap = document.createElement("div");
+  wrap.className = "msg" + (mine ? " mine" : "");
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+  bubble.textContent = m.content;
+  const meta = document.createElement("div"); meta.className = "meta";
+  meta.textContent = (mine ? "Toi" : "") + " " + fmtTime(m.created_at);
+  wrap.appendChild(meta); wrap.appendChild(bubble);
+  box.appendChild(wrap);
+  box.scrollTop = box.scrollHeight;
+}
+
+async function sendDM(e) {
+  e.preventDefault();
+  if (!state.dmWith) return;
+  const input = $("#dm-input");
+  const content = input.value.trim();
+  if (!content) return;
+  input.value = ""; input.style.height = "48px";
+  const m = { sender_id: state.user.id, recipient_id: state.dmWith, content };
+  appendDM({ ...m, created_at: new Date().toISOString() });
+  const { error } = await sb.from("dms").insert(m);
+  if (error) toast("Message non envoyé.");
+  else loadConversations();
 }

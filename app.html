@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/app.css?v=16" />
-  <script src="assets/config.js?v=16"></script>
+  <link rel="stylesheet" href="assets/app.css?v=18" />
+  <script src="assets/config.js?v=18"></script>
 </head>
 <body>
 
@@ -96,6 +96,7 @@
       <nav class="tabsnav">
         <button data-view="chat" class="active">Salons</button>
         <button data-view="feed">Fil</button>
+        <button data-view="dm">Messages</button>
         <button data-view="dash">Mon espace</button>
         <button data-view="profil">Profil</button>
       </nav>
@@ -145,6 +146,34 @@
           </div>
         </div>
         <div id="feed-list"></div>
+      </div>
+    </section>
+
+    <!-- MESSAGES PRIVÉS -->
+    <section id="view-dm" class="view">
+      <div class="chat-layout">
+        <aside class="rooms dm-side">
+          <div class="dm-side-head">
+            <h3>Messages</h3>
+            <button class="btn btn-ghost btn-sm" id="dm-new" type="button">Nouveau</button>
+          </div>
+          <div id="dm-convos"></div>
+        </aside>
+        <div class="chat-main">
+          <div class="chat-head">
+            <div>
+              <div class="t" id="dm-title">Tes messages privés</div>
+              <div class="d" id="dm-sub">Sélectionne une conversation</div>
+            </div>
+          </div>
+          <div class="messages" id="dm-messages"></div>
+          <form class="composer" id="dm-composer" style="display:none">
+            <textarea id="dm-input" class="field" placeholder="Écris un message privé…" rows="1"></textarea>
+            <button class="send-btn" type="submit" aria-label="Envoyer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+            </button>
+          </form>
+        </div>
       </div>
     </section>
 
@@ -317,6 +346,6 @@
 
   <div class="toast" id="toast"></div>
 
-  <script type="module" src="assets/app.js?v=16"></script>
+  <script type="module" src="assets/app.js?v=18"></script>
 </body>
 </html>
