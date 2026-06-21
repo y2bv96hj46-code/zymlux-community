@@ -15,8 +15,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/app.css?v=22" />
-  <script src="assets/config.js?v=22"></script>
+  <link rel="stylesheet" href="assets/app.css?v=23" />
+  <script src="assets/config.js?v=23"></script>
 </head>
 <body>
 
@@ -85,8 +85,15 @@
             <span class="slider"></span>
           </label>
         </div>
+        <label class="consent">
+          <input type="checkbox" id="su-terms" required />
+          <span>J'ai 18 ans ou plus et j'accepte les <a href="legal.html#cgu" target="_blank">CGU</a> et la <a href="legal.html#confidentialite" target="_blank">Politique de confidentialité</a>.</span>
+        </label>
+        <label class="consent">
+          <input type="checkbox" id="su-marketing" />
+          <span>Je souhaite recevoir les nouvelles de Zymlux par e-mail (optionnel).</span>
+        </label>
         <button class="btn btn-gold btn-block" type="submit">Rejoindre la communauté</button>
-        <p class="hint">Réservé aux personnes majeures (18 ans et +).</p>
       </form>
 
       <div class="auth-msg" id="auth-msg"></div>
@@ -375,6 +382,6 @@
   <div class="toast" id="toast"></div>
 
   <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
-  <script type="module" src="assets/app.js?v=22"></script>
+  <script type="module" src="assets/app.js?v=23"></script>
 </body>
 </html>
