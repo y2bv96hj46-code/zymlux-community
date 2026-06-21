@@ -577,7 +577,7 @@ body::before{
 @media (max-width:860px){
   .bottomnav{display:flex;}
   .tabsnav{display:none;}
-  #app{padding-bottom:70px;}
+  #app{padding-bottom:calc(74px + env(safe-area-inset-bottom));}
 }
 
 /* bouton central + (créer) */
