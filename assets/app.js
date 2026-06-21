@@ -1032,7 +1032,19 @@ async function loadComments(postId, listEl) {
 /* ============================================================
    SYSTÈME DE NIVEAUX (XP selon l'activité)
 ============================================================ */
-const LEVEL_TITLES = ["Nouvelle âme", "Présence", "Veilleur·se", "Confident·e", "Pilier", "Gardien·ne", "Lumière", "Phare", "Étoile", "Légende"];
+function titleForLevel(lvl) {
+  lvl = lvl || 1;
+  if (lvl >= 100) return "Légende";
+  if (lvl >= 90) return "Étoile";
+  if (lvl >= 70) return "Phare";
+  if (lvl >= 50) return "Lumière";
+  if (lvl >= 40) return "Gardien·ne";
+  if (lvl >= 30) return "Pilier";
+  if (lvl >= 20) return "Confident·e";
+  if (lvl >= 10) return "Veilleur·se";
+  if (lvl >= 5) return "Présence";
+  return "Nouvelle âme";
+}
 
 function levelFromXp(xp) {
   let lvl = 1;
@@ -1055,7 +1067,7 @@ async function loadLevel() {
            + (ch.count || 0) * 25 + rmDone * 20 + (likes.count || 0) * 2 + (reacts.count || 0) * 2
            + (state.profile.bonus_xp || 0);
   const L = levelFromXp(xp);
-  const title = LEVEL_TITLES[Math.min(L.lvl - 1, LEVEL_TITLES.length - 1)];
+  const title = titleForLevel(L.lvl);
   const setT = (id, v) => { const e = $("#" + id); if (e) e.textContent = v; };
   setT("lvl-num", L.lvl);
   setT("lvl-title", title + " · niveau " + L.lvl);
@@ -1101,10 +1113,12 @@ async function loadLeaderboard() {
 
 const REWARDS = [
   { lvl: 2, name: "Pastille de niveau", desc: "Ton niveau affiché en permanence" },
-  { lvl: 3, name: "Titre de membre", desc: "Un titre qui évolue avec toi" },
-  { lvl: 5, name: "Halo doré", desc: "Une aura lumineuse sur ton avatar" },
-  { lvl: 8, name: "Salon privé « Cercle »", desc: "Un espace réservé (bientôt)" },
-  { lvl: 10, name: "Statut Légende", desc: "Le rang ultime de Zymlux" },
+  { lvl: 5, name: "Cadre « Halo doux »", desc: "Ton premier cadre d'avatar" },
+  { lvl: 10, name: "Titre « Veilleur·se »", desc: "Un titre qui évolue avec toi" },
+  { lvl: 20, name: "Cadre « Lueur dorée »", desc: "Un cadre lumineux distinctif" },
+  { lvl: 50, name: "Cadre « Dégradé royal »", desc: "Réservé aux membres dévoués" },
+  { lvl: 70, name: "Cadres animés", desc: "Des cadres qui tournent autour de ton avatar" },
+  { lvl: 100, name: "Statut Légende", desc: "Le rang ultime de Zymlux ✦" },
 ];
 
 function loadRewards() {
