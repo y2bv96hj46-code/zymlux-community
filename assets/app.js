@@ -131,7 +131,10 @@ const state = {
   roomChannel: null,
   moodChannel: null,
   challenge: null,
+  challengeDone: false,
   selectedMood: null,
+  notifs: [],
+  notifChannel: null,
 };
 
 /* ============================================================
@@ -247,6 +250,7 @@ async function enterApp(user) {
   if (state.isAdmin) { const c = $("#admin-card"); if (c) c.style.display = ""; }
 
   initNav();
+  initNotifications();
   await initChat();
   initFeed();
   initDM();
@@ -254,6 +258,7 @@ async function enterApp(user) {
   initProfile();
   observeReveals();
   loadLevel();
+  checkDailyObjective();
   if (state.isAdmin) loadAdmin();
 }
 
@@ -309,6 +314,144 @@ async function loadUnread() {
 function markDmSeen() {
   localStorage.setItem("zx_dm_seen", new Date().toISOString());
   setUnreadBadge(0);
+}
+
+/* ============================================================
+   NOTIFICATIONS (cloche + temps réel + notifs du téléphone)
+============================================================ */
+function notifIcon(type) {
+  if (type === "like") return ICONS.heart;
+  if (type === "comment") return ICONS.message;
+  if (type === "dm") return ICONS.message;
+  if (type === "level") return ICONS.award;
+  if (type === "daily") return ICONS.flame;
+  return ICONS.star;
+}
+function fireSystemNotif(title, body) {
+  try {
+    if (typeof Notification === "undefined" || Notification.permission !== "granted") return;
+    const n = new Notification(title, { body, icon: "assets/icons/apple-touch-icon.png", tag: "zymlux", renotify: false });
+    n.onclick = () => { try { window.focus(); } catch (e) {} n.close(); };
+  } catch (e) {}
+}
+function updateNotifPermUI() {
+  const perm = $("#notif-perm");
+  if (!perm) return;
+  const ok = typeof Notification !== "undefined" && Notification.permission === "granted";
+  perm.style.display = ok ? "none" : "";
+}
+async function requestNotifPermission() {
+  if (typeof Notification === "undefined") { toast("Ton appareil ne gère pas les notifications ici."); return; }
+  let p = Notification.permission;
+  if (p === "default") { try { p = await Notification.requestPermission(); } catch (e) { p = Notification.permission; } }
+  updateNotifPermUI();
+  if (p === "granted") { toast("Notifications activées ✦"); fireSystemNotif("Zymlux ✦", "C'est activé ! On te préviendra ici."); }
+  else if (p === "denied") toast("Notifications bloquées. Active-les dans les réglages de ton navigateur.");
+}
+function notifUnreadCount() { return state.notifs.filter((n) => !n.read).length; }
+function setNotifBadge() {
+  const b = $("#notif-badge");
+  if (!b) return;
+  const n = notifUnreadCount();
+  if (n > 0) { b.textContent = n > 9 ? "9+" : String(n); b.hidden = false; }
+  else b.hidden = true;
+}
+function renderNotifs() {
+  const list = $("#notif-list");
+  if (!list) return;
+  list.innerHTML = "";
+  if (!state.notifs.length) {
+    list.innerHTML = `<div class="notif-empty">Pas encore de notification.<br>Reviens vite ✦</div>`;
+    setNotifBadge();
+    return;
+  }
+  state.notifs.forEach((n) => {
+    const it = document.createElement("button");
+    it.type = "button";
+    it.className = "notif-item" + (n.read ? "" : " unread");
+    const ic = document.createElement("span");
+    ic.className = "notif-ic notif-ic-" + n.type;
+    ic.innerHTML = notifIcon(n.type);
+    const tx = document.createElement("div"); tx.className = "notif-tx";
+    const bd = document.createElement("div"); bd.className = "notif-body"; bd.textContent = n.body;
+    const tm = document.createElement("div"); tm.className = "notif-time"; tm.textContent = timeAgo(n.created_at);
+    tx.appendChild(bd); tx.appendChild(tm);
+    it.appendChild(ic); it.appendChild(tx);
+    it.addEventListener("click", () => onNotifClick(n));
+    list.appendChild(it);
+  });
+  setNotifBadge();
+}
+async function onNotifClick(n) {
+  if (!n.read) {
+    n.read = true;
+    renderNotifs();
+    sb.from("notifications").update({ read: true }).eq("id", n.id).then(() => {}, () => {});
+  }
+  closeNotifPanel();
+  if (n.link) switchView(n.link);
+}
+async function markAllNotifsRead() {
+  const ids = state.notifs.filter((n) => !n.read).map((n) => n.id);
+  state.notifs.forEach((n) => (n.read = true));
+  renderNotifs();
+  if (ids.length) await sb.from("notifications").update({ read: true }).in("id", ids);
+}
+function openNotifPanel() { const p = $("#notif-panel"); if (p) { p.hidden = false; updateNotifPermUI(); } }
+function closeNotifPanel() { const p = $("#notif-panel"); if (p) p.hidden = true; }
+function toggleNotifPanel() {
+  const p = $("#notif-panel"); if (!p) return;
+  if (p.hidden) { openNotifPanel(); loadNotifications(); } else closeNotifPanel();
+}
+async function loadNotifications() {
+  const { data } = await sb.from("notifications").select("*")
+    .eq("user_id", state.user.id).order("created_at", { ascending: false }).limit(30);
+  state.notifs = data || [];
+  renderNotifs();
+}
+function onIncomingNotif(n) {
+  if (!n || state.notifs.some((x) => x.id === n.id)) return;
+  state.notifs.unshift(n);
+  if (state.notifs.length > 40) state.notifs.length = 40;
+  renderNotifs();
+  // Les notifs « auto » (niveau, rappel du jour) sont déjà affichées à la source.
+  if (n.type === "like" || n.type === "comment" || n.type === "dm") {
+    if (document.hidden) fireSystemNotif("Zymlux ✦", n.body);
+    else if (n.type !== "dm") toast(n.body); // les DM ont déjà leur propre signal
+  }
+}
+function initNotifications() {
+  if (state.notifInit) return;
+  state.notifInit = true;
+  const bell = $("#notif-bell");
+  if (bell) bell.addEventListener("click", (e) => { e.stopPropagation(); toggleNotifPanel(); });
+  const ra = $("#notif-readall"); if (ra) ra.addEventListener("click", markAllNotifsRead);
+  const en = $("#notif-enable"); if (en) en.addEventListener("click", requestNotifPermission);
+  document.addEventListener("click", (e) => {
+    const p = $("#notif-panel");
+    if (p && !p.hidden && !p.contains(e.target) && bell && !bell.contains(e.target)) closeNotifPanel();
+  });
+  updateNotifPermUI();
+  // On s'abonne AVANT de charger : ainsi un éventuel nouvel élément entre les
+  // deux est dédupliqué (par id) plutôt que manqué.
+  state.notifChannel = sb.channel("notif:" + state.user.id)
+    .on("postgres_changes", { event: "INSERT", schema: "public", table: "notifications", filter: "user_id=eq." + state.user.id },
+      (payload) => onIncomingNotif(payload.new))
+    .subscribe();
+  loadNotifications();
+}
+function checkDailyObjective() {
+  // Rappel « viens accomplir ton objectif du jour » — une fois par jour, si non relevé.
+  const today = new Date().toISOString().slice(0, 10);
+  if (localStorage.getItem("zx_daily_reminded") === today) return;
+  setTimeout(() => {
+    if (state.challenge && !state.challengeDone) {
+      localStorage.setItem("zx_daily_reminded", today);
+      const body = "Viens accomplir ton objectif du jour 💪 « " + state.challenge.title + " »";
+      sb.rpc("notify_self", { p_type: "daily", p_body: body, p_link: "dash" }).then(() => {}, () => {});
+      if (document.hidden) fireSystemNotif("Ton objectif t'attend ✦", body); else toast(body);
+    }
+  }, 2800);
 }
 
 /* ============================================================
@@ -766,6 +909,7 @@ async function loadChallenge() {
     .eq("user_id", state.user.id)
     .eq("challenge_id", ch.id)
     .maybeSingle();
+  state.challengeDone = !!done;
   setChallengeDone(!!done);
 
   $("#ch-btn").onclick = async () => {
@@ -1172,6 +1316,15 @@ async function loadLevel() {
     state.profile.level = L.lvl;
     sb.from("profiles").update({ level: L.lvl }).eq("id", state.user.id);
   }
+  // Notification de montée de niveau (une seule fois par palier franchi)
+  const lastKey = "zx_last_level_" + uid;
+  const prev = parseInt(localStorage.getItem(lastKey) || "0", 10);
+  if (prev > 0 && L.lvl > prev) {
+    const body = "Bravo ✦ Tu viens d'atteindre le niveau " + L.lvl + " : " + title + " !";
+    sb.rpc("notify_self", { p_type: "level", p_body: body, p_link: "dash" }).catch(() => {});
+    if (document.hidden) fireSystemNotif("Niveau " + L.lvl + " atteint ✦", body); else toast(body);
+  }
+  if (L.lvl !== prev) localStorage.setItem(lastKey, String(L.lvl));
   applyHalo();
   loadRewards();
 }
