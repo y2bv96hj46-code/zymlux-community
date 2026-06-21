@@ -1522,7 +1522,9 @@ function sndPlay(key) {
   const a = document.createElement("audio");
   a.loop = true;
   a.preload = "auto";
-  a.crossOrigin = "anonymous";
+  a.playsInline = true;
+  // pas de crossOrigin : on ne traite pas le flux, et l'activer peut bloquer
+  // la lecture sur certains appareils si le serveur ne renvoie pas les en-têtes CORS.
   a.volume = 0; // on monte en fondu
   const sMp3 = document.createElement("source"); sMp3.src = def.mp3; sMp3.type = "audio/mpeg";
   const sOgg = document.createElement("source"); sOgg.src = def.ogg; sOgg.type = "audio/ogg";
