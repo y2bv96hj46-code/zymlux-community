@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zymlux — Mon espace</title>
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#0E0D0C" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230E0D0C'/%3E%3Cpath d='M41 14a22 22 0 1 0 0 36 18 18 0 0 1 0-36Z' fill='%23C9A24B'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/app.css" />
+  <script src="assets/config.js"></script>
+</head>
+<body>
+
+  <!-- Chargement -->
+  <div id="loading"><div class="spin"></div></div>
+
+  <!-- Configuration manquante -->
+  <div id="setup" class="setup" style="display:none">
+    <div class="box">
+      <h1>Presque prêt ✦</h1>
+      <p>L'application a besoin d'être reliée à ta base de données <strong>Supabase</strong> (gratuit). Ouvre le fichier <code>assets/config.js</code> et remplace les deux valeurs par celles de ton projet.</p>
+      <ol>
+        <li>Crée un projet sur <code>supabase.com</code></li>
+        <li>Lance le script <code>supabase-schema.sql</code> (SQL Editor)</li>
+        <li>Copie <code>Project URL</code> et la clé <code>anon public</code> dans <code>assets/config.js</code></li>
+      </ol>
+      <p class="hint">Le guide complet est dans le fichier <code>SETUP.md</code> du projet.</p>
+    </div>
+  </div>
+
+  <!-- AUTH -->
+  <div id="auth" class="auth" style="display:none">
+    <div class="auth-card">
+      <div class="auth-brand">Zymlux<span>.</span></div>
+      <div class="auth-sub">Tu n'es pas seul. Entre, on t'attendait.</div>
+
+      <div class="tabs">
+        <button id="tab-login" class="active" type="button">Connexion</button>
+        <button id="tab-signup" type="button">Créer un compte</button>
+      </div>
+
+      <!-- Connexion -->
+      <form id="form-login">
+        <div>
+          <label class="lbl" for="li-email">E-mail</label>
+          <input class="field" id="li-email" type="email" autocomplete="email" placeholder="ton@email.com" required />
+        </div>
+        <div>
+          <label class="lbl" for="li-pass">Mot de passe</label>
+          <input class="field" id="li-pass" type="password" autocomplete="current-password" placeholder="••••••••" required />
+        </div>
+        <button class="btn btn-gold btn-block" type="submit">Se connecter</button>
+      </form>
+
+      <!-- Inscription -->
+      <form id="form-signup" style="display:none">
+        <div>
+          <label class="lbl" for="su-pseudo">Pseudo</label>
+          <input class="field" id="su-pseudo" type="text" maxlength="24" placeholder="Comment veux-tu qu'on t'appelle ?" required />
+        </div>
+        <div>
+          <label class="lbl" for="su-email">E-mail</label>
+          <input class="field" id="su-email" type="email" autocomplete="email" placeholder="ton@email.com" required />
+        </div>
+        <div>
+          <label class="lbl" for="su-pass">Mot de passe</label>
+          <input class="field" id="su-pass" type="password" autocomplete="new-password" placeholder="6 caractères minimum" required />
+        </div>
+        <div class="toggle-row">
+          <div class="tt">
+            <b>Rester anonyme</b>
+            Seul ton pseudo sera visible des autres membres.
+          </div>
+          <label class="switch">
+            <input id="su-anon" type="checkbox" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
+        <button class="btn btn-gold btn-block" type="submit">Rejoindre la communauté</button>
+        <p class="hint">Réservé aux personnes majeures (18 ans et +).</p>
+      </form>
+
+      <div class="auth-msg" id="auth-msg"></div>
+      <div class="auth-foot"><a href="index.html">← Retour à l'accueil</a></div>
+    </div>
+  </div>
+
+  <!-- APPLICATION -->
+  <div id="app" class="app">
+    <header class="topbar">
+      <div class="logo">Zymlux<span>.</span></div>
+      <nav class="tabsnav">
+        <button data-view="chat" class="active">Salons</button>
+        <button data-view="dash">Mon espace</button>
+        <button data-view="profil">Profil</button>
+      </nav>
+      <div class="top-right">
+        <div class="me-pill"><span class="av" id="me-av">🌙</span><span class="nm" id="me-name">…</span></div>
+      </div>
+    </header>
+
+    <!-- SALONS -->
+    <section id="view-chat" class="view active">
+      <div class="chat-layout">
+        <aside class="rooms">
+          <h3>Salons</h3>
+          <div id="rooms-list"></div>
+        </aside>
+        <div class="chat-main">
+          <div class="chat-head">
+            <div class="t" id="room-title">…</div>
+            <div class="d" id="room-desc"></div>
+          </div>
+          <div class="messages" id="messages"></div>
+          <form class="composer" id="composer">
+            <textarea id="msg-input" class="field" placeholder="Écris quelque chose de doux…" rows="1"></textarea>
+            <button class="btn btn-gold" type="submit" aria-label="Envoyer">Envoyer</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- MON ESPACE -->
+    <section id="view-dash" class="view">
+      <div class="container">
+        <div class="kicker">Mon espace</div>
+        <div class="welcome" id="dash-hello">Bonsoir.</div>
+        <div class="grid">
+          <!-- Défi -->
+          <div class="card challenge span">
+            <div class="kicker">Défi de la semaine</div>
+            <div class="ch-title" id="ch-title">…</div>
+            <div class="ch-desc" id="ch-desc"></div>
+            <button class="btn btn-gold" id="ch-btn" type="button">Marquer comme fait</button>
+            <div class="streak">🔥 <b id="ch-count">0</b> défis relevés au total</div>
+          </div>
+
+          <!-- Fiche de route -->
+          <div class="card">
+            <div class="ttl">🧭 Ma fiche de route</div>
+            <div class="sub">Tes objectifs à toi, un pas à la fois.</div>
+            <div class="rm-progress"><span id="rm-bar" style="width:0%"></span></div>
+            <form class="rm-add" id="rm-add">
+              <input class="field" id="rm-input" type="text" maxlength="200" placeholder="Ajouter un objectif…" />
+              <button class="btn btn-ghost" type="submit">+</button>
+            </form>
+            <div class="rm-list" id="rm-list"></div>
+          </div>
+
+          <!-- Évolution -->
+          <div class="card">
+            <div class="ttl">📈 Mon évolution</div>
+            <div class="sub">Comment tu te sens aujourd'hui ?</div>
+            <div class="mood-pick" id="mood-pick">
+              <button type="button" data-score="1" title="Très difficile">😣</button>
+              <button type="button" data-score="2" title="Difficile">😕</button>
+              <button type="button" data-score="3" title="Ça va">😐</button>
+              <button type="button" data-score="4" title="Bien">🙂</button>
+              <button type="button" data-score="5" title="Très bien">😌</button>
+            </div>
+            <button class="btn btn-gold btn-block btn-sm" id="mood-save" type="button" disabled>Enregistrer mon humeur</button>
+            <div class="chart" id="mood-chart"></div>
+            <div class="avg" id="mood-avg"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROFIL -->
+    <section id="view-profil" class="view">
+      <div class="container" style="max-width:640px">
+        <div class="kicker">Profil</div>
+        <div class="welcome">Toi, ici.</div>
+        <div class="card">
+          <div class="profile-row">
+            <span class="k">Pseudo</span>
+            <span class="v" id="pf-pseudo">…</span>
+          </div>
+          <div class="profile-row">
+            <span class="k">E-mail</span>
+            <span class="v" id="pf-email">…</span>
+          </div>
+          <div class="profile-row">
+            <div class="k">Visibilité</div>
+            <label class="switch">
+              <input id="pf-anon" type="checkbox" />
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="profile-row">
+            <span class="k">Membre depuis</span>
+            <span class="v" id="pf-since">…</span>
+          </div>
+        </div>
+        <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn btn-ghost" id="btn-logout" type="button">Se déconnecter</button>
+        </div>
+        <p class="hint">Zymlux est un espace d'entraide, pas un service de soin. En cas de détresse, contacte le 3114 (prévention du suicide, France, 24h/24, gratuit).</p>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script type="module" src="assets/app.js"></script>
+</body>
+</html>
