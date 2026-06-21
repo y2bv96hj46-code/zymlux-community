@@ -1484,32 +1484,20 @@ async function sendDM(e) {
 }
 
 /* ============================================================
-   SONS D'AMBIANCE
-   Deux familles :
-   1) "synth" — bruits (blanc / rose / brun) et fréquences apaisantes
-      (432 / 528 Hz) GÉNÉRÉS en direct via Web Audio. C'est la vraie
-      méthode studio : qualité parfaite, fonctionne sur 100 % des
-      appareils, sans aucune connexion.
-   2) "file" — vrais enregistrements (Wikimedia Commons, licences
-      libres). MP3 transcodé (iPhone/Safari) + repli OGG.
+   SONS D'AMBIANCE — vrais enregistrements hébergés sur notre propre
+   site (assets/sounds/*.mp3). Même origine = aucune dépendance externe,
+   fonctionne sur 100 % des appareils. Sons libres de droits
+   (Pixabay Content License / CC0).
 ============================================================ */
 const SOUNDS = [
-  // Bruits & fréquences (générés — apaisants, anti-anxiété, sommeil, focus)
-  { k: "blanc", n: "Bruit blanc",          type: "synth", synth: "white", lvl: 0.45 },
-  { k: "rose",  n: "Bruit rose",           type: "synth", synth: "pink",  lvl: 0.7 },
-  { k: "brun",  n: "Bruit brun · dormir",  type: "synth", synth: "brown", lvl: 1.0 },
-  { k: "f432",  n: "432 Hz · Sérénité",    type: "synth", synth: "tone",  freq: 432, lvl: 0.4 },
-  { k: "f528",  n: "528 Hz · Apaisement",  type: "synth", synth: "tone",  freq: 528, lvl: 0.4 },
-  // Vrais enregistrements
-  { k: "pluie", n: "Pluie", type: "file",
-    mp3: "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Rain_against_the_window.ogg/Rain_against_the_window.ogg.mp3",
-    ogg: "https://upload.wikimedia.org/wikipedia/commons/4/41/Rain_against_the_window.ogg" },
-  { k: "feu", n: "Feu de camp", type: "file",
-    mp3: "https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b1/Campfire_sound_ambience.ogg/Campfire_sound_ambience.ogg.mp3",
-    ogg: "https://upload.wikimedia.org/wikipedia/commons/b/b1/Campfire_sound_ambience.ogg" },
-  { k: "nature", n: "Nature", type: "file",
-    mp3: "https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0a/20090610_0_ambience.ogg/20090610_0_ambience.ogg.mp3",
-    ogg: "https://upload.wikimedia.org/wikipedia/commons/0/0a/20090610_0_ambience.ogg" },
+  { k: "rain-soft",   n: "Pluie douce",        src: "assets/sounds/rain-soft.mp3" },
+  { k: "rain-window", n: "Pluie sur la vitre", src: "assets/sounds/rain-window.mp3" },
+  { k: "thunder",     n: "Orage",              src: "assets/sounds/thunder.mp3" },
+  { k: "waves",       n: "Vagues",             src: "assets/sounds/waves.mp3" },
+  { k: "river",       n: "Ruisseau",           src: "assets/sounds/river.mp3" },
+  { k: "forest",      n: "Forêt & oiseaux",    src: "assets/sounds/forest-birds.mp3" },
+  { k: "campfire",    n: "Feu de cheminée",    src: "assets/sounds/campfire.mp3" },
+  { k: "bowl",        n: "Bol tibétain",       src: "assets/sounds/singing-bowl.mp3" },
 ];
 const sndState = { ctx: null, mode: null, audio: null, nodes: null, key: null, gain: 0.55, factor: 1, fade: null, buffers: {} };
 
@@ -1552,7 +1540,7 @@ function sndStop() {
   // flux fichier
   if (sndState.audio) {
     try { sndState.audio.pause(); } catch (e) {}
-    try { sndState.audio.src = ""; } catch (e) {}
+    try { sndState.audio.removeAttribute("src"); sndState.audio.load(); } catch (e) {}
     sndState.audio = null;
   }
   // nœuds Web Audio — petit fondu de sortie pour éviter le "clic"
@@ -1569,54 +1557,21 @@ function sndStop() {
   sndState.key = null;
   $$("#sounds .snd-btn").forEach((b) => b.classList.remove("active", "loading"));
 }
-// Lecture d'un bruit ou d'une fréquence générés
-function sndPlaySynth(def) {
-  const ctx = sndCtx();
-  const master = ctx.createGain();
-  master.gain.value = 0; // fondu d'entrée
-  const nodes = { master };
-  if (def.synth === "tone") {
-    // deux sinus très légèrement désaccordés = battement doux et apaisant
-    const o1 = ctx.createOscillator(); o1.type = "sine"; o1.frequency.value = def.freq;
-    const o2 = ctx.createOscillator(); o2.type = "sine"; o2.frequency.value = def.freq; o2.detune.value = 4;
-    const trem = ctx.createGain(); trem.gain.value = 1; // respiration lente
-    const lfo = ctx.createOscillator(); lfo.frequency.value = 0.12;
-    const lfoG = ctx.createGain(); lfoG.gain.value = 0.12;
-    lfo.connect(lfoG); lfoG.connect(trem.gain);
-    o1.connect(trem); o2.connect(trem); trem.connect(master);
-    o1.start(); o2.start(); lfo.start();
-    nodes.o1 = o1; nodes.o2 = o2; nodes.lfo = lfo;
-  } else {
-    const src = ctx.createBufferSource();
-    src.buffer = sndNoiseBuffer(ctx, def.synth); src.loop = true;
-    const lp = ctx.createBiquadFilter(); lp.type = "lowpass";
-    lp.frequency.value = def.synth === "white" ? 9000 : (def.synth === "pink" ? 5200 : 1700);
-    src.connect(lp); lp.connect(master);
-    src.start();
-    nodes.src = src;
-  }
-  master.connect(ctx.destination);
-  const target = sndState.gain * (def.lvl || 1);
-  master.gain.setTargetAtTime(target, ctx.currentTime, 0.7);
-  sndState.nodes = nodes;
-  sndState.factor = def.lvl || 1;
-  sndState.mode = "synth";
-}
-// Lecture d'un vrai enregistrement (fichier)
-function sndPlayFile(def) {
-  const a = document.createElement("audio");
+function sndPlay(key) {
+  const def = SOUNDS.find((s) => s.k === key);
+  if (!def) return;
+  sndStop();
+  const a = new Audio();
   a.loop = true; a.preload = "auto"; a.playsInline = true; a.volume = 0;
-  const sMp3 = document.createElement("source"); sMp3.src = def.mp3; sMp3.type = "audio/mpeg";
-  const sOgg = document.createElement("source"); sOgg.src = def.ogg; sOgg.type = "audio/ogg";
-  a.appendChild(sMp3); a.appendChild(sOgg);
+  a.src = def.src;
   const btn = $(`#sounds .snd-btn[data-k="${def.k}"]`);
   if (btn) btn.classList.add("loading");
   a.addEventListener("playing", () => {
     if (btn) btn.classList.remove("loading");
     if (sndState.fade) clearInterval(sndState.fade);
-    const target = sndState.gain;
     sndState.fade = setInterval(() => {
       if (!sndState.audio) { clearInterval(sndState.fade); sndState.fade = null; return; }
+      const target = sndState.gain; // suit le réglage en direct
       const v = Math.min(target, sndState.audio.volume + 0.05);
       sndState.audio.volume = v;
       if (v >= target) { clearInterval(sndState.fade); sndState.fade = null; }
@@ -1624,21 +1579,12 @@ function sndPlayFile(def) {
   });
   a.addEventListener("error", () => {
     sndStop();
-    toast && toast("Ce son n'est pas disponible ici, essaie un autre.");
+    toast && toast("Ce son n'a pas pu se charger, réessaie.");
   });
   sndState.audio = a;
-  sndState.mode = "file";
-  a.load();
+  sndState.key = key;
   const p = a.play();
   if (p && p.catch) p.catch(() => {});
-}
-function sndPlay(key) {
-  const def = SOUNDS.find((s) => s.k === key);
-  if (!def) return;
-  sndStop();
-  sndState.key = key;
-  if (def.type === "synth") sndPlaySynth(def);
-  else sndPlayFile(def);
 }
 function initSounds() {
   if (state.soundsInit) return;
