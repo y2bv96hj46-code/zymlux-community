@@ -1499,15 +1499,61 @@ const SOUNDS = [
   { k: "campfire",    n: "Feu de cheminée",    src: "assets/sounds/campfire.mp3" },
   { k: "bowl",        n: "Bol tibétain",       src: "assets/sounds/singing-bowl.mp3" },
 ];
-const sndState = { audio: null, key: null, gain: 0.55, fade: null };
+const sndState = { ctx: null, mode: null, audio: null, nodes: null, key: null, gain: 0.55, factor: 1, fade: null, buffers: {} };
 
+function sndCtx() {
+  if (!sndState.ctx) sndState.ctx = new (window.AudioContext || window.webkitAudioContext)();
+  if (sndState.ctx.resume) sndState.ctx.resume();
+  return sndState.ctx;
+}
+// Génère un buffer de bruit (6 s, bouclé) — blanc / rose / brun
+function sndNoiseBuffer(ctx, type) {
+  if (sndState.buffers[type]) return sndState.buffers[type];
+  const len = ctx.sampleRate * 6;
+  const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+  const d = buf.getChannelData(0);
+  if (type === "white") {
+    for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+  } else if (type === "pink") {
+    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0; // Paul Kellet
+    for (let i = 0; i < len; i++) {
+      const w = Math.random() * 2 - 1;
+      b0 = 0.99886 * b0 + w * 0.0555179; b1 = 0.99332 * b1 + w * 0.0750759;
+      b2 = 0.96900 * b2 + w * 0.1538520; b3 = 0.86650 * b3 + w * 0.3104856;
+      b4 = 0.55000 * b4 + w * 0.5329522; b5 = -0.7616 * b5 - w * 0.0168980;
+      d[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + w * 0.5362) * 0.11;
+      b6 = w * 0.115926;
+    }
+  } else { // brown
+    let last = 0;
+    for (let i = 0; i < len; i++) {
+      const w = Math.random() * 2 - 1;
+      last = (last + 0.02 * w) / 1.02;
+      d[i] = last * 3.5;
+    }
+  }
+  sndState.buffers[type] = buf;
+  return buf;
+}
 function sndStop() {
   if (sndState.fade) { clearInterval(sndState.fade); sndState.fade = null; }
+  // flux fichier
   if (sndState.audio) {
     try { sndState.audio.pause(); } catch (e) {}
     try { sndState.audio.removeAttribute("src"); sndState.audio.load(); } catch (e) {}
     sndState.audio = null;
   }
+  // nœuds Web Audio — petit fondu de sortie pour éviter le "clic"
+  if (sndState.nodes) {
+    const n = sndState.nodes;
+    const ctx = sndState.ctx;
+    const t = ctx ? ctx.currentTime : 0;
+    try { if (n.master && ctx) { n.master.gain.cancelScheduledValues(t); n.master.gain.setTargetAtTime(0, t, 0.04); } } catch (e) {}
+    const stopAt = t + 0.18; // on coupe APRÈS le fondu, pas pendant
+    [n.src, n.o1, n.o2, n.lfo].forEach((node) => { if (node) { try { node.stop(stopAt); } catch (e) {} } });
+    sndState.nodes = null;
+  }
+  sndState.mode = null;
   sndState.key = null;
   $$("#sounds .snd-btn").forEach((b) => b.classList.remove("active", "loading"));
 }
@@ -1559,6 +1605,10 @@ function initSounds() {
   const vol = $("#snd-vol");
   if (vol) vol.addEventListener("input", () => {
     sndState.gain = vol.value / 100;
-    if (sndState.audio && !sndState.fade) sndState.audio.volume = sndState.gain;
+    if (sndState.mode === "file" && sndState.audio && !sndState.fade) {
+      sndState.audio.volume = sndState.gain;
+    } else if (sndState.mode === "synth" && sndState.nodes && sndState.nodes.master && sndState.ctx) {
+      sndState.nodes.master.gain.setTargetAtTime(sndState.gain * sndState.factor, sndState.ctx.currentTime, 0.1);
+    }
   });
 }
