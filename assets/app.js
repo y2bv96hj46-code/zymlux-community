@@ -254,20 +254,49 @@ async function fetchProfile(id) {
 /* ============================================================
    Navigation entre vues
 ============================================================ */
+function switchView(v) {
+  $$("[data-view]").forEach((x) => x.classList.toggle("active", x.dataset.view === v));
+  $$(".view").forEach((vw) => vw.classList.remove("active"));
+  const el = $("#view-" + v);
+  if (el) el.classList.add("active");
+  if (v === "dash") { loadBadges(); loadLevel(); loadLeaderboard(); }
+  if (v === "feed") loadFeed();
+  if (v === "dm") { loadConversations(); markDmSeen(); }
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 function initNav() {
-  const buttons = $$("[data-view]");
-  buttons.forEach((b) => {
-    b.addEventListener("click", () => {
-      const v = b.dataset.view;
-      buttons.forEach((x) => x.classList.toggle("active", x.dataset.view === v));
-      $$(".view").forEach((vw) => vw.classList.remove("active"));
-      $("#view-" + v).classList.add("active");
-      if (v === "dash") { loadBadges(); loadLevel(); loadLeaderboard(); }
-      if (v === "feed") loadFeed();
-      if (v === "dm") loadConversations();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+  $$("[data-view]").forEach((b) => b.addEventListener("click", () => switchView(b.dataset.view)));
+  // Avatar (en haut) → Profil
+  const mp = $(".me-pill");
+  if (mp) { mp.style.cursor = "pointer"; mp.addEventListener("click", () => switchView("profil")); }
+  // Bouton central + → publier (va au Fil et ouvre la zone de publication)
+  const create = $("#bn-create");
+  if (create) create.addEventListener("click", () => {
+    switchView("feed");
+    setTimeout(() => { const i = $("#post-input"); if (i) { i.focus(); i.scrollIntoView({ block: "center", behavior: "smooth" }); } }, 100);
   });
+}
+
+/* Pastille de messages non lus (suivi local, sans SQL) */
+function setUnreadBadge(n) {
+  $$('[data-view="dm"]').forEach((btn) => {
+    let b = btn.querySelector(".nav-badge");
+    if (n > 0) {
+      if (!b) { b = document.createElement("span"); b.className = "nav-badge"; btn.appendChild(b); }
+      b.textContent = n > 9 ? "9+" : String(n);
+    } else if (b) { b.remove(); }
+  });
+}
+async function loadUnread() {
+  const seen = localStorage.getItem("zx_dm_seen") || "1970-01-01T00:00:00Z";
+  const { count } = await sb.from("dms").select("*", { count: "exact", head: true })
+    .eq("recipient_id", state.user.id).gt("created_at", seen);
+  setUnreadBadge(count || 0);
+}
+function markDmSeen() {
+  localStorage.setItem("zx_dm_seen", new Date().toISOString());
+  setUnreadBadge(0);
 }
 
 /* ============================================================
@@ -1274,13 +1303,14 @@ function initDM() {
   state.dmInChannel = sb.channel("dm-in")
     .on("postgres_changes", { event: "INSERT", schema: "public", table: "dms", filter: "recipient_id=eq." + state.user.id }, (payload) => {
       const m = payload.new;
-      if (state.dmWith === m.sender_id && $("#view-dm").classList.contains("active")) appendDM(m);
-      else toast("Nouveau message privé ✦");
+      if (state.dmWith === m.sender_id && $("#view-dm").classList.contains("active")) { appendDM(m); markDmSeen(); }
+      else { toast("Nouveau message privé ✦"); loadUnread(); }
       loadConversations();
     })
     .subscribe();
 
   loadConversations();
+  loadUnread();
 }
 
 async function loadConversations() {
