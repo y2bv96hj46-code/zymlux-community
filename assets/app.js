@@ -1484,54 +1484,72 @@ async function sendDM(e) {
 }
 
 /* ============================================================
-   SONS D'AMBIANCE (générés via Web Audio API — libres de droits)
+   SONS D'AMBIANCE (vrais enregistrements — Wikimedia Commons,
+   licences libres CC / domaine public). On charge le MP3 transcodé
+   (compatible iPhone/Safari) avec repli OGG pour les autres.
 ============================================================ */
 const SOUNDS = [
-  { k: "pluie",  n: "Pluie" },
-  { k: "vent",   n: "Vent nocturne" },
-  { k: "ocean",  n: "Vagues" },
-  { k: "souffle",n: "Souffle" },
+  { k: "pluie", n: "Pluie",
+    mp3: "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Rain_against_the_window.ogg/Rain_against_the_window.ogg.mp3",
+    ogg: "https://upload.wikimedia.org/wikipedia/commons/4/41/Rain_against_the_window.ogg" },
+  { k: "ocean", n: "Vagues",
+    mp3: "https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b8/Sounding_waves.ogg/Sounding_waves.ogg.mp3",
+    ogg: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Sounding_waves.ogg" },
+  { k: "feu", n: "Feu de camp",
+    mp3: "https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b1/Campfire_sound_ambience.ogg/Campfire_sound_ambience.ogg.mp3",
+    ogg: "https://upload.wikimedia.org/wikipedia/commons/b/b1/Campfire_sound_ambience.ogg" },
+  { k: "nature", n: "Nature",
+    mp3: "https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0a/20090610_0_ambience.ogg/20090610_0_ambience.ogg.mp3",
+    ogg: "https://upload.wikimedia.org/wikipedia/commons/0/0a/20090610_0_ambience.ogg" },
 ];
-const sndState = { ctx: null, buf: null, nodes: null, key: null, gain: 0.55 };
+const sndState = { audio: null, key: null, gain: 0.55, fade: null };
 
-function sndNoiseBuffer(ctx) {
-  const len = ctx.sampleRate * 4;
-  const buf = ctx.createBuffer(1, len, ctx.sampleRate);
-  const d = buf.getChannelData(0);
-  let last = 0;
-  for (let i = 0; i < len; i++) {
-    const white = Math.random() * 2 - 1;
-    last = (last + 0.02 * white) / 1.02;   // bruit brun (doux)
-    d[i] = last * 3.5;
-  }
-  return buf;
-}
 function sndStop() {
-  if (sndState.nodes) {
-    try { sndState.nodes.src.stop(); } catch (e) {}
-    try { if (sndState.nodes.lfo) sndState.nodes.lfo.stop(); } catch (e) {}
-    sndState.nodes = null;
+  if (sndState.fade) { clearInterval(sndState.fade); sndState.fade = null; }
+  if (sndState.audio) {
+    try { sndState.audio.pause(); } catch (e) {}
+    try { sndState.audio.src = ""; } catch (e) {}
+    sndState.audio = null;
   }
   sndState.key = null;
-  $$("#sounds .snd-btn").forEach((b) => b.classList.remove("active"));
+  $$("#sounds .snd-btn").forEach((b) => { b.classList.remove("active", "loading"); });
 }
 function sndPlay(key) {
-  if (!sndState.ctx) { sndState.ctx = new (window.AudioContext || window.webkitAudioContext)(); sndState.buf = sndNoiseBuffer(sndState.ctx); }
-  const ctx = sndState.ctx;
-  ctx.resume && ctx.resume();
+  const def = SOUNDS.find((s) => s.k === key);
+  if (!def) return;
   sndStop();
-  const src = ctx.createBufferSource(); src.buffer = sndState.buf; src.loop = true;
-  const filter = ctx.createBiquadFilter(); filter.type = "lowpass";
-  const gain = ctx.createGain(); gain.gain.value = sndState.gain;
-  let lfo = null, lfoGain = null;
-  if (key === "pluie")  { filter.frequency.value = 1400; }
-  if (key === "vent")   { filter.frequency.value = 520; lfo = ctx.createOscillator(); lfo.frequency.value = 0.08; lfoGain = ctx.createGain(); lfoGain.gain.value = 280; lfo.connect(lfoGain); lfoGain.connect(filter.frequency); lfo.start(); }
-  if (key === "ocean")  { filter.frequency.value = 700; lfo = ctx.createOscillator(); lfo.frequency.value = 0.12; lfoGain = ctx.createGain(); lfoGain.gain.value = sndState.gain * 0.5; lfo.connect(lfoGain); lfoGain.connect(gain.gain); lfo.start(); }
-  if (key === "souffle"){ filter.frequency.value = 380; }
-  src.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
-  src.start();
-  sndState.nodes = { src, gain, lfo, lfoGain };
+  // <audio> avec MP3 (iPhone) puis OGG en repli
+  const a = document.createElement("audio");
+  a.loop = true;
+  a.preload = "auto";
+  a.crossOrigin = "anonymous";
+  a.volume = 0; // on monte en fondu
+  const sMp3 = document.createElement("source"); sMp3.src = def.mp3; sMp3.type = "audio/mpeg";
+  const sOgg = document.createElement("source"); sOgg.src = def.ogg; sOgg.type = "audio/ogg";
+  a.appendChild(sMp3); a.appendChild(sOgg);
+  const btn = $(`#sounds .snd-btn[data-k="${key}"]`);
+  if (btn) btn.classList.add("loading");
+  a.addEventListener("playing", () => {
+    if (btn) btn.classList.remove("loading");
+    // fondu d'entrée jusqu'au volume réglé
+    if (sndState.fade) clearInterval(sndState.fade);
+    const target = sndState.gain;
+    sndState.fade = setInterval(() => {
+      if (!sndState.audio) { clearInterval(sndState.fade); sndState.fade = null; return; }
+      const v = Math.min(target, sndState.audio.volume + 0.05);
+      sndState.audio.volume = v;
+      if (v >= target) { clearInterval(sndState.fade); sndState.fade = null; }
+    }, 60);
+  });
+  a.addEventListener("error", () => {
+    sndStop();
+    toast && toast("Son indisponible pour l'instant, réessaie plus tard.");
+  });
+  sndState.audio = a;
   sndState.key = key;
+  a.load();
+  const p = a.play();
+  if (p && p.catch) p.catch(() => { /* lecture bloquée tant que l'utilisateur n'a pas interagi : sans gravité ici */ });
 }
 function initSounds() {
   if (state.soundsInit) return;
@@ -1552,7 +1570,6 @@ function initSounds() {
   const vol = $("#snd-vol");
   if (vol) vol.addEventListener("input", () => {
     sndState.gain = vol.value / 100;
-    if (sndState.nodes && sndState.nodes.gain) sndState.nodes.gain.gain.value = sndState.gain;
-    if (sndState.key === "ocean" && sndState.nodes && sndState.nodes.lfoGain) sndState.nodes.lfoGain.gain.value = sndState.gain * 0.5;
+    if (sndState.audio && !sndState.fade) sndState.audio.volume = sndState.gain;
   });
 }
