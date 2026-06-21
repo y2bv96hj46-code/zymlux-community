@@ -18,6 +18,24 @@ function fmtTime(iso) {
   const d = new Date(iso);
   return d.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
 }
+function colorFromString(str) {
+  let h = 0;
+  for (let i = 0; i < (str || "").length; i++) h = (h * 31 + str.charCodeAt(i)) % 360;
+  return `hsl(${h} 55% 64%)`;
+}
+const QUOTES = [
+  "Respire. Tu as déjà survécu à 100 % de tes pires journées.",
+  "Tu n'as pas besoin d'aller bien pour avoir ta place ici.",
+  "Un petit pas reste un pas. Et tu avances.",
+  "La nuit finit toujours par s'éclaircir.",
+  "Ce que tu ressens est réel, et tu as le droit de le déposer ici.",
+  "Demander de l'aide, c'est du courage, jamais une faiblesse.",
+  "Tu vaux plus que ta pire pensée d'aujourd'hui.",
+];
+function setQuote() {
+  const day = Math.floor(Date.now() / 86400000);
+  $("#quote-day").textContent = "« " + QUOTES[day % QUOTES.length] + " »";
+}
 
 /* ============================================================
    Vérification de la configuration
@@ -176,6 +194,7 @@ function initNav() {
       b.classList.add("active");
       $$(".view").forEach((v) => v.classList.remove("active"));
       $("#view-" + b.dataset.view).classList.add("active");
+      if (b.dataset.view === "dash") loadBadges();
     });
   });
 }
@@ -199,6 +218,8 @@ async function initChat() {
     list.appendChild(btn);
   });
   if (state.rooms.length) selectRoom(state.rooms[0]);
+
+  startPresence();
 
   // Composer
   const input = $("#msg-input");
@@ -269,12 +290,20 @@ function renderMessage(m) {
   const mine = m.user_id === state.user.id;
   const wrap = document.createElement("div");
   wrap.className = "msg" + (mine ? " mine" : "");
+  wrap.dataset.uid = m.user_id;
+  const prev = box.lastElementChild;
+  if (prev && prev.dataset && prev.dataset.uid === m.user_id) wrap.classList.add("grouped");
   const who = (m.profiles && m.profiles.pseudo) || "Membre";
   const meta = document.createElement("div");
   meta.className = "meta";
+  const av = document.createElement("span");
+  av.className = "av";
+  av.style.background = colorFromString(m.user_id);
+  av.textContent = (who[0] || "?").toUpperCase();
   const whoSpan = document.createElement("span");
   whoSpan.className = "who";
   whoSpan.textContent = mine ? "Toi" : who;
+  meta.appendChild(av);
   meta.appendChild(whoSpan);
   meta.appendChild(document.createTextNode(" · " + fmtTime(m.created_at)));
   const bubble = document.createElement("div");
@@ -283,6 +312,19 @@ function renderMessage(m) {
   wrap.appendChild(meta);
   wrap.appendChild(bubble);
   box.appendChild(wrap);
+}
+
+/* Présence en ligne (temps réel) */
+function startPresence() {
+  if (state.presenceChannel) return;
+  const ch = sb.channel("online", { config: { presence: { key: state.user.id } } });
+  ch.on("presence", { event: "sync" }, () => {
+    const n = Object.keys(ch.presenceState()).length;
+    $("#online").innerHTML = '<span class="dot"></span>' + n + " " + (n > 1 ? "membres veillent" : "membre veille");
+  }).subscribe(async (status) => {
+    if (status === "SUBSCRIBED") await ch.track({ pseudo: state.profile.pseudo });
+  });
+  state.presenceChannel = ch;
 }
 
 function scrollChat() {
@@ -315,10 +357,13 @@ async function initDashboard() {
   const hour = new Date().getHours();
   const greet = hour >= 22 || hour < 6 ? "Bonne nuit" : hour < 18 ? "Bonjour" : "Bonsoir";
   $("#dash-hello").textContent = `${greet}, ${state.profile.pseudo}.`;
+  setQuote();
+  initBreathing();
 
   await loadChallenge();
   await loadRoadmap();
   await loadMood();
+  await loadBadges();
   subscribeMood();
 
   // Fiche de route : ajout
@@ -344,13 +389,96 @@ async function initDashboard() {
   });
   $("#mood-save").addEventListener("click", async () => {
     if (!state.selectedMood) return;
-    const { error } = await sb.from("mood_logs").insert({ user_id: state.user.id, score: state.selectedMood });
+    const note = $("#mood-note").value.trim() || null;
+    const { error } = await sb.from("mood_logs").insert({ user_id: state.user.id, score: state.selectedMood, note });
     if (error) return toast("Impossible d'enregistrer.");
     state.selectedMood = null;
+    $("#mood-note").value = "";
     $$("#mood-pick button").forEach((x) => x.classList.remove("sel"));
     $("#mood-save").disabled = true;
     toast("Humeur enregistrée 🌙");
     await loadMood();
+    await loadBadges();
+  });
+}
+
+/* ============================================================
+   Réussites / badges (calculés à partir des données)
+============================================================ */
+async function loadBadges() {
+  const uid = state.user.id;
+  const [msg, mood, ch, rm] = await Promise.all([
+    sb.from("messages").select("*", { count: "exact", head: true }).eq("user_id", uid),
+    sb.from("mood_logs").select("*", { count: "exact", head: true }).eq("user_id", uid),
+    sb.from("challenge_completions").select("*", { count: "exact", head: true }).eq("user_id", uid),
+    sb.from("roadmap_items").select("done").eq("user_id", uid),
+  ]);
+  const msgC = msg.count || 0, moodC = mood.count || 0, chC = ch.count || 0;
+  const rmDone = (rm.data || []).filter((i) => i.done).length;
+  const defs = [
+    { e: "👋", n: "Première parole", d: "1er message", ok: msgC >= 1 },
+    { e: "💬", n: "Voix de la nuit", d: "10 messages", ok: msgC >= 10 },
+    { e: "📈", n: "À l'écoute", d: "3 humeurs notées", ok: moodC >= 3 },
+    { e: "🌗", n: "Sept nuits", d: "7 humeurs notées", ok: moodC >= 7 },
+    { e: "🔥", n: "Premier défi", d: "1 défi relevé", ok: chC >= 1 },
+    { e: "🏆", n: "Persévérance", d: "5 défis relevés", ok: chC >= 5 },
+    { e: "🧭", n: "En route", d: "1 objectif atteint", ok: rmDone >= 1 },
+    { e: "🌙", n: "Présent·e", d: "Tu es là, ce soir", ok: true },
+  ];
+  const box = $("#badges");
+  box.innerHTML = "";
+  defs.forEach((b) => {
+    const el = document.createElement("div");
+    el.className = "badge " + (b.ok ? "earned" : "locked");
+    el.innerHTML = `<span class="be"></span><span class="bn"></span><span class="bd"></span>`;
+    el.querySelector(".be").textContent = b.e;
+    el.querySelector(".bn").textContent = b.n;
+    el.querySelector(".bd").textContent = b.d;
+    box.appendChild(el);
+  });
+}
+
+/* ============================================================
+   Respiration guidée (inspire 4s · retiens 4s · expire 6s)
+============================================================ */
+function initBreathing() {
+  if (state.breatheInit) return;
+  state.breatheInit = true;
+  let running = false;
+  let timers = [];
+  const btn = $("#breathe-btn"), orb = $("#breathe-orb"), txt = $("#breathe-text");
+
+  function stop() {
+    running = false;
+    timers.forEach(clearTimeout);
+    timers = [];
+    orb.style.transitionDuration = "1s";
+    orb.style.transform = "scale(0.55)";
+    txt.textContent = "Prêt ?";
+    btn.textContent = "Commencer";
+  }
+  function phase(text, dur, scale) {
+    return new Promise((res) => {
+      txt.textContent = text;
+      orb.style.transitionDuration = dur + "ms";
+      orb.style.transform = "scale(" + scale + ")";
+      timers.push(setTimeout(res, dur));
+    });
+  }
+  async function cycle() {
+    while (running) {
+      await phase("Inspire…", 4000, 1);
+      if (!running) break;
+      await phase("Retiens…", 4000, 1);
+      if (!running) break;
+      await phase("Expire…", 6000, 0.55);
+    }
+  }
+  btn.addEventListener("click", () => {
+    if (running) { stop(); return; }
+    running = true;
+    btn.textContent = "Arrêter";
+    cycle();
   });
 }
 

@@ -166,6 +166,42 @@ label.lbl{display:block;font-size:0.74rem;letter-spacing:0.16em;text-transform:u
 .profile-row .k{color:var(--cream-muted);font-size:0.9rem;}
 .profile-row .v{font-size:0.95rem;}
 
+/* présence en ligne */
+.chat-head{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.online{display:flex;align-items:center;gap:8px;font-size:0.8rem;color:var(--cream-muted);white-space:nowrap;}
+.online .dot{width:8px;height:8px;border-radius:50%;background:#7FC98B;box-shadow:0 0 8px rgba(127,201,139,0.8);animation:pulse 2.2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:0.5;}50%{opacity:1;}}
+
+/* citation du jour */
+.quote-day{font-family:var(--serif);font-style:italic;font-size:clamp(1.1rem,2.4vw,1.4rem);color:var(--cream-muted);border-left:2px solid var(--gold-line);padding:4px 0 4px 18px;margin:0 0 26px;max-width:60ch;}
+
+/* respiration guidée */
+.breathe{display:flex;align-items:center;justify-content:center;height:200px;margin:8px 0 18px;}
+.breathe-orb{width:120px;height:120px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;
+  background:radial-gradient(circle at 38% 34%,rgba(226,192,116,0.4),rgba(201,162,75,0.12));
+  border:1px solid var(--gold-line);box-shadow:0 0 50px rgba(201,162,75,0.25);
+  transform:scale(0.55);transition:transform 4s var(--ease);will-change:transform;}
+.breathe-orb span{font-size:0.92rem;color:var(--cream);font-weight:400;letter-spacing:0.04em;}
+
+/* badges */
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px;}
+.badge{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:14px 8px;border:1px solid var(--line);border-radius:13px;transition:border-color .3s var(--ease),background .3s var(--ease);}
+.badge.earned{border-color:var(--gold-line);background:var(--gold-soft);}
+.badge.locked{opacity:0.4;filter:grayscale(0.6);}
+.badge .be{font-size:1.7rem;line-height:1;}
+.badge .bn{font-size:0.74rem;font-weight:500;color:var(--cream);}
+.badge .bd{font-size:0.66rem;color:var(--cream-faint);line-height:1.3;}
+
+/* avatars colorés + groupage messages */
+.msg .meta .av{display:inline-flex;width:18px;height:18px;border-radius:50%;align-items:center;justify-content:center;font-size:0.6rem;margin-right:6px;vertical-align:middle;color:#1A1410;font-weight:600;}
+.msg.grouped{margin-top:-9px;}
+.msg.grouped .meta{display:none;}
+.me-pill .av,.online .av{font-weight:600;color:#1A1410;}
+
+/* fondu d'apparition des vues */
+.view.active{animation:viewIn .5s var(--ease);}
+@keyframes viewIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--surface-2);border:1px solid var(--gold-line);color:var(--cream);padding:13px 22px;border-radius:999px;font-size:0.88rem;opacity:0;pointer-events:none;transition:opacity .4s var(--ease),transform .4s var(--ease);z-index:50;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
