@@ -194,13 +194,14 @@ $("#form-signup").addEventListener("submit", async (e) => {
   const btn = e.target.querySelector("button");
   const pseudo = $("#su-pseudo").value.trim() || "Membre";
   const pass = $("#su-pass").value;
+  if (!$("#su-terms").checked) return setAuthMsg("Tu dois avoir 18 ans et accepter les CGU.", "err");
   if (pass.length < 6) return setAuthMsg("Le mot de passe doit faire au moins 6 caractères.", "err");
   btn.disabled = true;
   setAuthMsg("Création du compte…");
   const { data, error } = await sb.auth.signUp({
     email: $("#su-email").value.trim(),
     password: pass,
-    options: { data: { pseudo, is_anonymous: $("#su-anon").checked } },
+    options: { data: { pseudo, is_anonymous: $("#su-anon").checked, marketing_consent: $("#su-marketing").checked, terms_accepted_at: new Date().toISOString() } },
   });
   btn.disabled = false;
   if (error) return setAuthMsg(traduireErreur(error.message), "err");

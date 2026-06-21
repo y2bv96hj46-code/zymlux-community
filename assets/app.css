@@ -595,3 +595,8 @@ body::before{
   border:1.5px solid rgba(12,11,10,0.92);box-shadow:0 0 8px rgba(229,103,90,0.6);}
 .tabsnav button{position:relative;}
 .tabsnav .nav-badge{top:-3px;right:-3px;}
+
+/* consentement inscription */
+.consent{display:flex;align-items:flex-start;gap:10px;font-size:0.8rem;color:var(--cream-muted);line-height:1.45;cursor:pointer;}
+.consent input{margin-top:2px;flex:0 0 auto;width:16px;height:16px;accent-color:var(--gold);}
+.consent a{color:var(--gold-bright);}
