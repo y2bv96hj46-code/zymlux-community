@@ -12,10 +12,11 @@ insert into storage.buckets (id, name, public)
 values ('avatars', 'avatars', true)
 on conflict (id) do nothing;
 
--- Limite de taille (2 Mo) + types d'images autorisés
+-- Limite de taille (5 Mo). Pas de restriction de type pour accepter aussi
+-- le format HEIC des iPhone (le contrôle se fait côté application).
 update storage.buckets
-set file_size_limit = 2097152,
-    allowed_mime_types = array['image/png','image/jpeg','image/jpg','image/gif','image/webp']
+set file_size_limit = 5242880,
+    allowed_mime_types = null
 where id = 'avatars';
 
 -- 3) Règles d'accès au stockage

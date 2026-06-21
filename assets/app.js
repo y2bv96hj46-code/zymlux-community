@@ -698,12 +698,12 @@ function initProfile() {
   photoInput.addEventListener("change", async () => {
     const file = photoInput.files && photoInput.files[0];
     if (!file) return;
-    if (file.size > 2 * 1024 * 1024) { toast("Image trop lourde (2 Mo max)."); return; }
+    if (file.size > 5 * 1024 * 1024) { toast("Image trop lourde (5 Mo max)."); return; }
     photoHint.textContent = "Envoi en cours…";
     const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
     const path = `${state.user.id}/avatar_${Date.now()}.${ext}`;
-    const { error: upErr } = await sb.storage.from("avatars").upload(path, file, { upsert: true, cacheControl: "3600" });
-    if (upErr) { photoHint.textContent = "Échec de l'envoi. Réessaie."; toast("Échec de l'envoi."); return; }
+    const { error: upErr } = await sb.storage.from("avatars").upload(path, file, { upsert: true, cacheControl: "3600", contentType: file.type || undefined });
+    if (upErr) { photoHint.textContent = "Échec : " + (upErr.message || "erreur inconnue"); toast("Échec : " + (upErr.message || "erreur")); return; }
     const { data: pub } = sb.storage.from("avatars").getPublicUrl(path);
     const url = pub.publicUrl;
     const { error: dbErr } = await sb.from("profiles").update({ avatar_url: url }).eq("id", state.user.id);
