@@ -163,7 +163,7 @@ end $$;
 -- ============================================================
 insert into public.rooms (slug, name, description, emoji, sort) values
   ('accueil',     'Accueil',            'Présente-toi, dis bonjour, prends tes marques.', '👋', 1),
-  ('nuit',        'Insomnie & nuit',    'Pour les heures où l''on ne dort pas.',          '🌙', 2),
+  ('nuit',        'Insomnie & nuit',    'Pour les heures sans sommeil.',                  '🌙', 2),
   ('anxiete',     'Anxiété',            'Parler de ce qui serre, sans jugement.',         '🫧', 3),
   ('victoires',   'Petites victoires',  'Célébrer chaque pas, même minuscule.',           '✨', 4),
   ('entraide',    'Entraide',           'Demander, offrir, se soutenir.',                 '🤝', 5)
