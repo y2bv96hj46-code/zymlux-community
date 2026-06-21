@@ -481,7 +481,10 @@ async function initChat() {
   // Réactions en temps réel
   state.reactChannel = sb.channel("reactions")
     .on("postgres_changes", { event: "*", schema: "public", table: "message_reactions" }, () => {
-      if ($("#view-chat").classList.contains("active")) loadReactionsForVisible();
+      // Regroupe les rafales de réactions en un seul rafraîchissement.
+      if (!$("#view-chat").classList.contains("active")) return;
+      clearTimeout(state._reactTimer);
+      state._reactTimer = setTimeout(loadReactionsForVisible, 350);
     })
     .subscribe();
 
@@ -548,6 +551,9 @@ async function selectRoom(room) {
           const { data: p } = await sb.from("profiles").select("pseudo, avatar_emoji, avatar_url, level").eq("id", m.user_id).maybeSingle();
           if (p) { pseudo = p.pseudo; emoji = p.avatar_emoji; url = p.avatar_url; lvl = p.level; }
         }
+        // Si l'utilisateur a changé de salon pendant la récupération du profil,
+        // on n'injecte pas ce message dans le salon désormais affiché.
+        if (state._roomToken !== token) return;
         if ($(".chat-empty", box)) box.innerHTML = "";
         renderMessage({ ...m, profiles: { pseudo, avatar_emoji: emoji, avatar_url: url, level: lvl } });
         scrollChat();
@@ -1133,7 +1139,9 @@ function initFeed() {
   });
 
   state.feedChannel = sb.channel("feed")
-    .on("postgres_changes", { event: "INSERT", schema: "public", table: "posts" }, () => {
+    .on("postgres_changes", { event: "INSERT", schema: "public", table: "posts" }, (payload) => {
+      // L'auteur a déjà rechargé son fil après publication : on évite le double rendu.
+      if (payload.new && payload.new.user_id === state.user.id) return;
       if ($("#view-feed").classList.contains("active")) loadFeed();
     })
     .subscribe();
@@ -1207,13 +1215,23 @@ function renderPost(p, isLiked) {
   const actions = document.createElement("div"); actions.className = "post-actions";
   const likeBtn = document.createElement("button"); likeBtn.className = "post-like" + (isLiked ? " liked" : "");
   likeBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg><span class="lc">${likeCount}</span>`;
-  let liked = isLiked, lc = likeCount;
+  let liked = isLiked, lc = likeCount, likeBusy = false;
   likeBtn.onclick = async () => {
+    if (likeBusy) return;                 // évite les double-clics rapides
+    likeBusy = true;
+    const wasLiked = liked, prevLc = lc;
     liked = !liked;
     likeBtn.classList.toggle("liked", liked);
     lc += liked ? 1 : -1; likeBtn.querySelector(".lc").textContent = lc;
-    if (liked) await sb.from("post_likes").insert({ post_id: p.id, user_id: state.user.id });
-    else await sb.from("post_likes").delete().eq("post_id", p.id).eq("user_id", state.user.id);
+    const { error } = liked
+      ? await sb.from("post_likes").insert({ post_id: p.id, user_id: state.user.id })
+      : await sb.from("post_likes").delete().eq("post_id", p.id).eq("user_id", state.user.id);
+    if (error) {                          // on annule l'affichage si l'enregistrement a échoué
+      liked = wasLiked; lc = prevLc;
+      likeBtn.classList.toggle("liked", liked);
+      likeBtn.querySelector(".lc").textContent = lc;
+    }
+    likeBusy = false;
   };
   const cmtBtn = document.createElement("button"); cmtBtn.className = "post-cmt";
   cmtBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.6A8.4 8.4 0 1 1 21 11.5Z"/></svg><span class="cc">${cmtCount}</span>`;
@@ -1652,61 +1670,15 @@ const SOUNDS = [
   { k: "campfire",    n: "Feu de cheminée",    src: "assets/sounds/campfire.mp3" },
   { k: "bowl",        n: "Bol tibétain",       src: "assets/sounds/singing-bowl.mp3" },
 ];
-const sndState = { ctx: null, mode: null, audio: null, nodes: null, key: null, gain: 0.55, factor: 1, fade: null, buffers: {} };
+const sndState = { audio: null, key: null, gain: 0.55, fade: null };
 
-function sndCtx() {
-  if (!sndState.ctx) sndState.ctx = new (window.AudioContext || window.webkitAudioContext)();
-  if (sndState.ctx.resume) sndState.ctx.resume();
-  return sndState.ctx;
-}
-// Génère un buffer de bruit (6 s, bouclé) — blanc / rose / brun
-function sndNoiseBuffer(ctx, type) {
-  if (sndState.buffers[type]) return sndState.buffers[type];
-  const len = ctx.sampleRate * 6;
-  const buf = ctx.createBuffer(1, len, ctx.sampleRate);
-  const d = buf.getChannelData(0);
-  if (type === "white") {
-    for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
-  } else if (type === "pink") {
-    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0; // Paul Kellet
-    for (let i = 0; i < len; i++) {
-      const w = Math.random() * 2 - 1;
-      b0 = 0.99886 * b0 + w * 0.0555179; b1 = 0.99332 * b1 + w * 0.0750759;
-      b2 = 0.96900 * b2 + w * 0.1538520; b3 = 0.86650 * b3 + w * 0.3104856;
-      b4 = 0.55000 * b4 + w * 0.5329522; b5 = -0.7616 * b5 - w * 0.0168980;
-      d[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + w * 0.5362) * 0.11;
-      b6 = w * 0.115926;
-    }
-  } else { // brown
-    let last = 0;
-    for (let i = 0; i < len; i++) {
-      const w = Math.random() * 2 - 1;
-      last = (last + 0.02 * w) / 1.02;
-      d[i] = last * 3.5;
-    }
-  }
-  sndState.buffers[type] = buf;
-  return buf;
-}
 function sndStop() {
   if (sndState.fade) { clearInterval(sndState.fade); sndState.fade = null; }
-  // flux fichier
   if (sndState.audio) {
     try { sndState.audio.pause(); } catch (e) {}
     try { sndState.audio.removeAttribute("src"); sndState.audio.load(); } catch (e) {}
     sndState.audio = null;
   }
-  // nœuds Web Audio — petit fondu de sortie pour éviter le "clic"
-  if (sndState.nodes) {
-    const n = sndState.nodes;
-    const ctx = sndState.ctx;
-    const t = ctx ? ctx.currentTime : 0;
-    try { if (n.master && ctx) { n.master.gain.cancelScheduledValues(t); n.master.gain.setTargetAtTime(0, t, 0.04); } } catch (e) {}
-    const stopAt = t + 0.18; // on coupe APRÈS le fondu, pas pendant
-    [n.src, n.o1, n.o2, n.lfo].forEach((node) => { if (node) { try { node.stop(stopAt); } catch (e) {} } });
-    sndState.nodes = null;
-  }
-  sndState.mode = null;
   sndState.key = null;
   $$("#sounds .snd-btn").forEach((b) => b.classList.remove("active", "loading"));
 }
@@ -1758,10 +1730,6 @@ function initSounds() {
   const vol = $("#snd-vol");
   if (vol) vol.addEventListener("input", () => {
     sndState.gain = vol.value / 100;
-    if (sndState.mode === "file" && sndState.audio && !sndState.fade) {
-      sndState.audio.volume = sndState.gain;
-    } else if (sndState.mode === "synth" && sndState.nodes && sndState.nodes.master && sndState.ctx) {
-      sndState.nodes.master.gain.setTargetAtTime(sndState.gain * sndState.factor, sndState.ctx.currentTime, 0.1);
-    }
+    if (sndState.audio && !sndState.fade) sndState.audio.volume = sndState.gain;
   });
 }
