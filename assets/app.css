@@ -269,6 +269,9 @@ label.lbl{display:block;font-size:0.7rem;letter-spacing:0.18em;text-transform:up
 .badge .bd{font-size:0.66rem;color:var(--cream-faint);line-height:1.3;}
 
 /* profil */
+.pf-top{display:flex;align-items:center;gap:18px;padding-bottom:22px;margin-bottom:6px;border-bottom:1px solid var(--line);}
+.pf-av{width:76px;height:76px;flex:0 0 auto;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:1.9rem;font-weight:600;color:#1A1410;border:1px solid var(--gold-line);background-size:cover;background-position:center;box-shadow:0 8px 24px rgba(0,0,0,0.35);}
 .profile-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);}
 .profile-row:last-child{border-bottom:none;}
 .profile-row .k{color:var(--cream-muted);font-size:0.9rem;}

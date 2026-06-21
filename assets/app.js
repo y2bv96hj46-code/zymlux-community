@@ -29,11 +29,24 @@ function avatarGrad(id) {
   const h2 = (h + 45) % 360;
   return `linear-gradient(135deg, hsl(${h} 62% 60%), hsl(${h2} 58% 46%))`;
 }
-function applyAvatar(el, name, id) {
+function applyAvatar(el, name, id, url) {
   if (!el) return;
   el.classList.add("avatar");
-  el.style.background = avatarGrad(id);
-  el.textContent = (name && name[0] ? name[0] : "?").toUpperCase();
+  if (url) {
+    el.style.backgroundImage = `url("${url}")`;
+    el.style.backgroundSize = "cover";
+    el.style.backgroundPosition = "center";
+    el.textContent = "";
+  } else {
+    el.style.backgroundImage = "none";
+    el.style.background = avatarGrad(id);
+    el.textContent = (name && name[0] ? name[0] : "?").toUpperCase();
+  }
+}
+function refreshMyAvatars() {
+  applyAvatar($("#me-av"), state.profile.pseudo, state.user.id, state.profile.avatar_url);
+  applyAvatar($("#dash-av"), state.profile.pseudo, state.user.id, state.profile.avatar_url);
+  applyAvatar($("#pf-av"), state.profile.pseudo, state.user.id, state.profile.avatar_url);
 }
 function observeReveals() {
   const els = $$(".reveal");
@@ -191,7 +204,7 @@ async function enterApp(user) {
   $("#app").style.display = "flex";
 
   $("#me-name").textContent = state.profile.pseudo;
-  applyAvatar($("#me-av"), state.profile.pseudo, state.user.id);
+  applyAvatar($("#me-av"), state.profile.pseudo, state.user.id, state.profile.avatar_url);
 
   initNav();
   await initChat();
@@ -268,7 +281,7 @@ async function selectRoom(room) {
 
   const { data: msgs } = await sb
     .from("messages")
-    .select("id, content, created_at, user_id, profiles(pseudo, avatar_emoji)")
+    .select("id, content, created_at, user_id, profiles(pseudo, avatar_emoji, avatar_url)")
     .eq("room_id", room.id)
     .order("created_at", { ascending: true })
     .limit(100);
@@ -290,16 +303,16 @@ async function selectRoom(room) {
       { event: "INSERT", schema: "public", table: "messages", filter: "room_id=eq." + room.id },
       async (payload) => {
         const m = payload.new;
-        // Récupère le pseudo de l'auteur
-        let pseudo = "Membre", emoji = "🌙";
+        // Récupère le profil de l'auteur
+        let pseudo = "Membre", emoji = "🌙", url = null;
         if (m.user_id === state.user.id) {
-          pseudo = state.profile.pseudo; emoji = state.profile.avatar_emoji;
+          pseudo = state.profile.pseudo; emoji = state.profile.avatar_emoji; url = state.profile.avatar_url;
         } else {
-          const { data: p } = await sb.from("profiles").select("pseudo, avatar_emoji").eq("id", m.user_id).maybeSingle();
-          if (p) { pseudo = p.pseudo; emoji = p.avatar_emoji; }
+          const { data: p } = await sb.from("profiles").select("pseudo, avatar_emoji, avatar_url").eq("id", m.user_id).maybeSingle();
+          if (p) { pseudo = p.pseudo; emoji = p.avatar_emoji; url = p.avatar_url; }
         }
         if ($(".chat-empty", box)) box.innerHTML = "";
-        renderMessage({ ...m, profiles: { pseudo, avatar_emoji: emoji } });
+        renderMessage({ ...m, profiles: { pseudo, avatar_emoji: emoji, avatar_url: url } });
         scrollChat();
       }
     )
@@ -319,8 +332,7 @@ function renderMessage(m) {
   meta.className = "meta";
   const av = document.createElement("span");
   av.className = "av";
-  av.style.background = avatarGrad(m.user_id);
-  av.textContent = (who[0] || "?").toUpperCase();
+  applyAvatar(av, who, m.user_id, m.profiles && m.profiles.avatar_url);
   const whoSpan = document.createElement("span");
   whoSpan.className = "who";
   whoSpan.textContent = mine ? "Toi" : who;
@@ -378,7 +390,7 @@ async function initDashboard() {
   const hour = new Date().getHours();
   const greet = hour >= 22 || hour < 6 ? "Bonne nuit" : hour < 18 ? "Bonjour" : "Bonsoir";
   $("#dash-hello").textContent = `${greet}, ${state.profile.pseudo}.`;
-  applyAvatar($("#dash-av"), state.profile.pseudo, state.user.id);
+  applyAvatar($("#dash-av"), state.profile.pseudo, state.user.id, state.profile.avatar_url);
   setQuote();
   initBreathing();
   initGrounding();
@@ -678,6 +690,29 @@ function subscribeMood() {
 function initProfile() {
   $("#pf-pseudo").textContent = state.profile.pseudo;
   $("#pf-email").textContent = state.user.email || "—";
+  applyAvatar($("#pf-av"), state.profile.pseudo, state.user.id, state.profile.avatar_url);
+
+  // Changer la photo de profil
+  const photoBtn = $("#pf-photo-btn"), photoInput = $("#pf-photo-input"), photoHint = $("#pf-photo-hint");
+  photoBtn.addEventListener("click", () => photoInput.click());
+  photoInput.addEventListener("change", async () => {
+    const file = photoInput.files && photoInput.files[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) { toast("Image trop lourde (2 Mo max)."); return; }
+    photoHint.textContent = "Envoi en cours…";
+    const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+    const path = `${state.user.id}/avatar_${Date.now()}.${ext}`;
+    const { error: upErr } = await sb.storage.from("avatars").upload(path, file, { upsert: true, cacheControl: "3600" });
+    if (upErr) { photoHint.textContent = "Échec de l'envoi. Réessaie."; toast("Échec de l'envoi."); return; }
+    const { data: pub } = sb.storage.from("avatars").getPublicUrl(path);
+    const url = pub.publicUrl;
+    const { error: dbErr } = await sb.from("profiles").update({ avatar_url: url }).eq("id", state.user.id);
+    if (dbErr) { photoHint.textContent = "Erreur d'enregistrement."; return; }
+    state.profile.avatar_url = url;
+    refreshMyAvatars();
+    photoHint.textContent = "JPG, PNG, GIF ou WebP · 2 Mo max";
+    toast("Photo de profil mise à jour ✦");
+  });
   $("#pf-anon").checked = !!state.profile.is_anonymous;
   const since = state.profile.created_at ? new Date(state.profile.created_at) : new Date();
   $("#pf-since").textContent = since.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
