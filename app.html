@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/app.css?v=15" />
-  <script src="assets/config.js?v=15"></script>
+  <link rel="stylesheet" href="assets/app.css?v=16" />
+  <script src="assets/config.js?v=16"></script>
 </head>
 <body>
 
@@ -165,6 +165,13 @@
           <div class="stat"><span class="s-n" id="stat-obj">0</span><span class="s-l">objectifs atteints</span></div>
         </div>
         <div class="grid">
+          <!-- Modération (admin uniquement) -->
+          <div class="card span" id="admin-card" style="display:none">
+            <div class="ttl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6Z"/><path d="M9 12l2 2 4-4"/></svg> Modération</div>
+            <div class="sub">Réservé à l'administrateur — gère les membres, offre de l'XP, bannis.</div>
+            <div class="admin-list" id="admin-list"></div>
+          </div>
+
           <!-- Niveau -->
           <div class="card level-card span">
             <div class="level-ring"><span id="lvl-num">1</span></div>
@@ -310,6 +317,6 @@
 
   <div class="toast" id="toast"></div>
 
-  <script type="module" src="assets/app.js?v=15"></script>
+  <script type="module" src="assets/app.js?v=16"></script>
 </body>
 </html>

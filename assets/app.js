@@ -219,12 +219,17 @@ async function enterApp(user) {
     profile = await fetchProfile(user.id);
   }
   state.profile = profile || { pseudo: "Membre", is_anonymous: true, avatar_emoji: "🌙" };
+  state.isAdmin = !!state.profile.is_admin;
+
+  if (state.profile.is_banned) { showBanned(); return; }
 
   $("#auth").style.display = "none";
   $("#app").style.display = "flex";
 
   $("#me-name").textContent = state.profile.pseudo;
   applyAvatar($("#me-av"), state.profile.pseudo, state.user.id, state.profile.avatar_url);
+
+  if (state.isAdmin) { const c = $("#admin-card"); if (c) c.style.display = ""; }
 
   initNav();
   await initChat();
@@ -233,6 +238,7 @@ async function enterApp(user) {
   initProfile();
   observeReveals();
   loadLevel();
+  if (state.isAdmin) loadAdmin();
 }
 
 async function fetchProfile(id) {
@@ -381,7 +387,31 @@ function renderMessage(m) {
   const reacts = document.createElement("div");
   reacts.className = "msg-reacts";
   wrap.appendChild(reacts);
+
+  if (state.isAdmin || mine) {
+    const mod = document.createElement("div");
+    mod.className = "msg-mod";
+    const del = document.createElement("button");
+    del.type = "button"; del.className = "mod-btn"; del.textContent = "Supprimer";
+    del.onclick = async () => { await sb.from("messages").delete().eq("id", m.id); wrap.remove(); };
+    mod.appendChild(del);
+    if (state.isAdmin && !mine) {
+      const ban = document.createElement("button");
+      ban.type = "button"; ban.className = "mod-btn ban"; ban.textContent = "Bannir";
+      ban.onclick = () => banUser(m.user_id, who);
+      mod.appendChild(ban);
+    }
+    wrap.appendChild(mod);
+  }
   box.appendChild(wrap);
+}
+
+async function banUser(uid, pseudo) {
+  if (uid === state.user.id) { toast("Tu ne peux pas te bannir toi-même."); return; }
+  if (!confirm("Bannir " + (pseudo || "ce membre") + " ? Il ne pourra plus rien publier.")) return;
+  const { error } = await sb.from("profiles").update({ is_banned: true }).eq("id", uid);
+  toast(error ? "Action impossible." : "Membre banni.");
+  if (!error && state.isAdmin) loadAdmin();
 }
 
 /* ---------- Réactions emoji sur les messages ---------- */
@@ -917,7 +947,7 @@ function renderPost(p, isLiked) {
   const tm = document.createElement("div"); tm.className = "time"; tm.textContent = timeAgo(p.created_at);
   info.appendChild(w); info.appendChild(tm);
   head.appendChild(av); head.appendChild(info);
-  if (p.user_id === state.user.id) {
+  if (p.user_id === state.user.id || state.isAdmin) {
     const del = document.createElement("button"); del.className = "post-del"; del.textContent = "×"; del.title = "Supprimer";
     del.onclick = async () => { if (!confirm("Supprimer cette publication ?")) return; await sb.from("posts").delete().eq("id", p.id); await loadFeed(); };
     head.appendChild(del);
@@ -1016,7 +1046,8 @@ async function loadLevel() {
   ]);
   const rmDone = ((rm.data) || []).filter((i) => i.done).length;
   const xp = (msg.count || 0) * 5 + (posts.count || 0) * 15 + (cmts.count || 0) * 8 + (mood.count || 0) * 10
-           + (ch.count || 0) * 25 + rmDone * 20 + (likes.count || 0) * 2 + (reacts.count || 0) * 2;
+           + (ch.count || 0) * 25 + rmDone * 20 + (likes.count || 0) * 2 + (reacts.count || 0) * 2
+           + (state.profile.bonus_xp || 0);
   const L = levelFromXp(xp);
   const title = LEVEL_TITLES[Math.min(L.lvl - 1, LEVEL_TITLES.length - 1)];
   const setT = (id, v) => { const e = $("#" + id); if (e) e.textContent = v; };
@@ -1133,5 +1164,68 @@ function loadFrames() {
     const lv = document.createElement("div"); lv.className = "frame-lvl"; lv.textContent = (t.cls === cur) ? "Actif" : ("Niveau " + t.lvl);
     it.appendChild(pv); it.appendChild(nm); it.appendChild(lv);
     box.appendChild(it);
+  });
+}
+
+/* ============================================================
+   ADMINISTRATION (chef absolu)
+============================================================ */
+function showBanned() {
+  document.body.innerHTML =
+    '<div style="min-height:100svh;display:flex;align-items:center;justify-content:center;padding:32px;text-align:center;font-family:var(--serif);">' +
+    '<div style="max-width:420px;"><div style="font-size:1.8rem;color:#E5917A;margin-bottom:12px;">Compte suspendu</div>' +
+    '<div style="font-family:var(--sans);font-weight:300;color:rgba(244,239,231,0.6);font-size:0.95rem;line-height:1.6;">Ton accès à la communauté a été suspendu par la modération.<br>Si tu penses qu\'il s\'agit d\'une erreur, contacte-nous.</div></div></div>';
+}
+
+async function loadAdmin() {
+  const box = $("#admin-list");
+  if (!box) return;
+  const { data, error } = await sb.from("profiles")
+    .select("id, pseudo, avatar_url, is_banned, is_admin, bonus_xp")
+    .order("created_at", { ascending: false })
+    .limit(100);
+  if (error) { box.innerHTML = `<div class="chart-empty">Liste indisponible.</div>`; return; }
+  box.innerHTML = "";
+  (data || []).forEach((m) => {
+    const row = document.createElement("div");
+    row.className = "admin-row" + (m.is_banned ? " banned" : "");
+    const av = document.createElement("span"); av.className = "lb-av"; applyAvatar(av, m.pseudo, m.id, m.avatar_url);
+    const info = document.createElement("div"); info.style.flex = "1"; info.style.minWidth = "0";
+    const nm = document.createElement("div"); nm.className = "lb-name";
+    nm.textContent = m.pseudo + (m.is_admin ? " · admin" : "") + (m.id === state.user.id ? " (toi)" : "");
+    const tag = document.createElement("div"); tag.className = "lb-lvl"; tag.textContent = m.is_banned ? "Banni" : "Actif";
+    info.appendChild(nm); info.appendChild(tag);
+    const actions = document.createElement("div"); actions.className = "admin-actions";
+
+    // Cadeau d'XP (monte le membre en niveau)
+    const gift = document.createElement("button");
+    gift.className = "btn btn-ghost btn-sm"; gift.textContent = "Offrir XP";
+    gift.onclick = async () => {
+      const v = prompt("Combien d'XP offrir à " + m.pseudo + " ? (ex. 500)\nMets un nombre négatif pour en retirer.");
+      if (v === null) return;
+      const amount = parseInt(v, 10);
+      if (isNaN(amount)) { toast("Nombre invalide."); return; }
+      const newBonus = Math.max(0, (m.bonus_xp || 0) + amount);
+      const { error: e } = await sb.from("profiles").update({ bonus_xp: newBonus }).eq("id", m.id);
+      toast(e ? "Action impossible." : "Cadeau envoyé ✦");
+      if (!e) { if (m.id === state.user.id) { state.profile.bonus_xp = newBonus; loadLevel(); } loadAdmin(); }
+    };
+    actions.appendChild(gift);
+
+    // Bannir / débannir
+    const btn = document.createElement("button");
+    btn.className = "btn btn-ghost btn-sm";
+    if (m.id === state.user.id || m.is_admin) {
+      btn.textContent = "—"; btn.disabled = true; btn.style.opacity = "0.4";
+    } else if (m.is_banned) {
+      btn.textContent = "Débannir";
+      btn.onclick = async () => { await sb.from("profiles").update({ is_banned: false }).eq("id", m.id); toast("Membre réintégré."); loadAdmin(); };
+    } else {
+      btn.textContent = "Bannir"; btn.classList.add("danger");
+      btn.onclick = async () => { if (!confirm("Bannir " + m.pseudo + " ?")) return; await sb.from("profiles").update({ is_banned: true }).eq("id", m.id); toast("Membre banni."); loadAdmin(); };
+    }
+    actions.appendChild(btn);
+    row.appendChild(av); row.appendChild(info); row.appendChild(actions);
+    box.appendChild(row);
   });
 }
