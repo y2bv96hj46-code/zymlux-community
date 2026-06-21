@@ -166,14 +166,53 @@ label.lbl{display:block;font-size:0.7rem;letter-spacing:0.18em;text-transform:up
 
 /* ---------- DASHBOARD ---------- */
 .kicker{font-size:0.68rem;letter-spacing:0.26em;text-transform:uppercase;color:var(--gold);opacity:0.85;}
-.welcome{font-family:var(--serif);font-size:clamp(2rem,4.4vw,2.9rem);font-weight:500;margin:6px 0 8px;letter-spacing:-0.01em;}
-.quote-day{font-family:var(--serif);font-style:italic;font-size:clamp(1.1rem,2.4vw,1.4rem);color:var(--cream-muted);border-left:2px solid var(--gold-line);padding:2px 0 2px 18px;margin:0 0 30px;max-width:62ch;}
+.welcome{font-family:var(--serif);font-size:clamp(2rem,4.4vw,2.9rem);font-weight:500;margin:6px 0 0;letter-spacing:-0.01em;}
+.quote-day{font-family:var(--serif);font-style:italic;font-size:clamp(1.1rem,2.4vw,1.4rem);color:var(--cream-muted);border-left:2px solid var(--gold-line);padding:2px 0 2px 18px;margin:0 0 26px;max-width:62ch;}
+
+/* avatars en dégradé */
+.avatar{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;color:#1A1410;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;}
+
+/* en-tête tableau de bord */
+.dash-hero{display:flex;align-items:center;gap:18px;margin-bottom:22px;}
+.dash-hero-av{width:64px;height:64px;flex:0 0 auto;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;font-weight:600;color:#1A1410;border:1px solid var(--gold-line);box-shadow:0 8px 26px rgba(0,0,0,0.35);}
+.dash-hero-txt{min-width:0;}
+
+/* statistiques */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:30px;}
+.stat{background:linear-gradient(180deg,var(--surface-2),var(--surface));border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;text-align:center;transition:border-color .4s var(--ease),transform .4s var(--ease);}
+.stat:hover{border-color:var(--gold-line);transform:translateY(-3px);}
+.stat .s-n{display:block;font-family:var(--serif);font-size:1.9rem;font-weight:600;color:var(--gold-bright);line-height:1;}
+.stat .s-l{display:block;font-size:0.72rem;letter-spacing:0.06em;color:var(--cream-muted);margin-top:8px;}
+
+/* ancrage 5-4-3-2-1 */
+.ground{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:150px;gap:14px;margin-bottom:18px;}
+.ground-num{font-family:var(--serif);font-size:3.4rem;font-weight:600;line-height:1;color:transparent;-webkit-text-stroke:1px var(--gold-line);}
+.ground-num.active{color:var(--gold-bright);-webkit-text-stroke:0;transition:color .3s var(--ease);}
+.ground-txt{color:var(--cream-muted);font-size:0.96rem;max-width:38ch;line-height:1.6;}
+
+/* reveal dashboard */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
+.reveal.is-visible{opacity:1;transform:none;}
+.reveal[data-delay="1"]{transition-delay:.08s;}
+.reveal[data-delay="2"]{transition-delay:.16s;}
+.reveal[data-delay="3"]{transition-delay:.24s;}
 .grid{display:grid;grid-template-columns:1.05fr 1fr;gap:20px;}
 .card{position:relative;background:linear-gradient(180deg,var(--surface-2),var(--surface));border:1px solid var(--line);border-radius:var(--radius);padding:26px;transition:transform .5s var(--ease),border-color .5s var(--ease),box-shadow .5s var(--ease);}
 .card:hover{border-color:var(--line-2);box-shadow:0 22px 50px rgba(0,0,0,0.3);}
 .card.span{grid-column:1 / -1;}
 .card .ttl{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:1.45rem;font-weight:600;margin-bottom:6px;}
 .card .sub{color:var(--cream-muted);font-size:0.9rem;margin-bottom:20px;}
+
+/* apparition en cascade des cartes */
+#view-dash.active .grid > .card{animation:cardIn .55s var(--ease) both;}
+@keyframes cardIn{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
+#view-dash.active .grid > .card:nth-child(1){animation-delay:.04s;}
+#view-dash.active .grid > .card:nth-child(2){animation-delay:.1s;}
+#view-dash.active .grid > .card:nth-child(3){animation-delay:.16s;}
+#view-dash.active .grid > .card:nth-child(4){animation-delay:.22s;}
+#view-dash.active .grid > .card:nth-child(5){animation-delay:.28s;}
+#view-dash.active .grid > .card:nth-child(6){animation-delay:.34s;}
 
 /* défi */
 .challenge{background:linear-gradient(135deg,rgba(201,162,75,0.14),rgba(201,162,75,0.03));border-color:var(--gold-line);overflow:hidden;}

@@ -23,6 +23,26 @@ function colorFromString(str) {
   for (let i = 0; i < (str || "").length; i++) h = (h * 31 + str.charCodeAt(i)) % 360;
   return `hsl(${h} 55% 64%)`;
 }
+function avatarGrad(id) {
+  let h = 0;
+  for (let i = 0; i < (id || "").length; i++) h = (h * 31 + id.charCodeAt(i)) % 360;
+  const h2 = (h + 45) % 360;
+  return `linear-gradient(135deg, hsl(${h} 62% 60%), hsl(${h2} 58% 46%))`;
+}
+function applyAvatar(el, name, id) {
+  if (!el) return;
+  el.classList.add("avatar");
+  el.style.background = avatarGrad(id);
+  el.textContent = (name && name[0] ? name[0] : "?").toUpperCase();
+}
+function observeReveals() {
+  const els = $$(".reveal");
+  if (!("IntersectionObserver" in window)) { els.forEach((e) => e.classList.add("is-visible")); return; }
+  const o = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-visible"); o.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  els.forEach((e) => o.observe(e));
+}
 const QUOTES = [
   "Respire. Tu as déjà survécu à 100 % de tes pires journées.",
   "Tu n'as pas besoin d'aller bien pour avoir ta place ici.",
@@ -171,12 +191,13 @@ async function enterApp(user) {
   $("#app").style.display = "flex";
 
   $("#me-name").textContent = state.profile.pseudo;
-  $("#me-av").textContent = state.profile.avatar_emoji || "🌙";
+  applyAvatar($("#me-av"), state.profile.pseudo, state.user.id);
 
   initNav();
   await initChat();
   await initDashboard();
   initProfile();
+  observeReveals();
 }
 
 async function fetchProfile(id) {
@@ -298,7 +319,7 @@ function renderMessage(m) {
   meta.className = "meta";
   const av = document.createElement("span");
   av.className = "av";
-  av.style.background = colorFromString(m.user_id);
+  av.style.background = avatarGrad(m.user_id);
   av.textContent = (who[0] || "?").toUpperCase();
   const whoSpan = document.createElement("span");
   whoSpan.className = "who";
@@ -357,8 +378,10 @@ async function initDashboard() {
   const hour = new Date().getHours();
   const greet = hour >= 22 || hour < 6 ? "Bonne nuit" : hour < 18 ? "Bonjour" : "Bonsoir";
   $("#dash-hello").textContent = `${greet}, ${state.profile.pseudo}.`;
+  applyAvatar($("#dash-av"), state.profile.pseudo, state.user.id);
   setQuote();
   initBreathing();
+  initGrounding();
 
   await loadChallenge();
   await loadRoadmap();
@@ -482,6 +505,39 @@ function initBreathing() {
   });
 }
 
+/* ============================================================
+   Ancrage 5-4-3-2-1
+============================================================ */
+function initGrounding() {
+  if (state.groundInit) return;
+  state.groundInit = true;
+  const STEPS = [
+    { n: "5", t: "Nomme 5 choses que tu peux VOIR autour de toi." },
+    { n: "4", t: "Nomme 4 choses que tu peux TOUCHER." },
+    { n: "3", t: "Nomme 3 choses que tu peux ENTENDRE." },
+    { n: "2", t: "Nomme 2 choses que tu peux SENTIR (des odeurs)." },
+    { n: "1", t: "Nomme 1 chose que tu peux GOÛTER." },
+  ];
+  const btn = $("#ground-btn"), num = $("#ground-num"), txt = $("#ground-txt");
+  let i = -1;
+  function show() {
+    if (i >= STEPS.length) {
+      num.classList.remove("active");
+      num.textContent = "🤍";
+      txt.textContent = "Tu es là, dans le présent. Respire. C'était courageux.";
+      btn.textContent = "Recommencer";
+      i = -1;
+      return;
+    }
+    const s = STEPS[i];
+    num.classList.add("active");
+    num.textContent = s.n;
+    txt.textContent = s.t;
+    btn.textContent = i === STEPS.length - 1 ? "Terminer" : "Suivant";
+  }
+  btn.addEventListener("click", () => { i++; show(); });
+}
+
 async function loadChallenge() {
   const { data: ch } = await sb.from("challenges").select("*").eq("is_active", true).order("created_at", { ascending: false }).maybeSingle();
   state.challenge = ch;
@@ -500,6 +556,7 @@ async function loadChallenge() {
     .select("*", { count: "exact", head: true })
     .eq("user_id", state.user.id);
   $("#ch-count").textContent = count || 0;
+  $("#stat-def").textContent = count || 0;
 
   // Ce défi est-il déjà relevé ?
   const { data: done } = await sb
@@ -572,6 +629,7 @@ async function loadRoadmap() {
   const total = arr.length;
   const done = arr.filter((i) => i.done).length;
   $("#rm-bar").style.width = (total ? (done / total) * 100 : 0) + "%";
+  const so = $("#stat-obj"); if (so) so.textContent = done;
 }
 
 async function loadMood() {
@@ -586,6 +644,7 @@ async function loadMood() {
   chart.innerHTML = "";
   if (!arr.length) {
     $("#mood-avg").innerHTML = "";
+    const sm = $("#stat-mood"); if (sm) sm.textContent = "–";
     chart.innerHTML = `<div class="chart-empty">Enregistre ton humeur pour voir ta courbe apparaître. 📈</div>`;
     return;
   }
@@ -598,6 +657,7 @@ async function loadMood() {
   });
   const avg = (arr.reduce((s, l) => s + l.score, 0) / arr.length).toFixed(1);
   $("#mood-avg").innerHTML = `Moyenne récente : <b>${avg} / 5</b> · ${arr.length} relevé${arr.length > 1 ? "s" : ""}`;
+  const sm = $("#stat-mood"); if (sm) sm.textContent = avg;
 }
 
 function subscribeMood() {
