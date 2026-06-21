@@ -7,6 +7,11 @@
   <meta name="description" content="Zymlux Community : un espace bienveillant et nocturne pour les personnes anxieuses, isolées ou incomprises. Ici, on en parle — sans jugement." />
   <meta name="theme-color" content="#0E0D0C" />
   <meta name="author" content="Zymlux Community" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Zymlux" />
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png" />
   <meta name="robots" content="index, follow" />
   <meta name="keywords" content="communauté, anxiété, isolement, soutien, bienveillance, santé mentale, entraide, espace safe, nuit" />
   <link rel="canonical" href="https://communaute.zymlux.fr/" />
@@ -727,5 +732,6 @@
       if (REDUCED) draw(0); else requestAnimationFrame(draw);
     })();
   </script>
+  <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
 </body>
 </html>
