@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zymlux Community — Tu n'es pas seul</title>
+  <meta name="description" content="Zymlux Community : un espace bienveillant et nocturne pour les personnes anxieuses, isolées ou incomprises. Ici, on en parle — sans jugement." />
+
+  <!-- Google Fonts : Cormorant Garamond (serif titres) + Inter (sans-serif corps) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-deep:      #0E0D0C;
+      --bg-warm:      #1A1714;
+      --surface:      #211D19;
+      --surface-soft: #25201B;
+      --cream:        #F2EDE4;
+      --cream-muted:  rgba(242, 237, 228, 0.62);
+      --cream-faint:  rgba(242, 237, 228, 0.40);
+      --gold:         #C9A24B;
+      --gold-soft:    rgba(201, 162, 75, 0.16);
+      --gold-line:    rgba(201, 162, 75, 0.22);
+
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+      --maxw: 1080px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      font-weight: 300;
+      color: var(--cream);
+      background-color: var(--bg-deep);
+      background-image:
+        radial-gradient(120% 80% at 50% -10%, rgba(201, 162, 75, 0.10) 0%, rgba(201, 162, 75, 0.03) 32%, transparent 60%),
+        linear-gradient(180deg, var(--bg-warm) 0%, var(--bg-deep) 55%);
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      text-rendering: optimizeLegibility;
+    }
+
+    ::selection { background: var(--gold-soft); color: var(--cream); }
+
+    .wrap {
+      width: 100%;
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 28px 100px;
+      overflow: hidden;
+    }
+
+    /* Halo doré subtil derrière le titre */
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 38%;
+      left: 50%;
+      width: min(880px, 120vw);
+      height: min(880px, 120vw);
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(201, 162, 75, 0.18) 0%, rgba(201, 162, 75, 0.06) 30%, transparent 62%);
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(8px);
+    }
+
+    .hero > * { position: relative; z-index: 1; }
+
+    .hero .eyebrow {
+      font-family: var(--sans);
+      font-size: 0.74rem;
+      font-weight: 400;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 30px;
+      opacity: 0.85;
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(3.2rem, 11vw, 6.6rem);
+      line-height: 1.02;
+      letter-spacing: -0.01em;
+      color: var(--cream);
+      margin-bottom: 28px;
+    }
+
+    .hero .subtitle {
+      font-size: clamp(1.05rem, 2.4vw, 1.32rem);
+      font-weight: 300;
+      color: var(--cream-muted);
+      max-width: 30ch;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+    }
+
+    /* ---------- BOUTON ---------- */
+    .btn-gold {
+      display: inline-block;
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: #1A1410;
+      background: linear-gradient(180deg, #D7B25E 0%, var(--gold) 100%);
+      border: none;
+      border-radius: 999px;
+      padding: 17px 42px;
+      cursor: pointer;
+      text-decoration: none;
+      position: relative;
+      box-shadow: 0 8px 28px rgba(201, 162, 75, 0.18), inset 0 1px 0 rgba(255,255,255,0.22);
+      transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease), filter 0.45s var(--ease);
+      will-change: transform;
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(201, 162, 75, 0.32), inset 0 1px 0 rgba(255,255,255,0.3);
+      filter: brightness(1.05);
+    }
+
+    .btn-gold:active { transform: translateY(-1px); }
+
+    /* Indicateur de scroll discret */
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 54px;
+      background: linear-gradient(to bottom, transparent, var(--gold-line), transparent);
+      z-index: 1;
+    }
+    .scroll-hint::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 50%;
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: var(--gold);
+      transform: translateX(-50%);
+      animation: drop 2.4s var(--ease) infinite;
+    }
+    @keyframes drop {
+      0%   { transform: translate(-50%, 0); opacity: 0; }
+      30%  { opacity: 1; }
+      80%  { opacity: 1; }
+      100% { transform: translate(-50%, 50px); opacity: 0; }
+    }
+
+    /* ---------- SECTION : CE QUE TU TROUVES ICI ---------- */
+    .features {
+      padding: 120px 0 130px;
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+
+    .section-head h2 {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(2.1rem, 5.5vw, 3.2rem);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--cream);
+    }
+
+    .section-head .lead {
+      margin-top: 18px;
+      color: var(--cream-muted);
+      font-size: 1.05rem;
+      max-width: 42ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, var(--surface-soft) 0%, var(--surface) 100%);
+      border: 1px solid var(--gold-line);
+      border-radius: 20px;
+      padding: 44px 34px;
+      text-align: left;
+      transition: transform 0.55s var(--ease), border-color 0.55s var(--ease), box-shadow 0.55s var(--ease);
+      will-change: transform;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(201, 162, 75, 0.45);
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    .card .icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: var(--gold-soft);
+      border: 1px solid var(--gold-line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 26px;
+      color: var(--gold);
+    }
+    .card .icon svg { width: 22px; height: 22px; display: block; }
+
+    .card h3 {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 1.6rem;
+      line-height: 1.2;
+      color: var(--cream);
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: var(--cream-muted);
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+
+    /* ---------- PIED DE PAGE ---------- */
+    footer {
+      border-top: 1px solid rgba(242, 237, 228, 0.08);
+      padding: 56px 0 64px;
+      text-align: center;
+    }
+
+    footer .brand {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 1.5rem;
+      letter-spacing: 0.04em;
+      color: var(--cream);
+    }
+    footer .brand span { color: var(--gold); }
+
+    footer .note {
+      margin-top: 12px;
+      font-size: 0.82rem;
+      color: var(--cream-faint);
+      letter-spacing: 0.02em;
+    }
+
+    /* ---------- ANIMATIONS D'APPARITION AU SCROLL ---------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 1s var(--ease), transform 1s var(--ease);
+      will-change: opacity, transform;
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal[data-delay="1"] { transition-delay: 0.12s; }
+    .reveal[data-delay="2"] { transition-delay: 0.24s; }
+    .reveal[data-delay="3"] { transition-delay: 0.36s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+      html { scroll-behavior: auto; }
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 860px) {
+      .cards { grid-template-columns: 1fr; gap: 20px; max-width: 460px; margin: 0 auto; }
+      .features { padding: 90px 0 100px; }
+      .section-head { margin-bottom: 52px; }
+    }
+
+    @media (max-width: 540px) {
+      .wrap { padding: 0 22px; }
+      .hero { padding: 110px 22px 90px; }
+      .hero .eyebrow { letter-spacing: 0.34em; margin-bottom: 24px; }
+      .hero .subtitle { margin-bottom: 40px; }
+      .btn-gold { padding: 16px 36px; width: 100%; max-width: 320px; }
+      .card { padding: 38px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <p class="eyebrow reveal">Zymlux Community</p>
+    <h1 class="reveal" data-delay="1">Zymlux Community</h1>
+    <p class="subtitle reveal" data-delay="2">Tu n'es pas seul. Ici, on en parle — sans jugement.</p>
+    <a href="#rejoindre" class="btn-gold reveal" data-delay="3">Rejoindre la communauté</a>
+    <div class="scroll-hint" aria-hidden="true"></div>
+  </header>
+
+  <!-- ===== CE QUE TU TROUVES ICI ===== -->
+  <main>
+    <section class="features" id="rejoindre">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 class="reveal">Ce que tu trouves ici</h2>
+          <p class="lead reveal" data-delay="1">Un refuge nocturne, pensé pour celles et ceux qui se sentent à part. Prends une respiration. Tu es au bon endroit.</p>
+        </div>
+
+        <div class="cards">
+          <article class="card reveal" data-delay="1">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <h3>Une communauté qui comprend</h3>
+            <p>Des personnes qui vivent ce que tu vis. Ici, tes mots sont accueillis, jamais minimisés. Tu peux enfin parler vraiment.</p>
+          </article>
+
+          <article class="card reveal" data-delay="2">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a7 7 0 0 0-4 12.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26A7 7 0 0 0 12 2Z"/>
+                <line x1="9" y1="21" x2="15" y2="21"/>
+                <line x1="10" y1="18" x2="14" y2="18"/>
+              </svg>
+            </div>
+            <h3>Des outils pour avancer</h3>
+            <p>Des ressources douces et concrètes pour apaiser l'anxiété, reprendre pied et avancer à ton rythme — un pas à la fois.</p>
+          </article>
+
+          <article class="card reveal" data-delay="3">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>
+                <path d="M9 12l2 2 4-4"/>
+              </svg>
+            </div>
+            <h3>Un espace safe, sans jugement</h3>
+            <p>Un lieu protégé, bienveillant et respectueux. Tu peux être pleinement toi-même, en sécurité, à toute heure de la nuit.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== PIED DE PAGE ===== -->
+  <footer>
+    <div class="wrap">
+      <p class="brand reveal">Zymlux<span>.</span></p>
+      <p class="note reveal" data-delay="1">Un espace bienveillant, pensé pour la nuit.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Animations d'apparition au scroll (fade + glissement vers le haut)
+    (function () {
+      var reveals = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        reveals.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
+
+      reveals.forEach(function (el) { observer.observe(el); });
+    })();
+  </script>
+
+</body>
+</html>
