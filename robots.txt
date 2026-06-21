@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://y2bv96hj46-code.github.io/zymlux-community/sitemap.xml
+Sitemap: https://communaute.zymlux.fr/sitemap.xml
