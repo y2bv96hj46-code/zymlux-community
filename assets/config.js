@@ -1,16 +1,12 @@
 /*
   ZYMLUX — Configuration
   --------------------------------------------------------------
-  Remplace les deux valeurs ci-dessous par celles de ton projet Supabase :
-    Supabase > Project Settings > Data API (ou API)
-      • Project URL      ->  SUPABASE_URL
-      • Project API keys : "anon public"  ->  SUPABASE_ANON_KEY
-
-  La clé "anon" est PUBLIQUE par nature : elle peut figurer ici sans danger,
-  car la sécurité est assurée par les règles RLS dans la base de données.
-  Ne mets JAMAIS la clé "service_role" ici.
+  Valeurs du projet Supabase.
+  La clé "publishable" / "anon" est PUBLIQUE par nature : aucun danger ici,
+  la sécurité est assurée par les règles RLS dans la base de données.
+  Ne mets JAMAIS la clé "secret" / "service_role" ici.
 */
 window.ZYMLUX_CONFIG = {
-  SUPABASE_URL: "https://VOTRE-PROJET.supabase.co",
-  SUPABASE_ANON_KEY: "VOTRE_CLE_ANON_PUBLIC"
+  SUPABASE_URL: "https://tgivtkvxvolozxjbhuhf.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_dHB0x2yMrXdpikN4fORhng_HKSREPto"
 };
