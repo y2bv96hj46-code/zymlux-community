@@ -7,6 +7,7 @@
 alter table public.profiles add column if not exists is_admin  boolean not null default false;
 alter table public.profiles add column if not exists is_banned boolean not null default false;
 alter table public.profiles add column if not exists bonus_xp  integer not null default 0;
+alter table public.profiles add column if not exists level     integer not null default 1;
 
 -- 2) Fonctions de contrôle (security definer = pas de récursion RLS)
 create or replace function public.is_admin() returns boolean
@@ -29,6 +30,8 @@ begin
     new.is_admin  := old.is_admin;
     new.is_banned := old.is_banned;
     new.bonus_xp  := old.bonus_xp;
+    -- NB: `level` reste modifiable par le membre (dérivé de son activité, purement cosmétique).
+    -- Le classement, lui, recalcule l'XP côté serveur (non falsifiable).
   end if;
   return new;
 end;

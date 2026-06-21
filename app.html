@@ -15,8 +15,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/app.css?v=21" />
-  <script src="assets/config.js?v=21"></script>
+  <link rel="stylesheet" href="assets/app.css?v=22" />
+  <script src="assets/config.js?v=22"></script>
 </head>
 <body>
 
@@ -243,11 +243,11 @@
             <div class="ttl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16h16"/><path d="M8 14l3-3 3 2 4-6"/></svg> Mon évolution</div>
             <div class="sub">Comment tu te sens aujourd'hui ?</div>
             <div class="mood-pick" id="mood-pick">
-              <button type="button" data-score="1" title="Très difficile"><svg class="ic-face" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".6" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".6" fill="currentColor" stroke="none"/><path d="M8.5 16q3.5-3 7 0"/></svg></button>
-              <button type="button" data-score="2" title="Difficile"><svg class="ic-face" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".6" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".6" fill="currentColor" stroke="none"/><path d="M8.5 15.5q3.5-2 7 0"/></svg></button>
-              <button type="button" data-score="3" title="Ça va"><svg class="ic-face" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".6" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".6" fill="currentColor" stroke="none"/><path d="M8.5 15h7"/></svg></button>
-              <button type="button" data-score="4" title="Bien"><svg class="ic-face" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".6" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".6" fill="currentColor" stroke="none"/><path d="M8.5 14.5q3.5 2 7 0"/></svg></button>
-              <button type="button" data-score="5" title="Très bien"><svg class="ic-face" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".6" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".6" fill="currentColor" stroke="none"/><path d="M8 14q4 3.5 8 0"/></svg></button>
+              <button type="button" data-score="1" title="Très difficile" aria-label="Très difficile"><svg class="ic-face" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".6" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".6" fill="currentColor" stroke="none"/><path d="M8.5 16q3.5-3 7 0"/></svg></button>
+              <button type="button" data-score="2" title="Difficile" aria-label="Difficile"><svg class="ic-face" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".6" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".6" fill="currentColor" stroke="none"/><path d="M8.5 15.5q3.5-2 7 0"/></svg></button>
+              <button type="button" data-score="3" title="Ça va" aria-label="Ça va"><svg class="ic-face" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".6" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".6" fill="currentColor" stroke="none"/><path d="M8.5 15h7"/></svg></button>
+              <button type="button" data-score="4" title="Bien" aria-label="Bien"><svg class="ic-face" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".6" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".6" fill="currentColor" stroke="none"/><path d="M8.5 14.5q3.5 2 7 0"/></svg></button>
+              <button type="button" data-score="5" title="Très bien" aria-label="Très bien"><svg class="ic-face" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".6" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".6" fill="currentColor" stroke="none"/><path d="M8 14q4 3.5 8 0"/></svg></button>
             </div>
             <input class="field" id="mood-note" type="text" maxlength="140" placeholder="Un mot sur ta journée (optionnel)" style="margin-bottom:10px" />
             <button class="btn btn-gold btn-block btn-sm" id="mood-save" type="button" disabled>Enregistrer mon humeur</button>
@@ -318,7 +318,7 @@
             <div>
               <button class="btn btn-ghost btn-sm" id="pf-photo-btn" type="button">Changer la photo</button>
               <input type="file" id="pf-photo-input" accept="image/*" hidden />
-              <div class="hint" id="pf-photo-hint">JPG, PNG, GIF ou WebP · 2 Mo max</div>
+              <div class="hint" id="pf-photo-hint">JPG, PNG, GIF ou WebP · 5 Mo max</div>
             </div>
           </div>
           <div class="profile-row">
@@ -375,6 +375,6 @@
   <div class="toast" id="toast"></div>
 
   <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
-  <script type="module" src="assets/app.js?v=21"></script>
+  <script type="module" src="assets/app.js?v=22"></script>
 </body>
 </html>
