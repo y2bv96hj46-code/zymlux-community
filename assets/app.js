@@ -1085,7 +1085,53 @@ function loadRewards() {
   });
 }
 
+/* ---------- Cadres d'avatar (évoluent jusqu'au niveau 100) ---------- */
+const FRAME_TIERS = [
+  { lvl: 1,   cls: "fr-1",  name: "Sans cadre" },
+  { lvl: 5,   cls: "fr-2",  name: "Halo doux" },
+  { lvl: 10,  cls: "fr-3",  name: "Double anneau" },
+  { lvl: 20,  cls: "fr-4",  name: "Lueur dorée" },
+  { lvl: 30,  cls: "fr-5",  name: "Givre" },
+  { lvl: 40,  cls: "fr-6",  name: "Aurore" },
+  { lvl: 50,  cls: "fr-7",  name: "Dégradé royal" },
+  { lvl: 60,  cls: "fr-8",  name: "Pulsation" },
+  { lvl: 70,  cls: "fr-9",  name: "Couronne tournante" },
+  { lvl: 80,  cls: "fr-10", name: "Orbite" },
+  { lvl: 90,  cls: "fr-11", name: "Céleste" },
+  { lvl: 100, cls: "fr-12", name: "Légende" },
+];
+const ALL_FRAME_CLS = FRAME_TIERS.map((t) => t.cls);
+function currentFrame() {
+  let cls = "fr-1";
+  const lvl = state.level || 1;
+  FRAME_TIERS.forEach((t) => { if (lvl >= t.lvl) cls = t.cls; });
+  return cls;
+}
 function applyHalo() {
-  const on = (state.level || 1) >= 5;
-  ["#me-av", "#dash-av", "#pf-av"].forEach((s) => { const e = $(s); if (e) e.classList.toggle("halo", on); });
+  const cls = currentFrame();
+  ["#me-av", "#dash-av", "#pf-av"].forEach((s) => {
+    const e = $(s);
+    if (!e) return;
+    ALL_FRAME_CLS.forEach((c) => e.classList.remove(c));
+    e.classList.add(cls);
+  });
+  loadFrames();
+}
+
+function loadFrames() {
+  const box = $("#frames");
+  if (!box) return;
+  const lvl = state.level || 1;
+  const cur = currentFrame();
+  box.innerHTML = "";
+  FRAME_TIERS.forEach((t) => {
+    const unlocked = lvl >= t.lvl;
+    const it = document.createElement("div");
+    it.className = "frame-item" + (unlocked ? "" : " locked") + (t.cls === cur ? " active" : "");
+    const pv = document.createElement("div"); pv.className = "frame-prev avatar " + t.cls; pv.textContent = "★";
+    const nm = document.createElement("div"); nm.className = "frame-name"; nm.textContent = t.name;
+    const lv = document.createElement("div"); lv.className = "frame-lvl"; lv.textContent = (t.cls === cur) ? "Actif" : ("Niveau " + t.lvl);
+    it.appendChild(pv); it.appendChild(nm); it.appendChild(lv);
+    box.appendChild(it);
+  });
 }
