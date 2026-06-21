@@ -29,18 +29,27 @@ function avatarGrad(id) {
   const h2 = (h + 45) % 360;
   return `linear-gradient(135deg, hsl(${h} 62% 60%), hsl(${h2} 58% 46%))`;
 }
+function safeImageUrl(url) {
+  // N'accepte qu'une URL https propre (anti-injection CSS dans background-image)
+  try {
+    const u = new URL(url, location.origin);
+    if (u.protocol !== "https:" && u.protocol !== "http:") return null;
+    return u.href.replace(/["'()\\]/g, encodeURIComponent);
+  } catch (e) { return null; }
+}
 function applyAvatar(el, name, id, url, level) {
   if (!el) return;
   el.classList.add("avatar");
-  if (url) {
-    el.style.backgroundImage = `url("${url}")`;
+  const safe = url ? safeImageUrl(url) : null;
+  if (safe) {
+    el.style.backgroundImage = `url("${safe}")`;
     el.style.backgroundSize = "cover";
     el.style.backgroundPosition = "center";
     el.textContent = "";
   } else {
     el.style.backgroundImage = "none";
     el.style.background = avatarGrad(id);
-    el.textContent = (name && name[0] ? name[0] : "?").toUpperCase();
+    el.textContent = (name ? [...name][0] || "?" : "?").toUpperCase();
   }
   if (level != null && typeof FRAME_TIERS !== "undefined") {
     ALL_FRAME_CLS.forEach((c) => el.classList.remove(c));
@@ -304,6 +313,8 @@ function markDmSeen() {
    SALONS DE CHAT (temps réel)
 ============================================================ */
 async function initChat() {
+  if (state.chatInit) return;
+  state.chatInit = true;
   const { data: rooms } = await sb.from("rooms").select("*").order("sort", { ascending: true });
   state.rooms = rooms || [];
   const list = $("#rooms-list");
@@ -346,6 +357,8 @@ async function initChat() {
 
 async function selectRoom(room) {
   state.currentRoom = room;
+  const token = room.id;
+  state._roomToken = token;
   $$(".room-btn").forEach((b) => b.classList.toggle("active", b.dataset.id === room.id));
   const rt = $("#room-title");
   rt.innerHTML = roomIcon(room.slug);
@@ -362,6 +375,8 @@ async function selectRoom(room) {
     .order("created_at", { ascending: true })
     .limit(100);
 
+  // Si l'utilisateur a changé de salon entre-temps, on abandonne ce rendu.
+  if (state._roomToken !== token) return;
   box.innerHTML = "";
   if (!msgs || !msgs.length) {
     box.innerHTML = `<div class="chat-empty">Aucun message pour l'instant.<br>Sois la première voix douce de ce salon.</div>`;
@@ -398,6 +413,7 @@ async function selectRoom(room) {
 
 function renderMessage(m) {
   const box = $("#messages");
+  if (m.id && box.querySelector('[data-mid="' + m.id + '"]')) return; // anti-doublon
   const mine = m.user_id === state.user.id;
   const wrap = document.createElement("div");
   wrap.className = "msg" + (mine ? " mine" : "");
@@ -431,7 +447,11 @@ function renderMessage(m) {
     mod.className = "msg-mod";
     const del = document.createElement("button");
     del.type = "button"; del.className = "mod-btn"; del.textContent = "Supprimer";
-    del.onclick = async () => { await sb.from("messages").delete().eq("id", m.id); wrap.remove(); };
+    del.onclick = async () => {
+      const { error } = await sb.from("messages").delete().eq("id", m.id);
+      if (error) { toast("Suppression impossible."); return; }
+      wrap.remove();
+    };
     mod.appendChild(del);
     if (state.isAdmin && !mine) {
       const ban = document.createElement("button");
@@ -480,7 +500,9 @@ function renderReactsBar(el, mid, agg) {
     const chip = document.createElement("button");
     chip.type = "button";
     chip.className = "react-chip" + (a.mine ? " mine" : "");
-    chip.innerHTML = `<span>${em}</span><span class="rc">${a.count}</span>`;
+    const es = document.createElement("span"); es.textContent = em;
+    const cs = document.createElement("span"); cs.className = "rc"; cs.textContent = a.count;
+    chip.appendChild(es); chip.appendChild(cs);
     chip.onclick = () => toggleReaction(mid, em);
     bar.appendChild(chip);
   });
@@ -526,9 +548,11 @@ function scrollChat() {
 
 async function sendMessage(e) {
   e.preventDefault();
+  if (state._sending) return;
   const input = $("#msg-input");
   const content = input.value.trim();
   if (!content || !state.currentRoom) return;
+  state._sending = true;
   input.value = "";
   input.style.height = "46px";
   const { error } = await sb.from("messages").insert({
@@ -536,6 +560,7 @@ async function sendMessage(e) {
     user_id: state.user.id,
     content,
   });
+  state._sending = false;
   if (error) {
     toast("Message non envoyé. Réessaie.");
     input.value = content;
@@ -887,6 +912,7 @@ function initProfile() {
   });
 
   $("#btn-logout").addEventListener("click", async () => {
+    try { if (navigator.serviceWorker && navigator.serviceWorker.controller) navigator.serviceWorker.controller.postMessage("zx-clear-cache"); } catch (e) {}
     await sb.auth.signOut();
     location.href = "index.html";
   });
@@ -1404,6 +1430,7 @@ function appendDM(m) {
   wrap.appendChild(meta); wrap.appendChild(bubble);
   box.appendChild(wrap);
   box.scrollTop = box.scrollHeight;
+  return wrap;
 }
 
 async function sendDM(e) {
@@ -1414,8 +1441,11 @@ async function sendDM(e) {
   if (!content) return;
   input.value = ""; input.style.height = "48px";
   const m = { sender_id: state.user.id, recipient_id: state.dmWith, content };
-  appendDM({ ...m, created_at: new Date().toISOString() });
+  const bubble = appendDM({ ...m, created_at: new Date().toISOString() });
   const { error } = await sb.from("dms").insert(m);
-  if (error) toast("Message non envoyé.");
-  else loadConversations();
+  if (error) {
+    if (bubble) bubble.remove();
+    input.value = content;
+    toast("Message non envoyé.");
+  } else loadConversations();
 }

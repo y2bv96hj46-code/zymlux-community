@@ -689,21 +689,6 @@
       });
     })();
 
-    /* WAITLIST (interface seule — pas encore connectée) */
-    (function () {
-      var form = document.getElementById('waitlist'), msg = document.getElementById('wl-msg'), email = document.getElementById('wl-email');
-      if (!form) return;
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var val = (email.value || '').trim();
-        var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
-        if (!ok) { msg.textContent = 'Entre une adresse e-mail valide 🙏'; msg.classList.add('show'); return; }
-        msg.textContent = 'Merci ✦ La liste d\'attente ouvre très bientôt — reviens vite.';
-        msg.classList.add('show');
-        form.reset();
-      });
-    })();
-
     /* ÉTOILES */
     (function () {
       var canvas = document.getElementById('stars'), ctx = canvas.getContext('2d');
