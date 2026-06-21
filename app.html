@@ -15,8 +15,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/app.css?v=23" />
-  <script src="assets/config.js?v=23"></script>
+  <link rel="stylesheet" href="assets/app.css?v=24" />
+  <script src="assets/config.js?v=24"></script>
 </head>
 <body>
 
@@ -150,10 +150,10 @@
         <div class="welcome">La communauté</div>
         <div class="card post-composer">
           <textarea id="post-input" class="field" rows="3" maxlength="2000" placeholder="Partage une pensée, une victoire, un moment difficile… On t'écoute."></textarea>
-          <div id="post-preview" class="post-preview" hidden><img id="post-preview-img" alt="" /><button type="button" id="post-preview-del" aria-label="Retirer">×</button></div>
+          <div id="post-preview" class="post-preview" hidden><div id="post-preview-media"></div><button type="button" id="post-preview-del" aria-label="Retirer">×</button></div>
           <div class="post-composer-actions">
-            <button class="btn btn-ghost btn-sm" id="post-photo-btn" type="button"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L17 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><circle cx="12" cy="12.5" r="3.5"/></svg> Photo</button>
-            <input type="file" id="post-photo-input" accept="image/*" hidden />
+            <button class="btn btn-ghost btn-sm" id="post-photo-btn" type="button"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L17 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><circle cx="12" cy="12.5" r="3.5"/></svg> Photo / Vidéo</button>
+            <input type="file" id="post-photo-input" accept="image/*,video/*" hidden />
             <button class="btn btn-gold btn-sm" id="post-send" type="button">Publier</button>
           </div>
         </div>
@@ -272,6 +272,17 @@
             <button class="btn btn-gold btn-block btn-sm" id="breathe-btn" type="button">Commencer</button>
           </div>
 
+          <!-- Sons d'ambiance -->
+          <div class="card">
+            <div class="ttl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4"/><path d="M7 7v10"/><path d="M11 4v16"/><path d="M15 8v8"/><path d="M19 6v12"/></svg> Sons d'ambiance</div>
+            <div class="sub">Des sons doux pour t'apaiser ou t'endormir.</div>
+            <div class="sounds" id="sounds"></div>
+            <div class="snd-vol-row">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cream-muted)"><path d="M4 9v6h4l5 4V5L8 9H4Z"/></svg>
+              <input type="range" id="snd-vol" min="0" max="100" value="55" class="snd-vol" aria-label="Volume" />
+            </div>
+          </div>
+
           <!-- Ancrage 5-4-3-2-1 -->
           <div class="card ground-card">
             <div class="ttl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c8 0 14-4 14-13 0 0-13-2-13 8 0 1 .3 3 2 5"/><path d="M5 19c3-5 6-7 10-9"/></svg> Ancrage 5-4-3-2-1</div>
@@ -382,6 +393,6 @@
   <div class="toast" id="toast"></div>
 
   <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}</script>
-  <script type="module" src="assets/app.js?v=23"></script>
+  <script type="module" src="assets/app.js?v=24"></script>
 </body>
 </html>
