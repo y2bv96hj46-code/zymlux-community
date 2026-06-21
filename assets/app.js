@@ -79,8 +79,8 @@ const state = {
   } else {
     $("#auth").style.display = "flex";
   }
-  sb.auth.onAuthStateChange((_evt, session) => {
-    if (!session) location.reload();
+  sb.auth.onAuthStateChange((evt) => {
+    if (evt === "SIGNED_OUT") location.href = "index.html";
   });
 })();
 
