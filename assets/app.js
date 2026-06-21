@@ -266,6 +266,7 @@ async function fetchProfile(id) {
    Navigation entre vues
 ============================================================ */
 function switchView(v) {
+  if (v !== "dash" && typeof sndStop === "function") sndStop(); // coupe les sons d'ambiance en quittant l'espace
   $$("[data-view]").forEach((x) => x.classList.toggle("active", x.dataset.view === v));
   $$(".view").forEach((vw) => vw.classList.remove("active"));
   const el = $("#view-" + v);
@@ -914,6 +915,7 @@ function initProfile() {
   });
 
   $("#btn-logout").addEventListener("click", async () => {
+    try { if (typeof sndStop === "function") sndStop(); } catch (e) {}
     try { if (navigator.serviceWorker && navigator.serviceWorker.controller) navigator.serviceWorker.controller.postMessage("zx-clear-cache"); } catch (e) {}
     await sb.auth.signOut();
     location.href = "index.html";
@@ -943,6 +945,7 @@ function initFeed() {
 
   function clearPreview() {
     feedImageFile = null; photoInput.value = ""; preview.hidden = true; previewMedia.innerHTML = "";
+    if (state._feedPreviewUrl) { URL.revokeObjectURL(state._feedPreviewUrl); state._feedPreviewUrl = null; }
   }
 
   photoBtn.addEventListener("click", () => photoInput.click());
@@ -954,7 +957,9 @@ function initFeed() {
     if (f.size > maxMB * 1024 * 1024) { toast((isVid ? "Vidéo" : "Image") + " trop lourde (" + maxMB + " Mo max)."); photoInput.value = ""; return; }
     feedImageFile = f;
     previewMedia.innerHTML = "";
+    if (state._feedPreviewUrl) URL.revokeObjectURL(state._feedPreviewUrl);
     const url = URL.createObjectURL(f);
+    state._feedPreviewUrl = url;
     const el = document.createElement(isVid ? "video" : "img");
     el.src = url;
     if (isVid) { el.controls = true; el.playsInline = true; }
@@ -971,9 +976,9 @@ function initFeed() {
     if (feedImageFile) {
       const ext = (feedImageFile.name.split(".").pop() || "jpg").toLowerCase();
       const path = `${state.user.id}/post_${Date.now()}.${ext}`;
-      const { error: upErr } = await sb.storage.from("avatars").upload(path, feedImageFile, { upsert: true, contentType: feedImageFile.type || undefined });
+      const { error: upErr } = await sb.storage.from("post-media").upload(path, feedImageFile, { upsert: true, contentType: feedImageFile.type || undefined });
       if (upErr) { sendBtn.disabled = false; toast("Envoi du fichier impossible."); return; }
-      mediaUrl = sb.storage.from("avatars").getPublicUrl(path).data.publicUrl;
+      mediaUrl = sb.storage.from("post-media").getPublicUrl(path).data.publicUrl;
     }
     const { error } = await sb.from("posts").insert({ user_id: state.user.id, content: content || " ", image_url: mediaUrl });
     sendBtn.disabled = false;
@@ -1025,7 +1030,16 @@ function renderPost(p, isLiked) {
   head.appendChild(av); head.appendChild(info);
   if (p.user_id === state.user.id || state.isAdmin) {
     const del = document.createElement("button"); del.className = "post-del"; del.textContent = "×"; del.title = "Supprimer";
-    del.onclick = async () => { if (!confirm("Supprimer cette publication ?")) return; await sb.from("posts").delete().eq("id", p.id); await loadFeed(); };
+    del.onclick = async () => {
+      if (!confirm("Supprimer cette publication ?")) return;
+      const { error } = await sb.from("posts").delete().eq("id", p.id);
+      if (error) { toast("Suppression impossible."); return; }
+      if (p.image_url && p.user_id === state.user.id) {
+        const i = p.image_url.indexOf("/post-media/");
+        if (i !== -1) { const path = decodeURIComponent(p.image_url.slice(i + "/post-media/".length)); sb.storage.from("post-media").remove([path]).catch(() => {}); }
+      }
+      await loadFeed();
+    };
     head.appendChild(del);
   }
   art.appendChild(head);
@@ -1516,7 +1530,7 @@ function sndPlay(key) {
   if (key === "souffle"){ filter.frequency.value = 380; }
   src.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
   src.start();
-  sndState.nodes = { src, gain, lfo };
+  sndState.nodes = { src, gain, lfo, lfoGain };
   sndState.key = key;
 }
 function initSounds() {
@@ -1539,5 +1553,6 @@ function initSounds() {
   if (vol) vol.addEventListener("input", () => {
     sndState.gain = vol.value / 100;
     if (sndState.nodes && sndState.nodes.gain) sndState.nodes.gain.gain.value = sndState.gain;
+    if (sndState.key === "ocean" && sndState.nodes && sndState.nodes.lfoGain) sndState.nodes.lfoGain.gain.value = sndState.gain * 0.5;
   });
 }
