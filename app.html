@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/app.css?v=11" />
-  <script src="assets/config.js?v=11"></script>
+  <link rel="stylesheet" href="assets/app.css?v=12" />
+  <script src="assets/config.js?v=12"></script>
 </head>
 <body>
 
@@ -136,10 +136,10 @@
         <div class="kicker">Le fil</div>
         <div class="welcome">La communauté</div>
         <div class="card post-composer">
-          <textarea id="post-input" class="field" rows="3" maxlength="2000" placeholder="Partage une pensée, une victoire, un moment difficile… On t'écoute. 🤍"></textarea>
+          <textarea id="post-input" class="field" rows="3" maxlength="2000" placeholder="Partage une pensée, une victoire, un moment difficile… On t'écoute."></textarea>
           <div id="post-preview" class="post-preview" hidden><img id="post-preview-img" alt="" /><button type="button" id="post-preview-del" aria-label="Retirer">×</button></div>
           <div class="post-composer-actions">
-            <button class="btn btn-ghost btn-sm" id="post-photo-btn" type="button">📷 Photo</button>
+            <button class="btn btn-ghost btn-sm" id="post-photo-btn" type="button"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L17 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><circle cx="12" cy="12.5" r="3.5"/></svg> Photo</button>
             <input type="file" id="post-photo-input" accept="image/*" hidden />
             <button class="btn btn-gold btn-sm" id="post-send" type="button">Publier</button>
           </div>
@@ -171,12 +171,12 @@
             <div class="ch-title" id="ch-title">…</div>
             <div class="ch-desc" id="ch-desc"></div>
             <button class="btn btn-gold" id="ch-btn" type="button">Marquer comme fait</button>
-            <div class="streak">🔥 <b id="ch-count">0</b> défis relevés au total</div>
+            <div class="streak"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.5 3 4 4 4 8a4 4 0 0 1-8 0c0-1.5.5-2.5 1.5-3.5 0 1.5 1 2.5 2.5 2.5C12 8 11 6.5 12 3Z"/></svg> <b id="ch-count">0</b> défis relevés au total</div>
           </div>
 
           <!-- Fiche de route -->
           <div class="card">
-            <div class="ttl">🧭 Ma fiche de route</div>
+            <div class="ttl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="15.5 8.5 13.5 13.5 8.5 15.5 10.5 10.5"/></svg> Ma fiche de route</div>
             <div class="sub">Tes objectifs à toi, un pas à la fois.</div>
             <div class="rm-progress"><span id="rm-bar" style="width:0%"></span></div>
             <form class="rm-add" id="rm-add">
@@ -188,14 +188,14 @@
 
           <!-- Évolution -->
           <div class="card">
-            <div class="ttl">📈 Mon évolution</div>
+            <div class="ttl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16h16"/><path d="M8 14l3-3 3 2 4-6"/></svg> Mon évolution</div>
             <div class="sub">Comment tu te sens aujourd'hui ?</div>
             <div class="mood-pick" id="mood-pick">
-              <button type="button" data-score="1" title="Très difficile">😣</button>
-              <button type="button" data-score="2" title="Difficile">😕</button>
-              <button type="button" data-score="3" title="Ça va">😐</button>
-              <button type="button" data-score="4" title="Bien">🙂</button>
-              <button type="button" data-score="5" title="Très bien">😌</button>
+              <button type="button" data-score="1" title="Très difficile"><svg class="ic-face" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".6" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".6" fill="currentColor" stroke="none"/><path d="M8.5 16q3.5-3 7 0"/></svg></button>
+              <button type="button" data-score="2" title="Difficile"><svg class="ic-face" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".6" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".6" fill="currentColor" stroke="none"/><path d="M8.5 15.5q3.5-2 7 0"/></svg></button>
+              <button type="button" data-score="3" title="Ça va"><svg class="ic-face" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".6" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".6" fill="currentColor" stroke="none"/><path d="M8.5 15h7"/></svg></button>
+              <button type="button" data-score="4" title="Bien"><svg class="ic-face" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".6" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".6" fill="currentColor" stroke="none"/><path d="M8.5 14.5q3.5 2 7 0"/></svg></button>
+              <button type="button" data-score="5" title="Très bien"><svg class="ic-face" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".6" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".6" fill="currentColor" stroke="none"/><path d="M8 14q4 3.5 8 0"/></svg></button>
             </div>
             <input class="field" id="mood-note" type="text" maxlength="140" placeholder="Un mot sur ta journée (optionnel)" style="margin-bottom:10px" />
             <button class="btn btn-gold btn-block btn-sm" id="mood-save" type="button" disabled>Enregistrer mon humeur</button>
@@ -205,7 +205,7 @@
 
           <!-- Respiration guidée -->
           <div class="card breathe-card">
-            <div class="ttl">🫧 Respiration guidée</div>
+            <div class="ttl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h9a2.5 2.5 0 1 0-2.5-2.5"/><path d="M4 13h12a2.5 2.5 0 1 1-2.5 2.5"/><path d="M4 17h6"/></svg> Respiration guidée</div>
             <div class="sub">Quand ça serre, respire avec le cercle.</div>
             <div class="breathe">
               <div class="breathe-orb" id="breathe-orb"><span id="breathe-text">Prêt ?</span></div>
@@ -215,7 +215,7 @@
 
           <!-- Ancrage 5-4-3-2-1 -->
           <div class="card ground-card">
-            <div class="ttl">🌿 Ancrage 5-4-3-2-1</div>
+            <div class="ttl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c8 0 14-4 14-13 0 0-13-2-13 8 0 1 .3 3 2 5"/><path d="M5 19c3-5 6-7 10-9"/></svg> Ancrage 5-4-3-2-1</div>
             <div class="sub">Reviens dans l'instant présent, en douceur.</div>
             <div class="ground" id="ground">
               <div class="ground-num" id="ground-num">5·4·3·2·1</div>
@@ -226,7 +226,7 @@
 
           <!-- Réussites -->
           <div class="card span">
-            <div class="ttl">🏅 Mes réussites</div>
+            <div class="ttl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M9 13l-1.5 8L12 18l4.5 3L15 13"/></svg> Mes réussites</div>
             <div class="sub">Chaque pas compte. Voici les tiens.</div>
             <div class="badges" id="badges"></div>
           </div>
@@ -278,6 +278,6 @@
 
   <div class="toast" id="toast"></div>
 
-  <script type="module" src="assets/app.js?v=11"></script>
+  <script type="module" src="assets/app.js?v=12"></script>
 </body>
 </html>
