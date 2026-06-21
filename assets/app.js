@@ -1484,56 +1484,135 @@ async function sendDM(e) {
 }
 
 /* ============================================================
-   SONS D'AMBIANCE (vrais enregistrements — Wikimedia Commons,
-   licences libres CC / domaine public). On charge le MP3 transcodé
-   (compatible iPhone/Safari) avec repli OGG pour les autres.
+   SONS D'AMBIANCE
+   Deux familles :
+   1) "synth" — bruits (blanc / rose / brun) et fréquences apaisantes
+      (432 / 528 Hz) GÉNÉRÉS en direct via Web Audio. C'est la vraie
+      méthode studio : qualité parfaite, fonctionne sur 100 % des
+      appareils, sans aucune connexion.
+   2) "file" — vrais enregistrements (Wikimedia Commons, licences
+      libres). MP3 transcodé (iPhone/Safari) + repli OGG.
 ============================================================ */
 const SOUNDS = [
-  { k: "pluie", n: "Pluie",
+  // Bruits & fréquences (générés — apaisants, anti-anxiété, sommeil, focus)
+  { k: "blanc", n: "Bruit blanc",          type: "synth", synth: "white", lvl: 0.45 },
+  { k: "rose",  n: "Bruit rose",           type: "synth", synth: "pink",  lvl: 0.7 },
+  { k: "brun",  n: "Bruit brun · dormir",  type: "synth", synth: "brown", lvl: 1.0 },
+  { k: "f432",  n: "432 Hz · Sérénité",    type: "synth", synth: "tone",  freq: 432, lvl: 0.4 },
+  { k: "f528",  n: "528 Hz · Apaisement",  type: "synth", synth: "tone",  freq: 528, lvl: 0.4 },
+  // Vrais enregistrements
+  { k: "pluie", n: "Pluie", type: "file",
     mp3: "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Rain_against_the_window.ogg/Rain_against_the_window.ogg.mp3",
     ogg: "https://upload.wikimedia.org/wikipedia/commons/4/41/Rain_against_the_window.ogg" },
-  { k: "ocean", n: "Vagues",
-    mp3: "https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b8/Sounding_waves.ogg/Sounding_waves.ogg.mp3",
-    ogg: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Sounding_waves.ogg" },
-  { k: "feu", n: "Feu de camp",
+  { k: "feu", n: "Feu de camp", type: "file",
     mp3: "https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b1/Campfire_sound_ambience.ogg/Campfire_sound_ambience.ogg.mp3",
     ogg: "https://upload.wikimedia.org/wikipedia/commons/b/b1/Campfire_sound_ambience.ogg" },
-  { k: "nature", n: "Nature",
+  { k: "nature", n: "Nature", type: "file",
     mp3: "https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0a/20090610_0_ambience.ogg/20090610_0_ambience.ogg.mp3",
     ogg: "https://upload.wikimedia.org/wikipedia/commons/0/0a/20090610_0_ambience.ogg" },
 ];
-const sndState = { audio: null, key: null, gain: 0.55, fade: null };
+const sndState = { ctx: null, mode: null, audio: null, nodes: null, key: null, gain: 0.55, factor: 1, fade: null, buffers: {} };
 
+function sndCtx() {
+  if (!sndState.ctx) sndState.ctx = new (window.AudioContext || window.webkitAudioContext)();
+  if (sndState.ctx.resume) sndState.ctx.resume();
+  return sndState.ctx;
+}
+// Génère un buffer de bruit (6 s, bouclé) — blanc / rose / brun
+function sndNoiseBuffer(ctx, type) {
+  if (sndState.buffers[type]) return sndState.buffers[type];
+  const len = ctx.sampleRate * 6;
+  const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+  const d = buf.getChannelData(0);
+  if (type === "white") {
+    for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+  } else if (type === "pink") {
+    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0; // Paul Kellet
+    for (let i = 0; i < len; i++) {
+      const w = Math.random() * 2 - 1;
+      b0 = 0.99886 * b0 + w * 0.0555179; b1 = 0.99332 * b1 + w * 0.0750759;
+      b2 = 0.96900 * b2 + w * 0.1538520; b3 = 0.86650 * b3 + w * 0.3104856;
+      b4 = 0.55000 * b4 + w * 0.5329522; b5 = -0.7616 * b5 - w * 0.0168980;
+      d[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + w * 0.5362) * 0.11;
+      b6 = w * 0.115926;
+    }
+  } else { // brown
+    let last = 0;
+    for (let i = 0; i < len; i++) {
+      const w = Math.random() * 2 - 1;
+      last = (last + 0.02 * w) / 1.02;
+      d[i] = last * 3.5;
+    }
+  }
+  sndState.buffers[type] = buf;
+  return buf;
+}
 function sndStop() {
   if (sndState.fade) { clearInterval(sndState.fade); sndState.fade = null; }
+  // flux fichier
   if (sndState.audio) {
     try { sndState.audio.pause(); } catch (e) {}
     try { sndState.audio.src = ""; } catch (e) {}
     sndState.audio = null;
   }
+  // nœuds Web Audio — petit fondu de sortie pour éviter le "clic"
+  if (sndState.nodes) {
+    const n = sndState.nodes;
+    const ctx = sndState.ctx;
+    const t = ctx ? ctx.currentTime : 0;
+    try { if (n.master && ctx) { n.master.gain.cancelScheduledValues(t); n.master.gain.setTargetAtTime(0, t, 0.04); } } catch (e) {}
+    const stopAt = t + 0.18; // on coupe APRÈS le fondu, pas pendant
+    [n.src, n.o1, n.o2, n.lfo].forEach((node) => { if (node) { try { node.stop(stopAt); } catch (e) {} } });
+    sndState.nodes = null;
+  }
+  sndState.mode = null;
   sndState.key = null;
-  $$("#sounds .snd-btn").forEach((b) => { b.classList.remove("active", "loading"); });
+  $$("#sounds .snd-btn").forEach((b) => b.classList.remove("active", "loading"));
 }
-function sndPlay(key) {
-  const def = SOUNDS.find((s) => s.k === key);
-  if (!def) return;
-  sndStop();
-  // <audio> avec MP3 (iPhone) puis OGG en repli
+// Lecture d'un bruit ou d'une fréquence générés
+function sndPlaySynth(def) {
+  const ctx = sndCtx();
+  const master = ctx.createGain();
+  master.gain.value = 0; // fondu d'entrée
+  const nodes = { master };
+  if (def.synth === "tone") {
+    // deux sinus très légèrement désaccordés = battement doux et apaisant
+    const o1 = ctx.createOscillator(); o1.type = "sine"; o1.frequency.value = def.freq;
+    const o2 = ctx.createOscillator(); o2.type = "sine"; o2.frequency.value = def.freq; o2.detune.value = 4;
+    const trem = ctx.createGain(); trem.gain.value = 1; // respiration lente
+    const lfo = ctx.createOscillator(); lfo.frequency.value = 0.12;
+    const lfoG = ctx.createGain(); lfoG.gain.value = 0.12;
+    lfo.connect(lfoG); lfoG.connect(trem.gain);
+    o1.connect(trem); o2.connect(trem); trem.connect(master);
+    o1.start(); o2.start(); lfo.start();
+    nodes.o1 = o1; nodes.o2 = o2; nodes.lfo = lfo;
+  } else {
+    const src = ctx.createBufferSource();
+    src.buffer = sndNoiseBuffer(ctx, def.synth); src.loop = true;
+    const lp = ctx.createBiquadFilter(); lp.type = "lowpass";
+    lp.frequency.value = def.synth === "white" ? 9000 : (def.synth === "pink" ? 5200 : 1700);
+    src.connect(lp); lp.connect(master);
+    src.start();
+    nodes.src = src;
+  }
+  master.connect(ctx.destination);
+  const target = sndState.gain * (def.lvl || 1);
+  master.gain.setTargetAtTime(target, ctx.currentTime, 0.7);
+  sndState.nodes = nodes;
+  sndState.factor = def.lvl || 1;
+  sndState.mode = "synth";
+}
+// Lecture d'un vrai enregistrement (fichier)
+function sndPlayFile(def) {
   const a = document.createElement("audio");
-  a.loop = true;
-  a.preload = "auto";
-  a.playsInline = true;
-  // pas de crossOrigin : on ne traite pas le flux, et l'activer peut bloquer
-  // la lecture sur certains appareils si le serveur ne renvoie pas les en-têtes CORS.
-  a.volume = 0; // on monte en fondu
+  a.loop = true; a.preload = "auto"; a.playsInline = true; a.volume = 0;
   const sMp3 = document.createElement("source"); sMp3.src = def.mp3; sMp3.type = "audio/mpeg";
   const sOgg = document.createElement("source"); sOgg.src = def.ogg; sOgg.type = "audio/ogg";
   a.appendChild(sMp3); a.appendChild(sOgg);
-  const btn = $(`#sounds .snd-btn[data-k="${key}"]`);
+  const btn = $(`#sounds .snd-btn[data-k="${def.k}"]`);
   if (btn) btn.classList.add("loading");
   a.addEventListener("playing", () => {
     if (btn) btn.classList.remove("loading");
-    // fondu d'entrée jusqu'au volume réglé
     if (sndState.fade) clearInterval(sndState.fade);
     const target = sndState.gain;
     sndState.fade = setInterval(() => {
@@ -1545,13 +1624,21 @@ function sndPlay(key) {
   });
   a.addEventListener("error", () => {
     sndStop();
-    toast && toast("Son indisponible pour l'instant, réessaie plus tard.");
+    toast && toast("Ce son n'est pas disponible ici, essaie un autre.");
   });
   sndState.audio = a;
-  sndState.key = key;
+  sndState.mode = "file";
   a.load();
   const p = a.play();
-  if (p && p.catch) p.catch(() => { /* lecture bloquée tant que l'utilisateur n'a pas interagi : sans gravité ici */ });
+  if (p && p.catch) p.catch(() => {});
+}
+function sndPlay(key) {
+  const def = SOUNDS.find((s) => s.k === key);
+  if (!def) return;
+  sndStop();
+  sndState.key = key;
+  if (def.type === "synth") sndPlaySynth(def);
+  else sndPlayFile(def);
 }
 function initSounds() {
   if (state.soundsInit) return;
@@ -1572,6 +1659,10 @@ function initSounds() {
   const vol = $("#snd-vol");
   if (vol) vol.addEventListener("input", () => {
     sndState.gain = vol.value / 100;
-    if (sndState.audio && !sndState.fade) sndState.audio.volume = sndState.gain;
+    if (sndState.mode === "file" && sndState.audio && !sndState.fade) {
+      sndState.audio.volume = sndState.gain;
+    } else if (sndState.mode === "synth" && sndState.nodes && sndState.nodes.master && sndState.ctx) {
+      sndState.nodes.master.gain.setTargetAtTime(sndState.gain * sndState.factor, sndState.ctx.currentTime, 0.1);
+    }
   });
 }
