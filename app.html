@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/app.css?v=6" />
-  <script src="assets/config.js?v=6"></script>
+  <link rel="stylesheet" href="assets/app.css?v=7" />
+  <script src="assets/config.js?v=7"></script>
 </head>
 <body>
 
@@ -221,6 +221,14 @@
         <div class="kicker">Profil</div>
         <div class="welcome">Toi, ici.</div>
         <div class="card">
+          <div class="pf-top">
+            <div class="pf-av" id="pf-av">🌙</div>
+            <div>
+              <button class="btn btn-ghost btn-sm" id="pf-photo-btn" type="button">Changer la photo</button>
+              <input type="file" id="pf-photo-input" accept="image/*" hidden />
+              <div class="hint" id="pf-photo-hint">JPG, PNG, GIF ou WebP · 2 Mo max</div>
+            </div>
+          </div>
           <div class="profile-row">
             <span class="k">Pseudo</span>
             <span class="v" id="pf-pseudo">…</span>
@@ -251,6 +259,6 @@
 
   <div class="toast" id="toast"></div>
 
-  <script type="module" src="assets/app.js?v=6"></script>
+  <script type="module" src="assets/app.js?v=7"></script>
 </body>
 </html>
