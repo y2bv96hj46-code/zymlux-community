@@ -155,6 +155,20 @@ label.lbl{display:block;font-size:0.7rem;letter-spacing:0.18em;text-transform:up
 .msg.grouped{margin-top:-10px;}
 .msg.grouped .meta{display:none;}
 .chat-empty{margin:auto;color:var(--cream-faint);font-size:0.92rem;text-align:center;line-height:1.7;}
+/* réactions emoji */
+.msg-reacts{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:3px;padding:0 2px;}
+.msg.mine .msg-reacts{justify-content:flex-end;}
+.react-chip{display:inline-flex;align-items:center;gap:4px;background:rgba(244,239,231,0.05);border:1px solid var(--line-2);border-radius:999px;padding:2px 9px;font-size:0.82rem;color:var(--cream-muted);transition:border-color .25s var(--ease),background .25s var(--ease);}
+.react-chip.mine{border-color:var(--gold-line);background:var(--gold-soft);color:var(--gold-bright);}
+.react-chip .rc{font-size:0.72rem;}
+.react-add{width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--cream-faint);font-size:0.82rem;display:inline-flex;align-items:center;justify-content:center;opacity:0;transition:opacity .25s var(--ease),color .25s var(--ease),border-color .25s var(--ease);}
+.msg:hover .react-add{opacity:1;}
+.react-add:hover{color:var(--gold-bright);border-color:var(--gold-line);}
+.react-picker{display:none;gap:2px;background:var(--surface-3);border:1px solid var(--line-2);border-radius:999px;padding:3px 7px;}
+.react-picker.open{display:inline-flex;}
+.react-picker button{background:none;border:none;font-size:1.15rem;padding:1px 3px;line-height:1;transition:transform .2s var(--ease);}
+.react-picker button:hover{transform:scale(1.25);}
+@media (hover:none){.react-add{opacity:1;}}
 .composer{display:flex;gap:11px;padding:15px;border-top:1px solid var(--line);align-items:flex-end;background:rgba(244,239,231,0.015);}
 .composer textarea{flex:1;resize:none;height:48px;max-height:140px;border-radius:14px;line-height:1.4;}
 .send-btn{flex:0 0 auto;width:48px;height:48px;border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;

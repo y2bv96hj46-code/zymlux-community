@@ -257,6 +257,13 @@ async function initChat() {
 
   startPresence();
 
+  // Réactions en temps réel
+  state.reactChannel = sb.channel("reactions")
+    .on("postgres_changes", { event: "*", schema: "public", table: "message_reactions" }, () => {
+      if ($("#view-chat").classList.contains("active")) loadReactionsForVisible();
+    })
+    .subscribe();
+
   // Composer
   const input = $("#msg-input");
   input.addEventListener("input", () => {
@@ -295,6 +302,7 @@ async function selectRoom(room) {
     msgs.forEach(renderMessage);
     scrollChat();
   }
+  loadReactionsForVisible();
 
   // (Re)souscription temps réel
   if (state.roomChannel) sb.removeChannel(state.roomChannel);
@@ -327,6 +335,7 @@ function renderMessage(m) {
   const wrap = document.createElement("div");
   wrap.className = "msg" + (mine ? " mine" : "");
   wrap.dataset.uid = m.user_id;
+  wrap.dataset.mid = m.id;
   const prev = box.lastElementChild;
   if (prev && prev.dataset && prev.dataset.uid === m.user_id) wrap.classList.add("grouped");
   const who = (m.profiles && m.profiles.pseudo) || "Membre";
@@ -346,7 +355,64 @@ function renderMessage(m) {
   bubble.textContent = m.content;
   wrap.appendChild(meta);
   wrap.appendChild(bubble);
+  const reacts = document.createElement("div");
+  reacts.className = "msg-reacts";
+  wrap.appendChild(reacts);
   box.appendChild(wrap);
+}
+
+/* ---------- Réactions emoji sur les messages ---------- */
+const REACT_EMOJIS = ["❤️", "🙏", "✨", "🫂", "😢", "👏"];
+
+async function loadReactionsForVisible() {
+  const els = $$("#messages .msg");
+  const mids = els.map((el) => el.dataset.mid).filter(Boolean);
+  if (!mids.length) return;
+  const { data } = await sb.from("message_reactions").select("message_id, emoji, user_id").in("message_id", mids);
+  const byMsg = {};
+  (data || []).forEach((r) => {
+    const mm = (byMsg[r.message_id] = byMsg[r.message_id] || {});
+    const a = (mm[r.emoji] = mm[r.emoji] || { count: 0, mine: false });
+    a.count++;
+    if (r.user_id === state.user.id) a.mine = true;
+  });
+  els.forEach((el) => renderReactsBar(el, el.dataset.mid, byMsg[el.dataset.mid] || {}));
+}
+
+function renderReactsBar(el, mid, agg) {
+  let bar = el.querySelector(".msg-reacts");
+  if (!bar) { bar = document.createElement("div"); bar.className = "msg-reacts"; el.appendChild(bar); }
+  bar.innerHTML = "";
+  Object.keys(agg).forEach((em) => {
+    const a = agg[em];
+    if (!a || a.count <= 0) return;
+    const chip = document.createElement("button");
+    chip.type = "button";
+    chip.className = "react-chip" + (a.mine ? " mine" : "");
+    chip.innerHTML = `<span>${em}</span><span class="rc">${a.count}</span>`;
+    chip.onclick = () => toggleReaction(mid, em);
+    bar.appendChild(chip);
+  });
+  const add = document.createElement("button");
+  add.type = "button"; add.className = "react-add"; add.textContent = "☺";
+  const picker = document.createElement("div"); picker.className = "react-picker";
+  REACT_EMOJIS.forEach((em) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.textContent = em;
+    b.onclick = () => { picker.classList.remove("open"); toggleReaction(mid, em); };
+    picker.appendChild(b);
+  });
+  add.onclick = () => picker.classList.toggle("open");
+  bar.appendChild(add);
+  bar.appendChild(picker);
+}
+
+async function toggleReaction(mid, emoji) {
+  const { data: existing } = await sb.from("message_reactions")
+    .select("id").eq("message_id", mid).eq("user_id", state.user.id).eq("emoji", emoji).maybeSingle();
+  if (existing) await sb.from("message_reactions").delete().eq("id", existing.id);
+  else await sb.from("message_reactions").insert({ message_id: mid, user_id: state.user.id, emoji });
+  loadReactionsForVisible();
 }
 
 /* Présence en ligne (temps réel) */
