@@ -530,3 +530,21 @@ body::before{
 .frame-lvl{font-size:0.66rem;color:var(--cream-faint);}
 .frame-item.active .frame-name{color:var(--gold-bright);}
 .frame-item.active .frame-lvl{color:var(--gold-bright);}
+
+/* ============================================================
+   ADMINISTRATION
+============================================================ */
+.admin-list{display:flex;flex-direction:column;gap:8px;}
+.admin-row{display:flex;align-items:center;gap:13px;padding:10px 13px;border:1px solid var(--line);border-radius:13px;}
+.admin-row.banned{border-color:rgba(229,145,122,0.4);background:rgba(229,145,122,0.06);}
+.admin-actions{display:flex;gap:8px;flex:0 0 auto;}
+.admin-actions .danger{color:var(--bad);border-color:rgba(229,145,122,0.4);}
+.admin-actions .danger:hover{background:rgba(229,145,122,0.1);color:var(--bad);}
+
+/* contrôles de modération sur les messages */
+.msg-mod{display:flex;gap:8px;margin-top:4px;opacity:0;transition:opacity .25s var(--ease);}
+.msg:hover .msg-mod{opacity:1;}
+.mod-btn{background:none;border:1px solid var(--line);color:var(--cream-faint);font-size:0.72rem;padding:3px 9px;border-radius:999px;transition:color .2s var(--ease),border-color .2s var(--ease);}
+.mod-btn:hover{color:var(--cream);border-color:var(--gold-line);}
+.mod-btn.ban:hover{color:var(--bad);border-color:rgba(229,145,122,0.5);}
+@media (hover:none){.msg-mod{opacity:1;}}
