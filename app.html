@@ -112,8 +112,11 @@
         </aside>
         <div class="chat-main">
           <div class="chat-head">
-            <div class="t" id="room-title">…</div>
-            <div class="d" id="room-desc"></div>
+            <div>
+              <div class="t" id="room-title">…</div>
+              <div class="d" id="room-desc"></div>
+            </div>
+            <div class="online" id="online" title="Membres connectés"></div>
           </div>
           <div class="messages" id="messages"></div>
           <form class="composer" id="composer">
@@ -129,6 +132,7 @@
       <div class="container">
         <div class="kicker">Mon espace</div>
         <div class="welcome" id="dash-hello">Bonsoir.</div>
+        <div class="quote-day" id="quote-day"></div>
         <div class="grid">
           <!-- Défi -->
           <div class="card challenge span">
@@ -162,9 +166,27 @@
               <button type="button" data-score="4" title="Bien">🙂</button>
               <button type="button" data-score="5" title="Très bien">😌</button>
             </div>
+            <input class="field" id="mood-note" type="text" maxlength="140" placeholder="Un mot sur ta journée (optionnel)" style="margin-bottom:10px" />
             <button class="btn btn-gold btn-block btn-sm" id="mood-save" type="button" disabled>Enregistrer mon humeur</button>
             <div class="chart" id="mood-chart"></div>
             <div class="avg" id="mood-avg"></div>
+          </div>
+
+          <!-- Respiration guidée -->
+          <div class="card breathe-card">
+            <div class="ttl">🫧 Respiration guidée</div>
+            <div class="sub">Quand ça serre, respire avec le cercle.</div>
+            <div class="breathe">
+              <div class="breathe-orb" id="breathe-orb"><span id="breathe-text">Prêt ?</span></div>
+            </div>
+            <button class="btn btn-gold btn-block btn-sm" id="breathe-btn" type="button">Commencer</button>
+          </div>
+
+          <!-- Réussites -->
+          <div class="card">
+            <div class="ttl">🏅 Mes réussites</div>
+            <div class="sub">Chaque pas compte. Voici les tiens.</div>
+            <div class="badges" id="badges"></div>
           </div>
         </div>
       </div>
