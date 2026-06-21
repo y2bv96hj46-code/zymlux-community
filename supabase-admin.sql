@@ -24,7 +24,8 @@ grant execute on function public.is_banned() to authenticated;
 create or replace function public.protect_profile_flags() returns trigger
 language plpgsql security definer set search_path = public as $$
 begin
-  if not public.is_admin() then
+  -- auth.uid() est NULL depuis l'éditeur SQL / service_role (contextes de confiance) : on laisse passer.
+  if auth.uid() is not null and not public.is_admin() then
     new.is_admin  := old.is_admin;
     new.is_banned := old.is_banned;
     new.bonus_xp  := old.bonus_xp;
