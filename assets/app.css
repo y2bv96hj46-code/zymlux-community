@@ -470,3 +470,31 @@ body::before{
   .level-ring{width:68px;height:68px;}
   .level-ring span{font-size:1.8rem;}
 }
+
+/* ============================================================
+   CLASSEMENT + RÉCOMPENSES
+============================================================ */
+.leaderboard{display:flex;flex-direction:column;gap:8px;}
+.lb-row{display:flex;align-items:center;gap:13px;padding:10px 13px;border:1px solid var(--line);border-radius:13px;background:rgba(244,239,231,0.015);transition:border-color .3s var(--ease);}
+.lb-row.me{border-color:var(--gold-line);background:var(--gold-soft);}
+.lb-rank{width:24px;text-align:center;font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--cream-muted);flex:0 0 auto;}
+.lb-row.top .lb-rank{color:var(--gold-bright);}
+.lb-av{width:38px;height:38px;border-radius:50%;flex:0 0 auto;font-size:0.85rem;background-size:cover;background-position:center;}
+.lb-name{font-size:0.93rem;font-weight:500;color:var(--cream);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.lb-lvl{font-size:0.72rem;color:var(--cream-faint);}
+.lb-xp{font-size:0.85rem;color:var(--gold-bright);font-weight:600;flex:0 0 auto;}
+
+.rewards{display:flex;flex-direction:column;gap:8px;}
+.reward{display:flex;align-items:center;gap:13px;padding:11px 13px;border:1px solid var(--line);border-radius:13px;transition:border-color .3s var(--ease),opacity .3s var(--ease);}
+.reward.unlocked{border-color:var(--gold-line);background:var(--gold-soft);}
+.reward.locked{opacity:0.5;}
+.rw-lvl{width:44px;height:44px;flex:0 0 auto;border-radius:11px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:600;color:var(--gold-bright);border:1px solid var(--gold-line);font-size:0.82rem;}
+.rw-info{flex:1;min-width:0;}
+.rw-name{font-size:0.93rem;font-weight:500;color:var(--cream);}
+.rw-desc{font-size:0.78rem;color:var(--cream-muted);}
+.rw-state{font-size:0.72rem;flex:0 0 auto;font-weight:500;}
+.reward.unlocked .rw-state{color:var(--gold-bright);}
+.reward.locked .rw-state{color:var(--cream-faint);}
+
+/* Récompense : halo doré sur l'avatar (niveau 5+) */
+.avatar.halo{box-shadow:0 0 0 2px var(--gold), 0 0 20px rgba(201,162,75,0.55) !important;}

@@ -47,6 +47,7 @@ function refreshMyAvatars() {
   applyAvatar($("#me-av"), state.profile.pseudo, state.user.id, state.profile.avatar_url);
   applyAvatar($("#dash-av"), state.profile.pseudo, state.user.id, state.profile.avatar_url);
   applyAvatar($("#pf-av"), state.profile.pseudo, state.user.id, state.profile.avatar_url);
+  if (typeof applyHalo === "function") applyHalo();
 }
 function observeReveals() {
   const els = $$(".reveal");
@@ -249,7 +250,7 @@ function initNav() {
       b.classList.add("active");
       $$(".view").forEach((v) => v.classList.remove("active"));
       $("#view-" + b.dataset.view).classList.add("active");
-      if (b.dataset.view === "dash") { loadBadges(); loadLevel(); }
+      if (b.dataset.view === "dash") { loadBadges(); loadLevel(); loadLeaderboard(); }
       if (b.dataset.view === "feed") loadFeed();
     });
   });
@@ -490,6 +491,7 @@ async function initDashboard() {
   await loadMood();
   await loadBadges();
   await loadLevel();
+  loadLeaderboard();
   subscribeMood();
 
   // Fiche de route : ajout
@@ -1024,4 +1026,66 @@ async function loadLevel() {
   const bar = $("#lvl-bar"); if (bar) bar.style.width = L.pct + "%";
   setT("lvl-next", "Plus que " + L.remaining + " XP pour le niveau " + (L.lvl + 1));
   const chip = $("#lvl-chip"); if (chip) chip.textContent = "Nv " + L.lvl;
+  state.level = L.lvl;
+  applyHalo();
+  loadRewards();
+}
+
+/* ============================================================
+   CLASSEMENT + RÉCOMPENSES
+============================================================ */
+async function loadLeaderboard() {
+  const box = $("#leaderboard");
+  if (!box) return;
+  const { data, error } = await sb.rpc("leaderboard", { lim: 10 });
+  if (error) { box.innerHTML = `<div class="chart-empty">Classement bientôt disponible.</div>`; return; }
+  box.innerHTML = "";
+  (data || []).forEach((row, i) => {
+    const lvl = levelFromXp(row.xp || 0).lvl;
+    const el = document.createElement("div");
+    el.className = "lb-row" + (row.id === state.user.id ? " me" : "") + (i < 3 ? " top" : "");
+    const rank = document.createElement("div"); rank.className = "lb-rank"; rank.textContent = (i + 1);
+    const av = document.createElement("span"); av.className = "lb-av"; applyAvatar(av, row.pseudo, row.id, row.avatar_url);
+    const info = document.createElement("div"); info.style.flex = "1"; info.style.minWidth = "0";
+    const nm = document.createElement("div"); nm.className = "lb-name"; nm.textContent = row.id === state.user.id ? (row.pseudo + " (toi)") : row.pseudo;
+    const lv = document.createElement("div"); lv.className = "lb-lvl"; lv.textContent = "Niveau " + lvl;
+    info.appendChild(nm); info.appendChild(lv);
+    const xp = document.createElement("div"); xp.className = "lb-xp"; xp.textContent = (row.xp || 0) + " XP";
+    el.appendChild(rank); el.appendChild(av); el.appendChild(info); el.appendChild(xp);
+    box.appendChild(el);
+  });
+  if (!data || !data.length) box.innerHTML = `<div class="chart-empty">Personne au classement pour l'instant. Sois le premier ✦</div>`;
+}
+
+const REWARDS = [
+  { lvl: 2, name: "Pastille de niveau", desc: "Ton niveau affiché en permanence" },
+  { lvl: 3, name: "Titre de membre", desc: "Un titre qui évolue avec toi" },
+  { lvl: 5, name: "Halo doré", desc: "Une aura lumineuse sur ton avatar" },
+  { lvl: 8, name: "Salon privé « Cercle »", desc: "Un espace réservé (bientôt)" },
+  { lvl: 10, name: "Statut Légende", desc: "Le rang ultime de Zymlux" },
+];
+
+function loadRewards() {
+  const box = $("#rewards");
+  if (!box) return;
+  const lvl = state.level || 1;
+  box.innerHTML = "";
+  REWARDS.forEach((r) => {
+    const unlocked = lvl >= r.lvl;
+    const el = document.createElement("div");
+    el.className = "reward " + (unlocked ? "unlocked" : "locked");
+    const badge = document.createElement("div"); badge.className = "rw-lvl"; badge.textContent = "Nv " + r.lvl;
+    const info = document.createElement("div"); info.className = "rw-info";
+    const nm = document.createElement("div"); nm.className = "rw-name"; nm.textContent = r.name;
+    const ds = document.createElement("div"); ds.className = "rw-desc"; ds.textContent = r.desc;
+    info.appendChild(nm); info.appendChild(ds);
+    const st = document.createElement("div"); st.className = "rw-state"; st.textContent = unlocked ? "Débloqué ✦" : "Niveau " + r.lvl;
+    el.appendChild(badge); el.appendChild(info); el.appendChild(st);
+    box.appendChild(el);
+  });
+}
+
+function applyHalo() {
+  const on = (state.level || 1) >= 5;
+  ["#me-av", "#dash-av", "#pf-av"].forEach((s) => { const e = $(s); if (e) e.classList.toggle("halo", on); });
 }
