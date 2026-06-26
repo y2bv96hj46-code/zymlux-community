@@ -91,9 +91,11 @@ header.scr{background:rgba(6,6,8,.82);backdrop-filter:blur(16px);border-bottom:1
 .pill .live{width:8px;height:8px;border-radius:50%;background:#21d07a;box-shadow:0 0 10px #21d07a;animation:pulse 1.6s infinite}
 @keyframes pulse{50%{opacity:.4}}
 .hero h1{font-size:clamp(2.9rem,7.4vw,5.6rem);font-weight:700;margin-bottom:26px}
-.rot{display:inline-block;position:relative;min-width:7ch;text-align:left}
-.rot span{position:absolute;left:0;white-space:nowrap;opacity:0;transform:translateY(14px);transition:.6s var(--ease)}
-.rot span.on{opacity:1;transform:none;position:relative}
+.rot{display:inline-block;position:relative;text-align:left;white-space:nowrap}
+.rot span{display:none}
+.rot span.on{display:inline-block;animation:rotin .55s var(--ease)}
+@keyframes rotin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.rot::after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:4px;background:var(--grad);border-radius:4px;box-shadow:0 0 16px var(--c1);opacity:.9}
 .hero p{font-size:1.18rem;color:var(--mut);max-width:600px;margin:0 auto 36px}
 .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 .hero-note{margin-top:20px;font-size:.85rem;color:var(--mut)}
