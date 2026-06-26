@@ -70,6 +70,21 @@ header.scr{background:rgba(6,6,8,.82);backdrop-filter:blur(16px);border-bottom:1
 .hero p{font-size:1.18rem;color:var(--mut);max-width:600px;margin:0 auto 36px}
 .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 .hero-note{margin-top:20px;font-size:.85rem;color:var(--mut)}
+.hero-grid2{display:grid;grid-template-columns:1.04fr .96fr;gap:54px;align-items:center;width:100%}
+.hero-copy{text-align:left}
+.hero-copy h1{font-size:clamp(2.5rem,5vw,4.3rem)}
+.hero-copy p{margin:22px 0 32px}
+.hero-copy .hero-actions{justify-content:flex-start}
+.mock{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#0a0a0e;box-shadow:0 40px 100px rgba(0,0,0,.6);position:relative}
+.mock .bar{height:40px;background:#13131b;display:flex;align-items:center;gap:7px;padding:0 16px;border-bottom:1px solid var(--line)}
+.mock .bar i{width:11px;height:11px;border-radius:50%;background:#3a3a46;display:inline-block}
+.mock .bar .url{margin-left:14px;font-size:.72rem;color:var(--mut);background:#0a0a0e;padding:4px 12px;border-radius:6px}
+.mock .screen{height:460px;overflow:hidden;position:relative}
+.mock .screen img{width:100%;display:block;animation:scrollsite 18s ease-in-out infinite alternate}
+@keyframes scrollsite{0%{transform:translateY(0)}100%{transform:translateY(calc(-100% + 460px))}}
+.mock .badge-live{position:absolute;top:54px;right:16px;background:var(--grad);color:#06060a;font-size:.7rem;font-weight:700;padding:5px 11px;border-radius:50px;z-index:3;display:flex;align-items:center;gap:6px}
+.mock .badge-live i{width:7px;height:7px;border-radius:50%;background:#06060a;animation:pulse 1.4s infinite}
+@media(max-width:900px){.hero-grid2{grid-template-columns:1fr;gap:40px}.hero-copy{text-align:center}.hero-copy .hero-actions{justify-content:center}.mock .screen{height:380px}}
 
 /* marquee */
 .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;overflow:hidden;white-space:nowrap;background:var(--bg2)}
@@ -135,7 +150,11 @@ section{padding:110px 0}
 .work{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
 .proj{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--card);transition:.4s var(--ease)}
 .proj:hover{transform:translateY(-8px);border-color:rgba(123,92,255,.5)}
-.proj .shot{aspect-ratio:16/10;display:grid;place-items:center;font-family:'Space Grotesk';font-weight:700;font-size:1.6rem;letter-spacing:1px;color:#fff}
+.proj .chrome{height:30px;background:#13131b;display:flex;align-items:center;gap:6px;padding:0 14px;border-bottom:1px solid var(--line)}
+.proj .chrome i{width:9px;height:9px;border-radius:50%;background:#3a3a46}
+.proj .shot{aspect-ratio:16/10;overflow:hidden;background:#0a0a0e}
+.proj .shot img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;transition:.6s var(--ease)}
+.proj:hover .shot img{transform:scale(1.05)}
 .b1{background:linear-gradient(135deg,#1a1410,#2a2012);color:#e7c878}
 .b2{background:linear-gradient(135deg,#0d2440,#0d3b66)}
 .b3{background:linear-gradient(135deg,#2a1338,#5a2d82)}
@@ -231,15 +250,22 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
 <section class="hero">
   <div class="grid-bg"></div>
   <div class="orb orb1" id="o1"></div><div class="orb orb2" id="o2"></div>
-  <div class="wrap hero-inner">
-    <div class="pill reveal"><span class="live"></span> 3 places dispo ce mois-ci</div>
-    <h1 class="reveal d1">Des sites web qui ramènent<br>des <span class="rot grad" id="rot"><span class="on">clients</span><span>réservations</span><span>avis 5★</span><span>revenus</span></span></h1>
-    <p class="reveal d2">Pour les barbiers, instituts, restaurants et artisans. Design premium, réservation en ligne, visibilité Google. Vous bossez, on s'occupe du web.</p>
-    <div class="hero-actions reveal d3">
-      <a href="#contact" class="btn">Mon site exemple gratuit →</a>
-      <a href="#avant-apres" class="btn btn-out">Voir la différence</a>
+  <div class="wrap hero-grid2">
+    <div class="hero-copy">
+      <div class="pill reveal"><span class="live"></span> 3 places dispo ce mois-ci</div>
+      <h1 class="reveal d1">Des sites web qui ramènent des <span class="rot grad" id="rot"><span class="on">clients</span><span>réservations</span><span>avis 5★</span><span>revenus</span></span></h1>
+      <p class="reveal d2">Pour les barbiers, instituts, restaurants et artisans. Design premium, réservation en ligne, visibilité Google. Vous bossez, on s'occupe du web.</p>
+      <div class="hero-actions reveal d3">
+        <a href="#contact" class="btn">Mon site exemple gratuit →</a>
+        <a href="#avant-apres" class="btn btn-out">Voir la différence</a>
+      </div>
+      <p class="hero-note reveal d4">✦ Exemple offert · Sans engagement · Livré en 7 jours</p>
     </div>
-    <p class="hero-note reveal d4">✦ Exemple offert · Sans engagement · Livré en 7 jours</p>
+    <div class="mock reveal d2">
+      <div class="bar"><i></i><i></i><i></i><span class="url">🔒 atelierblade.fr</span></div>
+      <div class="screen"><img src="media/barber-full.jpg" alt="Exemple de site créé par Studio Lumen"></div>
+      <div class="badge-live"><i></i> SITE LIVE</div>
+    </div>
   </div>
 </section>
 
@@ -333,10 +359,10 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
   <div class="wrap">
     <div class="head reveal"><span class="eyebrow">Réalisations</span><h2>Des sites qui en jettent</h2></div>
     <div class="work">
-      <div class="proj reveal"><div class="shot b1">ATELIER BLADE</div><div class="meta"><h3>Atelier Blade — Barbier</h3><span>Site premium + réservation</span></div></div>
-      <div class="proj reveal d1"><div class="shot b2">MARTIN PLOMBERIE</div><div class="meta"><h3>Martin Plomberie — Artisan</h3><span>Vitrine + devis en ligne</span></div></div>
-      <div class="proj reveal"><div class="shot b3">BELLA NAILS</div><div class="meta"><h3>Bella Nails — Onglerie</h3><span>Site beauté + prise de RDV</span></div></div>
-      <div class="proj reveal d1"><div class="shot b4">LE COMPTOIR</div><div class="meta"><h3>Le Comptoir — Restaurant</h3><span>Menu + réservation</span></div></div>
+      <div class="proj reveal"><div class="chrome"><i></i><i></i><i></i></div><div class="shot"><img src="media/work-barber.jpg" loading="lazy" alt="Site Atelier Blade — barbier"></div><div class="meta"><h3>Atelier Blade — Barbier</h3><span>Site premium + réservation</span></div></div>
+      <div class="proj reveal d1"><div class="chrome"><i></i><i></i><i></i></div><div class="shot"><img src="media/work-plombier.jpg" loading="lazy" alt="Site Martin Plomberie — artisan"></div><div class="meta"><h3>Martin Plomberie — Artisan</h3><span>Vitrine + devis en ligne</span></div></div>
+      <div class="proj reveal"><div class="chrome"><i></i><i></i><i></i></div><div class="shot"><img src="media/work-nails.jpg" loading="lazy" alt="Site Bella Nails — onglerie"></div><div class="meta"><h3>Bella Nails — Onglerie</h3><span>Site beauté + prise de RDV</span></div></div>
+      <div class="proj reveal d1"><div class="chrome"><i></i><i></i><i></i></div><div class="shot"><img src="media/work-resto.jpg" loading="lazy" alt="Site Le Comptoir — restaurant"></div><div class="meta"><h3>Le Comptoir — Restaurant</h3><span>Menu + réservation</span></div></div>
     </div>
   </div>
 </section>
