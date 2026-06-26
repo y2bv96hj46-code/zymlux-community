@@ -230,6 +230,29 @@ section{padding:110px 0}
 .plan li{display:flex;gap:10px;color:var(--mut);font-size:.93rem}
 .plan li::before{content:"✓";color:var(--c2);font-weight:700}
 .plan .btn{justify-content:center}
+/* comparatif */
+.cmp{overflow-x:auto}
+.cmp table{width:100%;border-collapse:collapse;min-width:560px}
+.cmp th,.cmp td{padding:16px 18px;text-align:center;border-bottom:1px solid var(--line);font-size:.95rem}
+.cmp th{font-family:'Space Grotesk';font-weight:700;font-size:1.05rem}
+.cmp td:first-child,.cmp th:first-child{text-align:left;color:var(--mut)}
+.cmp .us{background:linear-gradient(180deg,rgba(123,92,255,.12),transparent);border-left:1px solid rgba(123,92,255,.4);border-right:1px solid rgba(123,92,255,.4)}
+.cmp .us.top{border-top:1px solid rgba(123,92,255,.4);border-radius:14px 14px 0 0}
+.cmp .yes{color:var(--c2);font-weight:700}.cmp .no{color:#ff6b6b}
+.cmp .uslab{color:transparent;background:var(--grad);-webkit-background-clip:text;background-clip:text}
+/* FAQ */
+.faq{max-width:760px;margin:0 auto}
+.qa{border:1px solid var(--line);border-radius:14px;margin-bottom:12px;background:var(--card);overflow:hidden}
+.qa button{width:100%;text-align:left;background:none;border:0;color:var(--txt);font-family:inherit;font-size:1.05rem;font-weight:500;padding:20px 22px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.qa .ic{color:var(--c2);font-size:1.4rem;transition:.3s var(--ease);flex-shrink:0}
+.qa.open .ic{transform:rotate(45deg)}
+.qa .a{max-height:0;overflow:hidden;transition:max-height .4s var(--ease);color:var(--mut);font-size:.95rem}
+.qa.open .a{max-height:220px}
+.qa .a p{padding:0 22px 20px}
+/* garantie */
+.guarantee{display:flex;align-items:center;gap:18px;justify-content:center;flex-wrap:wrap;text-align:center;margin-top:30px;color:var(--mut);font-size:.95rem}
+.guarantee b{color:var(--txt)}
+.guarantee .shield{font-size:1.6rem}
 
 /* cta */
 .cta{position:relative;border:1px solid var(--line);border-radius:26px;padding:74px 30px;text-align:center;background:radial-gradient(80% 130% at 50% 0,rgba(123,92,255,.2),transparent 60%),var(--bg2);overflow:hidden}
@@ -500,6 +523,24 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
   </div>
 </section>
 
+<!-- COMPARATIF -->
+<section>
+  <div class="wrap">
+    <div class="head reveal"><span class="eyebrow">Pourquoi nous</span><h2>Le bon choix, sans hésiter</h2><p>Comparez. La différence est vite vue.</p></div>
+    <div class="cmp reveal d1">
+      <table>
+        <tr><th></th><th>Faire soi-même</th><th>Agence classique</th><th class="us top"><span class="uslab">Zymlux Création</span></th></tr>
+        <tr><td>Prix</td><td>Galère + temps perdu</td><td>1500€ à 5000€</td><td class="us"><b>dès 290€</b></td></tr>
+        <tr><td>Délai</td><td>Des semaines</td><td>1 à 2 mois</td><td class="us"><b>7 jours</b></td></tr>
+        <tr><td>Design pro</td><td class="no">✕</td><td class="yes">✓</td><td class="us yes">✓</td></tr>
+        <tr><td>Réservation en ligne</td><td class="no">✕</td><td>En option (cher)</td><td class="us yes">✓ inclus</td></tr>
+        <tr><td>Visibilité Google</td><td class="no">✕</td><td>En option</td><td class="us yes">✓ inclus</td></tr>
+        <tr><td>Suivi & maintenance</td><td class="no">✕</td><td>Facturé à part</td><td class="us yes">✓ inclus</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
 <!-- PRICING -->
 <section id="tarifs" style="background:var(--bg2)">
   <div class="wrap">
@@ -514,6 +555,21 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
       <div class="plan reveal d2"><span class="tag">Premium</span><div class="price">Sur devis</div><p style="color:var(--mut);font-size:.9rem">Pour aller plus loin.</p>
         <ul><li>Tout le pack Pro</li><li>Gestion réseaux sociaux</li><li>Campagnes & promos</li><li>Suivi mensuel</li></ul>
         <a href="#contact" class="btn btn-out">Discutons-en</a></div>
+    </div>
+    <div class="guarantee reveal"><span class="shield">🛡️</span> <span><b>Satisfait ou vous ne payez rien.</b> On vous montre votre site avant. S'il ne vous plaît pas, vous ne devez rien.</span></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="wrap">
+    <div class="head reveal"><span class="eyebrow">Questions fréquentes</span><h2>Tout ce que vous vous demandez</h2></div>
+    <div class="faq reveal d1">
+      <div class="qa"><button type="button">Je n'y connais rien en informatique, c'est un problème ? <span class="ic">+</span></button><div class="a"><p>Aucun problème : on s'occupe de TOUT. Vous nous donnez vos infos (logo, photos, horaires), on fait le reste. Vous n'avez rien à faire de technique.</p></div></div>
+      <div class="qa"><button type="button">En combien de temps mon site est en ligne ? <span class="ic">+</span></button><div class="a"><p>7 jours en moyenne après réception de vos contenus. Pour les urgences, on peut faire encore plus vite.</p></div></div>
+      <div class="qa"><button type="button">Et si le site ne me plaît pas ? <span class="ic">+</span></button><div class="a"><p>On vous montre un exemple à votre nom AVANT tout paiement. S'il ne vous plaît pas, vous ne payez rien. Zéro risque.</p></div></div>
+      <div class="qa"><button type="button">Je peux modifier mon site après ? <span class="ic">+</span></button><div class="a"><p>Oui. Avec la formule Pro, la maintenance et les modifications sont incluses. Un message et c'est fait.</p></div></div>
+      <div class="qa"><button type="button">Le nom de domaine et l'hébergement sont inclus ? <span class="ic">+</span></button><div class="a"><p>On s'occupe de la mise en ligne. Le nom de domaine (~10€/an) est en supplément, on vous accompagne pour le choisir et le configurer.</p></div></div>
     </div>
   </div>
 </section>
@@ -725,6 +781,15 @@ document.querySelectorAll('.vbtn').forEach(function(btn){btn.addEventListener('c
   if(v)document.documentElement.setAttribute('data-vibe',v);else document.documentElement.removeAttribute('data-vibe');
   document.querySelectorAll('.vbtn').forEach(function(x){x.classList.toggle('act',x===btn)});
 })});
+// FAQ accordéon
+document.querySelectorAll('.qa button').forEach(function(b){b.addEventListener('click',function(){b.parentElement.classList.toggle('open')})});
+// effet 3D au survol du portfolio (desktop)
+if(matchMedia('(pointer:fine)').matches){
+  document.querySelectorAll('.proj').forEach(function(card){
+    card.addEventListener('mousemove',function(e){var r=card.getBoundingClientRect();var rx=((e.clientY-r.top)/r.height-.5)*-5;var ry=((e.clientX-r.left)/r.width-.5)*5;card.style.transform='perspective(800px) rotateX('+rx+'deg) rotateY('+ry+'deg) translateY(-6px)'});
+    card.addEventListener('mouseleave',function(){card.style.transform=''});
+  });
+}
 </script>
 </body>
 </html>
