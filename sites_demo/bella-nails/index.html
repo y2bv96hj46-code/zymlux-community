@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bella Nails — Onglerie & beauté des mains à Lille</title>
+<meta name="description" content="Onglerie premium à Lille. Pose gel, nail art, manucure, soins. Prise de rendez-vous en ligne.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbf4f1;--cream:#fff;--ink:#33222a;--rose:#d98ba0;--rose2:#c06f88;--gold:#bda07a;--mut:#917f86;--line:#ecddd7;--ease:cubic-bezier(.22,1,.36,1)}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Jost',sans-serif;line-height:1.7}
+a{text-decoration:none;color:inherit}
+.serif{font-family:'Cormorant Garamond',serif}
+.wrap{max-width:1140px;margin:0 auto;padding:0 26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;padding:15px 30px;border-radius:50px;font-weight:500;font-size:.92rem;letter-spacing:.5px;transition:.35s var(--ease)}
+.btn:hover{background:var(--rose2);transform:translateY(-2px);box-shadow:0 14px 30px rgba(192,111,136,.3)}
+.btn-out{background:transparent;border:1px solid var(--ink);color:var(--ink)}
+.btn-out:hover{background:var(--ink);color:#fff}
+.eyebrow{font-size:.74rem;letter-spacing:4px;text-transform:uppercase;color:var(--rose2);font-weight:600}
+header{position:fixed;inset:0 0 auto;z-index:50;transition:.4s}
+header.scr{background:rgba(251,244,241,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:84px}
+.logo{font-family:'Cormorant Garamond';font-weight:700;font-size:1.9rem;letter-spacing:.5px}
+.logo span{color:var(--rose2);font-style:italic}
+.menu{display:flex;gap:32px;align-items:center}
+.menu a{font-size:.9rem;color:var(--mut);letter-spacing:.5px}.menu a:hover{color:var(--ink)}
+.burger{display:none;font-size:1.5rem;background:none;border:none;cursor:pointer}
+.hero{position:relative;padding:150px 0 90px;overflow:hidden}
+.hero::before{content:"";position:absolute;width:560px;height:560px;background:radial-gradient(circle,rgba(217,139,160,.18),transparent 70%);border-radius:50%;top:-120px;right:-120px;z-index:0}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center;position:relative;z-index:1}
+.hero h1{font-size:clamp(3rem,6.5vw,5.2rem);font-weight:600;line-height:1.02;margin:16px 0 22px}
+.hero h1 em{font-style:italic;color:var(--rose2)}
+.hero p{color:var(--mut);font-size:1.12rem;max-width:460px;margin-bottom:32px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.hero-visual{aspect-ratio:4/5;border-radius:220px 220px 28px 28px;background:linear-gradient(160deg,#f3d4dd,#e9bccb);position:relative;display:grid;place-items:center;overflow:hidden;box-shadow:0 30px 70px rgba(192,111,136,.25)}
+.hero-visual .lab{font-family:'Cormorant Garamond';font-style:italic;font-size:1.6rem;color:#fff;opacity:.85}
+.hero-visual::after{content:"";position:absolute;inset:16px;border:1px solid rgba(255,255,255,.5);border-radius:200px 200px 20px 20px}
+.tags{display:flex;gap:26px;margin-top:34px;flex-wrap:wrap}
+.tags div{display:flex;flex-direction:column}
+.tags b{font-family:'Cormorant Garamond';font-size:1.9rem;color:var(--rose2);line-height:1}
+.tags span{font-size:.8rem;color:var(--mut)}
+section{padding:96px 0}
+.head{text-align:center;max-width:600px;margin:0 auto 60px}
+.head h2{font-family:'Cormorant Garamond';font-size:clamp(2.4rem,5vw,3.4rem);font-weight:600;margin:12px 0}
+.head p{color:var(--mut)}
+.serv{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;max-width:860px;margin:0 auto}
+.s-item{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:22px 26px;background:var(--cream);border-radius:16px;border:1px solid var(--line);transition:.3s}
+.s-item:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(192,111,136,.12)}
+.s-item .n{font-family:'Cormorant Garamond';font-size:1.4rem}
+.s-item .d{font-size:.84rem;color:var(--mut);display:block;font-family:'Jost'}
+.s-item .p{font-family:'Cormorant Garamond';font-size:1.5rem;color:var(--rose2);white-space:nowrap}
+.gal{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.gal div{aspect-ratio:3/4;border-radius:14px;background:linear-gradient(160deg,#f3d4dd,#e3aebf)}
+.gal div:nth-child(2){background:linear-gradient(160deg,#efe0d3,#e7c9b4)}
+.gal div:nth-child(3){background:linear-gradient(160deg,#e8d6e2,#d3aecb)}
+.gal div:nth-child(4){background:linear-gradient(160deg,#f0d8d1,#e0b3a8)}
+.band{background:var(--ink);color:#fff;text-align:center;border-radius:28px;padding:64px 30px;margin:0 26px}
+.band h2{font-family:'Cormorant Garamond';font-size:clamp(2.2rem,5vw,3.2rem);font-weight:600;margin-bottom:14px}
+.band p{opacity:.8;margin-bottom:26px}
+.band .btn{background:var(--rose2)}
+footer{padding:50px 0 30px;border-top:1px solid var(--line);text-align:center;color:var(--mut);font-size:.85rem}
+@media(max-width:860px){.menu{display:none}.burger{display:block}.hero-grid,.serv{grid-template-columns:1fr}.gal{grid-template-columns:1fr 1fr}}
+</style></head>
+<body>
+<header id="h"><div class="wrap nav">
+  <a href="#" class="logo">Bella<span> Nails</span></a>
+  <nav class="menu"><a href="#prestations">Prestations</a><a href="#galerie">Galerie</a><a href="#rdv">Rendez-vous</a></nav>
+  <a href="#rdv" class="btn" style="padding:11px 22px">Prendre RDV</a>
+</div></header>
+
+<section class="hero"><div class="wrap hero-grid">
+  <div>
+    <span class="eyebrow">Onglerie & beauté · Lille</span>
+    <h1 class="serif">Des ongles <em>sublimes</em>, pensés pour vous</h1>
+    <p>Pose gel, nail art sur-mesure, manucure et soins dans un écrin doux et raffiné. Prenez rendez-vous en quelques secondes.</p>
+    <div class="hero-actions">
+      <a href="#rdv" class="btn">Réserver mon moment →</a>
+      <a href="#prestations" class="btn btn-out">Voir les prestations</a>
+    </div>
+    <div class="tags">
+      <div><b>4,9/5</b><span>+300 avis</span></div>
+      <div><b>7j/7</b><span>sur rendez-vous</span></div>
+      <div><b>100%</b><span>hygiène garantie</span></div>
+    </div>
+  </div>
+  <div class="hero-visual"><span class="lab">Votre photo ici</span></div>
+</div></section>
+
+<section id="prestations"><div class="wrap">
+  <div class="head"><span class="eyebrow">Nos prestations</span><h2 class="serif">Le soin du détail</h2><p>Des prestations délicates, réalisées avec des produits haut de gamme.</p></div>
+  <div class="serv">
+    <div class="s-item"><div class="n serif">Pose gel<span class="d">Couleur au choix, tenue 3 semaines</span></div><span class="p serif">35€</span></div>
+    <div class="s-item"><div class="n serif">Nail art<span class="d">Création sur-mesure</span></div><span class="p serif">45€</span></div>
+    <div class="s-item"><div class="n serif">Manucure russe<span class="d">Précision & finition parfaite</span></div><span class="p serif">40€</span></div>
+    <div class="s-item"><div class="n serif">Soin des mains<span class="d">Gommage + masque + massage</span></div><span class="p serif">28€</span></div>
+  </div>
+</div></section>
+
+<section id="galerie" style="background:var(--cream)"><div class="wrap">
+  <div class="head"><span class="eyebrow">Galerie</span><h2 class="serif">Nos plus belles créations</h2></div>
+  <div class="gal"><div></div><div></div><div></div><div></div></div>
+</div></section>
+
+<section id="rdv"><div class="wrap"><div class="band">
+  <span class="eyebrow" style="color:var(--rose)">Réservation</span>
+  <h2 class="serif">Offrez-vous une parenthèse beauté</h2>
+  <p>Réservez en ligne, 7j/7. On s'occupe du reste.</p>
+  <a href="#" class="btn">Prendre rendez-vous →</a>
+</div></div></section>
+
+<footer><div class="wrap"><div class="logo" style="margin-bottom:10px">Bella<span> Nails</span></div>© 2026 Bella Nails — Onglerie à Lille · Site par Studio Lumen</div></footer>
+<script>addEventListener('scroll',()=>document.getElementById('h').classList.toggle('scr',scrollY>30));</script>
+</body></html>

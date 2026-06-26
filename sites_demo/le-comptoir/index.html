@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Comptoir — Restaurant de cuisine française à Lille</title>
+<meta name="description" content="Restaurant gastronomique à Lille. Cuisine française de saison, produits locaux. Réservation en ligne.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#14120e;--bg2:#1c1913;--cream:#f2ead9;--ink:#14120e;--terra:#c4763f;--terra2:#dd9a5e;--olive:#7d8466;--mut:#a89c86;--line:#332d22;--ease:cubic-bezier(.22,1,.36,1)}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:'Inter',sans-serif;line-height:1.7}
+a{text-decoration:none;color:inherit}
+.serif{font-family:'Fraunces',serif}
+.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+.btn{display:inline-flex;align-items:center;gap:9px;background:var(--terra);color:#1a1109;padding:16px 32px;border-radius:3px;font-weight:600;font-size:.9rem;letter-spacing:.6px;text-transform:uppercase;transition:.35s var(--ease)}
+.btn:hover{background:var(--terra2);transform:translateY(-2px);box-shadow:0 14px 32px rgba(196,118,63,.3)}
+.btn-out{background:transparent;border:1px solid var(--line);color:var(--cream)}
+.btn-out:hover{border-color:var(--cream)}
+.eyebrow{font-size:.74rem;letter-spacing:4px;text-transform:uppercase;color:var(--terra2);font-weight:600}
+header{position:fixed;inset:0 0 auto;z-index:50;transition:.4s}
+header.scr{background:rgba(20,18,14,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:88px}
+.logo{font-family:'Fraunces';font-weight:600;font-size:1.7rem;letter-spacing:1px}
+.logo span{color:var(--terra2)}
+.menu{display:flex;gap:34px;align-items:center}
+.menu a{font-size:.85rem;color:var(--mut);letter-spacing:1px;text-transform:uppercase}.menu a:hover{color:var(--cream)}
+.burger{display:none;font-size:1.5rem;background:none;border:none;color:var(--cream);cursor:pointer}
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding-top:88px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0;background:linear-gradient(105deg,#14120e 0%,#14120e 46%,#241f16 100%)}
+.hero-bg::after{content:"";position:absolute;right:0;top:0;bottom:0;width:42%;background:linear-gradient(160deg,#3a2c1c,#211a12);clip-path:polygon(22% 0,100% 0,100% 100%,0 100%)}
+.hero-bg .plate{position:absolute;right:7%;top:50%;transform:translateY(-50%);width:min(36vw,440px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 40% 35%,#4a3826,#241a10);box-shadow:0 40px 90px rgba(0,0,0,.5),inset 0 0 0 14px rgba(242,234,217,.06);display:grid;place-items:center}
+.hero-bg .plate span{font-family:'Fraunces';font-style:italic;color:var(--mut);font-size:1.3rem}
+.hero-inner{position:relative;z-index:2;max-width:620px}
+.hero h1{font-family:'Fraunces';font-size:clamp(3.2rem,8vw,6rem);font-weight:500;line-height:.98;margin:18px 0 24px}
+.hero h1 em{font-style:italic;color:var(--terra2)}
+.hero p{color:var(--mut);font-size:1.15rem;max-width:480px;margin-bottom:34px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.stars{margin-top:30px;color:var(--terra2);font-size:.9rem;letter-spacing:1px}
+.stars b{color:var(--cream)}
+section{padding:110px 0}
+.head{max-width:620px;margin:0 auto 64px;text-align:center}
+.head h2{font-family:'Fraunces';font-size:clamp(2.4rem,5vw,3.6rem);font-weight:500;margin:12px 0}
+.head p{color:var(--mut)}
+.dishes{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.dish{border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--bg2);transition:.4s var(--ease)}
+.dish:hover{transform:translateY(-6px);border-color:var(--terra)}
+.dish .img{aspect-ratio:4/3;background:linear-gradient(150deg,#3a2c1c,#221a11)}
+.dish:nth-child(2) .img{background:linear-gradient(150deg,#3c3322,#211d12)}
+.dish:nth-child(3) .img{background:linear-gradient(150deg,#42301f,#241813)}
+.dish .info{padding:24px}
+.dish h3{font-family:'Fraunces';font-size:1.5rem;font-weight:500;margin-bottom:6px}
+.dish p{color:var(--mut);font-size:.92rem}
+.dish .price{font-family:'Fraunces';color:var(--terra2);font-size:1.3rem;margin-top:12px;display:block}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.frame{aspect-ratio:4/5;border-radius:6px;background:linear-gradient(150deg,#2c2417,#1a150e);position:relative;display:grid;place-items:center}
+.frame span{font-family:'Fraunces';font-style:italic;color:var(--mut)}
+.frame::after{content:"";position:absolute;inset:16px;border:1px solid rgba(242,234,217,.14)}
+.split h2{font-family:'Fraunces';font-size:clamp(2.2rem,4.5vw,3.2rem);font-weight:500;margin:14px 0 16px}
+.split p{color:var(--mut);margin-bottom:14px}
+.band{position:relative;text-align:center;padding:90px 30px;background:linear-gradient(180deg,#1c1913,#14120e);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.band h2{font-family:'Fraunces';font-size:clamp(2.4rem,5vw,3.8rem);font-weight:500;margin-bottom:16px}
+.band p{color:var(--mut);margin-bottom:28px}
+footer{padding:54px 0 30px;text-align:center;color:var(--mut);font-size:.85rem}
+@media(max-width:860px){.menu{display:none}.burger{display:block}.dishes,.split{grid-template-columns:1fr}.hero-bg::after,.hero-bg .plate{display:none}}
+</style></head>
+<body>
+<header id="h"><div class="wrap nav">
+  <a href="#" class="logo">Le Comptoir<span>.</span></a>
+  <nav class="menu"><a href="#carte">La carte</a><a href="#maison">La maison</a><a href="#reserver">Réserver</a></nav>
+  <a href="#reserver" class="btn" style="padding:12px 22px">Réserver une table</a>
+</div></header>
+
+<section class="hero">
+  <div class="hero-bg"><div class="plate"><span>Votre plat signature</span></div></div>
+  <div class="wrap"><div class="hero-inner">
+    <span class="eyebrow">Cuisine française · Lille</span>
+    <h1 class="serif">Le goût du <em>vrai</em>, à chaque assiette</h1>
+    <p>Une cuisine de saison, des produits locaux, et l'amour du détail. Réservez votre table en quelques secondes.</p>
+    <div class="hero-actions">
+      <a href="#reserver" class="btn">Réserver une table →</a>
+      <a href="#carte" class="btn btn-out">Découvrir la carte</a>
+    </div>
+    <div class="stars">★★★★★ &nbsp; <b>4,8/5</b> sur plus de 900 avis</div>
+  </div></div>
+</section>
+
+<section id="carte"><div class="wrap">
+  <div class="head"><span class="eyebrow">La carte</span><h2 class="serif">Nos plats signature</h2><p>Une sélection qui change au fil des saisons.</p></div>
+  <div class="dishes">
+    <div class="dish"><div class="img"></div><div class="info"><h3 class="serif">Ris de veau</h3><p>Jus corsé, légumes glacés de saison.</p><span class="price serif">28€</span></div></div>
+    <div class="dish"><div class="img"></div><div class="info"><h3 class="serif">Bar de ligne</h3><p>Beurre blanc, fenouil rôti.</p><span class="price serif">26€</span></div></div>
+    <div class="dish"><div class="img"></div><div class="info"><h3 class="serif">Soufflé chocolat</h3><p>Coeur coulant, glace vanille bourbon.</p><span class="price serif">12€</span></div></div>
+  </div>
+</div></section>
+
+<section id="maison" style="background:var(--bg2)"><div class="wrap split">
+  <div class="frame"><span>Photo de la salle</span></div>
+  <div>
+    <span class="eyebrow">La maison</span>
+    <h2 class="serif">Une table, une histoire</h2>
+    <p>Depuis 2014, Le Comptoir réunit les amoureux de la bonne chère dans une ambiance chaleureuse et intime.</p>
+    <p>Produits sélectionnés chez nos producteurs locaux, cuisine ouverte, service aux petits soins.</p>
+    <a href="#reserver" class="btn" style="margin-top:14px">Réserver votre soirée →</a>
+  </div>
+</div></section>
+
+<section style="padding:0"><div class="band">
+  <span class="eyebrow">Réservation</span>
+  <h2 class="serif">Réservez votre table</h2>
+  <p>Midi & soir, du mardi au dimanche. En ligne, en deux clics.</p>
+  <a href="#" class="btn">Réserver maintenant →</a>
+</div></section>
+
+<footer><div class="wrap"><div class="logo" style="margin-bottom:10px">Le Comptoir<span>.</span></div>© 2026 Le Comptoir — Restaurant à Lille · Site par Studio Lumen</div></footer>
+<script>addEventListener('scroll',()=>document.getElementById('h').classList.toggle('scr',scrollY>30));</script>
+</body></html>
