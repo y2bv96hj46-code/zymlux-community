@@ -41,6 +41,8 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
 .sw:hover{transform:scale(1.12)}
 .sw.active{border-color:#fff;box-shadow:0 0 0 2px var(--s)}
 .cpick{width:46px;height:30px;border:1px solid var(--line);border-radius:8px;background:none;cursor:pointer;padding:2px}
+.upload{display:block;background:var(--card);border:1px dashed var(--line);color:var(--mut);padding:13px;border-radius:10px;text-align:center;cursor:pointer;font-size:.85rem;transition:.25s}
+.upload:hover{border-color:var(--c1);color:var(--txt)}
 .toggle{display:flex;gap:7px}
 .toggle button{flex:1;background:var(--card);border:1px solid var(--line);color:var(--mut);padding:9px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:.82rem;transition:.25s}
 .toggle button.active{color:#06060a;background:var(--grad);border-color:transparent;font-weight:600}
@@ -120,6 +122,11 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
       <label>Téléphone</label>
       <input id="f-phone" type="text" maxlength="20" value="06 12 34 56 78" placeholder="Votre numéro">
     </div>
+    <div class="field">
+      <label>Votre photo (vitrine / logo)</label>
+      <label class="upload" for="f-photo">📷 Choisir une image</label>
+      <input type="file" accept="image/*" id="f-photo" hidden>
+    </div>
 
     <div class="cta-box">
       <a id="claim" class="btn" href="../#contact">J'adore — je veux ce site →</a>
@@ -162,7 +169,7 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
     {k:'Élégant',font:'Fraunces',w:'500;600',h1:'54px',tt:'none',it:true},
     {k:'Audacieux',font:'Anton',w:'',h1:'70px',tt:'uppercase',it:false}
   ];
-  var st={name:'Chez Marco',slogan:'',type:0,color:'#7b5cff',style:0,theme:'dark',city:'Lille',phone:'06 12 34 56 78'};
+  var st={name:'Chez Marco',slogan:'',type:0,color:'#7b5cff',style:0,theme:'dark',city:'Lille',phone:'06 12 34 56 78',photo:''};
   // restaurer depuis l'URL (sites partagés)
   try{var q=new URLSearchParams(location.search);
     if(q.get('n'))st.name=q.get('n');
@@ -187,6 +194,9 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
     var dark=st.theme==='dark';
     var bg=dark?'#0e0e13':'#ffffff', tx=dark?'#f3f3f7':'#16161d', mut=dark?'#9a9aac':'#6a6a78', card=dark?'#17171f':'#f5f6f8', line=dark?'#23232f':'#e9e9f0';
     var serv=d.serv.map(function(s){return '<div class=sc><div class=ic></div><h3>'+esc(s[0])+'</h3><p>'+esc(s[1])+'</p></div>'}).join('');
+    var pv=st.photo?('background-image:url('+st.photo+');background-size:cover;background-position:center'):('background:linear-gradient(135deg,'+c+'55,'+card+')');
+    var revs='<div class=rv><div class=stx>★★★★★</div><p>« Service au top, je recommande à 100%. »</p><b>— Julie</b></div><div class=rv><div class=stx>★★★★★</div><p>« Accueil parfait et résultat impeccable. »</p><b>— Marc</b></div><div class=rv><div class=stx>★★★★★</div><p>« Réservation hyper simple, que du bonheur. »</p><b>— Sofia</b></div>';
+    var steps='<div class=stp><span>1</span><h4>Vous réservez</h4><p>En ligne, en 30 secondes.</p></div><div class=stp><span>2</span><h4>On s\'occupe de tout</h4><p>Avec soin et savoir-faire.</p></div><div class=stp><span>3</span><h4>Vous repartez ravi</h4><p>Et vous revenez !</p></div>';
     return '<!doctype html><html lang=fr><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1">'+
     '<link href="https://fonts.googleapis.com/css2?family='+fam+'&family=Inter:wght@400;500&display=swap" rel=stylesheet>'+
     '<style>*{margin:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:Inter,sans-serif;background:'+bg+';color:'+tx+'}'+
@@ -205,6 +215,9 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
     '.hero p{color:'+mut+';font-size:17px;max-width:440px;margin-bottom:24px}'+
     '.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}'+
     '.stat{display:flex;gap:34px;margin-top:32px}.stat b{font-family:"'+ff+'";font-size:26px;color:'+c+';display:block}.stat span{font-size:12px;color:'+mut+'}'+
+    '.hgrid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}.hvis{aspect-ratio:4/3;border-radius:18px;border:1px solid '+line+'}'+
+    '.revs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.rv{background:'+card+';border:1px solid '+line+';border-radius:14px;padding:18px}.rv .stx{color:'+c+';font-size:13px;margin-bottom:8px}.rv p{font-size:13px;color:'+mut+'}.rv b{display:block;margin-top:10px;font-size:12px}'+
+    '.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}.stp{background:'+card+';border:1px solid '+line+';border-radius:14px;padding:20px}.stp span{display:inline-flex;width:30px;height:30px;border-radius:50%;background:'+c+';color:#fff;align-items:center;justify-content:center;font-weight:700;font-size:14px;margin-bottom:10px}.stp h4{font-size:15px;margin-bottom:4px}.stp p{font-size:12px;color:'+mut+'}'+
     'section.s{padding:48px 0}'+
     '.h2{font-size:30px;margin-bottom:8px}.lead{color:'+mut+';margin-bottom:26px;font-size:15px;max-width:520px}'+
     '.serv{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}'+
@@ -218,29 +231,33 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
     '.fl{display:flex;flex-direction:column;gap:10px}.fl input,.fl textarea{background:'+bg+';border:1px solid '+line+';color:'+tx+';padding:11px;border-radius:10px;font-family:inherit;font-size:13px}'+
     '.band{text-align:center;background:'+card+';border:1px solid '+line+';border-radius:20px;padding:38px;margin-top:34px}.band h2{font-size:26px;margin-bottom:8px}.band p{color:'+mut+';margin-bottom:16px}'+
     'footer{padding:26px;border-top:1px solid '+line+';color:'+mut+';font-size:12px;text-align:center}'+
-    '@media(max-width:720px){.hero h1{font-size:34px}.serv,.about,.contact{grid-template-columns:1fr}nav{display:none}.stat{gap:22px}}'+
+    '@media(max-width:720px){.hero h1{font-size:34px}.serv,.about,.contact,.hgrid,.revs,.steps{grid-template-columns:1fr}nav{display:none}.stat{gap:22px}.hvis{display:none}}'+
     '</style></head><body>'+
     '<header><div class=lo><span class=mono>'+esc(ini)+'</span>'+nm+'</div>'+
     '<nav><button data-p=home class=act>Accueil</button><button data-p=services>Services</button><button data-p=about>À propos</button><button data-p=contact>Contact</button></nav>'+
     '<a class=cta data-go=contact>'+esc(d.cta)+'</a></header>'+
     // PAGE ACCUEIL
     '<main class=page id=p-home>'+
-    '<div class=hero><div class=wrap><div class=glow></div><div class=eb>'+esc(d.eyebrow)+' · '+esc(st.city)+'</div>'+
+    '<div class=hero><div class=wrap><div class=glow></div><div class=hgrid><div>'+
+    '<div class=eb>'+esc(d.eyebrow)+' · '+esc(st.city)+'</div>'+
     '<h1>'+slog+'</h1>'+
     '<p>Bienvenue chez <b>'+nm+'</b>. Réservez en ligne en quelques secondes, 7j/7.</p>'+
     '<div class=row><a class=cta data-go=contact>'+esc(d.cta)+' &rarr;</a><a class=ghost data-go=services>Voir nos services</a></div>'+
     '<div class=stat><div><b>4,9/5</b><span>+200 avis</span></div><div><b>7j/7</b><span>disponible</span></div><div><b>'+esc(st.city)+'</b><span>& alentours</span></div></div>'+
+    '</div><div class=hvis style="'+pv+'"></div></div>'+
     '</div></div>'+
     '<section class=s><div class=wrap><div class=eb>Aperçu</div><div class=h2>Nos prestations</div><div class=serv>'+serv+'</div></div></section>'+
+    '<section class=s><div class=wrap><div class=eb>Avis clients</div><div class=h2>Ils nous recommandent</div><div class=revs>'+revs+'</div></div></section>'+
     '</main>'+
     // PAGE SERVICES
     '<main class=page id=p-services>'+
     '<section class=s><div class=wrap><div class=eb>Services</div><div class=h2>Ce que nous faisons pour vous</div><p class=lead>Des prestations soignées, réalisées avec passion et savoir-faire.</p><div class=serv>'+serv+'</div>'+
+    '<div style="margin-top:40px"><div class=eb>Comment ça marche</div><div class=h2>Simple comme bonjour</div><div class=steps>'+steps+'</div></div>'+
     '<div class=band><h2>Prêt à réserver ?</h2><p>Réservation en ligne, 7j/7, en quelques secondes.</p><a class=cta data-go=contact>'+esc(d.cta)+' &rarr;</a></div>'+
     '</div></section></main>'+
     // PAGE A PROPOS
     '<main class=page id=p-about>'+
-    '<section class=s><div class=wrap><div class=about><div class=pic></div><div><div class=eb>À propos</div><div class=h2>'+nm+', votre adresse de confiance</div><p class=lead>Une équipe passionnée, un accueil chaleureux et un vrai savoir-faire. Venez vivre l’expérience '+nm+'.</p><ul class=vals><li>Savoir-faire reconnu</li><li>Accueil chaleureux & sur-mesure</li><li>Produits et matériel de qualité</li></ul><a class=cta data-go=contact>'+esc(d.cta)+' &rarr;</a></div></div>'+
+    '<section class=s><div class=wrap><div class=about><div class=pic style="'+pv+'"></div><div><div class=eb>À propos</div><div class=h2>'+nm+', votre adresse de confiance</div><p class=lead>Une équipe passionnée, un accueil chaleureux et un vrai savoir-faire. Venez vivre l’expérience '+nm+'.</p><ul class=vals><li>Savoir-faire reconnu</li><li>Accueil chaleureux & sur-mesure</li><li>Produits et matériel de qualité</li></ul><a class=cta data-go=contact>'+esc(d.cta)+' &rarr;</a></div></div>'+
     '<div class=stat><div><b>+10 ans</b><span>d’expérience</span></div><div><b>+2000</b><span>clients satisfaits</span></div><div><b>4,9/5</b><span>note moyenne</span></div></div>'+
     '</div></section></main>'+
     // PAGE CONTACT
@@ -291,6 +308,9 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
   document.getElementById('f-phone').value=st.phone;
   [].forEach.call(themeWrap.children,function(c){c.classList.toggle('active',c.dataset.t===st.theme)});
 
+  // upload photo
+  var photoInput=document.getElementById('f-photo');
+  if(photoInput)photoInput.addEventListener('change',function(e){var f=e.target.files&&e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){st.photo=r.result;render();var up=document.querySelector('.upload');if(up)up.textContent='✅ Image ajoutée — changer'};r.readAsDataURL(f)});
   // couleur personnalisée
   var cust=document.getElementById('f-custom');
   if(cust){cust.value=st.color;cust.addEventListener('input',function(){st.color=cust.value;[].forEach.call(colWrap.children,function(c){c.classList.remove('active')});render()})}
