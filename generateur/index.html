@@ -190,48 +190,67 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
     return '<!doctype html><html lang=fr><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1">'+
     '<link href="https://fonts.googleapis.com/css2?family='+fam+'&family=Inter:wght@400;500&display=swap" rel=stylesheet>'+
     '<style>*{margin:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:Inter,sans-serif;background:'+bg+';color:'+tx+'}'+
-    'h1,h2,h3,.lg{font-family:"'+ff+'",sans-serif}'+
-    '.cta{background:'+c+';color:#fff;font-weight:600;border:0;padding:12px 22px;border-radius:50px;font-size:14px;text-decoration:none;display:inline-block;cursor:pointer}'+
+    'h1,h2,h3,.lg{font-family:"'+ff+'",sans-serif}a{color:inherit;text-decoration:none}'+
+    '.cta{background:'+c+';color:#fff;font-weight:600;border:0;padding:12px 22px;border-radius:50px;font-size:14px;display:inline-block;cursor:pointer}'+
+    '.ghost{border:1px solid '+line+';color:'+tx+';padding:12px 22px;border-radius:50px;font-size:14px;cursor:pointer;background:none}'+
     '.wrap{max-width:1000px;margin:0 auto;padding:0 26px}'+
-    'header{position:sticky;top:0;z-index:9;display:flex;align-items:center;justify-content:space-between;padding:16px 26px;background:'+bg+'ee;backdrop-filter:blur(8px);border-bottom:1px solid '+line+'}'+
-    '.lo{font-family:"'+ff+'";font-weight:700;font-size:18px;display:flex;gap:9px;align-items:center}.lo .mono{width:30px;height:30px;border-radius:9px;background:'+c+';color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;letter-spacing:.5px}'+
-    'nav{display:flex;gap:18px;font-size:13px;color:'+mut+'}'+
-    '.hero{position:relative;padding:64px 0 54px;overflow:hidden}'+
+    'header{position:sticky;top:0;z-index:9;display:flex;align-items:center;justify-content:space-between;padding:14px 26px;background:'+bg+'ee;backdrop-filter:blur(8px);border-bottom:1px solid '+line+'}'+
+    '.lo{font-family:"'+ff+'";font-weight:700;font-size:18px;display:flex;gap:9px;align-items:center}.lo .mono{width:30px;height:30px;border-radius:9px;background:'+c+';color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}'+
+    'nav{display:flex;gap:5px}nav button{background:none;border:0;color:'+mut+';font-family:inherit;font-size:13px;cursor:pointer;padding:7px 13px;border-radius:50px;transition:.2s}nav button:hover{color:'+tx+'}nav button.act{color:#fff;background:'+c+'}'+
+    '.page{display:none}.page.on{display:block;animation:fp .5s ease}@keyframes fp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}'+
+    '.hero{position:relative;padding:60px 0 48px;overflow:hidden}'+
     '.glow{position:absolute;width:340px;height:340px;border-radius:50%;background:'+c+';filter:blur(110px);opacity:.22;top:-80px;right:-60px}'+
     '.eb{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:'+c+';font-weight:600}'+
     '.hero h1{font-size:'+S.h1+';line-height:1.03;margin:14px 0 16px;max-width:680px;text-transform:'+S.tt+';font-style:'+(S.it?'italic':'normal')+'}'+
-    '.hero p{color:'+mut+';font-size:17px;max-width:440px;margin-bottom:26px}'+
+    '.hero p{color:'+mut+';font-size:17px;max-width:440px;margin-bottom:24px}'+
     '.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}'+
-    '.ghost{border:1px solid '+line+';color:'+tx+';padding:12px 22px;border-radius:50px;font-size:14px;text-decoration:none}'+
-    '.stat{display:flex;gap:34px;margin-top:34px}.stat b{font-family:"Space Grotesk";font-size:26px;color:'+c+';display:block}.stat span{font-size:12px;color:'+mut+'}'+
-    'section.s{padding:56px 0}'+
-    '.h2{font-size:32px;margin-bottom:8px}.lead{color:'+mut+';margin-bottom:32px;font-size:15px}'+
+    '.stat{display:flex;gap:34px;margin-top:32px}.stat b{font-family:"'+ff+'";font-size:26px;color:'+c+';display:block}.stat span{font-size:12px;color:'+mut+'}'+
+    'section.s{padding:48px 0}'+
+    '.h2{font-size:30px;margin-bottom:8px}.lead{color:'+mut+';margin-bottom:26px;font-size:15px;max-width:520px}'+
     '.serv{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}'+
-    '.sc{background:'+card+';border:1px solid '+line+';border-radius:16px;padding:24px}'+
-    '.sc .ic{width:44px;height:44px;border-radius:12px;background:'+c+';opacity:.9;margin-bottom:14px}'+
-    '.sc h3{font-size:18px;margin-bottom:6px}.sc p{color:'+mut+';font-size:13px}'+
+    '.sc{background:'+card+';border:1px solid '+line+';border-radius:16px;padding:22px}'+
+    '.sc .ic{width:42px;height:42px;border-radius:12px;background:'+c+';opacity:.9;margin-bottom:12px}'+
+    '.sc h3{font-size:17px;margin-bottom:5px}.sc p{color:'+mut+';font-size:13px}.sc .pr{color:'+c+';font-weight:700;margin-top:10px;display:block;font-family:"'+ff+'"}'+
     '.about{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}'+
     '.about .pic{aspect-ratio:4/3;border-radius:16px;background:linear-gradient(135deg,'+c+'55,'+card+')}'+
-    '.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}'+
-    '.gal div{aspect-ratio:1;border-radius:12px;background:linear-gradient(135deg,'+c+'33,'+card+')}'+
-    '.contact{background:'+card+';border:1px solid '+line+';border-radius:20px;padding:40px;text-align:center}'+
-    '.contact h2{font-size:30px;margin-bottom:10px}.contact p{color:'+mut+';margin-bottom:8px}'+
-    'footer{padding:30px 26px;border-top:1px solid '+line+';color:'+mut+';font-size:13px;text-align:center}'+
-    '@media(max-width:720px){.hero h1{font-size:34px}.serv,.about{grid-template-columns:1fr}nav{display:none}.stat{gap:22px}}'+
+    '.vals{list-style:none;margin:16px 0 22px;display:flex;flex-direction:column;gap:9px}.vals li{color:'+mut+';font-size:14px;padding-left:18px;position:relative}.vals li:before{content:"✦";position:absolute;left:0;color:'+c+'}'+
+    '.contact{display:grid;grid-template-columns:1fr 1fr;gap:22px}.ci{background:'+card+';border:1px solid '+line+';border-radius:16px;padding:24px}.ci h3{font-size:16px;margin-bottom:12px}.ci p{color:'+mut+';font-size:14px;margin-bottom:8px}'+
+    '.fl{display:flex;flex-direction:column;gap:10px}.fl input,.fl textarea{background:'+bg+';border:1px solid '+line+';color:'+tx+';padding:11px;border-radius:10px;font-family:inherit;font-size:13px}'+
+    '.band{text-align:center;background:'+card+';border:1px solid '+line+';border-radius:20px;padding:38px;margin-top:34px}.band h2{font-size:26px;margin-bottom:8px}.band p{color:'+mut+';margin-bottom:16px}'+
+    'footer{padding:26px;border-top:1px solid '+line+';color:'+mut+';font-size:12px;text-align:center}'+
+    '@media(max-width:720px){.hero h1{font-size:34px}.serv,.about,.contact{grid-template-columns:1fr}nav{display:none}.stat{gap:22px}}'+
     '</style></head><body>'+
-    '<header><div class=lo><span class=mono>'+esc(ini)+'</span>'+nm+'</div><nav><span>Accueil</span><span>Services</span><span>À propos</span><span>Contact</span></nav><a class=cta>'+esc(d.cta)+'</a></header>'+
+    '<header><div class=lo><span class=mono>'+esc(ini)+'</span>'+nm+'</div>'+
+    '<nav><button data-p=home class=act>Accueil</button><button data-p=services>Services</button><button data-p=about>À propos</button><button data-p=contact>Contact</button></nav>'+
+    '<a class=cta data-go=contact>'+esc(d.cta)+'</a></header>'+
+    // PAGE ACCUEIL
+    '<main class=page id=p-home>'+
     '<div class=hero><div class=wrap><div class=glow></div><div class=eb>'+esc(d.eyebrow)+' · '+esc(st.city)+'</div>'+
     '<h1>'+slog+'</h1>'+
     '<p>Bienvenue chez <b>'+nm+'</b>. Réservez en ligne en quelques secondes, 7j/7.</p>'+
-    '<div class=row><a class=cta>'+esc(d.cta)+' &rarr;</a><a class=ghost>Nous appeler</a></div>'+
+    '<div class=row><a class=cta data-go=contact>'+esc(d.cta)+' &rarr;</a><a class=ghost data-go=services>Voir nos services</a></div>'+
     '<div class=stat><div><b>4,9/5</b><span>+200 avis</span></div><div><b>7j/7</b><span>disponible</span></div><div><b>'+esc(st.city)+'</b><span>& alentours</span></div></div>'+
     '</div></div>'+
-    '<section class=s><div class=wrap><div class=eb>Nos prestations</div><div class=h2>Ce que nous faisons pour vous</div><div class=serv>'+serv+'</div></div></section>'+
-    '<section class=s><div class=wrap><div class=about><div class=pic></div><div><div class=eb>À propos</div><div class=h2>'+nm+', votre adresse de confiance</div><p class=lead>Une équipe passionnée, un accueil chaleureux et un savoir-faire reconnu. Venez vivre l’expérience '+nm+'.</p><a class=cta>'+esc(d.cta)+' &rarr;</a></div></div></div></section>'+
-    '<section class=s><div class=wrap><div class=eb>Galerie</div><div class=h2>Nos réalisations</div><div class=gal><div></div><div></div><div></div></div></div></section>'+
-    '<section class=s><div class=wrap><div class=contact><div class=eb>Contact</div><h2>On vous attend</h2><p>📍 '+esc(st.city)+'</p><p>📞 '+esc(st.phone)+'</p><br><a class=cta>'+esc(d.cta)+' &rarr;</a></div></div></section>'+
+    '<section class=s><div class=wrap><div class=eb>Aperçu</div><div class=h2>Nos prestations</div><div class=serv>'+serv+'</div></div></section>'+
+    '</main>'+
+    // PAGE SERVICES
+    '<main class=page id=p-services>'+
+    '<section class=s><div class=wrap><div class=eb>Services</div><div class=h2>Ce que nous faisons pour vous</div><p class=lead>Des prestations soignées, réalisées avec passion et savoir-faire.</p><div class=serv>'+serv+'</div>'+
+    '<div class=band><h2>Prêt à réserver ?</h2><p>Réservation en ligne, 7j/7, en quelques secondes.</p><a class=cta data-go=contact>'+esc(d.cta)+' &rarr;</a></div>'+
+    '</div></section></main>'+
+    // PAGE A PROPOS
+    '<main class=page id=p-about>'+
+    '<section class=s><div class=wrap><div class=about><div class=pic></div><div><div class=eb>À propos</div><div class=h2>'+nm+', votre adresse de confiance</div><p class=lead>Une équipe passionnée, un accueil chaleureux et un vrai savoir-faire. Venez vivre l’expérience '+nm+'.</p><ul class=vals><li>Savoir-faire reconnu</li><li>Accueil chaleureux & sur-mesure</li><li>Produits et matériel de qualité</li></ul><a class=cta data-go=contact>'+esc(d.cta)+' &rarr;</a></div></div>'+
+    '<div class=stat><div><b>+10 ans</b><span>d’expérience</span></div><div><b>+2000</b><span>clients satisfaits</span></div><div><b>4,9/5</b><span>note moyenne</span></div></div>'+
+    '</div></section></main>'+
+    // PAGE CONTACT
+    '<main class=page id=p-contact>'+
+    '<section class=s><div class=wrap><div class=eb>Contact</div><div class=h2>On vous attend</div><div class=contact>'+
+    '<div class=ci><h3>Coordonnées</h3><p>📍 '+esc(st.city)+'</p><p>📞 '+esc(st.phone)+'</p><p>🕒 Lun–Sam · 9h–19h</p><br><a class=cta data-go=contact>'+esc(d.cta)+' &rarr;</a></div>'+
+    '<div class=ci><h3>Écrivez-nous</h3><div class=fl><input placeholder="Votre nom"><input placeholder="Téléphone"><textarea rows=3 placeholder="Votre message"></textarea><a class=cta>Envoyer</a></div></div>'+
+    '</div></div></section></main>'+
     '<footer>© 2026 '+nm+' — '+esc(st.city)+' · Site créé avec Zymlux Création</footer>'+
-    '<script>(function(){var d=0,dir=1;function loop(){var m=document.body.scrollHeight-window.innerHeight;if(m>2){d+=dir*Math.max(1,m/420);if(d>=m){d=m;dir=-1}else if(d<=0){d=0;dir=1}window.scrollTo(0,d)}requestAnimationFrame(loop)}setTimeout(function(){requestAnimationFrame(loop)},1200)})();<\/script>'+
+    '<script>(function(){var P=["home","services","about","contact"],i=0,t=false;function go(id){var x=P.indexOf(id);if(x<0)x=0;i=x;var ps=document.querySelectorAll(".page");for(var k=0;k<ps.length;k++)ps[k].classList.toggle("on",ps[k].id==="p-"+id);var nb=document.querySelectorAll("nav button");for(var j=0;j<nb.length;j++)nb[j].classList.toggle("act",nb[j].getAttribute("data-p")===id);window.scrollTo(0,0)}var cl=document.querySelectorAll("[data-p],[data-go]");for(var a=0;a<cl.length;a++){cl[a].addEventListener("click",function(){t=true;go(this.getAttribute("data-p")||this.getAttribute("data-go"))})}go("home");setInterval(function(){if(t)return;i=(i+1)%P.length;go(P[i])},3600)})();<\/script>'+
     '</body></html>';
   }
 
