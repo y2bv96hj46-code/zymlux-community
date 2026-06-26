@@ -47,11 +47,12 @@ header.scr{background:rgba(6,6,8,.82);backdrop-filter:blur(16px);border-bottom:1
 .nav{display:flex;align-items:center;justify-content:space-between;height:80px}
 .brand{font-family:'Space Grotesk';font-weight:700;font-size:1.4rem;display:flex;align-items:center;gap:9px}
 .dot{width:11px;height:11px;border-radius:50%;background:var(--grad);box-shadow:0 0 18px var(--c1)}
-.links{display:flex;gap:30px;align-items:center}
+.links{display:none}
 .links a{font-size:.92rem;color:var(--mut);transition:.3s}
 .links a:hover{color:var(--txt)}
-.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer}
-.burger span{width:26px;height:2px;background:var(--txt)}
+.burger{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;border:1px solid var(--line);border-radius:10px;transition:.3s}
+.burger:hover{border-color:var(--c1)}
+.burger span{width:24px;height:2px;background:var(--txt);transition:.3s}
 
 /* HERO */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;padding-top:80px;overflow:hidden}
@@ -202,10 +203,36 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
 
 .float{position:fixed;bottom:22px;right:22px;z-index:90;box-shadow:0 10px 40px rgba(123,92,255,.5)}
 
-.mmenu{position:fixed;inset:0;background:var(--bg);z-index:120;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;transform:translateY(-100%);transition:.5s var(--ease)}
-.mmenu.open{transform:none}
-.mmenu a{font-family:'Space Grotesk';font-size:1.8rem}
-.mmenu .x{position:absolute;top:24px;right:26px;font-size:2rem;background:none;border:none;color:var(--txt)}
+/* intro loader */
+.loader{position:fixed;inset:0;z-index:9999;background:var(--bg2);display:grid;place-items:center;animation:loaderOut .85s var(--ease) 1.7s forwards}
+.loader .li{text-align:center;padding:0 24px}
+.loader .lbrand{font-family:'Space Grotesk';font-weight:700;font-size:clamp(1.7rem,5vw,2.6rem);display:flex;align-items:center;gap:11px;justify-content:center;margin-bottom:26px;opacity:0;transform:translateY(16px);animation:fadeUp .7s var(--ease) .1s forwards}
+.loader .lbar{width:min(260px,62vw);height:3px;background:var(--line);border-radius:3px;overflow:hidden;margin:0 auto}
+.loader .lbar span{display:block;height:100%;width:0;background:var(--grad);animation:fillbar 1.55s var(--ease) .15s forwards}
+.loader .lpct{margin-top:15px;color:var(--mut);font-size:.82rem;letter-spacing:2px}
+@keyframes fillbar{to{width:100%}}
+@keyframes fadeUp{to{opacity:1;transform:none}}
+@keyframes loaderOut{to{transform:translateY(-101%);visibility:hidden}}
+/* nav right */
+.nav-right{display:flex;align-items:center;gap:18px}
+/* fullscreen menu */
+.mmenu{position:fixed;inset:0;background:radial-gradient(120% 120% at 100% 0,#181826,#08080c);z-index:120;display:flex;flex-direction:column;justify-content:center;padding:0 9vw;clip-path:circle(0% at calc(100% - 50px) 50px);transition:clip-path .75s var(--ease);pointer-events:none}
+.mmenu.open{clip-path:circle(160% at calc(100% - 50px) 50px);pointer-events:auto}
+.mmenu .ml{display:flex;flex-direction:column;gap:2px}
+.mmenu .ml a{font-family:'Space Grotesk';font-weight:700;font-size:clamp(2.1rem,8vw,4.4rem);color:var(--txt);display:flex;align-items:baseline;gap:18px;padding:7px 0;width:fit-content;opacity:0;transform:translateY(46px);transition:.6s var(--ease)}
+.mmenu.open .ml a{opacity:1;transform:none}
+.mmenu.open .ml a:nth-child(1){transition-delay:.18s}
+.mmenu.open .ml a:nth-child(2){transition-delay:.25s}
+.mmenu.open .ml a:nth-child(3){transition-delay:.32s}
+.mmenu.open .ml a:nth-child(4){transition-delay:.39s}
+.mmenu.open .ml a:nth-child(5){transition-delay:.46s}
+.mmenu .ml a .ix{font-family:'Inter';font-size:.85rem;color:var(--c2);font-weight:600;transform:translateY(-.4em)}
+.mmenu .ml a:hover{padding-left:18px}
+.mmenu .ml a:hover .ix{color:var(--c1)}
+.mmenu .mfoot{margin-top:50px;display:flex;gap:28px;align-items:center;flex-wrap:wrap;color:var(--mut);font-size:.92rem;opacity:0;transition:.6s var(--ease) .55s}
+.mmenu.open .mfoot{opacity:1}
+.mmenu .x{position:absolute;top:30px;right:9vw;width:46px;height:46px;border:1px solid var(--line);border-radius:50%;background:none;color:var(--txt);font-size:1.3rem;cursor:pointer;transition:.3s}
+.mmenu .x:hover{background:var(--c1);border-color:var(--c1);transform:rotate(90deg)}
 
 @media(max-width:900px){
   .links{display:none}.burger{display:flex}
@@ -226,28 +253,35 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
 <div id="prog"></div>
 <div id="cur"></div><div id="curdot"></div>
 
+<div class="loader" id="loader"><div class="li">
+  <div class="lbrand"><span class="dot"></span>STUDIO<span class="grad">LUMEN</span></div>
+  <div class="lbar"><span></span></div>
+  <div class="lpct" id="lpct">Chargement… 0%</div>
+</div></div>
+
 <header id="hdr">
   <div class="wrap nav">
     <a href="#" class="brand"><span class="dot"></span>STUDIO<span class="grad">LUMEN</span></a>
-    <nav class="links">
-      <a href="#avant-apres">Avant/Après</a>
-      <a href="#services">Services</a>
-      <a href="#process">Méthode</a>
-      <a href="#travaux">Réalisations</a>
-      <a href="#tarifs">Tarifs</a>
+    <div class="nav-right">
       <a href="#contact" class="btn" style="padding:11px 22px">Devis gratuit</a>
-    </nav>
-    <button class="burger" onclick="mm.classList.add('open')"><span></span><span></span><span></span></button>
+      <button class="burger" aria-label="Ouvrir le menu" onclick="openMenu()"><span></span><span></span><span></span></button>
+    </div>
   </div>
 </header>
 
 <div class="mmenu" id="mm">
-  <button class="x" onclick="mm.classList.remove('open')">✕</button>
-  <a href="#services" onclick="mm.classList.remove('open')">Services</a>
-  <a href="#process" onclick="mm.classList.remove('open')">Méthode</a>
-  <a href="#travaux" onclick="mm.classList.remove('open')">Réalisations</a>
-  <a href="#tarifs" onclick="mm.classList.remove('open')">Tarifs</a>
-  <a href="#contact" class="btn" onclick="mm.classList.remove('open')">Devis gratuit</a>
+  <button class="x" aria-label="Fermer le menu" onclick="closeMenu()">✕</button>
+  <nav class="ml">
+    <a href="#avant-apres" onclick="closeMenu()"><span class="ix">01</span> Avant / Après</a>
+    <a href="#services" onclick="closeMenu()"><span class="ix">02</span> Services</a>
+    <a href="#process" onclick="closeMenu()"><span class="ix">03</span> Méthode</a>
+    <a href="#travaux" onclick="closeMenu()"><span class="ix">04</span> Réalisations</a>
+    <a href="#tarifs" onclick="closeMenu()"><span class="ix">05</span> Tarifs</a>
+  </nav>
+  <div class="mfoot">
+    <span>✦ Exemple gratuit sous 48h</span>
+    <a href="#contact" class="btn" onclick="closeMenu()">Devis gratuit →</a>
+  </div>
 </div>
 
 <!-- HERO -->
@@ -509,6 +543,18 @@ if(slides.length){
     s.classList.add('on');
     if(mockurl)mockurl.textContent='🔒 '+s.dataset.url;
   },6000);
+}
+// menu plein écran
+function openMenu(){document.getElementById('mm').classList.add('open');document.body.style.overflow='hidden'}
+function closeMenu(){document.getElementById('mm').classList.remove('open');document.body.style.overflow=''}
+// compteur du loader (visuel)
+(function(){var el=document.getElementById('lpct');if(!el)return;var n=0;var t=setInterval(function(){n=Math.min(100,n+Math.ceil(Math.random()*11));el.textContent='Chargement… '+n+'%';if(n>=100)clearInterval(t)},110);})();
+// boutons magnétiques (desktop)
+if(matchMedia('(pointer:fine)').matches){
+  document.querySelectorAll('.btn').forEach(function(btn){
+    btn.addEventListener('mousemove',function(e){var r=btn.getBoundingClientRect();btn.style.transform='translate('+((e.clientX-r.left-r.width/2)*0.25)+'px,'+((e.clientY-r.top-r.height/2)*0.4)+'px)'});
+    btn.addEventListener('mouseleave',function(){btn.style.transform=''});
+  });
 }
 </script>
 </body>
