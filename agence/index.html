@@ -27,6 +27,14 @@ body,header,.card,.panel,.proj,.plan,.rcard,.step,.tile,.rev,.s-item,.btn-out,.c
 .vbtn{width:22px;height:22px;border-radius:50%;background:var(--d);border:2px solid transparent;cursor:pointer;padding:0;transition:.2s}
 .vbtn:hover{transform:scale(1.18)}
 .vbtn.act{border-color:#fff;box-shadow:0 0 0 2px var(--d)}
+/* scroll-spy lateral */
+.spy{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:80;display:flex;flex-direction:column;gap:15px}
+.spy a{width:11px;height:11px;border-radius:50%;background:transparent;border:1.5px solid var(--mut);transition:.3s var(--ease);position:relative}
+.spy a:hover{border-color:var(--c1)}
+.spy a.act{background:var(--c1);border-color:var(--c1);box-shadow:0 0 12px var(--c1)}
+.spy a::after{content:attr(data-l);position:absolute;right:22px;top:50%;transform:translateY(-50%) translateX(6px);background:var(--card);border:1px solid var(--line);color:var(--txt);font-size:.72rem;padding:4px 10px;border-radius:7px;white-space:nowrap;opacity:0;pointer-events:none;transition:.25s var(--ease)}
+.spy a:hover::after{opacity:1;transform:translateY(-50%) translateX(0)}
+@media(max-width:960px){.spy{display:none}}
 @media(max-width:600px){.vibe .vibe-lbl{display:none}.vibe{left:12px;bottom:12px;padding:8px 10px}}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -613,6 +621,15 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
 
 <a href="#contact" class="btn float">Devis gratuit →</a>
 
+<nav class="spy" aria-label="Navigation rapide">
+  <a href="#" data-s="top" data-l="Accueil" class="act"></a>
+  <a href="#avant-apres" data-s="avant-apres" data-l="Avant/Après"></a>
+  <a href="#services" data-s="services" data-l="Services"></a>
+  <a href="#travaux" data-s="travaux" data-l="Réalisations"></a>
+  <a href="#tarifs" data-s="tarifs" data-l="Tarifs"></a>
+  <a href="#contact" data-s="contact" data-l="Contact"></a>
+</nav>
+
 <div class="vibe" title="Ce site se redessine en direct">
   <span class="vibe-lbl">🎨 Change l'ambiance du site →</span>
   <button class="vbtn act" type="button" data-v="" style="--d:#7b5cff" aria-label="Néon"></button>
@@ -783,6 +800,15 @@ document.querySelectorAll('.vbtn').forEach(function(btn){btn.addEventListener('c
 })});
 // FAQ accordéon
 document.querySelectorAll('.qa button').forEach(function(b){b.addEventListener('click',function(){b.parentElement.classList.toggle('open')})});
+// scroll-spy : les points latéraux suivent la section visible
+(function(){
+  var dots=[].slice.call(document.querySelectorAll('.spy a'));
+  if(!dots.length)return;
+  var hero=document.querySelector('.hero');if(hero&&!hero.id)hero.id='top';
+  var ids=['top','avant-apres','services','travaux','tarifs','contact'];
+  var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var id=e.target.id||'top';dots.forEach(function(a){a.classList.toggle('act',a.getAttribute('data-s')===id)})}})},{rootMargin:'-45% 0px -45% 0px'});
+  ids.forEach(function(id){var el=document.getElementById(id);if(el)so.observe(el)});
+})();
 // effet 3D au survol du portfolio (desktop)
 if(matchMedia('(pointer:fine)').matches){
   document.querySelectorAll('.proj').forEach(function(card){
