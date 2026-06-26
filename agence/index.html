@@ -36,6 +36,11 @@ body,header,.card,.panel,.proj,.plan,.rcard,.step,.tile,.rev,.s-item,.btn-out,.c
 .spy a:hover::after{opacity:1;transform:translateY(-50%) translateX(0)}
 @media(max-width:960px){.spy{display:none}}
 @media(max-width:600px){.vibe .vibe-lbl{display:none}.vibe{left:12px;bottom:12px;padding:8px 10px}}
+/* easter egg */
+.egg{position:fixed;left:50%;top:24px;transform:translateX(-50%) translateY(-160%);z-index:9998;background:var(--card);border:1px solid var(--c1);color:var(--txt);padding:14px 24px;border-radius:14px;box-shadow:0 16px 44px rgba(0,0,0,.55);transition:.55s var(--ease);font-size:.95rem;text-align:center;max-width:92vw}
+.egg.show{transform:translateX(-50%) translateY(0)}
+.egg b{color:transparent;background:var(--grad);-webkit-background-clip:text;background-clip:text;font-weight:700}
+#confetti{position:fixed;inset:0;z-index:9997;pointer-events:none}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden}
@@ -621,6 +626,9 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
 
 <a href="#contact" class="btn float">Devis gratuit →</a>
 
+<div class="egg" id="egg">🎉 Bien joué, petit curieux ! Code <b>ZYMLUX10</b> = −10% sur ton site 🎁</div>
+<canvas id="confetti"></canvas>
+
 <nav class="spy" aria-label="Navigation rapide">
   <a href="#" data-s="top" data-l="Accueil" class="act"></a>
   <a href="#avant-apres" data-s="avant-apres" data-l="Avant/Après"></a>
@@ -808,6 +816,24 @@ document.querySelectorAll('.qa button').forEach(function(b){b.addEventListener('
   var ids=['top','avant-apres','services','travaux','tarifs','contact'];
   var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var id=e.target.id||'top';dots.forEach(function(a){a.classList.toggle('act',a.getAttribute('data-s')===id)})}})},{rootMargin:'-45% 0px -45% 0px'});
   ids.forEach(function(id){var el=document.getElementById(id);if(el)so.observe(el)});
+})();
+// easter egg : code Konami (ou 5 tics sur le logo) -> confettis + code promo
+(function(){
+  var seq=[38,38,40,40,37,39,37,39,66,65],i=0,fired=false;
+  addEventListener('keydown',function(e){i=(e.keyCode===seq[i])?i+1:0;if(i===seq.length){i=0;egg()}});
+  var dot=document.querySelector('.brand .dot'),dc=0;
+  if(dot)dot.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();dc++;if(dc>=5){dc=0;egg()}});
+  function egg(){
+    var t=document.getElementById('egg');if(t){t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(function(){t.classList.remove('show')},6500)}
+    confetti();
+  }
+  function confetti(){
+    var c=document.getElementById('confetti');if(!c)return;var x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+    var cols=['#7b5cff','#19e3c0','#ff5fa2','#f4a300','#2e8bff'],P=[];
+    for(var k=0;k<150;k++)P.push({x:Math.random()*c.width,y:-20-Math.random()*c.height,r:4+Math.random()*7,vy:2+Math.random()*4,vx:-2+Math.random()*4,col:cols[k%cols.length],a:Math.random()*6});
+    var t0=Date.now();
+    (function loop(){x.clearRect(0,0,c.width,c.height);for(var j=0;j<P.length;j++){var p=P[j];p.y+=p.vy;p.x+=p.vx;p.a+=.12;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.col;x.fillRect(-p.r/2,-p.r/2,p.r,p.r*.6);x.restore()}if(Date.now()-t0<4000)requestAnimationFrame(loop);else x.clearRect(0,0,c.width,c.height)})();
+  }
 })();
 // effet 3D au survol du portfolio (desktop)
 if(matchMedia('(pointer:fine)').matches){
