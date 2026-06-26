@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Générateur de site gratuit — Zymlux Création</title>
+<meta name="description" content="Créez votre site web en direct, gratuitement. Nom, métier, couleur — votre site apparaît instantanément.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070708;--bg2:#0d0d12;--card:#13131b;--line:#222230;--txt:#f4f4f6;--mut:#9a9aac;--c1:#7b5cff;--c2:#19e3c0;--grad:linear-gradient(120deg,#7b5cff,#19e3c0);--ease:cubic-bezier(.22,1,.36,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;line-height:1.5;height:100vh;overflow:hidden}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--grad);color:#06060a;font-weight:600;padding:13px 22px;border-radius:50px;border:0;cursor:pointer;font-size:.92rem;transition:.3s var(--ease);font-family:inherit}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(123,92,255,.4)}
+.btn-out{background:transparent;border:1px solid var(--line);color:var(--txt)}
+.btn-out:hover{border-color:#fff}
+/* top bar */
+.top{height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;border-bottom:1px solid var(--line);background:rgba(7,7,8,.8);backdrop-filter:blur(10px)}
+.brand{font-family:'Space Grotesk';font-weight:700;font-size:1.15rem;display:flex;align-items:center;gap:8px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--grad)}
+.top .pill{font-size:.72rem;color:var(--c2);border:1px solid var(--line);padding:5px 12px;border-radius:50px}
+/* layout */
+.app{display:grid;grid-template-columns:380px 1fr;height:calc(100vh - 64px)}
+.controls{border-right:1px solid var(--line);padding:24px;overflow-y:auto;background:var(--bg2)}
+.controls h1{font-size:1.4rem;margin-bottom:4px}
+.controls .sub{color:var(--mut);font-size:.85rem;margin-bottom:22px}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:1px;color:var(--mut);margin-bottom:8px;font-weight:600}
+.field input{width:100%;background:var(--card);border:1px solid var(--line);color:var(--txt);padding:12px 14px;border-radius:10px;font-family:inherit;font-size:.92rem;transition:.3s}
+.field input:focus{outline:none;border-color:var(--c1);box-shadow:0 0 0 3px rgba(123,92,255,.16)}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{font-family:inherit;font-size:.8rem;color:var(--mut);background:var(--card);border:1px solid var(--line);padding:8px 12px;border-radius:50px;cursor:pointer;transition:.25s}
+.chip:hover{color:var(--txt);border-color:var(--c1)}
+.chip.active{color:#06060a;background:var(--grad);border-color:transparent;font-weight:600}
+.swatches{display:flex;gap:9px;flex-wrap:wrap}
+.sw{width:30px;height:30px;border-radius:50%;background:var(--s);border:2px solid transparent;cursor:pointer;transition:.2s;padding:0}
+.sw:hover{transform:scale(1.12)}
+.sw.active{border-color:#fff;box-shadow:0 0 0 2px var(--s)}
+.toggle{display:flex;gap:7px}
+.toggle button{flex:1;background:var(--card);border:1px solid var(--line);color:var(--mut);padding:9px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:.82rem;transition:.25s}
+.toggle button.active{color:#06060a;background:var(--grad);border-color:transparent;font-weight:600}
+.cta-box{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+.cta-box .btn{width:100%}
+.cta-box p{text-align:center;color:var(--mut);font-size:.76rem;margin-top:10px}
+/* preview */
+.preview{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;gap:16px;background:radial-gradient(80% 80% at 50% 0,rgba(123,92,255,.08),transparent 60%)}
+.device{width:100%;max-width:900px;height:100%;max-height:calc(100vh - 150px);border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#0a0a0e;box-shadow:0 30px 90px rgba(0,0,0,.55);display:flex;flex-direction:column}
+.device .bar{height:40px;display:flex;align-items:center;gap:7px;padding:0 16px;background:#13131b;border-bottom:1px solid var(--line);flex:0 0 auto}
+.device .bar i{width:11px;height:11px;border-radius:50%;background:#3a3a46}
+.device .bar .url{margin-left:12px;font-size:.74rem;color:var(--mut);background:#0a0a0e;padding:4px 12px;border-radius:6px}
+.device iframe{flex:1;width:100%;border:0;background:#fff}
+.preview .hint{color:var(--mut);font-size:.8rem;display:flex;align-items:center;gap:8px}
+.preview .hint .live{width:7px;height:7px;border-radius:50%;background:#21d07a;box-shadow:0 0 8px #21d07a;animation:p 1.5s infinite}
+@keyframes p{50%{opacity:.4}}
+@media(max-width:880px){
+  body{overflow:auto;height:auto}
+  .app{grid-template-columns:1fr;height:auto}
+  .controls{border-right:0;border-bottom:1px solid var(--line);overflow:visible}
+  .preview{padding:18px}
+  .device{height:560px;max-height:none}
+}
+</style>
+</head>
+<body>
+<div class="top">
+  <a href="../" class="brand"><span class="dot"></span>Zymlux <span class="grad">Création</span></a>
+  <span class="pill">⚡ Générateur en direct</span>
+  <a href="../#contact" class="btn" style="padding:9px 18px">Être rappelé</a>
+</div>
+
+<div class="app">
+  <aside class="controls">
+    <h1>Crée ton site <span class="grad">en direct</span></h1>
+    <p class="sub">Remplis, regarde ton site se construire à droite. Gratuit, instantané.</p>
+
+    <div class="field">
+      <label>Nom du commerce</label>
+      <input id="f-name" type="text" maxlength="26" value="Chez Marco" placeholder="Ex : Salon Élégance">
+    </div>
+    <div class="field">
+      <label>Slogan (optionnel)</label>
+      <input id="f-slogan" type="text" maxlength="48" placeholder="Laissez vide = slogan auto">
+    </div>
+    <div class="field">
+      <label>Métier</label>
+      <div class="chips" id="f-type"></div>
+    </div>
+    <div class="field">
+      <label>Couleur</label>
+      <div class="swatches" id="f-color"></div>
+    </div>
+    <div class="field">
+      <label>Thème</label>
+      <div class="toggle" id="f-theme">
+        <button data-t="dark" class="active">Sombre</button>
+        <button data-t="light">Clair</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Ville</label>
+      <input id="f-city" type="text" maxlength="24" value="Lille" placeholder="Votre ville">
+    </div>
+    <div class="field">
+      <label>Téléphone</label>
+      <input id="f-phone" type="text" maxlength="20" value="06 12 34 56 78" placeholder="Votre numéro">
+    </div>
+
+    <div class="cta-box">
+      <a id="claim" class="btn" href="../#contact">J'adore — je veux ce site →</a>
+      <p>On le met en ligne, à votre nom, sous 7 jours.</p>
+    </div>
+  </aside>
+
+  <section class="preview">
+    <div class="device">
+      <div class="bar"><i></i><i></i><i></i><span class="url" id="d-url">🔒 chez-marco.fr</span></div>
+      <iframe id="d-frame" title="Aperçu de votre site"></iframe>
+    </div>
+    <div class="hint"><span class="live"></span> Aperçu mis à jour en temps réel</div>
+  </section>
+</div>
+
+<script>
+(function(){
+  var TYPES=[
+    {k:'Barbier',emoji:'🪒',eyebrow:'Barbier · Salon',slogan:"L'art de la coupe, sur-mesure.",cta:'Réserver',serv:[['Coupe signature','Shampoing + coiffage'],['Taille de barbe','Au cordeau'],['Rasage traditionnel','Serviette chaude']]},
+    {k:'Beauté',emoji:'💅',eyebrow:'Institut · Beauté',slogan:'Sublimez votre beauté, en douceur.',cta:'Prendre RDV',serv:[['Soins du visage','Éclat & hydratation'],['Pose & nail art','Mains de rêve'],['Épilation','Précise & soignée']]},
+    {k:'Restaurant',emoji:'🍽️',eyebrow:'Restaurant',slogan:'Une cuisine qui a du goût.',cta:'Réserver une table',serv:[['Entrées','De saison'],['Plats signature','Faits maison'],['Desserts','Gourmands']]},
+    {k:'Artisan',emoji:'🔧',eyebrow:'Artisan · Dépannage',slogan:'Un travail soigné, garanti.',cta:'Devis gratuit',serv:[['Dépannage','Intervention rapide'],['Installation','Aux normes'],['Rénovation','Clé en main']]},
+    {k:'Coach',emoji:'💪',eyebrow:'Coach · Sport',slogan:'Dépassez vos limites.',cta:'Séance d’essai',serv:[['Coaching perso','Programme sur-mesure'],['Cours collectifs','Énergie de groupe'],['Nutrition','Plan adapté']]},
+    {k:'Fleuriste',emoji:'🌸',eyebrow:'Atelier floral',slogan:'La beauté, au naturel.',cta:'Commander',serv:[['Bouquets','Compositions du jour'],['Mariages','Décoration florale'],['Abonnements','Fleurs chaque semaine']]}
+  ];
+  var COLORS=['#7b5cff','#19e3c0','#ff5fa2','#f4a300','#e3261f','#2e8bff','#16c172'];
+  var st={name:'Chez Marco',slogan:'',type:0,color:'#7b5cff',theme:'dark',city:'Lille',phone:'06 12 34 56 78'};
+
+  function esc(s){return String(s||'').replace(/[<>&"]/g,function(c){return({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'})[c]})}
+  function slug(s){return (s||'site').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'site'}
+
+  function build(){
+    var d=TYPES[st.type],c=st.color,nm=esc(st.name||'Votre Commerce');
+    var slog=esc(st.slogan||d.slogan);
+    var dark=st.theme==='dark';
+    var bg=dark?'#0e0e13':'#ffffff', tx=dark?'#f3f3f7':'#16161d', mut=dark?'#9a9aac':'#6a6a78', card=dark?'#17171f':'#f5f6f8', line=dark?'#23232f':'#e9e9f0';
+    var serv=d.serv.map(function(s){return '<div class=sc><div class=ic></div><h3>'+esc(s[0])+'</h3><p>'+esc(s[1])+'</p></div>'}).join('');
+    return '<!doctype html><html lang=fr><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1">'+
+    '<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500&display=swap" rel=stylesheet>'+
+    '<style>*{margin:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:Inter,sans-serif;background:'+bg+';color:'+tx+'}'+
+    'h1,h2,h3,.lg{font-family:"Space Grotesk",sans-serif}'+
+    '.cta{background:'+c+';color:#fff;font-weight:600;border:0;padding:12px 22px;border-radius:50px;font-size:14px;text-decoration:none;display:inline-block;cursor:pointer}'+
+    '.wrap{max-width:1000px;margin:0 auto;padding:0 26px}'+
+    'header{position:sticky;top:0;z-index:9;display:flex;align-items:center;justify-content:space-between;padding:16px 26px;background:'+bg+'ee;backdrop-filter:blur(8px);border-bottom:1px solid '+line+'}'+
+    '.lo{font-family:"Space Grotesk";font-weight:700;font-size:18px;display:flex;gap:8px;align-items:center}.lo .b{width:9px;height:9px;border-radius:50%;background:'+c+'}'+
+    'nav{display:flex;gap:18px;font-size:13px;color:'+mut+'}'+
+    '.hero{position:relative;padding:64px 0 54px;overflow:hidden}'+
+    '.glow{position:absolute;width:340px;height:340px;border-radius:50%;background:'+c+';filter:blur(110px);opacity:.22;top:-80px;right:-60px}'+
+    '.eb{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:'+c+';font-weight:600}'+
+    '.hero h1{font-size:50px;line-height:1.03;margin:14px 0 16px;max-width:680px}'+
+    '.hero p{color:'+mut+';font-size:17px;max-width:440px;margin-bottom:26px}'+
+    '.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}'+
+    '.ghost{border:1px solid '+line+';color:'+tx+';padding:12px 22px;border-radius:50px;font-size:14px;text-decoration:none}'+
+    '.stat{display:flex;gap:34px;margin-top:34px}.stat b{font-family:"Space Grotesk";font-size:26px;color:'+c+';display:block}.stat span{font-size:12px;color:'+mut+'}'+
+    'section.s{padding:56px 0}'+
+    '.h2{font-size:32px;margin-bottom:8px}.lead{color:'+mut+';margin-bottom:32px;font-size:15px}'+
+    '.serv{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}'+
+    '.sc{background:'+card+';border:1px solid '+line+';border-radius:16px;padding:24px}'+
+    '.sc .ic{width:44px;height:44px;border-radius:12px;background:'+c+';opacity:.9;margin-bottom:14px}'+
+    '.sc h3{font-size:18px;margin-bottom:6px}.sc p{color:'+mut+';font-size:13px}'+
+    '.about{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}'+
+    '.about .pic{aspect-ratio:4/3;border-radius:16px;background:linear-gradient(135deg,'+c+'55,'+card+')}'+
+    '.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}'+
+    '.gal div{aspect-ratio:1;border-radius:12px;background:linear-gradient(135deg,'+c+'33,'+card+')}'+
+    '.contact{background:'+card+';border:1px solid '+line+';border-radius:20px;padding:40px;text-align:center}'+
+    '.contact h2{font-size:30px;margin-bottom:10px}.contact p{color:'+mut+';margin-bottom:8px}'+
+    'footer{padding:30px 26px;border-top:1px solid '+line+';color:'+mut+';font-size:13px;text-align:center}'+
+    '@media(max-width:720px){.hero h1{font-size:34px}.serv,.about{grid-template-columns:1fr}nav{display:none}.stat{gap:22px}}'+
+    '</style></head><body>'+
+    '<header><div class=lo><span class=b></span>'+nm+'</div><nav><span>Accueil</span><span>Services</span><span>À propos</span><span>Contact</span></nav><a class=cta>'+esc(d.cta)+'</a></header>'+
+    '<div class=hero><div class=wrap><div class=glow></div><div class=eb>'+esc(d.eyebrow)+' · '+esc(st.city)+'</div>'+
+    '<h1>'+slog+'</h1>'+
+    '<p>Bienvenue chez <b>'+nm+'</b>. Réservez en ligne en quelques secondes, 7j/7.</p>'+
+    '<div class=row><a class=cta>'+esc(d.cta)+' &rarr;</a><a class=ghost>Nous appeler</a></div>'+
+    '<div class=stat><div><b>4,9/5</b><span>+200 avis</span></div><div><b>7j/7</b><span>disponible</span></div><div><b>'+esc(st.city)+'</b><span>& alentours</span></div></div>'+
+    '</div></div>'+
+    '<section class=s><div class=wrap><div class=eb>Nos prestations</div><div class=h2>Ce que nous faisons pour vous</div><div class=serv>'+serv+'</div></div></section>'+
+    '<section class=s><div class=wrap><div class=about><div class=pic></div><div><div class=eb>À propos</div><div class=h2>'+nm+', votre adresse de confiance</div><p class=lead>Une équipe passionnée, un accueil chaleureux et un savoir-faire reconnu. Venez vivre l’expérience '+nm+'.</p><a class=cta>'+esc(d.cta)+' &rarr;</a></div></div></div></section>'+
+    '<section class=s><div class=wrap><div class=eb>Galerie</div><div class=h2>Nos réalisations</div><div class=gal><div></div><div></div><div></div></div></div></section>'+
+    '<section class=s><div class=wrap><div class=contact><div class=eb>Contact</div><h2>On vous attend</h2><p>📍 '+esc(st.city)+'</p><p>📞 '+esc(st.phone)+'</p><br><a class=cta>'+esc(d.cta)+' &rarr;</a></div></div></section>'+
+    '<footer>© 2026 '+nm+' — '+esc(st.city)+' · Site créé avec Zymlux Création</footer>'+
+    '</body></html>';
+  }
+
+  var frame=document.getElementById('d-frame'),url=document.getElementById('d-url'),claim=document.getElementById('claim');
+  var T;
+  function render(){
+    frame.srcdoc=build();
+    url.textContent='🔒 '+slug(st.name)+'.fr';
+    if(claim)claim.href='../#contact';
+  }
+  function debounced(){clearTimeout(T);T=setTimeout(render,260)}
+
+  // build type chips
+  var typeWrap=document.getElementById('f-type');
+  TYPES.forEach(function(t,i){var b=document.createElement('button');b.className='chip'+(i===0?' active':'');b.type='button';b.textContent=t.emoji+' '+t.k;
+    b.addEventListener('click',function(){st.type=i;[].forEach.call(typeWrap.children,function(c,k){c.classList.toggle('active',k===i)});render()});typeWrap.appendChild(b)});
+  // colors
+  var colWrap=document.getElementById('f-color');
+  COLORS.forEach(function(col,i){var b=document.createElement('button');b.className='sw'+(i===0?' active':'');b.type='button';b.style.setProperty('--s',col);b.dataset.c=col;
+    b.addEventListener('click',function(){st.color=col;[].forEach.call(colWrap.children,function(c){c.classList.toggle('active',c.dataset.c===col)});render()});colWrap.appendChild(b)});
+  // theme
+  var themeWrap=document.getElementById('f-theme');
+  [].forEach.call(themeWrap.children,function(btn){btn.addEventListener('click',function(){st.theme=btn.dataset.t;[].forEach.call(themeWrap.children,function(c){c.classList.toggle('active',c===btn)});render()})});
+  // text inputs
+  document.getElementById('f-name').addEventListener('input',function(e){st.name=e.target.value;debounced()});
+  document.getElementById('f-slogan').addEventListener('input',function(e){st.slogan=e.target.value;debounced()});
+  document.getElementById('f-city').addEventListener('input',function(e){st.city=e.target.value;debounced()});
+  document.getElementById('f-phone').addEventListener('input',function(e){st.phone=e.target.value;debounced()});
+
+  render();
+})();
+</script>
+</body>
+</html>
