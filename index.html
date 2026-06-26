@@ -120,6 +120,12 @@ header.scr{background:rgba(6,6,8,.82);backdrop-filter:blur(16px);border-bottom:1
 .glowsec{position:relative;overflow:hidden}
 .glowsec::before{content:"";position:absolute;left:50%;top:34%;transform:translateX(-50%);width:760px;height:440px;max-width:92%;background:radial-gradient(ellipse,rgba(123,92,255,.10),transparent 70%);z-index:0;pointer-events:none}
 .glowsec .wrap{position:relative;z-index:1}
+/* section generateur intégré */
+.genwrap{border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.55);background:var(--bg2);height:700px;position:relative;z-index:1}
+.genwrap iframe{width:100%;height:100%;border:0;display:block}
+.gen-badge{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;color:var(--c2);border:1px solid var(--line);background:rgba(255,255,255,.03);padding:6px 13px;border-radius:50px;margin-bottom:14px}
+.gen-badge .live{width:7px;height:7px;border-radius:50%;background:#21d07a;box-shadow:0 0 8px #21d07a;animation:pulse 1.5s infinite}
+@media(max-width:900px){.genwrap{height:600px}}
 /* manifeste cinematique */
 .manifesto{padding:130px 0;text-align:center}
 .mani{font-family:'Space Grotesk';font-weight:700;font-size:clamp(1.7rem,4.6vw,3.4rem);line-height:1.3;max-width:920px;margin:0 auto;letter-spacing:-.01em}
@@ -422,6 +428,23 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
   <span>BARBIERS <b>✦</b></span><span>INSTITUTS <b>✦</b></span><span>RESTAURANTS <b>✦</b></span><span>ARTISANS <b>✦</b></span><span>COACHS <b>✦</b></span><span>COIFFEURS <b>✦</b></span>
 </div></div>
 
+<!-- GENERATEUR INTEGRE -->
+<section id="creer" class="glowsec">
+  <div class="wrap">
+    <div class="head reveal" style="max-width:760px">
+      <span class="gen-badge"><span class="live"></span> Outil exclusif · en direct</span>
+      <h2>Crée ton site <span class="grad">en 30 secondes</span></h2>
+      <p>Tape ton nom, choisis ton métier, ta couleur, ton style — et regarde ton site complet (multi-pages) se construire sous tes yeux. Tu peux même le télécharger. Gratuit, ici, maintenant.</p>
+    </div>
+    <div class="genwrap reveal d1">
+      <iframe src="generateur/index.html" title="Générateur de site Zymlux Création" loading="lazy"></iframe>
+    </div>
+    <div style="text-align:center;margin-top:26px" class="reveal d2">
+      <a href="generateur/" class="btn">Ouvrir le générateur en plein écran →</a>
+    </div>
+  </div>
+</section>
+
 <!-- BEFORE/AFTER -->
 <section id="avant-apres">
   <div class="wrap">
@@ -652,6 +675,7 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
 
 <nav class="spy" aria-label="Navigation rapide">
   <a href="#" data-s="top" data-l="Accueil" class="act"></a>
+  <a href="#creer" data-s="creer" data-l="Créer mon site"></a>
   <a href="#avant-apres" data-s="avant-apres" data-l="Avant/Après"></a>
   <a href="#services" data-s="services" data-l="Services"></a>
   <a href="#travaux" data-s="travaux" data-l="Réalisations"></a>
@@ -840,7 +864,7 @@ document.querySelectorAll('.qa button').forEach(function(b){b.addEventListener('
   var dots=[].slice.call(document.querySelectorAll('.spy a'));
   if(!dots.length)return;
   var hero=document.querySelector('.hero');if(hero&&!hero.id)hero.id='top';
-  var ids=['top','avant-apres','services','travaux','tarifs','contact'];
+  var ids=['top','creer','avant-apres','services','travaux','tarifs','contact'];
   var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var id=e.target.id||'top';dots.forEach(function(a){a.classList.toggle('act',a.getAttribute('data-s')===id)})}})},{rootMargin:'-45% 0px -45% 0px'});
   ids.forEach(function(id){var el=document.getElementById(id);if(el)so.observe(el)});
 })();
