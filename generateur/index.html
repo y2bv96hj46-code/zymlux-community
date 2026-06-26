@@ -45,7 +45,9 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
 .toggle button.active{color:#06060a;background:var(--grad);border-color:transparent;font-weight:600}
 .cta-box{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
 .cta-box .btn{width:100%}
-.cta-box p{text-align:center;color:var(--mut);font-size:.76rem;margin-top:10px}
+.cta-row{display:flex;gap:8px;margin-top:9px}
+.cta-row .btn{flex:1;padding:11px;font-size:.85rem}
+.cta-box p{text-align:center;color:var(--mut);font-size:.76rem;margin-top:10px;transition:.2s}
 /* preview */
 .preview{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;gap:16px;background:radial-gradient(80% 80% at 50% 0,rgba(123,92,255,.08),transparent 60%)}
 .device{width:100%;max-width:900px;height:100%;max-height:calc(100vh - 150px);border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#0a0a0e;box-shadow:0 30px 90px rgba(0,0,0,.55);display:flex;flex-direction:column}
@@ -111,7 +113,11 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
 
     <div class="cta-box">
       <a id="claim" class="btn" href="../#contact">J'adore — je veux ce site →</a>
-      <p>On le met en ligne, à votre nom, sous 7 jours.</p>
+      <div class="cta-row">
+        <button id="dl" class="btn btn-out" type="button">⬇ Télécharger</button>
+        <button id="share" class="btn btn-out" type="button">🔗 Partager</button>
+      </div>
+      <p id="cta-note">On le met en ligne, à votre nom, sous 7 jours.</p>
     </div>
   </aside>
 
@@ -136,6 +142,16 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
   ];
   var COLORS=['#7b5cff','#19e3c0','#ff5fa2','#f4a300','#e3261f','#2e8bff','#16c172'];
   var st={name:'Chez Marco',slogan:'',type:0,color:'#7b5cff',theme:'dark',city:'Lille',phone:'06 12 34 56 78'};
+  // restaurer depuis l'URL (sites partagés)
+  try{var q=new URLSearchParams(location.search);
+    if(q.get('n'))st.name=q.get('n');
+    if(q.get('s'))st.slogan=q.get('s');
+    if(q.get('t')!=null)st.type=Math.max(0,Math.min(5,parseInt(q.get('t'),10)||0));
+    if(q.get('c'))st.color='#'+q.get('c').replace('#','');
+    if(q.get('th'))st.theme=q.get('th')==='light'?'light':'dark';
+    if(q.get('city'))st.city=q.get('city');
+    if(q.get('p'))st.phone=q.get('p');
+  }catch(e){}
 
   function esc(s){return String(s||'').replace(/[<>&"]/g,function(c){return({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'})[c]})}
   function slug(s){return (s||'site').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'site'}
@@ -204,11 +220,11 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
 
   // build type chips
   var typeWrap=document.getElementById('f-type');
-  TYPES.forEach(function(t,i){var b=document.createElement('button');b.className='chip'+(i===0?' active':'');b.type='button';b.textContent=t.emoji+' '+t.k;
+  TYPES.forEach(function(t,i){var b=document.createElement('button');b.className='chip'+(i===st.type?' active':'');b.type='button';b.textContent=t.emoji+' '+t.k;
     b.addEventListener('click',function(){st.type=i;[].forEach.call(typeWrap.children,function(c,k){c.classList.toggle('active',k===i)});render()});typeWrap.appendChild(b)});
   // colors
   var colWrap=document.getElementById('f-color');
-  COLORS.forEach(function(col,i){var b=document.createElement('button');b.className='sw'+(i===0?' active':'');b.type='button';b.style.setProperty('--s',col);b.dataset.c=col;
+  COLORS.forEach(function(col,i){var b=document.createElement('button');b.className='sw'+(col===st.color?' active':'');b.type='button';b.style.setProperty('--s',col);b.dataset.c=col;
     b.addEventListener('click',function(){st.color=col;[].forEach.call(colWrap.children,function(c){c.classList.toggle('active',c.dataset.c===col)});render()});colWrap.appendChild(b)});
   // theme
   var themeWrap=document.getElementById('f-theme');
@@ -218,6 +234,29 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
   document.getElementById('f-slogan').addEventListener('input',function(e){st.slogan=e.target.value;debounced()});
   document.getElementById('f-city').addEventListener('input',function(e){st.city=e.target.value;debounced()});
   document.getElementById('f-phone').addEventListener('input',function(e){st.phone=e.target.value;debounced()});
+
+  // appliquer l'état restauré aux champs + thème
+  document.getElementById('f-name').value=st.name;
+  document.getElementById('f-slogan').value=st.slogan;
+  document.getElementById('f-city').value=st.city;
+  document.getElementById('f-phone').value=st.phone;
+  [].forEach.call(themeWrap.children,function(c){c.classList.toggle('active',c.dataset.t===st.theme)});
+
+  function note(t){var n=document.getElementById('cta-note');if(!n)return;clearTimeout(n._t);var o=n.dataset.o||(n.dataset.o=n.textContent);n.textContent=t;n._t=setTimeout(function(){n.textContent=o},2400)}
+  function shareURL(){var p=new URLSearchParams();p.set('n',st.name);if(st.slogan)p.set('s',st.slogan);p.set('t',st.type);p.set('c',st.color.replace('#',''));p.set('th',st.theme);p.set('city',st.city);p.set('p',st.phone);return location.origin+location.pathname+'?'+p.toString()}
+  // télécharger le vrai fichier HTML
+  document.getElementById('dl').addEventListener('click',function(){
+    var blob=new Blob([build()],{type:'text/html;charset=utf-8'});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=slug(st.name)+'.html';
+    document.body.appendChild(a);a.click();setTimeout(function(){a.remove();URL.revokeObjectURL(a.href)},100);
+    note('✅ Votre site est téléchargé !');
+  });
+  // partager via lien
+  document.getElementById('share').addEventListener('click',function(){
+    var u=shareURL();
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(function(){note('🔗 Lien copié — partagez-le !')},function(){window.prompt('Copiez votre lien :',u)})}
+    else{window.prompt('Copiez votre lien :',u)}
+  });
 
   render();
 })();
