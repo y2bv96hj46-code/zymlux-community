@@ -116,6 +116,10 @@ header.scr{background:rgba(6,6,8,.82);backdrop-filter:blur(16px);border-bottom:1
 .mock .badge-live i{width:7px;height:7px;border-radius:50%;background:#06060a;animation:pulse 1.4s infinite}
 .fx{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.55}
 .spot{position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(380px circle at var(--mx,70%) var(--my,35%),rgba(123,92,255,.20),transparent 62%);transition:background .12s linear}
+/* profondeur lumineuse (cohesion d'ensemble) */
+.glowsec{position:relative;overflow:hidden}
+.glowsec::before{content:"";position:absolute;left:50%;top:34%;transform:translateX(-50%);width:760px;height:440px;max-width:92%;background:radial-gradient(ellipse,rgba(123,92,255,.10),transparent 70%);z-index:0;pointer-events:none}
+.glowsec .wrap{position:relative;z-index:1}
 /* manifeste cinematique */
 .manifesto{padding:130px 0;text-align:center}
 .mani{font-family:'Space Grotesk';font-weight:700;font-size:clamp(1.7rem,4.6vw,3.4rem);line-height:1.3;max-width:920px;margin:0 auto;letter-spacing:-.01em}
@@ -498,7 +502,7 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
 </section>
 
 <!-- MANIFESTE -->
-<section class="manifesto">
+<section class="manifesto glowsec">
   <div class="wrap">
     <p class="mani" id="mani"><span class="w">On</span> <span class="w">ne</span> <span class="w">fait</span> <span class="w">pas</span> <span class="w g">des</span> <span class="w g">sites.</span> <span class="w">On</span> <span class="w">crée</span> <span class="w">des</span> <span class="w g">machines</span> <span class="w g">à</span> <span class="w g">clients</span> <span class="w">—</span> <span class="w">belles,</span> <span class="w">rapides,</span> <span class="w">et</span> <span class="w">pensées</span> <span class="w">pour</span> <span class="w g">vous</span> <span class="w g">faire</span> <span class="w g">gagner.</span></p>
   </div>
@@ -554,7 +558,7 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
 </section>
 
 <!-- COMPARATIF -->
-<section>
+<section class="glowsec">
   <div class="wrap">
     <div class="head reveal"><span class="eyebrow">Pourquoi nous</span><h2>Le bon choix, sans hésiter</h2><p>Comparez. La différence est vite vue.</p></div>
     <div class="cmp reveal d1">
