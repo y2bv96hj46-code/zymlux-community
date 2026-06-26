@@ -86,7 +86,13 @@ header.scr{background:rgba(6,6,8,.82);backdrop-filter:blur(16px);border-bottom:1
 @keyframes scrollsite{0%,10%{transform:translateY(0)}100%{transform:translateY(calc(-100% + 460px))}}
 .mock .badge-live{position:absolute;top:54px;right:16px;background:var(--grad);color:#06060a;font-size:.7rem;font-weight:700;padding:5px 11px;border-radius:50px;z-index:3;display:flex;align-items:center;gap:6px}
 .mock .badge-live i{width:7px;height:7px;border-radius:50%;background:#06060a;animation:pulse 1.4s infinite}
-@media(max-width:900px){.hero-grid2{grid-template-columns:1fr;gap:40px}.hero-copy{text-align:center}.hero-copy .hero-actions{justify-content:center}.mock .screen{height:380px}}
+.fx{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.55}
+.picker{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:24px}
+.picker-lbl{font-size:.8rem;color:var(--mut);margin-right:2px}
+.chip{font-family:inherit;font-size:.84rem;color:var(--mut);background:var(--card);border:1px solid var(--line);padding:8px 14px;border-radius:50px;cursor:pointer;transition:.3s}
+.chip:hover{color:var(--txt);border-color:var(--c1);transform:translateY(-2px)}
+.chip.active{color:#06060a;background:var(--grad);border-color:transparent;font-weight:600}
+@media(max-width:900px){.hero-grid2{grid-template-columns:1fr;gap:40px}.hero-copy{text-align:center}.hero-copy .hero-actions,.picker{justify-content:center}.mock .screen{height:380px}}
 
 /* marquee */
 .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;overflow:hidden;white-space:nowrap;background:var(--bg2)}
@@ -288,6 +294,7 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
 <section class="hero">
   <div class="grid-bg"></div>
   <div class="orb orb1" id="o1"></div><div class="orb orb2" id="o2"></div>
+  <canvas class="fx" id="fx"></canvas>
   <div class="wrap hero-grid2">
     <div class="hero-copy">
       <div class="pill reveal"><span class="live"></span> 3 places dispo ce mois-ci</div>
@@ -298,6 +305,13 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
         <a href="#avant-apres" class="btn btn-out">Voir la différence</a>
       </div>
       <p class="hero-note reveal d4">✦ Exemple offert · Sans engagement · Livré en 7 jours</p>
+      <div class="picker reveal d4">
+        <span class="picker-lbl">Votre métier ?</span>
+        <button class="chip active" type="button">🪒 Barbier</button>
+        <button class="chip" type="button">💅 Beauté</button>
+        <button class="chip" type="button">🍽️ Resto</button>
+        <button class="chip" type="button">🔧 Artisan</button>
+      </div>
     </div>
     <div class="mock reveal d2">
       <div class="bar"><i></i><i></i><i></i><span class="url" id="mockurl">🔒 atelierblade.fr</span></div>
@@ -530,20 +544,44 @@ addEventListener('mousemove',e=>{if(drag)setBA(e.clientX)});
 addEventListener('mouseup',()=>drag=false);
 ba.addEventListener('touchstart',e=>setBA(e.touches[0].clientX),{passive:true});
 ba.addEventListener('touchmove',e=>setBA(e.touches[0].clientX),{passive:true});
-// showreel hero : fait défiler tes sites en boucle dans le mockup
+// showreel + configurateur : le visiteur choisit son métier, le mockup suit
 const slides=[...document.querySelectorAll('.mock .slide')];
 const mockurl=document.getElementById('mockurl');
-if(slides.length){
-  let si=0;
-  setInterval(()=>{
-    slides[si].classList.remove('on');
-    si=(si+1)%slides.length;
-    const s=slides[si];
-    s.style.animation='none';void s.offsetWidth;s.style.animation='';
-    s.classList.add('on');
-    if(mockurl)mockurl.textContent='🔒 '+s.dataset.url;
-  },6000);
+const chips=[...document.querySelectorAll('.chip')];
+let si=0,idle=0;
+function showSlide(i){
+  if(!slides.length)return;
+  slides[si].classList.remove('on');
+  si=(i+slides.length)%slides.length;
+  const s=slides[si];
+  s.style.animation='none';void s.offsetWidth;s.style.animation='';
+  s.classList.add('on');
+  if(mockurl)mockurl.textContent='🔒 '+s.dataset.url;
+  chips.forEach((c,k)=>c.classList.toggle('active',k===si));
 }
+if(slides.length){
+  setInterval(()=>{if(idle>0){idle--;return;}showSlide(si+1)},6000);
+  chips.forEach((c,k)=>c.addEventListener('click',()=>{showSlide(k);idle=3;}));
+}
+// fond de particules anime (hero)
+(function(){
+  var c=document.getElementById('fx');if(!c)return;
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  var x=c.getContext('2d'),w,h,pts;
+  function size(){var r=c.getBoundingClientRect();w=c.width=r.width;h=c.height=r.height;}
+  function init(){size();var n=Math.min(64,Math.floor(w/24));pts=[];for(var i=0;i<n;i++)pts.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4});}
+  function tick(){
+    x.clearRect(0,0,w,h);
+    for(var i=0;i<pts.length;i++){var p=pts[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;
+      x.beginPath();x.arc(p.x,p.y,1.5,0,7);x.fillStyle='rgba(123,92,255,.7)';x.fill();}
+    for(var a=0;a<pts.length;a++)for(var b=a+1;b<pts.length;b++){
+      var dx=pts[a].x-pts[b].x,dy=pts[a].y-pts[b].y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<120){x.globalAlpha=1-d/120;x.strokeStyle='rgba(25,227,192,.22)';x.lineWidth=1;x.beginPath();x.moveTo(pts[a].x,pts[a].y);x.lineTo(pts[b].x,pts[b].y);x.stroke();x.globalAlpha=1;}
+    }
+    requestAnimationFrame(tick);
+  }
+  addEventListener('resize',size);init();tick();
+})();
 // menu plein écran
 function openMenu(){document.getElementById('mm').classList.add('open');document.body.style.overflow='hidden'}
 function closeMenu(){document.getElementById('mm').classList.remove('open');document.body.style.overflow=''}
