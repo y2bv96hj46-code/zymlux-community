@@ -40,6 +40,7 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
 .sw{width:30px;height:30px;border-radius:50%;background:var(--s);border:2px solid transparent;cursor:pointer;transition:.2s;padding:0}
 .sw:hover{transform:scale(1.12)}
 .sw.active{border-color:#fff;box-shadow:0 0 0 2px var(--s)}
+.cpick{width:46px;height:30px;border:1px solid var(--line);border-radius:8px;background:none;cursor:pointer;padding:2px}
 .toggle{display:flex;gap:7px}
 .toggle button{flex:1;background:var(--card);border:1px solid var(--line);color:var(--mut);padding:9px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:.82rem;transition:.25s}
 .toggle button.active{color:#06060a;background:var(--grad);border-color:transparent;font-weight:600}
@@ -78,6 +79,7 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
   <aside class="controls">
     <h1>Crée ton site <span class="grad">en direct</span></h1>
     <p class="sub">Remplis, regarde ton site se construire à droite. Gratuit, instantané.</p>
+    <button id="surprise" class="btn" type="button" style="width:100%;margin-bottom:18px">🎲 Surprends-moi</button>
 
     <div class="field">
       <label>Nom du commerce</label>
@@ -94,6 +96,10 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
     <div class="field">
       <label>Couleur</label>
       <div class="swatches" id="f-color"></div>
+      <div style="margin-top:10px;display:flex;align-items:center;gap:9px">
+        <input type="color" id="f-custom" class="cpick" value="#7b5cff" title="Couleur personnalisée">
+        <span style="font-size:.78rem;color:var(--mut)">ou ta couleur exacte</span>
+      </div>
     </div>
     <div class="field">
       <label>Style</label>
@@ -142,7 +148,13 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
     {k:'Restaurant',emoji:'🍽️',eyebrow:'Restaurant',slogan:'Une cuisine qui a du goût.',cta:'Réserver une table',serv:[['Entrées','De saison'],['Plats signature','Faits maison'],['Desserts','Gourmands']]},
     {k:'Artisan',emoji:'🔧',eyebrow:'Artisan · Dépannage',slogan:'Un travail soigné, garanti.',cta:'Devis gratuit',serv:[['Dépannage','Intervention rapide'],['Installation','Aux normes'],['Rénovation','Clé en main']]},
     {k:'Coach',emoji:'💪',eyebrow:'Coach · Sport',slogan:'Dépassez vos limites.',cta:'Séance d’essai',serv:[['Coaching perso','Programme sur-mesure'],['Cours collectifs','Énergie de groupe'],['Nutrition','Plan adapté']]},
-    {k:'Fleuriste',emoji:'🌸',eyebrow:'Atelier floral',slogan:'La beauté, au naturel.',cta:'Commander',serv:[['Bouquets','Compositions du jour'],['Mariages','Décoration florale'],['Abonnements','Fleurs chaque semaine']]}
+    {k:'Fleuriste',emoji:'🌸',eyebrow:'Atelier floral',slogan:'La beauté, au naturel.',cta:'Commander',serv:[['Bouquets','Compositions du jour'],['Mariages','Décoration florale'],['Abonnements','Fleurs chaque semaine']]},
+    {k:'Café',emoji:'☕',eyebrow:'Café · Salon de thé',slogan:'Le bon café, simplement.',cta:'Voir la carte',serv:[['Cafés','Torréfaction maison'],['Pâtisseries','Faites maison'],['Brunch','Tous les week-ends']]},
+    {k:'Tatoueur',emoji:'🖋️',eyebrow:'Studio de tatouage',slogan:"L'encre qui vous ressemble.",cta:'Prendre RDV',serv:[['Flash','Modèles dispo'],['Sur-mesure','Votre projet'],['Cover-up','On rattrape tout']]},
+    {k:'Photographe',emoji:'📸',eyebrow:'Studio photo',slogan:'Vos instants, sublimés.',cta:'Réserver une séance',serv:[['Portrait','Studio ou extérieur'],['Mariage','Le grand jour'],['Entreprise','Image pro']]},
+    {k:'Garage',emoji:'🚗',eyebrow:'Garage · Auto',slogan:'Votre voiture entre de bonnes mains.',cta:'Prendre RDV',serv:[['Entretien','Révision complète'],['Réparation','Toutes marques'],['Pneus','Montage rapide']]},
+    {k:'Immobilier',emoji:'🏠',eyebrow:'Agence immobilière',slogan:'Le bien de vos rêves vous attend.',cta:'Estimer mon bien',serv:[['Achat','Biens sélectionnés'],['Vente','Estimation gratuite'],['Location','Accompagnement']]},
+    {k:'Dentiste',emoji:'🦷',eyebrow:'Cabinet dentaire',slogan:'Votre sourire, notre priorité.',cta:'Prendre RDV',serv:[['Soins','Caries & détartrage'],['Esthétique','Blanchiment'],['Implants','Solutions durables']]}
   ];
   var COLORS=['#7b5cff','#19e3c0','#ff5fa2','#f4a300','#e3261f','#2e8bff','#16c172'];
   var STYLES=[
@@ -155,7 +167,7 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
   try{var q=new URLSearchParams(location.search);
     if(q.get('n'))st.name=q.get('n');
     if(q.get('s'))st.slogan=q.get('s');
-    if(q.get('t')!=null)st.type=Math.max(0,Math.min(5,parseInt(q.get('t'),10)||0));
+    if(q.get('t')!=null)st.type=Math.max(0,Math.min(TYPES.length-1,parseInt(q.get('t'),10)||0));
     if(q.get('ly')!=null)st.style=Math.max(0,Math.min(2,parseInt(q.get('ly'),10)||0));
     if(q.get('c'))st.color='#'+q.get('c').replace('#','');
     if(q.get('th'))st.theme=q.get('th')==='light'?'light':'dark';
@@ -260,6 +272,23 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
   document.getElementById('f-phone').value=st.phone;
   [].forEach.call(themeWrap.children,function(c){c.classList.toggle('active',c.dataset.t===st.theme)});
 
+  // couleur personnalisée
+  var cust=document.getElementById('f-custom');
+  if(cust){cust.value=st.color;cust.addEventListener('input',function(){st.color=cust.value;[].forEach.call(colWrap.children,function(c){c.classList.remove('active')});render()})}
+  // 🎲 surprends-moi
+  var NAMES=['Chez Léa','Studio Onze','La Maison','Atelier Nord','Le Refuge','Côté Sud','Maison Belle','Vesper','L’Atelier','Nova','Le Cercle','Brume'];
+  function rnd(a){return a[Math.floor(Math.random()*a.length)]}
+  var surprise=document.getElementById('surprise');
+  if(surprise)surprise.addEventListener('click',function(){
+    st.name=rnd(NAMES);st.slogan='';st.type=Math.floor(Math.random()*TYPES.length);st.style=Math.floor(Math.random()*STYLES.length);st.color=rnd(COLORS);st.theme=Math.random()<0.5?'dark':'light';
+    document.getElementById('f-name').value=st.name;document.getElementById('f-slogan').value='';
+    [].forEach.call(typeWrap.children,function(c,k){c.classList.toggle('active',k===st.type)});
+    [].forEach.call(styleWrap.children,function(c,k){c.classList.toggle('active',k===st.style)});
+    [].forEach.call(colWrap.children,function(c){c.classList.toggle('active',c.dataset.c===st.color)});
+    [].forEach.call(themeWrap.children,function(c){c.classList.toggle('active',c.dataset.t===st.theme)});
+    if(cust)cust.value=st.color;
+    render();
+  });
   function note(t){var n=document.getElementById('cta-note');if(!n)return;clearTimeout(n._t);var o=n.dataset.o||(n.dataset.o=n.textContent);n.textContent=t;n._t=setTimeout(function(){n.textContent=o},2400)}
   function shareURL(){var p=new URLSearchParams();p.set('n',st.name);if(st.slogan)p.set('s',st.slogan);p.set('t',st.type);p.set('ly',st.style);p.set('c',st.color.replace('#',''));p.set('th',st.theme);p.set('city',st.city);p.set('p',st.phone);return location.origin+location.pathname+'?'+p.toString()}
   // télécharger le vrai fichier HTML
