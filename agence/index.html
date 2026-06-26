@@ -80,8 +80,9 @@ header.scr{background:rgba(6,6,8,.82);backdrop-filter:blur(16px);border-bottom:1
 .mock .bar i{width:11px;height:11px;border-radius:50%;background:#3a3a46;display:inline-block}
 .mock .bar .url{margin-left:14px;font-size:.72rem;color:var(--mut);background:#0a0a0e;padding:4px 12px;border-radius:6px}
 .mock .screen{height:460px;overflow:hidden;position:relative}
-.mock .screen img{width:100%;display:block;animation:scrollsite 18s ease-in-out infinite alternate}
-@keyframes scrollsite{0%{transform:translateY(0)}100%{transform:translateY(calc(-100% + 460px))}}
+.mock .screen .slide{position:absolute;inset:0 0 auto 0;width:100%;height:auto;display:block;opacity:0;transition:opacity .9s var(--ease)}
+.mock .screen .slide.on{opacity:1;animation:scrollsite 6s ease-in-out forwards}
+@keyframes scrollsite{0%,10%{transform:translateY(0)}100%{transform:translateY(calc(-100% + 460px))}}
 .mock .badge-live{position:absolute;top:54px;right:16px;background:var(--grad);color:#06060a;font-size:.7rem;font-weight:700;padding:5px 11px;border-radius:50px;z-index:3;display:flex;align-items:center;gap:6px}
 .mock .badge-live i{width:7px;height:7px;border-radius:50%;background:#06060a;animation:pulse 1.4s infinite}
 @media(max-width:900px){.hero-grid2{grid-template-columns:1fr;gap:40px}.hero-copy{text-align:center}.hero-copy .hero-actions{justify-content:center}.mock .screen{height:380px}}
@@ -153,8 +154,11 @@ section{padding:110px 0}
 .proj .chrome{height:30px;background:#13131b;display:flex;align-items:center;gap:6px;padding:0 14px;border-bottom:1px solid var(--line)}
 .proj .chrome i{width:9px;height:9px;border-radius:50%;background:#3a3a46}
 .proj .shot{aspect-ratio:16/10;overflow:hidden;background:#0a0a0e}
-.proj .shot img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;transition:.6s var(--ease)}
-.proj:hover .shot img{transform:scale(1.05)}
+.proj .shot img{width:100%;height:auto;display:block;transition:transform 3.6s var(--ease)}
+.proj:hover .shot img{transform:translateY(calc(-100% + 250px))}
+.proj .scrollhint{position:absolute;bottom:10px;right:12px;font-size:.7rem;color:var(--mut);background:rgba(6,6,8,.7);padding:4px 9px;border-radius:50px;opacity:.85;transition:.3s}
+.proj:hover .scrollhint{opacity:0}
+.proj{position:relative}
 .b1{background:linear-gradient(135deg,#1a1410,#2a2012);color:#e7c878}
 .b2{background:linear-gradient(135deg,#0d2440,#0d3b66)}
 .b3{background:linear-gradient(135deg,#2a1338,#5a2d82)}
@@ -262,9 +266,14 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
       <p class="hero-note reveal d4">✦ Exemple offert · Sans engagement · Livré en 7 jours</p>
     </div>
     <div class="mock reveal d2">
-      <div class="bar"><i></i><i></i><i></i><span class="url">🔒 atelierblade.fr</span></div>
-      <div class="screen"><img src="media/barber-full.jpg" alt="Exemple de site créé par Studio Lumen"></div>
-      <div class="badge-live"><i></i> SITE LIVE</div>
+      <div class="bar"><i></i><i></i><i></i><span class="url" id="mockurl">🔒 atelierblade.fr</span></div>
+      <div class="screen" id="screen">
+        <img class="slide on" src="media/barber-full.jpg" data-url="atelierblade.fr" alt="Site barbier créé par nos soins">
+        <img class="slide" src="media/nails-full.jpg" data-url="bellanails.fr" alt="Site onglerie">
+        <img class="slide" src="media/resto-full.jpg" data-url="lecomptoir.fr" alt="Site restaurant">
+        <img class="slide" src="media/plombier-full.jpg" data-url="martin-plomberie.fr" alt="Site plombier">
+      </div>
+      <div class="badge-live"><i></i> DÉMO LIVE</div>
     </div>
   </div>
 </section>
@@ -359,10 +368,10 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
   <div class="wrap">
     <div class="head reveal"><span class="eyebrow">Réalisations</span><h2>Des sites qui en jettent</h2></div>
     <div class="work">
-      <div class="proj reveal"><div class="chrome"><i></i><i></i><i></i></div><div class="shot"><img src="media/work-barber.jpg" loading="lazy" alt="Site Atelier Blade — barbier"></div><div class="meta"><h3>Atelier Blade — Barbier</h3><span>Site premium + réservation</span></div></div>
-      <div class="proj reveal d1"><div class="chrome"><i></i><i></i><i></i></div><div class="shot"><img src="media/work-plombier.jpg" loading="lazy" alt="Site Martin Plomberie — artisan"></div><div class="meta"><h3>Martin Plomberie — Artisan</h3><span>Vitrine + devis en ligne</span></div></div>
-      <div class="proj reveal"><div class="chrome"><i></i><i></i><i></i></div><div class="shot"><img src="media/work-nails.jpg" loading="lazy" alt="Site Bella Nails — onglerie"></div><div class="meta"><h3>Bella Nails — Onglerie</h3><span>Site beauté + prise de RDV</span></div></div>
-      <div class="proj reveal d1"><div class="chrome"><i></i><i></i><i></i></div><div class="shot"><img src="media/work-resto.jpg" loading="lazy" alt="Site Le Comptoir — restaurant"></div><div class="meta"><h3>Le Comptoir — Restaurant</h3><span>Menu + réservation</span></div></div>
+      <div class="proj reveal"><div class="chrome"><i></i><i></i><i></i></div><div class="shot"><img src="media/barber-full.jpg" loading="lazy" alt="Site Atelier Blade — barbier"></div><span class="scrollhint">↕ survole pour dérouler</span><div class="meta"><h3>Atelier Blade — Barbier</h3><span>Site premium + réservation</span></div></div>
+      <div class="proj reveal d1"><div class="chrome"><i></i><i></i><i></i></div><div class="shot"><img src="media/plombier-full.jpg" loading="lazy" alt="Site Martin Plomberie — artisan"></div><span class="scrollhint">↕ survole pour dérouler</span><div class="meta"><h3>Martin Plomberie — Artisan</h3><span>Vitrine + devis en ligne</span></div></div>
+      <div class="proj reveal"><div class="chrome"><i></i><i></i><i></i></div><div class="shot"><img src="media/nails-full.jpg" loading="lazy" alt="Site Bella Nails — onglerie"></div><span class="scrollhint">↕ survole pour dérouler</span><div class="meta"><h3>Bella Nails — Onglerie</h3><span>Site beauté + prise de RDV</span></div></div>
+      <div class="proj reveal d1"><div class="chrome"><i></i><i></i><i></i></div><div class="shot"><img src="media/resto-full.jpg" loading="lazy" alt="Site Le Comptoir — restaurant"></div><span class="scrollhint">↕ survole pour dérouler</span><div class="meta"><h3>Le Comptoir — Restaurant</h3><span>Menu + réservation</span></div></div>
     </div>
   </div>
 </section>
@@ -417,8 +426,8 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
       <input style="background:var(--card);border:1px solid var(--line);color:var(--txt);padding:15px;border-radius:12px;font-family:inherit" placeholder="Votre nom" required>
       <input style="background:var(--card);border:1px solid var(--line);color:var(--txt);padding:15px;border-radius:12px;font-family:inherit" placeholder="Nom de votre commerce" required>
       <input style="background:var(--card);border:1px solid var(--line);color:var(--txt);padding:15px;border-radius:12px;font-family:inherit" placeholder="Téléphone ou email" required>
-      <textarea rows="4" style="background:var(--card);border:1px solid var(--line);color:var(--txt);padding:15px;border-radius:12px;font-family:inherit" placeholder="Votre activité / votre besoin"></textarea>
       <button class="btn" style="justify-content:center" type="submit">Recevoir mon exemple gratuit →</button>
+      <p style="text-align:center;color:var(--mut);font-size:.8rem;margin-top:4px">Réponse sous 24h · Sans engagement · Aucune carte demandée</p>
     </form>
   </div>
 </section>
@@ -487,6 +496,20 @@ addEventListener('mousemove',e=>{if(drag)setBA(e.clientX)});
 addEventListener('mouseup',()=>drag=false);
 ba.addEventListener('touchstart',e=>setBA(e.touches[0].clientX),{passive:true});
 ba.addEventListener('touchmove',e=>setBA(e.touches[0].clientX),{passive:true});
+// showreel hero : fait défiler tes sites en boucle dans le mockup
+const slides=[...document.querySelectorAll('.mock .slide')];
+const mockurl=document.getElementById('mockurl');
+if(slides.length){
+  let si=0;
+  setInterval(()=>{
+    slides[si].classList.remove('on');
+    si=(si+1)%slides.length;
+    const s=slides[si];
+    s.style.animation='none';void s.offsetWidth;s.style.animation='';
+    s.classList.add('on');
+    if(mockurl)mockurl.textContent='🔒 '+s.dataset.url;
+  },6000);
+}
 </script>
 </body>
 </html>
