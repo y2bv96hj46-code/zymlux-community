@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STUDIO LUMEN — Sites web qui ramènent des clients aux commerces</title>
+<meta name="description" content="Studio de création de sites web pour commerces et indépendants. Réservation en ligne, visibilité Google, design premium. Exemple gratuit sous 48h.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060608; --bg2:#0c0c11; --card:#111119; --line:#20202e;
+  --txt:#f5f5f8; --mut:#9a9aac;
+  --c1:#7b5cff; --c2:#19e3c0; --grad:linear-gradient(120deg,#7b5cff,#19e3c0);
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif;letter-spacing:-.02em;line-height:1.04}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{font-size:.76rem;letter-spacing:3px;text-transform:uppercase;color:var(--c2);font-weight:600}
+
+/* progress bar */
+#prog{position:fixed;top:0;left:0;height:3px;width:0;background:var(--grad);z-index:200}
+
+/* custom cursor */
+#cur{position:fixed;width:34px;height:34px;border:1.5px solid rgba(123,92,255,.7);border-radius:50%;pointer-events:none;z-index:300;transform:translate(-50%,-50%);transition:width .25s,height .25s,background .25s;mix-blend-mode:screen}
+#curdot{position:fixed;width:6px;height:6px;background:var(--c2);border-radius:50%;pointer-events:none;z-index:300;transform:translate(-50%,-50%)}
+@media(pointer:coarse){#cur,#curdot{display:none}}
+
+.btn{position:relative;display:inline-flex;align-items:center;gap:9px;background:var(--grad);color:#06060a;font-weight:600;padding:15px 28px;border-radius:50px;transition:.35s var(--ease);border:none;cursor:pointer;font-size:.95rem;overflow:hidden}
+.btn:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(123,92,255,.45)}
+.btn-out{background:transparent;border:1px solid var(--line);color:var(--txt)}
+.btn-out:hover{background:#fff;color:#000;border-color:#fff;box-shadow:none}
+
+.reveal{opacity:0;transform:translateY(36px);transition:.9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+header{position:fixed;inset:0 0 auto;z-index:100;transition:.4s var(--ease)}
+header.scr{background:rgba(6,6,8,.82);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:80px}
+.brand{font-family:'Space Grotesk';font-weight:700;font-size:1.4rem;display:flex;align-items:center;gap:9px}
+.dot{width:11px;height:11px;border-radius:50%;background:var(--grad);box-shadow:0 0 18px var(--c1)}
+.links{display:flex;gap:30px;align-items:center}
+.links a{font-size:.92rem;color:var(--mut);transition:.3s}
+.links a:hover{color:var(--txt)}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer}
+.burger span{width:26px;height:2px;background:var(--txt)}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding-top:80px;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);z-index:-1;transition:transform .4s ease-out}
+.orb1{width:520px;height:520px;background:var(--c1);opacity:.45;top:-140px;right:-60px}
+.orb2{width:460px;height:460px;background:var(--c2);opacity:.30;bottom:-180px;left:-120px}
+.grid-bg{position:absolute;inset:0;z-index:-2;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:62px 62px;opacity:.16;mask-image:radial-gradient(70% 65% at 50% 38%,#000,transparent)}
+.hero-inner{text-align:center;max-width:920px;margin:0 auto}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:rgba(255,255,255,.03);padding:8px 16px;border-radius:50px;font-size:.85rem;color:var(--mut);margin-bottom:30px}
+.pill .live{width:8px;height:8px;border-radius:50%;background:#21d07a;box-shadow:0 0 10px #21d07a;animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.4}}
+.hero h1{font-size:clamp(2.9rem,7.4vw,5.6rem);font-weight:700;margin-bottom:26px}
+.rot{display:inline-block;position:relative;min-width:7ch;text-align:left}
+.rot span{position:absolute;left:0;white-space:nowrap;opacity:0;transform:translateY(14px);transition:.6s var(--ease)}
+.rot span.on{opacity:1;transform:none;position:relative}
+.hero p{font-size:1.18rem;color:var(--mut);max-width:600px;margin:0 auto 36px}
+.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.hero-note{margin-top:20px;font-size:.85rem;color:var(--mut)}
+
+/* marquee */
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;overflow:hidden;white-space:nowrap;background:var(--bg2)}
+.marquee div{display:inline-block;animation:slide 26s linear infinite}
+.marquee span{font-family:'Space Grotesk';font-weight:600;font-size:1.3rem;margin:0 26px;color:var(--mut)}
+.marquee b{color:var(--c2)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+section{padding:110px 0}
+.head{max-width:680px;margin:0 auto 64px;text-align:center}
+.head h2{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:700;margin:14px 0 16px}
+.head p{color:var(--mut)}
+
+/* BEFORE/AFTER */
+.ba{max-width:920px;margin:0 auto;border:1px solid var(--line);border-radius:20px;overflow:hidden;position:relative;aspect-ratio:16/9;cursor:ew-resize;user-select:none;background:#000}
+.ba .side{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;font-family:'Space Grotesk';font-weight:700}
+.ba .after{background:linear-gradient(135deg,#161228,#0c2a2a)}
+.ba .after .tag{background:var(--grad);color:#06060a}
+.ba .before{background:repeating-linear-gradient(45deg,#181818,#181818 18px,#202020 18px,#202020 36px);clip-path:inset(0 50% 0 0);color:#777}
+.ba .before .tag{background:#2a2a2a;color:#aaa}
+.ba .lbl{font-size:clamp(1.4rem,3.4vw,2.4rem)}
+.ba .sub{font-size:.85rem;font-weight:400;font-family:'Inter';opacity:.7}
+.ba .tag{font-family:'Inter';font-size:.72rem;letter-spacing:2px;padding:5px 12px;border-radius:50px;text-transform:uppercase}
+.ba .handle{position:absolute;top:0;bottom:0;left:50%;width:3px;background:var(--grad);transform:translateX(-50%);z-index:5}
+.ba .grip{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:#fff;color:#000;display:grid;place-items:center;font-weight:700;z-index:6;box-shadow:0 6px 20px rgba(0,0,0,.5)}
+.ba-hint{text-align:center;color:var(--mut);font-size:.85rem;margin-top:16px}
+
+/* cols problem */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.panel{border:1px solid var(--line);border-radius:18px;padding:34px;background:var(--card)}
+.panel h3{font-size:1.4rem;margin-bottom:20px}
+.panel ul{list-style:none;display:flex;flex-direction:column;gap:14px}
+.panel li{display:flex;gap:12px;color:var(--mut)}
+.panel.bad li::before{content:"✕";color:#ff6b6b;font-weight:700}
+.panel.good{border-color:rgba(123,92,255,.4);background:linear-gradient(160deg,rgba(123,92,255,.08),var(--card))}
+.panel.good li{color:var(--txt)}
+.panel.good li::before{content:"✓";color:var(--c2);font-weight:700}
+
+/* services */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{border:1px solid var(--line);border-radius:18px;padding:32px;background:var(--card);transition:.4s var(--ease);position:relative;overflow:hidden}
+.card:hover{transform:translateY(-6px);border-color:transparent;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 100% 0,rgba(25,227,192,.1),transparent 55%);opacity:0;transition:.4s}
+.card:hover::before{opacity:1}
+.card .ic{width:54px;height:54px;border-radius:14px;background:var(--grad);display:grid;place-items:center;font-size:1.5rem;margin-bottom:18px}
+.card h3{font-size:1.25rem;margin-bottom:10px}
+.card p{color:var(--mut);font-size:.95rem}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:56px 0;background:var(--bg2)}
+.stat{text-align:center}
+.stat .num{font-family:'Space Grotesk';font-size:3.2rem;font-weight:700;line-height:1}
+.stat .lab{color:var(--mut);font-size:.85rem;margin-top:6px}
+
+/* process */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;counter-reset:s}
+.step{border:1px solid var(--line);border-radius:18px;padding:32px;background:var(--card)}
+.step::before{counter-increment:s;content:"0" counter(s);font-family:'Space Grotesk';font-size:3rem;font-weight:700;color:transparent;-webkit-text-stroke:1.5px var(--c1);opacity:.6;display:block;margin-bottom:14px}
+.step h3{font-size:1.25rem;margin-bottom:10px}
+.step p{color:var(--mut);font-size:.95rem}
+
+/* portfolio */
+.work{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.proj{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--card);transition:.4s var(--ease)}
+.proj:hover{transform:translateY(-8px);border-color:rgba(123,92,255,.5)}
+.proj .shot{aspect-ratio:16/10;display:grid;place-items:center;font-family:'Space Grotesk';font-weight:700;font-size:1.6rem;letter-spacing:1px;color:#fff}
+.b1{background:linear-gradient(135deg,#1a1410,#2a2012);color:#e7c878}
+.b2{background:linear-gradient(135deg,#0d2440,#0d3b66)}
+.b3{background:linear-gradient(135deg,#2a1338,#5a2d82)}
+.b4{background:linear-gradient(135deg,#10261c,#1d6b4a)}
+.proj .meta{padding:22px}
+.proj .meta h3{font-size:1.15rem}
+.proj .meta span{color:var(--mut);font-size:.88rem}
+
+/* testimonials */
+.revs{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.rev{border:1px solid var(--line);border-radius:18px;padding:28px;background:var(--card)}
+.rev .st{color:#19e3c0;letter-spacing:3px;margin-bottom:12px}
+.rev p{font-size:.96rem}
+.rev .who{margin-top:16px;display:flex;gap:12px;align-items:center}
+.rev .av{width:42px;height:42px;border-radius:50%;background:var(--grad);display:grid;place-items:center;color:#06060a;font-weight:700}
+.rev .who b{font-size:.9rem;display:block}.rev .who span{font-size:.8rem;color:var(--mut)}
+
+/* pricing */
+.pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+.plan{border:1px solid var(--line);border-radius:20px;padding:34px;background:var(--card);display:flex;flex-direction:column;position:relative}
+.plan.feat{border-color:transparent;background:linear-gradient(160deg,rgba(123,92,255,.14),var(--card));box-shadow:0 0 0 1px rgba(123,92,255,.5)}
+.plan .tag{font-size:.76rem;text-transform:uppercase;letter-spacing:2px;color:var(--c2);font-weight:600}
+.badge-pop{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--grad);color:#06060a;font-size:.72rem;font-weight:700;padding:5px 14px;border-radius:50px;letter-spacing:1px}
+.plan .price{font-family:'Space Grotesk';font-size:2.7rem;font-weight:700;margin:14px 0 4px}
+.plan .price small{font-size:.95rem;color:var(--mut);font-weight:400}
+.plan ul{list-style:none;display:flex;flex-direction:column;gap:12px;margin:22px 0 28px;flex:1}
+.plan li{display:flex;gap:10px;color:var(--mut);font-size:.93rem}
+.plan li::before{content:"✓";color:var(--c2);font-weight:700}
+.plan .btn{justify-content:center}
+
+/* cta */
+.cta{position:relative;border:1px solid var(--line);border-radius:26px;padding:74px 30px;text-align:center;background:radial-gradient(80% 130% at 50% 0,rgba(123,92,255,.2),transparent 60%),var(--bg2);overflow:hidden}
+.cta h2{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:700;margin-bottom:16px}
+.cta p{color:var(--mut);margin-bottom:30px}
+
+footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2)}
+.fg{display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;margin-bottom:30px}
+.fg .col a,.fg .col p{display:block;color:var(--mut);font-size:.9rem;margin-bottom:8px}
+.fg h4{margin-bottom:14px;font-family:'Space Grotesk'}
+.copy{text-align:center;border-top:1px solid var(--line);padding-top:24px;color:var(--mut);font-size:.82rem}
+
+.float{position:fixed;bottom:22px;right:22px;z-index:90;box-shadow:0 10px 40px rgba(123,92,255,.5)}
+
+.mmenu{position:fixed;inset:0;background:var(--bg);z-index:120;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;transform:translateY(-100%);transition:.5s var(--ease)}
+.mmenu.open{transform:none}
+.mmenu a{font-family:'Space Grotesk';font-size:1.8rem}
+.mmenu .x{position:absolute;top:24px;right:26px;font-size:2rem;background:none;border:none;color:var(--txt)}
+
+@media(max-width:900px){
+  .links{display:none}.burger{display:flex}
+  .cols,.cards,.steps,.work,.revs,.pricing{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .float{display:none}
+}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div id="cur"></div><div id="curdot"></div>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a href="#" class="brand"><span class="dot"></span>STUDIO<span class="grad">LUMEN</span></a>
+    <nav class="links">
+      <a href="#avant-apres">Avant/Après</a>
+      <a href="#services">Services</a>
+      <a href="#process">Méthode</a>
+      <a href="#travaux">Réalisations</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#contact" class="btn" style="padding:11px 22px">Devis gratuit</a>
+    </nav>
+    <button class="burger" onclick="mm.classList.add('open')"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="mmenu" id="mm">
+  <button class="x" onclick="mm.classList.remove('open')">✕</button>
+  <a href="#services" onclick="mm.classList.remove('open')">Services</a>
+  <a href="#process" onclick="mm.classList.remove('open')">Méthode</a>
+  <a href="#travaux" onclick="mm.classList.remove('open')">Réalisations</a>
+  <a href="#tarifs" onclick="mm.classList.remove('open')">Tarifs</a>
+  <a href="#contact" class="btn" onclick="mm.classList.remove('open')">Devis gratuit</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="grid-bg"></div>
+  <div class="orb orb1" id="o1"></div><div class="orb orb2" id="o2"></div>
+  <div class="wrap hero-inner">
+    <div class="pill reveal"><span class="live"></span> 3 places dispo ce mois-ci</div>
+    <h1 class="reveal d1">Des sites web qui ramènent<br>des <span class="rot grad" id="rot"><span class="on">clients</span><span>réservations</span><span>avis 5★</span><span>revenus</span></span></h1>
+    <p class="reveal d2">Pour les barbiers, instituts, restaurants et artisans. Design premium, réservation en ligne, visibilité Google. Vous bossez, on s'occupe du web.</p>
+    <div class="hero-actions reveal d3">
+      <a href="#contact" class="btn">Mon site exemple gratuit →</a>
+      <a href="#avant-apres" class="btn btn-out">Voir la différence</a>
+    </div>
+    <p class="hero-note reveal d4">✦ Exemple offert · Sans engagement · Livré en 7 jours</p>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee"><div>
+  <span>BARBIERS <b>✦</b></span><span>INSTITUTS <b>✦</b></span><span>RESTAURANTS <b>✦</b></span><span>ARTISANS <b>✦</b></span><span>COACHS <b>✦</b></span><span>COIFFEURS <b>✦</b></span>
+  <span>BARBIERS <b>✦</b></span><span>INSTITUTS <b>✦</b></span><span>RESTAURANTS <b>✦</b></span><span>ARTISANS <b>✦</b></span><span>COACHS <b>✦</b></span><span>COIFFEURS <b>✦</b></span>
+</div></div>
+
+<!-- BEFORE/AFTER -->
+<section id="avant-apres">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">La différence</span>
+      <h2>Faites glisser pour voir la transformation</h2>
+      <p>À gauche, ce que la plupart des commerces ont aujourd'hui. À droite, ce qu'on leur livre.</p>
+    </div>
+    <div class="ba reveal d1" id="ba">
+      <div class="side after"><span class="tag">Après ✨</span><span class="lbl grad">Site moderne</span><span class="sub">Réservation en ligne · Google · Mobile</span></div>
+      <div class="side before" id="baBefore"><span class="tag">Avant</span><span class="lbl">Page Facebook</span><span class="sub">Daté · pas de résa · invisible</span></div>
+      <div class="handle" id="baHandle"></div>
+      <div class="grip" id="baGrip">⇄</div>
+    </div>
+    <p class="ba-hint reveal d2">↔ Glissez la poignée</p>
+  </div>
+</section>
+
+<!-- PROBLEM/SOLUTION -->
+<section style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">Le constat</span>
+      <h2>Chaque jour sans site,<br>c'est des clients chez le concurrent</h2>
+    </div>
+    <div class="cols">
+      <div class="panel bad reveal"><h3>😓 Sans nous</h3><ul>
+        <li>Juste une page Facebook ou rien</li>
+        <li>Réservations par téléphone, en plein travail</li>
+        <li>Invisible sur Google</li>
+        <li>Aucune vitrine du travail</li>
+        <li>Des rendez-vous oubliés</li>
+      </ul></div>
+      <div class="panel good reveal d1"><h3>🚀 Avec nous</h3><ul>
+        <li>Un site pro et moderne à votre image</li>
+        <li>Réservation 24/7, même la nuit</li>
+        <li>Visible sur Google en premier</li>
+        <li>Galerie qui donne envie</li>
+        <li>Rappels auto = moins de no-shows</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div class="head reveal"><span class="eyebrow">Nos services</span><h2>Une vraie machine à clients</h2><p>On ne vend pas un site. On installe un système qui travaille pour vous.</p></div>
+    <div class="cards">
+      <div class="card reveal"><div class="ic">🎨</div><h3>Création de site</h3><p>Sur-mesure, rapide, moderne, 100% mobile, à votre image.</p></div>
+      <div class="card reveal d1"><div class="ic">📅</div><h3>Réservation en ligne</h3><p>Vos clients réservent 24/7. Rappels SMS automatiques.</p></div>
+      <div class="card reveal d2"><div class="ic">🔍</div><h3>Visibilité Google</h3><p>On vous fait remonter quand les clients du coin cherchent.</p></div>
+      <div class="card reveal"><div class="ic">⭐</div><h3>Avis clients</h3><p>Un système simple pour récolter des avis 5★ en continu.</p></div>
+      <div class="card reveal d1"><div class="ic">📸</div><h3>Galerie & visuels</h3><p>On met en valeur vos réalisations avant même la visite.</p></div>
+      <div class="card reveal d2"><div class="ic">🔧</div><h3>Maintenance</h3><p>Mises à jour & support. Vous ne touchez à rien.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="num grad" data-count="7">0</div><div class="lab">Jours pour livrer</div></div>
+  <div class="stat"><div class="num grad" data-count="24">0</div><div class="lab">H/24 de réservation</div></div>
+  <div class="stat"><div class="num grad" data-count="100" data-suf="%">0</div><div class="lab">Adapté mobile</div></div>
+  <div class="stat"><div class="num grad" data-count="0" data-pre="" data-suf="€">0</div><div class="lab">Exemple sans engagement</div></div>
+</div>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="wrap">
+    <div class="head reveal"><span class="eyebrow">Notre méthode</span><h2>Simple, rapide, sans prise de tête</h2></div>
+    <div class="steps">
+      <div class="step reveal"><h3>On discute</h3><p>15 min sur votre commerce et vos objectifs. Gratuit, sans engagement.</p></div>
+      <div class="step reveal d1"><h3>On crée</h3><p>On vous montre un exemple réel à votre nom. Vous validez, on ajuste.</p></div>
+      <div class="step reveal d2"><h3>On lance</h3><p>En ligne en 7 jours, avec réservation et Google. Vous récoltez les clients.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="travaux" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="head reveal"><span class="eyebrow">Réalisations</span><h2>Des sites qui en jettent</h2></div>
+    <div class="work">
+      <div class="proj reveal"><div class="shot b1">ATELIER BLADE</div><div class="meta"><h3>Atelier Blade — Barbier</h3><span>Site premium + réservation</span></div></div>
+      <div class="proj reveal d1"><div class="shot b2">MARTIN PLOMBERIE</div><div class="meta"><h3>Martin Plomberie — Artisan</h3><span>Vitrine + devis en ligne</span></div></div>
+      <div class="proj reveal"><div class="shot b3">BELLA NAILS</div><div class="meta"><h3>Bella Nails — Onglerie</h3><span>Site beauté + prise de RDV</span></div></div>
+      <div class="proj reveal d1"><div class="shot b4">LE COMPTOIR</div><div class="meta"><h3>Le Comptoir — Restaurant</h3><span>Menu + réservation</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section>
+  <div class="wrap">
+    <div class="head reveal"><span class="eyebrow">Ils nous font confiance</span><h2>Ce qu'en disent les commerçants</h2></div>
+    <div class="revs">
+      <div class="rev reveal"><div class="st">★★★★★</div><p>« Site livré en une semaine, et j'ai eu 3 réservations en ligne dès le premier week-end. »</p><div class="who"><div class="av">K</div><div><b>Karim — Barbier</b><span>Lille</span></div></div></div>
+      <div class="rev reveal d1"><div class="st">★★★★★</div><p>« Enfin je suis sur Google ! Les clients me trouvent et réservent seuls. Un vrai gain de temps. »</p><div class="who"><div class="av">S</div><div><b>Sophie — Esthéticienne</b><span>Roubaix</span></div></div></div>
+      <div class="rev reveal d2"><div class="st">★★★★★</div><p>« Pro, rapide, à l'écoute. Mon resto a enfin une vitrine à la hauteur. Je recommande. »</p><div class="who"><div class="av">M</div><div><b>Marco — Restaurant</b><span>Lille</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="tarifs" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="head reveal"><span class="eyebrow">Tarifs</span><h2>Des formules claires, sans surprise</h2><p>Un seul nouveau client rentabilise votre site.</p></div>
+    <div class="pricing">
+      <div class="plan reveal"><span class="tag">Essentiel</span><div class="price">290€</div><p style="color:var(--mut);font-size:.9rem">Être enfin présent en ligne.</p>
+        <ul><li>Site vitrine 1 page</li><li>100% mobile</li><li>Contact & itinéraire</li><li>Mise en ligne incluse</li></ul>
+        <a href="#contact" class="btn btn-out">Choisir</a></div>
+      <div class="plan feat reveal d1"><span class="badge-pop">LE PLUS CHOISI</span><span class="tag">Pro</span><div class="price">490€<small> + 29€/mois</small></div><p style="color:var(--mut);font-size:.9rem">Le site qui ramène des clients.</p>
+        <ul><li>Site complet multi-sections</li><li>Réservation 24/7 + SMS</li><li>Optimisation Google</li><li>Galerie & avis clients</li><li>Maintenance incluse</li></ul>
+        <a href="#contact" class="btn">Choisir</a></div>
+      <div class="plan reveal d2"><span class="tag">Premium</span><div class="price">Sur devis</div><p style="color:var(--mut);font-size:.9rem">Pour aller plus loin.</p>
+        <ul><li>Tout le pack Pro</li><li>Gestion réseaux sociaux</li><li>Campagnes & promos</li><li>Suivi mensuel</li></ul>
+        <a href="#contact" class="btn btn-out">Discutons-en</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section>
+  <div class="wrap">
+    <div class="cta reveal">
+      <span class="eyebrow">On démarre ?</span>
+      <h2>Recevez votre site exemple<br><span class="grad">gratuitement</span></h2>
+      <p>On vous prépare un aperçu de votre futur site, à votre nom. Ça plaît ? On continue. Sinon vous ne devez rien.</p>
+      <a href="#contact" class="btn">Je veux mon exemple gratuit →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background:var(--bg2)">
+  <div class="wrap" style="max-width:680px">
+    <div class="head reveal"><span class="eyebrow">Contact</span><h2>Parlons de votre projet</h2><p>On vous prépare votre exemple gratuit sous 48h.</p></div>
+    <form class="reveal d1" style="display:flex;flex-direction:column;gap:14px" onsubmit="alert('Démo : votre demande serait envoyée ✓');return false;">
+      <input style="background:var(--card);border:1px solid var(--line);color:var(--txt);padding:15px;border-radius:12px;font-family:inherit" placeholder="Votre nom" required>
+      <input style="background:var(--card);border:1px solid var(--line);color:var(--txt);padding:15px;border-radius:12px;font-family:inherit" placeholder="Nom de votre commerce" required>
+      <input style="background:var(--card);border:1px solid var(--line);color:var(--txt);padding:15px;border-radius:12px;font-family:inherit" placeholder="Téléphone ou email" required>
+      <textarea rows="4" style="background:var(--card);border:1px solid var(--line);color:var(--txt);padding:15px;border-radius:12px;font-family:inherit" placeholder="Votre activité / votre besoin"></textarea>
+      <button class="btn" style="justify-content:center" type="submit">Recevoir mon exemple gratuit →</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fg">
+      <div class="col"><div class="brand" style="margin-bottom:12px"><span class="dot"></span>STUDIO<span class="grad">LUMEN</span></div><p style="max-width:280px">Des sites web qui ramènent des clients aux commerces et indépendants.</p></div>
+      <div class="col"><h4>Navigation</h4><a href="#services">Services</a><a href="#process">Méthode</a><a href="#travaux">Réalisations</a><a href="#tarifs">Tarifs</a></div>
+      <div class="col"><h4>Contact</h4><p>contact@studiolumen.fr</p><p>06 00 00 00 00</p><p>@studiolumen</p></div>
+    </div>
+    <div class="copy">© 2026 Studio Lumen — Création de sites web pour commerces · Lille & alentours</div>
+  </div>
+</footer>
+
+<a href="#contact" class="btn float">Devis gratuit →</a>
+
+<script>
+const hdr=document.getElementById('hdr');
+const prog=document.getElementById('prog');
+addEventListener('scroll',()=>{
+  hdr.classList.toggle('scr',scrollY>30);
+  const h=document.documentElement;
+  prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+});
+// reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// rotating word
+const rot=document.getElementById('rot').children;let ri=0;
+setInterval(()=>{rot[ri].classList.remove('on');ri=(ri+1)%rot.length;rot[ri].classList.add('on')},2200);
+// counters
+const cio=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;cio.unobserve(e.target);
+  const el=e.target,end=+el.dataset.count,suf=el.dataset.suf||'',pre=el.dataset.pre||'';let t0=null;
+  const step=t=>{if(!t0)t0=t;const p=Math.min((t-t0)/1200,1);el.textContent=pre+Math.round(end*(1-Math.pow(1-p,3)))+suf;if(p<1)requestAnimationFrame(step)};
+  requestAnimationFrame(step);
+},{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
+// hero orbs parallax
+addEventListener('mousemove',e=>{
+  const x=(e.clientX/innerWidth-.5),y=(e.clientY/innerHeight-.5);
+  const o1=document.getElementById('o1'),o2=document.getElementById('o2');
+  if(o1)o1.style.transform=`translate(${x*40}px,${y*40}px)`;
+  if(o2)o2.style.transform=`translate(${-x*40}px,${-y*40}px)`;
+});
+// custom cursor
+const cur=document.getElementById('cur'),cd=document.getElementById('curdot');
+addEventListener('mousemove',e=>{cur.style.left=cd.style.left=e.clientX+'px';cur.style.top=cd.style.top=e.clientY+'px';});
+document.querySelectorAll('a,button,.proj,.card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='52px';cur.style.height='52px';cur.style.background='rgba(123,92,255,.15)'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='34px';cur.style.height='34px';cur.style.background='transparent'});
+});
+// before/after slider
+const ba=document.getElementById('ba'),bef=document.getElementById('baBefore'),hd=document.getElementById('baHandle'),gr=document.getElementById('baGrip');
+let drag=false;
+function setBA(clientX){const r=ba.getBoundingClientRect();let p=(clientX-r.left)/r.width;p=Math.max(.05,Math.min(.95,p));
+  bef.style.clipPath=`inset(0 ${(1-p)*100}% 0 0)`;hd.style.left=gr.style.left=(p*100)+'%';}
+ba.addEventListener('mousedown',e=>{drag=true;setBA(e.clientX)});
+addEventListener('mousemove',e=>{if(drag)setBA(e.clientX)});
+addEventListener('mouseup',()=>drag=false);
+ba.addEventListener('touchstart',e=>setBA(e.touches[0].clientX),{passive:true});
+ba.addEventListener('touchmove',e=>setBA(e.touches[0].clientX),{passive:true});
+</script>
+</body>
+</html>
