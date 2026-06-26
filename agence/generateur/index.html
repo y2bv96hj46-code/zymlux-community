@@ -96,6 +96,10 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
       <div class="swatches" id="f-color"></div>
     </div>
     <div class="field">
+      <label>Style</label>
+      <div class="chips" id="f-style"></div>
+    </div>
+    <div class="field">
       <label>Thème</label>
       <div class="toggle" id="f-theme">
         <button data-t="dark" class="active">Sombre</button>
@@ -141,12 +145,18 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
     {k:'Fleuriste',emoji:'🌸',eyebrow:'Atelier floral',slogan:'La beauté, au naturel.',cta:'Commander',serv:[['Bouquets','Compositions du jour'],['Mariages','Décoration florale'],['Abonnements','Fleurs chaque semaine']]}
   ];
   var COLORS=['#7b5cff','#19e3c0','#ff5fa2','#f4a300','#e3261f','#2e8bff','#16c172'];
-  var st={name:'Chez Marco',slogan:'',type:0,color:'#7b5cff',theme:'dark',city:'Lille',phone:'06 12 34 56 78'};
+  var STYLES=[
+    {k:'Moderne',font:'Space Grotesk',w:'600;700',h1:'50px',tt:'none',it:false},
+    {k:'Élégant',font:'Fraunces',w:'500;600',h1:'54px',tt:'none',it:true},
+    {k:'Audacieux',font:'Anton',w:'',h1:'70px',tt:'uppercase',it:false}
+  ];
+  var st={name:'Chez Marco',slogan:'',type:0,color:'#7b5cff',style:0,theme:'dark',city:'Lille',phone:'06 12 34 56 78'};
   // restaurer depuis l'URL (sites partagés)
   try{var q=new URLSearchParams(location.search);
     if(q.get('n'))st.name=q.get('n');
     if(q.get('s'))st.slogan=q.get('s');
     if(q.get('t')!=null)st.type=Math.max(0,Math.min(5,parseInt(q.get('t'),10)||0));
+    if(q.get('ly')!=null)st.style=Math.max(0,Math.min(2,parseInt(q.get('ly'),10)||0));
     if(q.get('c'))st.color='#'+q.get('c').replace('#','');
     if(q.get('th'))st.theme=q.get('th')==='light'?'light':'dark';
     if(q.get('city'))st.city=q.get('city');
@@ -159,22 +169,25 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
   function build(){
     var d=TYPES[st.type],c=st.color,nm=esc(st.name||'Votre Commerce');
     var slog=esc(st.slogan||d.slogan);
+    var S=STYLES[st.style]||STYLES[0];
+    var ff=S.font, fam=(ff==='Anton'?'Anton':ff.replace(/ /g,'+')+':wght@'+S.w);
+    var ini=(st.name||'S').replace(/[^A-Za-zÀ-ÿ ]/g,'').split(/\s+/).filter(Boolean).slice(0,2).map(function(w){return w.charAt(0)}).join('').toUpperCase()||'S';
     var dark=st.theme==='dark';
     var bg=dark?'#0e0e13':'#ffffff', tx=dark?'#f3f3f7':'#16161d', mut=dark?'#9a9aac':'#6a6a78', card=dark?'#17171f':'#f5f6f8', line=dark?'#23232f':'#e9e9f0';
     var serv=d.serv.map(function(s){return '<div class=sc><div class=ic></div><h3>'+esc(s[0])+'</h3><p>'+esc(s[1])+'</p></div>'}).join('');
     return '<!doctype html><html lang=fr><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1">'+
-    '<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500&display=swap" rel=stylesheet>'+
+    '<link href="https://fonts.googleapis.com/css2?family='+fam+'&family=Inter:wght@400;500&display=swap" rel=stylesheet>'+
     '<style>*{margin:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:Inter,sans-serif;background:'+bg+';color:'+tx+'}'+
-    'h1,h2,h3,.lg{font-family:"Space Grotesk",sans-serif}'+
+    'h1,h2,h3,.lg{font-family:"'+ff+'",sans-serif}'+
     '.cta{background:'+c+';color:#fff;font-weight:600;border:0;padding:12px 22px;border-radius:50px;font-size:14px;text-decoration:none;display:inline-block;cursor:pointer}'+
     '.wrap{max-width:1000px;margin:0 auto;padding:0 26px}'+
     'header{position:sticky;top:0;z-index:9;display:flex;align-items:center;justify-content:space-between;padding:16px 26px;background:'+bg+'ee;backdrop-filter:blur(8px);border-bottom:1px solid '+line+'}'+
-    '.lo{font-family:"Space Grotesk";font-weight:700;font-size:18px;display:flex;gap:8px;align-items:center}.lo .b{width:9px;height:9px;border-radius:50%;background:'+c+'}'+
+    '.lo{font-family:"'+ff+'";font-weight:700;font-size:18px;display:flex;gap:9px;align-items:center}.lo .mono{width:30px;height:30px;border-radius:9px;background:'+c+';color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;letter-spacing:.5px}'+
     'nav{display:flex;gap:18px;font-size:13px;color:'+mut+'}'+
     '.hero{position:relative;padding:64px 0 54px;overflow:hidden}'+
     '.glow{position:absolute;width:340px;height:340px;border-radius:50%;background:'+c+';filter:blur(110px);opacity:.22;top:-80px;right:-60px}'+
     '.eb{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:'+c+';font-weight:600}'+
-    '.hero h1{font-size:50px;line-height:1.03;margin:14px 0 16px;max-width:680px}'+
+    '.hero h1{font-size:'+S.h1+';line-height:1.03;margin:14px 0 16px;max-width:680px;text-transform:'+S.tt+';font-style:'+(S.it?'italic':'normal')+'}'+
     '.hero p{color:'+mut+';font-size:17px;max-width:440px;margin-bottom:26px}'+
     '.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}'+
     '.ghost{border:1px solid '+line+';color:'+tx+';padding:12px 22px;border-radius:50px;font-size:14px;text-decoration:none}'+
@@ -194,7 +207,7 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
     'footer{padding:30px 26px;border-top:1px solid '+line+';color:'+mut+';font-size:13px;text-align:center}'+
     '@media(max-width:720px){.hero h1{font-size:34px}.serv,.about{grid-template-columns:1fr}nav{display:none}.stat{gap:22px}}'+
     '</style></head><body>'+
-    '<header><div class=lo><span class=b></span>'+nm+'</div><nav><span>Accueil</span><span>Services</span><span>À propos</span><span>Contact</span></nav><a class=cta>'+esc(d.cta)+'</a></header>'+
+    '<header><div class=lo><span class=mono>'+esc(ini)+'</span>'+nm+'</div><nav><span>Accueil</span><span>Services</span><span>À propos</span><span>Contact</span></nav><a class=cta>'+esc(d.cta)+'</a></header>'+
     '<div class=hero><div class=wrap><div class=glow></div><div class=eb>'+esc(d.eyebrow)+' · '+esc(st.city)+'</div>'+
     '<h1>'+slog+'</h1>'+
     '<p>Bienvenue chez <b>'+nm+'</b>. Réservez en ligne en quelques secondes, 7j/7.</p>'+
@@ -223,6 +236,10 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
   var typeWrap=document.getElementById('f-type');
   TYPES.forEach(function(t,i){var b=document.createElement('button');b.className='chip'+(i===st.type?' active':'');b.type='button';b.textContent=t.emoji+' '+t.k;
     b.addEventListener('click',function(){st.type=i;[].forEach.call(typeWrap.children,function(c,k){c.classList.toggle('active',k===i)});render()});typeWrap.appendChild(b)});
+  // styles
+  var styleWrap=document.getElementById('f-style');
+  STYLES.forEach(function(s,i){var b=document.createElement('button');b.className='chip'+(i===st.style?' active':'');b.type='button';b.textContent=s.k;
+    b.addEventListener('click',function(){st.style=i;[].forEach.call(styleWrap.children,function(c,k){c.classList.toggle('active',k===i)});render()});styleWrap.appendChild(b)});
   // colors
   var colWrap=document.getElementById('f-color');
   COLORS.forEach(function(col,i){var b=document.createElement('button');b.className='sw'+(col===st.color?' active':'');b.type='button';b.style.setProperty('--s',col);b.dataset.c=col;
@@ -244,7 +261,7 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
   [].forEach.call(themeWrap.children,function(c){c.classList.toggle('active',c.dataset.t===st.theme)});
 
   function note(t){var n=document.getElementById('cta-note');if(!n)return;clearTimeout(n._t);var o=n.dataset.o||(n.dataset.o=n.textContent);n.textContent=t;n._t=setTimeout(function(){n.textContent=o},2400)}
-  function shareURL(){var p=new URLSearchParams();p.set('n',st.name);if(st.slogan)p.set('s',st.slogan);p.set('t',st.type);p.set('c',st.color.replace('#',''));p.set('th',st.theme);p.set('city',st.city);p.set('p',st.phone);return location.origin+location.pathname+'?'+p.toString()}
+  function shareURL(){var p=new URLSearchParams();p.set('n',st.name);if(st.slogan)p.set('s',st.slogan);p.set('t',st.type);p.set('ly',st.style);p.set('c',st.color.replace('#',''));p.set('th',st.theme);p.set('city',st.city);p.set('p',st.phone);return location.origin+location.pathname+'?'+p.toString()}
   // télécharger le vrai fichier HTML
   document.getElementById('dl').addEventListener('click',function(){
     var blob=new Blob([build()],{type:'text/html;charset=utf-8'});
