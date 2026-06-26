@@ -37,8 +37,9 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif;letter-spacing:-.02em;line-
 .btn-out{background:transparent;border:1px solid var(--line);color:var(--txt)}
 .btn-out:hover{background:#fff;color:#000;border-color:#fff;box-shadow:none}
 
-.reveal{opacity:0;transform:translateY(36px);transition:.9s var(--ease)}
-.reveal.in{opacity:1;transform:none}
+.reveal{opacity:1;transform:none;transition:.9s var(--ease)}
+html.js .reveal{opacity:0;transform:translateY(36px)}
+html.js .reveal.in{opacity:1;transform:none}
 .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
 
 header{position:fixed;inset:0 0 auto;z-index:100;transition:.4s var(--ease)}
@@ -190,6 +191,13 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
   .float{display:none}
 }
 </style>
+<script>
+  // Affichage animé seulement si JS OK (sinon contenu visible par défaut)
+  document.documentElement.classList.add('js');
+  // Tuer l'ancien service worker Zymlux + vider le cache (pour les anciens visiteurs)
+  if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>r.unregister())).catch(()=>{});}
+  if(window.caches){caches.keys().then(ks=>ks.forEach(k=>caches.delete(k))).catch(()=>{});}
+</script>
 </head>
 <body>
 <div id="prog"></div>
@@ -411,8 +419,14 @@ addEventListener('scroll',()=>{
   prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
 });
 // reveal
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const revs=document.querySelectorAll('.reveal');
+function showAll(){revs.forEach(el=>el.classList.add('in'))}
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08});
+  revs.forEach(el=>io.observe(el));
+  // Filet de sécurité : tout révéler après 1,8s quoi qu'il arrive
+  setTimeout(showAll,1800);
+}else{showAll()}
 // rotating word
 const rot=document.getElementById('rot').children;let ri=0;
 setInterval(()=>{rot[ri].classList.remove('on');ri=(ri+1)%rot.length;rot[ri].classList.add('on')},2200);
@@ -421,7 +435,7 @@ const cio=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)retur
   const el=e.target,end=+el.dataset.count,suf=el.dataset.suf||'',pre=el.dataset.pre||'';let t0=null;
   const step=t=>{if(!t0)t0=t;const p=Math.min((t-t0)/1200,1);el.textContent=pre+Math.round(end*(1-Math.pow(1-p,3)))+suf;if(p<1)requestAnimationFrame(step)};
   requestAnimationFrame(step);
-},{threshold:.5});
+}),{threshold:.5});
 document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
 // hero orbs parallax
 addEventListener('mousemove',e=>{
