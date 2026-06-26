@@ -15,6 +15,19 @@
   --c1:#7b5cff; --c2:#19e3c0; --grad:linear-gradient(120deg,#7b5cff,#19e3c0);
   --ease:cubic-bezier(.22,1,.36,1);
 }
+/* moteur d'ambiance : le site se redessine en direct */
+html[data-vibe="or"]{--bg:#0b0a06;--bg2:#120f08;--card:#171206;--line:#2b2310;--txt:#f5efe0;--mut:#b3a585;--c1:#c9a24b;--c2:#e7c878;--grad:linear-gradient(120deg,#c9a24b,#e7c878)}
+html[data-vibe="emeraude"]{--bg:#05100b;--bg2:#08160f;--card:#0c1c14;--line:#163a2a;--txt:#eafff5;--mut:#8fb6a4;--c1:#16c172;--c2:#7ee0a8;--grad:linear-gradient(120deg,#16c172,#7ee0a8)}
+html[data-vibe="corail"]{--bg:#100808;--bg2:#160b0a;--card:#1c0f0d;--line:#3a201c;--txt:#fff0ec;--mut:#c2a59f;--c1:#ff5d5d;--c2:#ffb15d;--grad:linear-gradient(120deg,#ff5d5d,#ffb15d)}
+html[data-vibe="glace"]{--bg:#06090f;--bg2:#0a0f18;--card:#0e1420;--line:#1c2940;--txt:#eaf3ff;--mut:#90a4c2;--c1:#2e8bff;--c2:#7ad0ff;--grad:linear-gradient(120deg,#2e8bff,#7ad0ff)}
+body,header,.card,.panel,.proj,.plan,.rcard,.step,.tile,.rev,.s-item,.btn-out,.chip,.mock,.device{transition:background-color .5s var(--ease),border-color .5s var(--ease),color .35s var(--ease)}
+/* sélecteur d'ambiance flottant */
+.vibe{position:fixed;left:18px;bottom:18px;z-index:95;display:flex;align-items:center;gap:9px;background:rgba(10,10,16,.72);backdrop-filter:blur(12px);border:1px solid var(--line);padding:9px 13px;border-radius:50px}
+.vibe-lbl{font-size:.76rem;color:var(--mut);white-space:nowrap}
+.vbtn{width:22px;height:22px;border-radius:50%;background:var(--d);border:2px solid transparent;cursor:pointer;padding:0;transition:.2s}
+.vbtn:hover{transform:scale(1.18)}
+.vbtn.act{border-color:#fff;box-shadow:0 0 0 2px var(--d)}
+@media(max-width:600px){.vibe .vibe-lbl{display:none}.vibe{left:12px;bottom:12px;padding:8px 10px}}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden}
@@ -544,6 +557,15 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
 
 <a href="#contact" class="btn float">Devis gratuit →</a>
 
+<div class="vibe" title="Ce site se redessine en direct">
+  <span class="vibe-lbl">🎨 Change l'ambiance du site →</span>
+  <button class="vbtn act" type="button" data-v="" style="--d:#7b5cff" aria-label="Néon"></button>
+  <button class="vbtn" type="button" data-v="or" style="--d:#c9a24b" aria-label="Or"></button>
+  <button class="vbtn" type="button" data-v="emeraude" style="--d:#16c172" aria-label="Émeraude"></button>
+  <button class="vbtn" type="button" data-v="corail" style="--d:#ff5d5d" aria-label="Corail"></button>
+  <button class="vbtn" type="button" data-v="glace" style="--d:#2e8bff" aria-label="Glace"></button>
+</div>
+
 <script>
 const hdr=document.getElementById('hdr');
 const prog=document.getElementById('prog');
@@ -697,6 +719,12 @@ if(matchMedia('(pointer:fine)').matches){
 }
 // duplique les avis pour un defilement continu et fluide
 var _rt=document.querySelector('.revtrack');if(_rt)_rt.innerHTML+=_rt.innerHTML;
+// moteur d'ambiance : le site se redessine en direct
+document.querySelectorAll('.vbtn').forEach(function(btn){btn.addEventListener('click',function(){
+  var v=btn.getAttribute('data-v');
+  if(v)document.documentElement.setAttribute('data-vibe',v);else document.documentElement.removeAttribute('data-vibe');
+  document.querySelectorAll('.vbtn').forEach(function(x){x.classList.toggle('act',x===btn)});
+})});
 </script>
 </body>
 </html>
