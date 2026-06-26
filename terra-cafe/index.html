@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TERRA — Café de spécialité</title>
+<meta name="description" content="TERRA, torréfacteur de café de spécialité. Cafés d'origine, torréfaction artisanale, sourcing direct producteur.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f3ece1;
+    --cream-deep:#e9dfcf;
+    --espresso:#3a2a1e;
+    --espresso-soft:#5a4636;
+    --terracotta:#c2683f;
+    --terracotta-soft:#d68a63;
+    --line:rgba(58,42,30,.14);
+    --serif:'Fraunces',Georgia,serif;
+    --sans:'Jost',-apple-system,BlinkMacSystemFont,sans-serif;
+    --maxw:1200px;
+    --ease:cubic-bezier(.2,.7,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--cream);
+    color:var(--espresso);
+    font-family:var(--sans);
+    font-weight:400;
+    line-height:1.65;
+    font-size:17px;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3,h4{font-family:var(--serif);font-weight:400;line-height:1.05;letter-spacing:-.01em}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  .eyebrow{
+    font-family:var(--sans);
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:.32em;
+    text-transform:uppercase;
+    color:var(--terracotta);
+    display:inline-block;
+  }
+  .rule{height:1px;background:var(--line);border:0;width:100%}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;gap:.6em;
+    font-family:var(--sans);font-size:13px;font-weight:500;
+    letter-spacing:.18em;text-transform:uppercase;
+    padding:14px 26px;border-radius:40px;
+    background:var(--espresso);color:var(--cream);
+    border:1px solid var(--espresso);
+    cursor:pointer;transition:all .4s var(--ease);
+  }
+  .btn:hover{background:var(--terracotta);border-color:var(--terracotta);transform:translateY(-2px)}
+  .btn--ghost{background:transparent;color:var(--espresso)}
+  .btn--ghost:hover{background:var(--espresso);color:var(--cream);border-color:var(--espresso)}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(243,236,225,.82);
+    backdrop-filter:saturate(140%) blur(14px);
+    -webkit-backdrop-filter:saturate(140%) blur(14px);
+    border-bottom:1px solid transparent;
+    transition:border-color .4s var(--ease),background .4s var(--ease);
+  }
+  header.scrolled{border-bottom-color:var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:78px}
+  .logo{font-family:var(--serif);font-size:24px;letter-spacing:.04em;display:flex;align-items:center;gap:.5em}
+  .logo .dot{width:9px;height:9px;border-radius:50%;background:var(--terracotta);display:inline-block}
+  .logo small{font-family:var(--sans);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--espresso-soft);font-weight:500}
+  .nav-links{display:flex;align-items:center;gap:38px}
+  .nav-links a{
+    font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+    position:relative;color:var(--espresso-soft);transition:color .3s var(--ease);
+  }
+  .nav-links a::after{
+    content:'';position:absolute;left:0;bottom:-6px;width:0;height:1px;
+    background:var(--terracotta);transition:width .35s var(--ease);
+  }
+  .nav-links a:hover{color:var(--espresso)}
+  .nav-links a:hover::after{width:100%}
+  .nav-cta{display:flex;align-items:center;gap:20px}
+  .burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+  .burger span{width:24px;height:2px;background:var(--espresso);transition:.3s var(--ease)}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:1;transform:none}
+  .js .reveal{opacity:0;transform:translateY(26px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+  .js .reveal.in{opacity:1;transform:none}
+  .js .reveal.d1{transition-delay:.08s}
+  .js .reveal.d2{transition-delay:.16s}
+  .js .reveal.d3{transition-delay:.24s}
+
+  /* ---------- hero ---------- */
+  .hero{padding:80px 0 90px;position:relative}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+  .hero h1{font-size:clamp(52px,8vw,108px);line-height:.96}
+  .hero h1 em{font-style:italic;color:var(--terracotta)}
+  .hero .lede{max-width:440px;margin:30px 0 36px;color:var(--espresso-soft);font-size:18px}
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .hero-visual{position:relative;aspect-ratio:4/5;border-radius:8px;overflow:hidden}
+  .hero-visual .img{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(120% 90% at 20% 10%,rgba(214,138,99,.55),transparent 60%),
+      linear-gradient(160deg,#7a4a2e,#3a2a1e 70%);
+  }
+  .hero-visual .badge{
+    position:absolute;left:22px;bottom:22px;
+    background:var(--cream);color:var(--espresso);
+    padding:14px 18px;border-radius:6px;max-width:210px;
+    box-shadow:0 18px 40px -20px rgba(58,42,30,.5);
+  }
+  .hero-visual .badge b{font-family:var(--serif);font-size:30px;display:block;line-height:1}
+  .hero-visual .badge span{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--espresso-soft)}
+  .hero-meta{display:flex;gap:44px;margin-top:54px;flex-wrap:wrap;padding-top:34px;border-top:1px solid var(--line)}
+  .hero-meta .m b{font-family:var(--serif);font-size:34px;display:block;line-height:1}
+  .hero-meta .m span{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--espresso-soft)}
+
+  /* marquee */
+  .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0;overflow:hidden;background:var(--cream-deep)}
+  .marquee-track{display:flex;gap:60px;white-space:nowrap;animation:scrollx 28s linear infinite;width:max-content}
+  .marquee-track span{font-family:var(--serif);font-style:italic;font-size:22px;color:var(--espresso-soft);display:inline-flex;align-items:center;gap:60px}
+  .marquee-track span::after{content:'•';color:var(--terracotta);font-style:normal}
+  @keyframes scrollx{to{transform:translateX(-50%)}}
+
+  /* ---------- section base ---------- */
+  section{position:relative}
+  .pad{padding:110px 0}
+  .sec-head{max-width:680px;margin-bottom:60px}
+  .sec-head h2{font-size:clamp(34px,5vw,60px);margin-top:18px}
+  .sec-head p{margin-top:20px;color:var(--espresso-soft);max-width:540px}
+
+  /* origines */
+  .orig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+  .orig{border-top:1px solid var(--line);padding-top:24px}
+  .orig .thumb{aspect-ratio:5/4;border-radius:6px;margin-bottom:22px;overflow:hidden}
+  .orig:nth-child(1) .thumb{background:linear-gradient(150deg,#b07b4e,#5a3a22)}
+  .orig:nth-child(2) .thumb{background:linear-gradient(150deg,#caa35f,#6e5226)}
+  .orig:nth-child(3) .thumb{background:linear-gradient(150deg,#a85c3e,#4a2418)}
+  .orig h3{font-size:26px;margin-bottom:10px}
+  .orig .country{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--terracotta);font-weight:500}
+  .orig p{color:var(--espresso-soft);font-size:15.5px;margin-top:8px}
+  .orig .notes{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap}
+  .orig .notes span{font-size:11px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);padding:5px 11px;border-radius:30px;color:var(--espresso-soft)}
+
+  /* carte */
+  .menu{background:var(--espresso);color:var(--cream)}
+  .menu .eyebrow{color:var(--terracotta-soft)}
+  .menu .sec-head p{color:rgba(243,236,225,.7)}
+  .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 70px}
+  .menu-item{display:flex;justify-content:space-between;align-items:baseline;gap:18px;padding:22px 0;border-bottom:1px solid rgba(243,236,225,.14)}
+  .menu-item .l h4{font-size:23px;color:var(--cream)}
+  .menu-item .l p{font-size:13.5px;color:rgba(243,236,225,.6);margin-top:4px}
+  .menu-item .price{font-family:var(--serif);font-size:22px;color:var(--terracotta-soft);white-space:nowrap}
+  .menu-foot{margin-top:48px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+  .menu-foot p{color:rgba(243,236,225,.65);font-size:14px;max-width:420px}
+  .menu .btn{background:var(--cream);color:var(--espresso);border-color:var(--cream)}
+  .menu .btn:hover{background:var(--terracotta);color:var(--cream);border-color:var(--terracotta)}
+
+  /* histoire */
+  .story-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center}
+  .story-visual{aspect-ratio:1/1;border-radius:8px;overflow:hidden;position:relative}
+  .story-visual .img{position:absolute;inset:0;background:radial-gradient(110% 100% at 80% 20%,rgba(194,104,63,.45),transparent 55%),linear-gradient(140deg,#6e4a2f,#3a2a1e)}
+  .story-visual .stamp{position:absolute;right:18px;top:18px;width:104px;height:104px;border-radius:50%;border:1px solid rgba(243,236,225,.5);color:var(--cream);display:flex;align-items:center;justify-content:center;text-align:center;font-family:var(--serif);font-style:italic;font-size:14px;line-height:1.2}
+  .story h2{font-size:clamp(32px,4.4vw,54px);margin:16px 0 24px}
+  .story p{color:var(--espresso-soft);margin-bottom:18px;max-width:520px}
+  .story .sig{font-family:var(--serif);font-style:italic;font-size:24px;margin-top:14px}
+  .story .sig small{display:block;font-family:var(--sans);font-style:normal;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--espresso-soft);margin-top:4px}
+
+  /* avis */
+  .reviews{background:var(--cream-deep)}
+  .rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  .rev{background:var(--cream);border-radius:8px;padding:34px 30px;border:1px solid var(--line)}
+  .rev .stars{color:var(--terracotta);letter-spacing:3px;font-size:14px;margin-bottom:18px}
+  .rev blockquote{font-family:var(--serif);font-size:21px;line-height:1.4;margin-bottom:24px}
+  .rev .who{display:flex;align-items:center;gap:14px}
+  .rev .av{width:42px;height:42px;border-radius:50%;background:linear-gradient(140deg,var(--terracotta-soft),var(--espresso-soft))}
+  .rev .who b{font-size:15px;font-weight:500;display:block}
+  .rev .who span{font-size:12px;color:var(--espresso-soft);letter-spacing:.04em}
+
+  /* contact */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px}
+  .hours-list{margin-top:8px}
+  .hours-list .row{display:flex;justify-content:space-between;padding:15px 0;border-bottom:1px solid var(--line);font-size:15.5px}
+  .hours-list .row span:first-child{letter-spacing:.06em}
+  .hours-list .row.now span:last-child{color:var(--terracotta);font-weight:500}
+  .contact-info p{color:var(--espresso-soft);margin:6px 0}
+  .contact-info .label{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--terracotta);font-weight:500;margin-top:26px;display:block}
+  .map{aspect-ratio:4/3;border-radius:8px;overflow:hidden;position:relative}
+  .map .img{position:absolute;inset:0;background:
+    linear-gradient(transparent 49%,rgba(58,42,30,.08) 50%,transparent 51%),
+    linear-gradient(90deg,transparent 49%,rgba(58,42,30,.08) 50%,transparent 51%),
+    linear-gradient(150deg,#e6d9c5,#d8c6ab);
+    background-size:38px 38px,38px 38px,100% 100%}
+  .map .pin{position:absolute;left:50%;top:48%;transform:translate(-50%,-100%);width:18px;height:18px;background:var(--terracotta);border-radius:50% 50% 50% 0;rotate:-45deg;box-shadow:0 8px 18px -6px rgba(58,42,30,.6)}
+
+  /* footer */
+  footer{background:var(--espresso);color:var(--cream);padding:80px 0 36px}
+  .foot-top{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding-bottom:54px;border-bottom:1px solid rgba(243,236,225,.16)}
+  .foot-top .logo{color:var(--cream)}
+  .foot-top .logo small{color:rgba(243,236,225,.6)}
+  .foot-brand p{color:rgba(243,236,225,.65);max-width:300px;margin-top:18px;font-size:15px}
+  .foot-col h5{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--terracotta-soft);margin-bottom:18px;font-weight:500;font-family:var(--sans)}
+  .foot-col a{display:block;color:rgba(243,236,225,.78);padding:6px 0;font-size:15px;transition:color .3s}
+  .foot-col a:hover{color:var(--cream)}
+  .foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;padding-top:28px;color:rgba(243,236,225,.5);font-size:13px;letter-spacing:.04em}
+
+  /* mobile nav panel */
+  .mobile-nav{display:none}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:960px){
+    .hero-grid{grid-template-columns:1fr;gap:40px}
+    .hero-visual{aspect-ratio:16/11;max-height:420px}
+    .orig-grid{grid-template-columns:1fr 1fr}
+    .menu-grid{grid-template-columns:1fr;gap:0}
+    .story-grid{grid-template-columns:1fr;gap:38px}
+    .rev-grid{grid-template-columns:1fr;gap:20px}
+    .contact-grid{grid-template-columns:1fr;gap:40px}
+    .foot-top{grid-template-columns:1fr 1fr;gap:34px}
+    .foot-brand{grid-column:1/-1}
+  }
+  @media(max-width:720px){
+    body{font-size:16px}
+    .wrap{padding:0 22px}
+    .nav-links,.nav-cta .btn{display:none}
+    .burger{display:flex}
+    .pad{padding:78px 0}
+    .hero{padding:54px 0 64px}
+    .hero-meta{gap:30px}
+    .orig-grid{grid-template-columns:1fr}
+    .menu-foot{flex-direction:column;align-items:flex-start}
+    .foot-top{grid-template-columns:1fr}
+
+    .mobile-nav.open{
+      display:block;position:fixed;inset:78px 0 0;z-index:99;
+      background:var(--cream);padding:30px 22px;
+    }
+    .mobile-nav a{
+      display:block;font-family:var(--serif);font-size:30px;
+      padding:14px 0;border-bottom:1px solid var(--line);color:var(--espresso);
+    }
+    .mobile-nav .btn{margin-top:26px;width:100%;justify-content:center}
+    body.lock{overflow:hidden}
+  }
+  @media(max-width:420px){
+    .wrap{padding:0 18px}
+    .hero h1{font-size:clamp(44px,13vw,60px)}
+    .hero-meta .m b{font-size:28px}
+  }
+</style>
+</head>
+<body>
+
+<header id="header">
+  <div class="wrap nav">
+    <a href="#top" class="logo">
+      <span class="dot"></span>TERRA
+      <small>Café de spécialité</small>
+    </a>
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a href="#cafe">Notre café</a>
+      <a href="#carte">La carte</a>
+      <a href="#histoire">Histoire</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#carte" class="btn">Commander</a>
+      <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav" aria-label="Menu mobile">
+  <a href="#cafe">Notre café</a>
+  <a href="#carte">La carte</a>
+  <a href="#histoire">Histoire</a>
+  <a href="#avis">Avis</a>
+  <a href="#contact">Contact</a>
+  <a href="#carte" class="btn">Commander</a>
+</nav>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow reveal">Torréfacteur artisanal · depuis 2014</span>
+        <h1 class="reveal d1">Le café,<br>cultivé comme<br>un <em>terroir</em>.</h1>
+        <p class="lede reveal d2">Nous sélectionnons des grains rares, torréfiés en petites séries dans notre atelier parisien. Du producteur à votre tasse, sans détour.</p>
+        <div class="hero-actions reveal d3">
+          <a href="#carte" class="btn">Découvrir la carte</a>
+          <a href="#cafe" class="btn btn--ghost">Nos origines</a>
+        </div>
+        <div class="hero-meta reveal d3">
+          <div class="m"><b>27</b><span>Origines<br>par an</span></div>
+          <div class="m"><b>100%</b><span>Sourcing<br>direct</span></div>
+          <div class="m"><b>4.9</b><span>Note<br>moyenne</span></div>
+        </div>
+      </div>
+      <div class="hero-visual reveal d2">
+        <div class="img"></div>
+        <div class="badge">
+          <b>Récolte 2025</b>
+          <span>Lot frais d'Éthiopie</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Éthiopie Yirgacheffe</span><span>Colombie Huila</span><span>Guatemala Antigua</span><span>Kenya AA</span><span>Brésil Cerrado</span>
+      <span>Éthiopie Yirgacheffe</span><span>Colombie Huila</span><span>Guatemala Antigua</span><span>Kenya AA</span><span>Brésil Cerrado</span>
+    </div>
+  </div>
+
+  <!-- NOTRE CAFÉ / ORIGINES -->
+  <section class="pad" id="cafe">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Notre café</span>
+        <h2>Des origines choisies, une signature à chaque tasse.</h2>
+        <p>Chaque café raconte un sol, une altitude, une main. Nous travaillons en lien direct avec des fermes engagées dans une agriculture vivante et rémunératrice.</p>
+      </div>
+      <div class="orig-grid">
+        <article class="orig reveal d1">
+          <div class="thumb"></div>
+          <span class="country">Éthiopie</span>
+          <h3>Yirgacheffe</h3>
+          <p>Lavé, cultivé à 2 000 m. Une tasse florale et lumineuse, d'une grande finesse.</p>
+          <div class="notes"><span>Jasmin</span><span>Bergamote</span><span>Thé noir</span></div>
+        </article>
+        <article class="orig reveal d2">
+          <div class="thumb"></div>
+          <span class="country">Colombie</span>
+          <h3>Finca El Huila</h3>
+          <p>Un classique généreux et rond, équilibré, parfait pour l'espresso du matin.</p>
+          <div class="notes"><span>Caramel</span><span>Noisette</span><span>Cacao</span></div>
+        </article>
+        <article class="orig reveal d3">
+          <div class="thumb"></div>
+          <span class="country">Guatemala</span>
+          <h3>Antigua Volcán</h3>
+          <p>Cultivé sur sols volcaniques. Corps soyeux, douceur épicée et longue finale.</p>
+          <div class="notes"><span>Chocolat noir</span><span>Orange</span><span>Épices</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- LA CARTE -->
+  <section class="pad menu" id="carte">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">La carte</span>
+        <h2>À déguster sur place, ou à emporter chez vous.</h2>
+        <p>Préparations au comptoir et grains à la vente. Nos baristas vous guident selon vos goûts et votre méthode d'infusion.</p>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-item reveal">
+          <div class="l"><h4>Espresso</h4><p>Simple ou serré, extraction soignée</p></div>
+          <span class="price">2,80 €</span>
+        </div>
+        <div class="menu-item reveal">
+          <div class="l"><h4>Flat White</h4><p>Lait micro-texturé, double ristretto</p></div>
+          <span class="price">4,50 €</span>
+        </div>
+        <div class="menu-item reveal d1">
+          <div class="l"><h4>Filtre V60</h4><p>Origine du jour, infusion lente</p></div>
+          <span class="price">4,90 €</span>
+        </div>
+        <div class="menu-item reveal d1">
+          <div class="l"><h4>Cappuccino</h4><p>Équilibre velouté lait & café</p></div>
+          <span class="price">4,20 €</span>
+        </div>
+        <div class="menu-item reveal d2">
+          <div class="l"><h4>Cold Brew</h4><p>Infusé 18 h à froid, naturellement doux</p></div>
+          <span class="price">5,20 €</span>
+        </div>
+        <div class="menu-item reveal d2">
+          <div class="l"><h4>Chocolat chaud maison</h4><p>Pure origine 70 %, lait entier</p></div>
+          <span class="price">4,80 €</span>
+        </div>
+        <div class="menu-item reveal d3">
+          <div class="l"><h4>Paquet de grains · 250 g</h4><p>Torréfié de la semaine, au choix</p></div>
+          <span class="price">12,90 €</span>
+        </div>
+        <div class="menu-item reveal d3">
+          <div class="l"><h4>Abonnement mensuel</h4><p>2 origines livrées chaque mois</p></div>
+          <span class="price">24,00 €</span>
+        </div>
+      </div>
+      <div class="menu-foot reveal">
+        <p>Carte des pâtisseries artisanales disponible en boutique. Options végétales pour toutes nos boissons lactées.</p>
+        <a href="#contact" class="btn">Réserver / Commander</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOTRE HISTOIRE -->
+  <section class="pad story" id="histoire">
+    <div class="wrap story-grid">
+      <div class="story-visual reveal">
+        <div class="img"></div>
+        <div class="stamp">Atelier<br>Paris XI</div>
+      </div>
+      <div class="story-text">
+        <span class="eyebrow reveal">Notre histoire</span>
+        <h2 class="reveal d1">Une idée fixe : le respect du grain et de ceux qui le cultivent.</h2>
+        <p class="reveal d2">TERRA est né en 2014, dans un petit local du 11e arrondissement, autour d'une conviction simple : un grand café commence à la terre. Nous avons appris à torréfier lentement, à écouter le grain, à ne rien masquer.</p>
+        <p class="reveal d2">Aujourd'hui, nous parcourons chaque année les régions productrices pour bâtir des relations durables. Des prix justes, des récoltes tracées, une qualité qui ne transige jamais.</p>
+        <div class="sig reveal d3">Camille &amp; Marius
+          <small>Fondateurs, TERRA</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVIS -->
+  <section class="pad reviews" id="avis">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Ils en parlent</span>
+        <h2>Une adresse que l'on garde précieusement.</h2>
+      </div>
+      <div class="rev-grid">
+        <article class="rev reveal d1">
+          <div class="stars" aria-hidden="true">★★★★★</div>
+          <blockquote>« Le meilleur filtre que j'aie bu à Paris. L'accueil est aussi soigné que la tasse. »</blockquote>
+          <div class="who"><div class="av"></div><div><b>Léa M.</b><span>Habituée du quartier</span></div></div>
+        </article>
+        <article class="rev reveal d2">
+          <div class="stars" aria-hidden="true">★★★★★</div>
+          <blockquote>« Leur abonnement a changé mes matins. Chaque origine est une vraie découverte. »</blockquote>
+          <div class="who"><div class="av"></div><div><b>Thomas R.</b><span>Abonné depuis 2 ans</span></div></div>
+        </article>
+        <article class="rev reveal d3">
+          <div class="stars" aria-hidden="true">★★★★★</div>
+          <blockquote>« On sent une vraie exigence, du sourcing jusqu'à la torréfaction. Bravo. »</blockquote>
+          <div class="who"><div class="av"></div><div><b>Inès B.</b><span>Barista professionnelle</span></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / HORAIRES -->
+  <section class="pad" id="contact">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Nous trouver</span>
+        <h2>Passez nous voir, la cafetière est prête.</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info reveal d1">
+          <h3 style="font-size:26px;margin-bottom:14px;font-family:var(--serif)">Horaires</h3>
+          <div class="hours-list">
+            <div class="row"><span>Lundi — Vendredi</span><span>7 h 30 — 19 h 00</span></div>
+            <div class="row"><span>Samedi</span><span>8 h 30 — 19 h 30</span></div>
+            <div class="row"><span>Dimanche</span><span>9 h 00 — 17 h 00</span></div>
+          </div>
+          <span class="label">Adresse</span>
+          <p>18 rue des Torréfacteurs<br>75011 Paris, France</p>
+          <span class="label">Contact</span>
+          <p>bonjour@terra-cafe.fr<br>01 84 25 09 14</p>
+          <a href="#carte" class="btn" style="margin-top:30px">Commander en ligne</a>
+        </div>
+        <div class="map reveal d2" role="img" aria-label="Carte de localisation de TERRA">
+          <div class="img"></div>
+          <div class="pin"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="#top" class="logo"><span class="dot"></span>TERRA<small>Café de spécialité</small></a>
+        <p>Torréfacteur artisanal de cafés de spécialité. Sourcing direct, torréfaction en petites séries, à Paris.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Explorer</h5>
+        <a href="#cafe">Notre café</a>
+        <a href="#carte">La carte</a>
+        <a href="#histoire">Notre histoire</a>
+        <a href="#avis">Avis</a>
+      </div>
+      <div class="foot-col">
+        <h5>Suivez-nous</h5>
+        <a href="#">Instagram</a>
+        <a href="#">Newsletter</a>
+        <a href="#contact">Nous écrire</a>
+        <a href="#carte">Abonnement</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 TERRA — Café de spécialité. Tous droits réservés.</span>
+      <span>Fait avec soin à Paris · Mentions légales · Confidentialité</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var root = document.documentElement;
+  root.classList.add('js');
+
+  // Filet de sécurité : tout révéler après 1.8s quoi qu'il arrive
+  var safety = setTimeout(revealAll, 1800);
+  function revealAll(){
+    var els = document.querySelectorAll('.reveal');
+    for (var i=0;i<els.length;i++){ els[i].classList.add('in'); }
+  }
+
+  function init(){
+    // Header scrolled state
+    var header = document.getElementById('header');
+    function onScroll(){
+      if (window.pageYOffset > 12){ header.classList.add('scrolled'); }
+      else { header.classList.remove('scrolled'); }
+    }
+    onScroll();
+    window.addEventListener('scroll', onScroll, {passive:true});
+
+    // Reveal on scroll via IntersectionObserver (avec fallback)
+    var reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting){
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+      reveals.forEach(function(el){ io.observe(el); });
+    } else {
+      revealAll();
+    }
+
+    // Mobile nav
+    var burger = document.getElementById('burger');
+    var mobileNav = document.getElementById('mobileNav');
+    function closeNav(){
+      mobileNav.classList.remove('open');
+      document.body.classList.remove('lock');
+      burger.setAttribute('aria-expanded','false');
+    }
+    if (burger && mobileNav){
+      burger.addEventListener('click', function(){
+        var open = mobileNav.classList.toggle('open');
+        document.body.classList.toggle('lock', open);
+        burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      var links = mobileNav.querySelectorAll('a');
+      for (var i=0;i<links.length;i++){
+        links[i].addEventListener('click', closeNav);
+      }
+    }
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MERIDIAN — Avocats d'affaires | Paris</title>
+<meta name="description" content="MERIDIAN Avocats — Cabinet d'avocats d'affaires à Paris. Droit des sociétés, fiscalité, droit social, fusions-acquisitions. Une exigence d'excellence au service de vos décisions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0e1b2e;
+    --navy-deep:#0a1422;
+    --navy-soft:#16294240;
+    --gold:#c9a86a;
+    --gold-soft:#d8bd8b;
+    --cream:#f4f1ea;
+    --cream-dim:#e7e2d6;
+    --ink:#1a2433;
+    --muted:#8a93a3;
+    --line:#26384f;
+    --maxw:1180px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',-apple-system,sans-serif;
+    background:var(--navy);
+    color:var(--cream);
+    line-height:1.7;
+    font-weight:300;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;line-height:1.12;letter-spacing:.01em}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  .gold{color:var(--gold)}
+  .eyebrow{
+    font-family:'Inter',sans-serif;
+    font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--gold);font-weight:500;
+    display:inline-flex;align-items:center;gap:14px;
+  }
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--gold);opacity:.7}
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    transition:background .5s var(--ease),border-color .5s var(--ease),padding .4s var(--ease);
+    border-bottom:1px solid transparent;
+    padding:22px 0;
+  }
+  header.scrolled{
+    background:rgba(10,20,34,.86);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+    padding:14px 0;
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .logo{display:flex;flex-direction:column;line-height:1}
+  .logo .mark{
+    font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;
+    letter-spacing:.18em;color:var(--cream);
+  }
+  .logo .sub{font-size:.58rem;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-top:4px}
+  .menu{display:flex;gap:38px;align-items:center}
+  .menu a{
+    font-size:.8rem;letter-spacing:.04em;color:var(--cream-dim);position:relative;padding:4px 0;
+    transition:color .3s var(--ease);
+  }
+  .menu a::after{
+    content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--gold);
+    transition:width .35s var(--ease);
+  }
+  .menu a:hover{color:var(--cream)}
+  .menu a:hover::after{width:100%}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:'Inter',sans-serif;font-size:.78rem;letter-spacing:.08em;font-weight:500;
+    padding:13px 26px;border:1px solid var(--gold);color:var(--gold);
+    background:transparent;cursor:pointer;
+    transition:background .4s var(--ease),color .4s var(--ease);
+    text-transform:uppercase;
+  }
+  .btn:hover{background:var(--gold);color:var(--navy-deep)}
+  .btn-solid{background:var(--gold);color:var(--navy-deep)}
+  .btn-solid:hover{background:var(--gold-soft);border-color:var(--gold-soft)}
+  .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
+  .burger span{width:24px;height:1.5px;background:var(--cream);transition:.3s var(--ease)}
+  .burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;min-height:100vh;display:flex;align-items:center;
+    background:
+      radial-gradient(120% 90% at 80% 10%, #16294a 0%, rgba(22,41,74,0) 55%),
+      radial-gradient(90% 70% at 10% 90%, #122036 0%, rgba(14,27,46,0) 50%),
+      linear-gradient(160deg,#0e1b2e 0%,#0a1422 100%);
+    overflow:hidden;
+  }
+  .hero-grid-lines{position:absolute;inset:0;pointer-events:none;opacity:.5}
+  .hero-grid-lines span{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(var(--line),transparent 70%)}
+  .hero-grid-lines span:nth-child(1){left:25%}
+  .hero-grid-lines span:nth-child(2){left:50%}
+  .hero-grid-lines span:nth-child(3){left:75%}
+  .hero .wrap{position:relative;z-index:2;padding-top:120px;padding-bottom:80px;width:100%}
+  .hero-eyebrow{margin-bottom:34px}
+  .hero h1{
+    font-size:clamp(2.8rem,7vw,6.2rem);
+    letter-spacing:.005em;margin-bottom:30px;color:var(--cream);
+  }
+  .hero h1 em{font-style:italic;color:var(--gold)}
+  .hero p.lead{
+    max-width:560px;font-size:1.08rem;color:var(--cream-dim);font-weight:300;margin-bottom:44px;
+  }
+  .hero-actions{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+  .hero-scroll{
+    position:absolute;bottom:38px;left:50%;transform:translateX(-50%);z-index:3;
+    font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);
+    display:flex;flex-direction:column;align-items:center;gap:12px;
+  }
+  .hero-scroll .l{width:1px;height:46px;background:linear-gradient(var(--gold),transparent);animation:scrolldot 2.4s var(--ease) infinite}
+  @keyframes scrolldot{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+  /* ---------- SECTION COMMON ---------- */
+  section{position:relative}
+  .sec-pad{padding:120px 0}
+  .sec-head{margin-bottom:64px;max-width:680px}
+  .sec-head h2{font-size:clamp(2.1rem,4.4vw,3.4rem);margin:22px 0 0;color:var(--cream)}
+  .sec-head h2 em{font-style:italic;color:var(--gold)}
+  .num{font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:1rem;letter-spacing:.1em}
+
+  /* ---------- EXPERTISE ---------- */
+  .expertise{background:var(--navy-deep)}
+  .exp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+  .exp-card{
+    padding:48px 38px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+    position:relative;transition:background .45s var(--ease);
+  }
+  .exp-card:hover{background:#11233c}
+  .exp-card .num{display:block;margin-bottom:26px}
+  .exp-card h3{font-size:1.6rem;color:var(--cream);margin-bottom:14px}
+  .exp-card p{font-size:.92rem;color:var(--muted);font-weight:300}
+  .exp-card .line{height:1px;width:40px;background:var(--gold);margin:20px 0;transition:width .45s var(--ease)}
+  .exp-card:hover .line{width:80px}
+
+  /* ---------- CABINET / VALUES ---------- */
+  .cabinet{background:var(--navy)}
+  .cab-split{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+  .cab-visual{
+    aspect-ratio:4/5;border:1px solid var(--line);position:relative;overflow:hidden;
+    background:
+      linear-gradient(135deg,rgba(201,168,106,.14),rgba(201,168,106,0) 60%),
+      linear-gradient(200deg,#16294a,#0a1422);
+  }
+  .cab-visual .frame{position:absolute;inset:18px;border:1px solid rgba(201,168,106,.35)}
+  .cab-visual .mono{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    font-family:'Cormorant Garamond',serif;font-size:6rem;color:rgba(201,168,106,.22);letter-spacing:.1em;
+  }
+  .cab-visual .est{position:absolute;bottom:36px;left:0;right:0;text-align:center;font-size:.66rem;letter-spacing:.34em;text-transform:uppercase;color:var(--gold)}
+  .cab-text h2{font-size:clamp(2rem,4vw,3.1rem);margin:20px 0 26px;color:var(--cream)}
+  .cab-text h2 em{font-style:italic;color:var(--gold)}
+  .cab-text p{color:var(--cream-dim);margin-bottom:20px;font-weight:300}
+  .values{margin-top:40px;display:grid;gap:0;border-top:1px solid var(--line)}
+  .value{display:flex;gap:24px;padding:24px 0;border-bottom:1px solid var(--line);align-items:baseline}
+  .value .num{flex-shrink:0}
+  .value h4{font-size:1.25rem;color:var(--cream)}
+  .value p{font-size:.88rem;color:var(--muted);margin:6px 0 0}
+
+  /* ---------- STATS ---------- */
+  .stats{background:var(--navy-deep);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+  .stat{padding:64px 28px;text-align:center;border-right:1px solid var(--line)}
+  .stat:last-child{border-right:none}
+  .stat .big{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5vw,4.4rem);color:var(--gold);line-height:1}
+  .stat .lab{font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cream-dim);margin-top:16px}
+
+  /* ---------- TEAM ---------- */
+  .team{background:var(--navy)}
+  .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+  .member{}
+  .member .photo{
+    aspect-ratio:3/4;border:1px solid var(--line);position:relative;overflow:hidden;margin-bottom:20px;
+    transition:transform .5s var(--ease);
+  }
+  .member:hover .photo{transform:translateY(-6px)}
+  .member .photo .ph{position:absolute;inset:0}
+  .member .photo .ini{
+    position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);
+    font-family:'Cormorant Garamond',serif;font-size:3.4rem;color:rgba(244,241,234,.18);letter-spacing:.08em;
+  }
+  .member .photo .bar{position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+  .member:hover .photo .bar{transform:scaleX(1)}
+  .member h4{font-size:1.35rem;color:var(--cream)}
+  .member .role{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-top:6px}
+  .member .spec{font-size:.84rem;color:var(--muted);margin-top:8px}
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testi{background:var(--navy-deep)}
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .quote{
+    border:1px solid var(--line);padding:40px 36px;background:#0e1b2e;position:relative;
+    transition:border-color .4s var(--ease);
+  }
+  .quote:hover{border-color:rgba(201,168,106,.5)}
+  .quote .mk{font-family:'Cormorant Garamond',serif;font-size:4rem;color:rgba(201,168,106,.35);line-height:.6;height:30px}
+  .quote p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.32rem;color:var(--cream);line-height:1.4;margin:16px 0 26px}
+  .quote .who{display:flex;flex-direction:column;border-top:1px solid var(--line);padding-top:18px}
+  .quote .who .n{font-size:.92rem;color:var(--gold);font-weight:500;letter-spacing:.02em}
+  .quote .who .c{font-size:.76rem;color:var(--muted);margin-top:3px}
+
+  /* ---------- CONTACT ---------- */
+  .contact{background:var(--navy);overflow:hidden}
+  .contact-split{display:grid;grid-template-columns:1fr 1.1fr;gap:72px;align-items:start}
+  .contact-info h2{font-size:clamp(2.1rem,4.2vw,3.3rem);margin:20px 0 28px;color:var(--cream)}
+  .contact-info h2 em{font-style:italic;color:var(--gold)}
+  .contact-info > p{color:var(--cream-dim);margin-bottom:40px;max-width:420px;font-weight:300}
+  .ci-row{display:flex;gap:20px;padding:22px 0;border-top:1px solid var(--line);align-items:flex-start}
+  .ci-row:last-child{border-bottom:1px solid var(--line)}
+  .ci-row .k{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);width:120px;flex-shrink:0;padding-top:3px}
+  .ci-row .v{color:var(--cream);font-size:.96rem;font-weight:300}
+  .form{border:1px solid var(--line);padding:48px;background:var(--navy-deep)}
+  .form h3{font-size:1.7rem;color:var(--cream);margin-bottom:8px}
+  .form .fsub{font-size:.86rem;color:var(--muted);margin-bottom:30px}
+  .field{margin-bottom:22px}
+  .field label{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cream-dim);margin-bottom:9px}
+  .field input,.field select,.field textarea{
+    width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);
+    color:var(--cream);font-family:'Inter',sans-serif;font-size:.95rem;font-weight:300;
+    padding:11px 0;transition:border-color .3s var(--ease);
+  }
+  .field input::placeholder,.field textarea::placeholder{color:#5a6678}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-bottom-color:var(--gold)}
+  .field select{appearance:none;cursor:pointer}
+  .field select option{background:var(--navy-deep);color:var(--cream)}
+  .field textarea{resize:vertical;min-height:90px}
+  .form .btn{width:100%;justify-content:center;margin-top:8px}
+  .form-note{font-size:.74rem;color:var(--muted);margin-top:18px;text-align:center}
+  .form-ok{display:none;text-align:center;padding:20px 0;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--navy-deep);border-top:1px solid var(--line);padding:80px 0 40px}
+  .foot-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:60px}
+  .foot-brand .mark{font-family:'Cormorant Garamond',serif;font-size:1.8rem;letter-spacing:.16em;color:var(--cream)}
+  .foot-brand .sub{font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-top:6px}
+  .foot-brand p{color:var(--muted);font-size:.88rem;margin-top:22px;max-width:300px;font-weight:300}
+  .foot-col h5{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+  .foot-col a,.foot-col p{display:block;color:var(--cream-dim);font-size:.88rem;margin-bottom:12px;font-weight:300;transition:color .3s var(--ease)}
+  .foot-col a:hover{color:var(--gold)}
+  .foot-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:28px;flex-wrap:wrap;gap:14px}
+  .foot-bottom p{font-size:.78rem;color:var(--muted)}
+  .foot-bottom .legals{display:flex;gap:24px}
+  .foot-bottom .legals a{font-size:.78rem;color:var(--muted)}
+  .foot-bottom .legals a:hover{color:var(--gold)}
+
+  /* ---------- REVEAL ANIMATION (safe) ---------- */
+  .reveal{opacity:1;transform:none;transition:opacity .9s var(--ease),transform .9s var(--ease)}
+  .js-on .reveal{opacity:0;transform:translateY(28px)}
+  .js-on .reveal.in{opacity:1;transform:none}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:980px){
+    .exp-grid{grid-template-columns:1fr 1fr}
+    .team-grid{grid-template-columns:1fr 1fr}
+    .testi-grid{grid-template-columns:1fr}
+    .stats-grid{grid-template-columns:1fr 1fr}
+    .stat:nth-child(2){border-right:none}
+    .stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid var(--line)}
+    .cab-split,.contact-split{grid-template-columns:1fr;gap:48px}
+    .foot-top{grid-template-columns:1fr 1fr}
+    .cab-visual{aspect-ratio:16/12;max-width:480px}
+  }
+  @media(max-width:680px){
+    .wrap{padding:0 22px}
+    .sec-pad{padding:84px 0}
+    .menu{
+      position:fixed;top:0;right:0;height:100vh;width:78%;max-width:320px;
+      background:var(--navy-deep);border-left:1px solid var(--line);
+      flex-direction:column;justify-content:center;gap:30px;padding:40px;
+      transform:translateX(100%);transition:transform .5s var(--ease);z-index:99;
+    }
+    .menu.open{transform:translateX(0)}
+    .menu a{font-size:1.05rem}
+    .menu .btn{margin-top:10px}
+    .burger{display:flex}
+    .nav .btn-desk{display:none}
+    .exp-grid{grid-template-columns:1fr}
+    .team-grid{grid-template-columns:1fr 1fr}
+    .form{padding:32px 24px}
+    .ci-row{flex-direction:column;gap:6px}
+    .ci-row .k{width:auto}
+  }
+  @media(max-width:390px){
+    .wrap{padding:0 18px}
+    .hero h1{font-size:2.4rem}
+    .team-grid{grid-template-columns:1fr}
+    .stats-grid{grid-template-columns:1fr}
+    .stat{border-right:none;border-bottom:1px solid var(--line)}
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="wrap nav">
+    <a href="#top" class="logo" aria-label="MERIDIAN Avocats — accueil">
+      <span class="mark">MERIDIAN</span>
+      <span class="sub">Avocats</span>
+    </a>
+    <nav class="menu" id="menu">
+      <a href="#expertise">Expertises</a>
+      <a href="#cabinet">Le Cabinet</a>
+      <a href="#equipe">L'Équipe</a>
+      <a href="#avis">Références</a>
+      <a href="#contact">Contact</a>
+      <a href="#contact" class="btn btn-solid">Prendre rendez-vous</a>
+    </nav>
+    <a href="#contact" class="btn btn-desk">Prendre rendez-vous</a>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-grid-lines"><span></span><span></span><span></span></div>
+  <div class="wrap">
+    <span class="eyebrow hero-eyebrow reveal">Cabinet d'avocats d'affaires · Paris</span>
+    <h1 class="reveal">L'exigence du droit,<br>au service de vos <em>décisions</em>.</h1>
+    <p class="lead reveal">Depuis 1998, MERIDIAN accompagne dirigeants, investisseurs et grands groupes dans leurs opérations les plus sensibles. Une approche rigoureuse, confidentielle et profondément stratégique.</p>
+    <div class="hero-actions reveal">
+      <a href="#contact" class="btn btn-solid">Prendre rendez-vous</a>
+      <a href="#expertise" class="btn">Nos expertises</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Découvrir</span><span class="l"></span></div>
+</section>
+
+<!-- EXPERTISE -->
+<section class="expertise sec-pad" id="expertise">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Domaines d'intervention</span>
+      <h2>Une maîtrise transversale du <em>droit des affaires</em>.</h2>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-card reveal">
+        <span class="num">01</span>
+        <h3>Droit des sociétés</h3>
+        <div class="line"></div>
+        <p>Structuration, gouvernance, pactes d'associés et vie sociale. Nous sécurisons chaque étape de la vie de l'entreprise, de la création à la transmission.</p>
+      </div>
+      <div class="exp-card reveal">
+        <span class="num">02</span>
+        <h3>Fusions-acquisitions</h3>
+        <div class="line"></div>
+        <p>Audits, négociation, closing. Nous pilotons vos opérations de croissance externe et de cession avec exigence et discrétion.</p>
+      </div>
+      <div class="exp-card reveal">
+        <span class="num">03</span>
+        <h3>Droit fiscal</h3>
+        <div class="line"></div>
+        <p>Optimisation, contentieux et fiscalité internationale. Une lecture stratégique de la norme fiscale au service de votre performance.</p>
+      </div>
+      <div class="exp-card reveal">
+        <span class="num">04</span>
+        <h3>Droit social</h3>
+        <div class="line"></div>
+        <p>Relations individuelles et collectives, restructurations, contentieux prud'homal. Nous conjuguons sécurité juridique et dialogue social.</p>
+      </div>
+      <div class="exp-card reveal">
+        <span class="num">05</span>
+        <h3>Contentieux & Arbitrage</h3>
+        <div class="line"></div>
+        <p>Représentation devant les juridictions et instances arbitrales. Une défense construite, documentée et résolument offensive.</p>
+      </div>
+      <div class="exp-card reveal">
+        <span class="num">06</span>
+        <h3>Droit immobilier</h3>
+        <div class="line"></div>
+        <p>Promotion, baux commerciaux, montages complexes et financements. Nous accompagnons vos actifs immobiliers d'envergure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CABINET / VALEURS -->
+<section class="cabinet sec-pad" id="cabinet">
+  <div class="wrap cab-split">
+    <div class="cab-visual reveal">
+      <div class="frame"></div>
+      <div class="mono">M</div>
+      <div class="est">Fondé en 1998 · Paris</div>
+    </div>
+    <div class="cab-text">
+      <span class="eyebrow reveal">Le Cabinet</span>
+      <h2 class="reveal">Une signature : la <em>rigueur</em> au service de l'ambition.</h2>
+      <p class="reveal">MERIDIAN réunit des avocats animés par une même conviction : le droit n'est pas une contrainte, mais un levier. Notre vocation est d'éclairer les décisions de nos clients par une analyse exigeante, une disponibilité totale et un sens aigu de la confidentialité.</p>
+      <p class="reveal">Cabinet à taille humaine, nous cultivons une relation de proximité et d'engagement. Chaque dossier est porté par un associé, garant d'un conseil sur-mesure et d'une réactivité sans compromis.</p>
+      <div class="values">
+        <div class="value reveal">
+          <span class="num">I</span>
+          <div><h4>Excellence</h4><p>Une exigence intellectuelle constante, à chaque dossier.</p></div>
+        </div>
+        <div class="value reveal">
+          <span class="num">II</span>
+          <div><h4>Confidentialité</h4><p>La discrétion absolue comme fondement de la confiance.</p></div>
+        </div>
+        <div class="value reveal">
+          <span class="num">III</span>
+          <div><h4>Engagement</h4><p>Un investissement personnel de l'associé, du début à la fin.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat reveal"><div class="big" data-count="26" data-suffix="">26</div><div class="lab">Années d'expérience</div></div>
+      <div class="stat reveal"><div class="big" data-count="850" data-suffix="+">850+</div><div class="lab">Opérations menées</div></div>
+      <div class="stat reveal"><div class="big" data-count="18" data-suffix="">18</div><div class="lab">Avocats associés</div></div>
+      <div class="stat reveal"><div class="big" data-count="97" data-suffix="%">97%</div><div class="lab">Clients fidélisés</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team sec-pad" id="equipe">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Les Associés</span>
+      <h2>Des praticiens reconnus, <em>à vos côtés</em>.</h2>
+    </div>
+    <div class="team-grid">
+      <div class="member reveal">
+        <div class="photo"><div class="ph" style="background:linear-gradient(160deg,#1d3656,#0c1828)"></div><div class="ini">CV</div><div class="bar"></div></div>
+        <h4>Camille Vasseur</h4>
+        <div class="role">Associée fondatrice</div>
+        <div class="spec">Fusions-acquisitions · Private Equity</div>
+      </div>
+      <div class="member reveal">
+        <div class="photo"><div class="ph" style="background:linear-gradient(160deg,#23304a,#0c1828)"></div><div class="ini">AL</div><div class="bar"></div></div>
+        <h4>Antoine Lefèvre</h4>
+        <div class="role">Associé</div>
+        <div class="spec">Droit fiscal · Contentieux</div>
+      </div>
+      <div class="member reveal">
+        <div class="photo"><div class="ph" style="background:linear-gradient(160deg,#1a2f4d,#0c1828)"></div><div class="ini">SM</div><div class="bar"></div></div>
+        <h4>Sophie Marchand</h4>
+        <div class="role">Associée</div>
+        <div class="spec">Droit social · Restructurations</div>
+      </div>
+      <div class="member reveal">
+        <div class="photo"><div class="ph" style="background:linear-gradient(160deg,#243a58,#0c1828)"></div><div class="ini">JR</div><div class="bar"></div></div>
+        <h4>Julien Roussel</h4>
+        <div class="role">Associé</div>
+        <div class="spec">Droit des sociétés · Gouvernance</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi sec-pad" id="avis">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Références clients</span>
+      <h2>La confiance de ceux qui <em>décident</em>.</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="quote reveal">
+        <div class="mk">“</div>
+        <p>Une rigueur et une disponibilité remarquables. MERIDIAN a sécurisé notre opération de cession dans un calendrier extrêmement contraint.</p>
+        <div class="who"><span class="n">Élodie Carrère</span><span class="c">Directrice Générale · Groupe Helven</span></div>
+      </div>
+      <div class="quote reveal">
+        <div class="mk">“</div>
+        <p>Des conseils d'une grande finesse stratégique. Le cabinet comprend nos enjeux financiers autant que juridiques.</p>
+        <div class="who"><span class="n">Marc Delaunay</span><span class="c">Managing Partner · Aurélix Capital</span></div>
+      </div>
+      <div class="quote reveal">
+        <div class="mk">“</div>
+        <p>Un accompagnement humain et exigeant. Nous avons trouvé en MERIDIAN un partenaire de long terme, et non un simple prestataire.</p>
+        <div class="who"><span class="n">Nathalie Bréval</span><span class="c">Présidente · Manufacture Sévigné</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact sec-pad" id="contact">
+  <div class="wrap contact-split">
+    <div class="contact-info">
+      <span class="eyebrow reveal">Contact & Rendez-vous</span>
+      <h2 class="reveal">Échangeons sur votre <em>dossier</em>.</h2>
+      <p class="reveal">Nos associés vous reçoivent sur rendez-vous, dans le respect d'une stricte confidentialité. Décrivez-nous votre situation : nous vous recontactons sous 24 heures ouvrées.</p>
+      <div class="reveal">
+        <div class="ci-row"><span class="k">Adresse</span><span class="v">42, avenue Montaigne<br>75008 Paris, France</span></div>
+        <div class="ci-row"><span class="k">Téléphone</span><span class="v">+33 (0)1 53 67 84 20</span></div>
+        <div class="ci-row"><span class="k">Courriel</span><span class="v">contact@meridian-avocats.fr</span></div>
+        <div class="ci-row"><span class="k">Horaires</span><span class="v">Lundi — Vendredi · 9h00 à 19h00</span></div>
+      </div>
+    </div>
+    <div class="form reveal">
+      <h3>Demande de rendez-vous</h3>
+      <p class="fsub">Tous les champs sont confidentiels.</p>
+      <form id="rdvForm" novalidate>
+        <div class="field">
+          <label for="nom">Nom & prénom</label>
+          <input type="text" id="nom" name="nom" placeholder="Camille Durand" required>
+        </div>
+        <div class="field">
+          <label for="email">Adresse e-mail</label>
+          <input type="email" id="email" name="email" placeholder="vous@société.fr" required>
+        </div>
+        <div class="field">
+          <label for="objet">Domaine concerné</label>
+          <select id="objet" name="objet">
+            <option>Droit des sociétés</option>
+            <option>Fusions-acquisitions</option>
+            <option>Droit fiscal</option>
+            <option>Droit social</option>
+            <option>Contentieux & Arbitrage</option>
+            <option>Droit immobilier</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="msg">Votre message</label>
+          <textarea id="msg" name="msg" placeholder="Décrivez brièvement votre situation…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-solid">Envoyer ma demande</button>
+        <p class="form-note">En soumettant ce formulaire, vous acceptez d'être recontacté par le cabinet.</p>
+      </form>
+      <div class="form-ok" id="formOk">Merci. Votre demande a bien été transmise — nous vous recontactons sous 24 heures.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <div class="mark">MERIDIAN</div>
+        <div class="sub">Avocats</div>
+        <p>Cabinet d'avocats d'affaires. Une exigence d'excellence au service de vos décisions stratégiques, depuis 1998.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Expertises</h5>
+        <a href="#expertise">Droit des sociétés</a>
+        <a href="#expertise">Fusions-acquisitions</a>
+        <a href="#expertise">Droit fiscal</a>
+        <a href="#expertise">Droit social</a>
+      </div>
+      <div class="foot-col">
+        <h5>Cabinet</h5>
+        <a href="#cabinet">Notre approche</a>
+        <a href="#equipe">Les associés</a>
+        <a href="#avis">Références</a>
+        <a href="#contact">Carrières</a>
+      </div>
+      <div class="foot-col">
+        <h5>Contact</h5>
+        <p>42, av. Montaigne<br>75008 Paris</p>
+        <a href="tel:+33153678420">+33 (0)1 53 67 84 20</a>
+        <a href="mailto:contact@meridian-avocats.fr">contact@meridian-avocats.fr</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 MERIDIAN Avocats — Tous droits réservés. Barreau de Paris.</p>
+      <div class="legals">
+        <a href="#">Mentions légales</a>
+        <a href="#">Confidentialité</a>
+        <a href="#">CGV</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  // Mark JS as active so reveal styles apply (content stays visible if this never runs)
+  document.body.classList.add('js-on');
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var reveals = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+
+    function showAll(){ reveals.forEach(function(el){ el.classList.add('in'); }); }
+
+    // Safety net: reveal everything after 1.8s no matter what
+    var safety = setTimeout(showAll, 1800);
+
+    // Progressive reveal via IntersectionObserver
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+      reveals.forEach(function(el){ io.observe(el); });
+    } else {
+      showAll();
+      clearTimeout(safety);
+    }
+
+    // Header scrolled state
+    var header = document.getElementById('header');
+    function onScroll(){
+      if(window.scrollY > 40){ header.classList.add('scrolled'); }
+      else{ header.classList.remove('scrolled'); }
+    }
+    onScroll();
+    window.addEventListener('scroll', onScroll, {passive:true});
+
+    // Mobile menu
+    var burger = document.getElementById('burger');
+    var menu = document.getElementById('menu');
+    if(burger && menu){
+      burger.addEventListener('click', function(){
+        var open = menu.classList.toggle('open');
+        burger.classList.toggle('open', open);
+        burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+      });
+      menu.querySelectorAll('a').forEach(function(a){
+        a.addEventListener('click', function(){
+          menu.classList.remove('open');
+          burger.classList.remove('open');
+        });
+      });
+    }
+
+    // Animated counters
+    var counters = Array.prototype.slice.call(document.querySelectorAll('[data-count]'));
+    function animate(el){
+      var target = parseFloat(el.getAttribute('data-count')) || 0;
+      var suffix = el.getAttribute('data-suffix') || '';
+      var dur = 1400, start = null;
+      function step(ts){
+        if(!start) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased) + suffix;
+        if(p < 1) requestAnimationFrame(step);
+        else el.textContent = target + suffix;
+      }
+      requestAnimationFrame(step);
+    }
+    if('IntersectionObserver' in window && counters.length){
+      var co = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){ animate(e.target); co.unobserve(e.target); }
+        });
+      }, {threshold:0.5});
+      counters.forEach(function(c){ co.observe(c); });
+    }
+
+    // Form (front-end demo)
+    var form = document.getElementById('rdvForm');
+    var ok = document.getElementById('formOk');
+    if(form){
+      form.addEventListener('submit', function(ev){
+        ev.preventDefault();
+        var nom = form.querySelector('#nom');
+        var email = form.querySelector('#email');
+        if(!nom.value.trim() || !email.value.trim()){
+          (nom.value.trim() ? email : nom).focus();
+          return;
+        }
+        form.style.display = 'none';
+        if(ok) ok.style.display = 'block';
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>

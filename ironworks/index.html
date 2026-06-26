@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRONWORKS — Salle de sport & coaching | Dépasse tes limites</title>
+<meta name="description" content="IRONWORKS : salle de sport premium et coaching personnalisé. Musculation, cross-training, boxe et cours collectifs. Essai gratuit sans engagement.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0a0a0a;
+  --ink:#111111;
+  --panel:#161616;
+  --panel2:#1d1d1d;
+  --volt:#c6ff00;
+  --volt-dim:#9ecb00;
+  --white:#ffffff;
+  --grey:#8a8a8a;
+  --line:rgba(255,255,255,.08);
+  --maxw:1280px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:'Inter',system-ui,sans-serif;
+  line-height:1.5;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.display{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;line-height:.92;letter-spacing:.01em}
+.archivo{font-family:'Archivo Black',sans-serif;text-transform:uppercase}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.volt{color:var(--volt)}
+section{position:relative}
+::selection{background:var(--volt);color:var(--black)}
+
+/* ---------- Reveal (safe: visible by default fallback) ---------- */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
+.reveal.in{opacity:1;transform:none}
+.no-js .reveal{opacity:1;transform:none}
+
+/* ---------- Header ---------- */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,10,10,.72);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+  transition:background .3s,border-color .3s;
+}
+header.scrolled{background:rgba(8,8,8,.92)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+.logo{font-family:'Archivo Black',sans-serif;font-size:24px;letter-spacing:.04em;display:flex;align-items:center;gap:10px}
+.logo .mark{
+  width:30px;height:30px;background:var(--volt);
+  display:inline-flex;align-items:center;justify-content:center;
+  color:var(--black);font-size:18px;transform:skewX(-10deg);
+  box-shadow:0 0 22px rgba(198,255,0,.5);
+}
+.logo .mark span{transform:skewX(10deg)}
+.nav-links{display:flex;gap:34px;align-items:center}
+.nav-links a{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#d6d6d6;position:relative;padding:4px 0}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--volt);transition:width .3s}
+.nav-links a:hover{color:#fff}
+.nav-links a:hover::after{width:100%}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Archivo Black',sans-serif;font-size:13px;letter-spacing:.05em;text-transform:uppercase;
+  padding:13px 22px;background:var(--volt);color:var(--black);
+  border:none;cursor:pointer;transition:transform .18s,box-shadow .25s,background .2s;
+  clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(198,255,0,.4)}
+.btn.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.25)}
+.btn.ghost:hover{border-color:var(--volt);color:var(--volt);box-shadow:none}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
+.burger span{width:26px;height:2px;background:#fff;transition:.3s}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;padding:88px 0 70px;overflow:hidden;min-height:88vh;display:flex;align-items:center}
+.hero-bg{position:absolute;inset:0;z-index:0;
+  background:
+   radial-gradient(900px 540px at 78% 18%,rgba(198,255,0,.16),transparent 60%),
+   radial-gradient(700px 500px at 10% 90%,rgba(198,255,0,.07),transparent 60%),
+   linear-gradient(180deg,#0c0c0c,#070707);
+}
+.hero-bg::after{content:"";position:absolute;inset:0;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:64px 64px;mask-image:radial-gradient(circle at 70% 40%,#000,transparent 75%);opacity:.6}
+.hero .wrap{position:relative;z-index:2;width:100%}
+.tag{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--volt);margin-bottom:26px}
+.tag .dot{width:8px;height:8px;border-radius:50%;background:var(--volt);box-shadow:0 0 12px var(--volt);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.hero h1{font-size:clamp(54px,11vw,150px);margin-bottom:24px}
+.hero h1 .out{-webkit-text-stroke:2px var(--volt);color:transparent}
+.hero p.lead{max-width:540px;font-size:clamp(16px,2vw,20px);color:#c4c4c4;margin-bottom:36px}
+.hero-cta{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.hero-mini{display:flex;gap:28px;margin-top:46px;flex-wrap:wrap}
+.hero-mini .m{border-left:2px solid var(--volt);padding-left:14px}
+.hero-mini .m b{font-family:'Anton',sans-serif;font-size:34px;display:block;line-height:1}
+.hero-mini .m span{font-size:12px;color:var(--grey);letter-spacing:.06em;text-transform:uppercase}
+
+/* ---------- Marquee ---------- */
+.marquee{background:var(--volt);color:var(--black);overflow:hidden;border-top:3px solid #000;border-bottom:3px solid #000;transform:rotate(-1.4deg) scale(1.04);margin:-10px 0 0}
+.marquee .track{display:flex;white-space:nowrap;will-change:transform;animation:scroll 28s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+.marquee span{font-family:'Archivo Black',sans-serif;font-size:26px;letter-spacing:.04em;padding:14px 26px;display:inline-flex;align-items:center}
+.marquee .sep{font-size:16px}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ---------- Stats ---------- */
+.stats{padding:96px 0;background:linear-gradient(180deg,#070707,#0c0c0c)}
+.stats-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:54px}
+.stats-head h2{font-size:clamp(34px,5vw,64px)}
+.stats-head p{max-width:360px;color:var(--grey);font-size:15px}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.stat{background:var(--panel);border:1px solid var(--line);padding:34px 26px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.stat::before{content:"";position:absolute;left:0;top:0;height:3px;width:0;background:var(--volt);transition:width .5s}
+.stat:hover{border-color:rgba(198,255,0,.4);transform:translateY(-4px)}
+.stat:hover::before{width:100%}
+.stat .num{font-family:'Anton',sans-serif;font-size:clamp(46px,6vw,74px);line-height:1;color:#fff}
+.stat .num .s{color:var(--volt)}
+.stat .lbl{margin-top:12px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);font-weight:700}
+
+/* ---------- Programs ---------- */
+.programs{padding:100px 0;background:var(--black)}
+.sec-tag{font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--volt);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.sec-tag::before{content:"";width:30px;height:2px;background:var(--volt)}
+.sec-title{font-size:clamp(34px,6vw,72px);margin-bottom:50px;max-width:760px}
+.prog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:var(--panel);border:1px solid var(--line);overflow:hidden;position:relative;transition:transform .35s,border-color .35s}
+.card:hover{transform:translateY(-6px);border-color:rgba(198,255,0,.45)}
+.card .ph{height:200px;position:relative;overflow:hidden}
+.card .ph::after{content:attr(data-ico);position:absolute;right:16px;bottom:10px;font-family:'Anton',sans-serif;font-size:64px;color:rgba(0,0,0,.32);line-height:1}
+.card:hover .ph{filter:saturate(1.25)}
+.ph.p1{background:linear-gradient(135deg,#1a2a00,#3a5400 70%,#c6ff00)}
+.ph.p2{background:linear-gradient(135deg,#241a00,#5a3e00 70%,#ff9d00)}
+.ph.p3{background:linear-gradient(135deg,#001a1f,#004955 70%,#00d9ff)}
+.ph.p4{background:linear-gradient(135deg,#1f0014,#5a003a 70%,#ff0080)}
+.ph.p5{background:linear-gradient(135deg,#10131f,#2a3155 70%,#7a8cff)}
+.ph.p6{background:linear-gradient(135deg,#0a0a0a,#333 70%,#c6ff00)}
+.card .body{padding:26px 24px 30px}
+.card h3{font-size:26px;margin-bottom:10px}
+.card p{color:var(--grey);font-size:14.5px;margin-bottom:18px}
+.card .meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#bdbdbd;font-weight:700;border-top:1px solid var(--line);padding-top:16px}
+.card .meta .arrow{color:var(--volt);font-size:18px;transition:transform .3s}
+.card:hover .meta .arrow{transform:translateX(6px)}
+
+/* ---------- Pricing ---------- */
+.pricing{padding:100px 0;background:linear-gradient(180deg,#0c0c0c,#070707)}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+.plan{background:var(--panel);border:1px solid var(--line);padding:38px 30px;display:flex;flex-direction:column;position:relative;transition:transform .3s,border-color .3s}
+.plan:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.22)}
+.plan.feat{background:linear-gradient(180deg,#141a00,#0e0e0e);border-color:var(--volt);transform:scale(1.03)}
+.plan.feat:hover{transform:scale(1.03) translateY(-6px);box-shadow:0 24px 60px rgba(198,255,0,.16)}
+.plan .badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--volt);color:#000;font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:.1em;padding:6px 16px;text-transform:uppercase}
+.plan .pname{font-family:'Anton',sans-serif;font-size:26px;letter-spacing:.03em}
+.plan .pdesc{color:var(--grey);font-size:13.5px;margin:8px 0 22px}
+.plan .price{display:flex;align-items:flex-end;gap:6px;margin-bottom:6px}
+.plan .price .amt{font-family:'Anton',sans-serif;font-size:64px;line-height:.85}
+.plan.feat .price .amt{color:var(--volt)}
+.plan .price .per{color:var(--grey);font-size:14px;font-weight:600;margin-bottom:8px}
+.plan .note{font-size:12px;color:#7a7a7a;margin-bottom:24px}
+.plan ul{list-style:none;margin-bottom:30px;flex:1}
+.plan li{display:flex;gap:11px;align-items:flex-start;font-size:14px;color:#d2d2d2;padding:9px 0;border-bottom:1px dashed rgba(255,255,255,.06)}
+.plan li .chk{color:var(--volt);font-weight:900;flex-shrink:0}
+.plan li.off{color:#555}
+.plan li.off .chk{color:#444}
+.plan .btn{width:100%;justify-content:center}
+
+/* ---------- Reviews ---------- */
+.reviews{padding:100px 0;background:var(--black)}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.rev{background:var(--panel);border:1px solid var(--line);padding:30px 26px;transition:transform .3s,border-color .3s}
+.rev:hover{transform:translateY(-5px);border-color:rgba(198,255,0,.35)}
+.rev .stars{color:var(--volt);letter-spacing:3px;font-size:15px;margin-bottom:16px}
+.rev p{font-size:15px;color:#dcdcdc;margin-bottom:22px;line-height:1.6}
+.rev .who{display:flex;align-items:center;gap:13px}
+.rev .av{width:46px;height:46px;border-radius:50%;flex-shrink:0;font-family:'Archivo Black',sans-serif;color:#000;display:flex;align-items:center;justify-content:center;font-size:16px}
+.rev .who b{display:block;font-size:14.5px}
+.rev .who span{font-size:12px;color:var(--grey)}
+
+/* ---------- CTA ---------- */
+.cta{padding:0 0 0}
+.cta-inner{position:relative;overflow:hidden;background:
+   radial-gradient(700px 400px at 80% 20%,rgba(198,255,0,.2),transparent 60%),
+   linear-gradient(135deg,#0e0e0e,#080808);
+  border:1px solid var(--line);border-radius:0;padding:80px 50px;margin:90px auto;max-width:var(--maxw)}
+.cta-inner::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(circle at 75% 30%,#000,transparent 70%);opacity:.5}
+.cta-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center}
+.cta h2{font-size:clamp(38px,6vw,82px);margin-bottom:20px}
+.cta h2 .out{-webkit-text-stroke:2px var(--volt);color:transparent}
+.cta p{color:#c4c4c4;font-size:16px;max-width:440px;margin-bottom:30px}
+.cta .pts{display:flex;flex-direction:column;gap:12px;margin-bottom:32px}
+.cta .pts span{display:flex;gap:10px;font-size:14.5px;color:#d8d8d8}
+.cta .pts .chk{color:var(--volt);font-weight:900}
+.form{background:rgba(0,0,0,.5);border:1px solid var(--line);padding:32px;backdrop-filter:blur(8px)}
+.form label{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);font-weight:700;margin:0 0 7px}
+.form input,.form select{width:100%;background:#0d0d0d;border:1px solid var(--line);color:#fff;padding:13px 14px;font-family:inherit;font-size:14px;margin-bottom:18px;outline:none;transition:border-color .2s}
+.form input:focus,.form select:focus{border-color:var(--volt)}
+.form .btn{width:100%;justify-content:center;font-size:14px;padding:15px}
+.form-msg{margin-top:14px;font-size:13.5px;color:var(--volt);font-weight:700;text-align:center;min-height:18px}
+
+/* ---------- Footer ---------- */
+footer{background:#060606;border-top:1px solid var(--line);padding:64px 0 30px}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:36px;margin-bottom:46px}
+.foot-grid h4{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#fff;margin-bottom:18px;font-family:'Inter',sans-serif;font-weight:800}
+.foot-grid a,.foot-grid p{display:block;color:var(--grey);font-size:14px;margin-bottom:11px;transition:color .2s}
+.foot-grid a:hover{color:var(--volt)}
+.foot-brand .logo{margin-bottom:16px}
+.foot-brand p{max-width:300px}
+.socials{display:flex;gap:10px;margin-top:6px}
+.socials a{width:38px;height:38px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:#bbb;font-size:13px;font-weight:800;transition:.25s}
+.socials a:hover{background:var(--volt);color:#000;border-color:var(--volt)}
+.foot-bottom{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:#6f6f6f}
+
+/* ---------- Responsive ---------- */
+@media(max-width:980px){
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .prog-grid,.rev-grid{grid-template-columns:repeat(2,1fr)}
+  .price-grid{grid-template-columns:1fr;max-width:480px;margin:0 auto}
+  .plan.feat{transform:none}
+  .plan.feat:hover{transform:translateY(-6px)}
+  .cta-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+  .nav-links{position:fixed;inset:74px 0 auto 0;background:#0a0a0a;flex-direction:column;gap:0;padding:10px 0;border-bottom:1px solid var(--line);transform:translateY(-130%);transition:transform .35s;height:auto}
+  .nav-links.open{transform:translateY(0)}
+  .nav-links a{width:100%;padding:16px 24px;border-bottom:1px solid var(--line)}
+  .nav-links .btn{margin:14px 24px;width:calc(100% - 48px);justify-content:center}
+  .burger{display:flex}
+  .nav .btn.head-cta{display:none}
+}
+@media(max-width:560px){
+  .wrap{padding:0 18px}
+  .prog-grid,.rev-grid{grid-template-columns:1fr}
+  .hero-mini{gap:20px}
+  .cta-inner{padding:48px 24px;margin:60px 18px}
+  .foot-grid{grid-template-columns:1fr}
+}
+@media(max-width:390px){
+  .stat-grid{grid-template-columns:1fr}
+  .hero h1{font-size:48px}
+  .logo{font-size:21px}
+  .marquee span{font-size:21px}
+}
+</style>
+</head>
+<body class="no-js">
+
+<!-- HEADER -->
+<header id="top">
+  <div class="wrap nav">
+    <a href="#top" class="logo"><span class="mark"><span>I</span></span>IRON<span class="volt">WORKS</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#stats">La box</a>
+      <a href="#programs">Programmes</a>
+      <a href="#pricing">Abonnements</a>
+      <a href="#reviews">Avis</a>
+      <a href="#contact">Contact</a>
+      <a href="#contact" class="btn">Essai gratuit</a>
+    </nav>
+    <a href="#contact" class="btn head-cta">Essai gratuit →</a>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="wrap">
+    <div class="tag reveal"><span class="dot"></span>Salle premium · Coaching · Lyon 7e</div>
+    <h1 class="reveal">Forge ton<br><span class="out">corps</span> d'acier</h1>
+    <p class="lead reveal">Musculation, cross-training, boxe et cours collectifs. Un coaching qui te pousse, du matériel haut de gamme et une communauté qui ne lâche rien. Ta transformation commence aujourd'hui.</p>
+    <div class="hero-cta reveal">
+      <a href="#contact" class="btn">Démarrer l'essai gratuit</a>
+      <a href="#programs" class="btn ghost">Voir les programmes</a>
+    </div>
+    <div class="hero-mini reveal">
+      <div class="m"><b class="counter" data-target="2400" data-suffix="+">0</b><span>Membres actifs</span></div>
+      <div class="m"><b class="counter" data-target="98" data-suffix="%">0</b><span>Taux de satisfaction</span></div>
+      <div class="m"><b>24/7</b><span>Accès illimité</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>NO EXCUSES</span><span class="sep">◆</span><span>FORCE</span><span class="sep">◆</span><span>ENDURANCE</span><span class="sep">◆</span><span>DISCIPLINE</span><span class="sep">◆</span><span>PUISSANCE</span><span class="sep">◆</span><span>DÉPASSEMENT</span><span class="sep">◆</span>
+    <span>NO EXCUSES</span><span class="sep">◆</span><span>FORCE</span><span class="sep">◆</span><span>ENDURANCE</span><span class="sep">◆</span><span>DISCIPLINE</span><span class="sep">◆</span><span>PUISSANCE</span><span class="sep">◆</span><span>DÉPASSEMENT</span><span class="sep">◆</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats" id="stats">
+  <div class="wrap">
+    <div class="stats-head">
+      <h2 class="reveal">Des chiffres<br>qui frappent fort</h2>
+      <p class="reveal">1 200 m² d'équipement premium, une équipe de coachs certifiés et plus de 60 cours par semaine. IRONWORKS, c'est la performance sans compromis.</p>
+    </div>
+    <div class="stat-grid">
+      <div class="stat reveal"><div class="num"><span class="counter" data-target="2400">0</span><span class="s">+</span></div><div class="lbl">Membres actifs</div></div>
+      <div class="stat reveal"><div class="num"><span class="counter" data-target="32">0</span></div><div class="lbl">Coachs certifiés</div></div>
+      <div class="stat reveal"><div class="num"><span class="counter" data-target="60">0</span><span class="s">+</span></div><div class="lbl">Cours / semaine</div></div>
+      <div class="stat reveal"><div class="num"><span class="counter" data-target="1200">0</span><span class="s">m²</span></div><div class="lbl">Surface d'entraînement</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="programs" id="programs">
+  <div class="wrap">
+    <div class="sec-tag reveal">Nos programmes</div>
+    <h2 class="sec-title reveal">Choisis ton terrain<br>de bataille</h2>
+    <div class="prog-grid">
+      <article class="card reveal">
+        <div class="ph p1" data-ico="01"></div>
+        <div class="body">
+          <h3>Musculation</h3>
+          <p>Plateau de force complet, charges libres et machines guidées dernière génération pour bâtir du muscle sec.</p>
+          <div class="meta"><span>Tous niveaux · 60 min</span><span class="arrow">→</span></div>
+        </div>
+      </article>
+      <article class="card reveal">
+        <div class="ph p2" data-ico="02"></div>
+        <div class="body">
+          <h3>Cross-Training</h3>
+          <p>WOD intensifs, haltérophilie et conditionnement métabolique. Repousse tes limites en groupe.</p>
+          <div class="meta"><span>Intermédiaire · 45 min</span><span class="arrow">→</span></div>
+        </div>
+      </article>
+      <article class="card reveal">
+        <div class="ph p3" data-ico="03"></div>
+        <div class="body">
+          <h3>Boxe & Combat</h3>
+          <p>Boxe anglaise, kickboxing et sac lourd. Cardio explosif, technique et défoulement total.</p>
+          <div class="meta"><span>Tous niveaux · 50 min</span><span class="arrow">→</span></div>
+        </div>
+      </article>
+      <article class="card reveal">
+        <div class="ph p4" data-ico="04"></div>
+        <div class="body">
+          <h3>HIIT & Cardio</h3>
+          <p>Intervalles haute intensité pour brûler un max de calories et booster ton endurance.</p>
+          <div class="meta"><span>Tous niveaux · 30 min</span><span class="arrow">→</span></div>
+        </div>
+      </article>
+      <article class="card reveal">
+        <div class="ph p5" data-ico="05"></div>
+        <div class="body">
+          <h3>Mobilité & Yoga</h3>
+          <p>Récupération active, souplesse et gainage profond pour prévenir les blessures.</p>
+          <div class="meta"><span>Tous niveaux · 55 min</span><span class="arrow">→</span></div>
+        </div>
+      </article>
+      <article class="card reveal">
+        <div class="ph p6" data-ico="06"></div>
+        <div class="body">
+          <h3>Coaching Privé</h3>
+          <p>Suivi 100% personnalisé avec ton coach dédié, plan nutrition et objectifs sur mesure.</p>
+          <div class="meta"><span>Sur RDV · 60 min</span><span class="arrow">→</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="wrap">
+    <div class="sec-tag reveal">Abonnements</div>
+    <h2 class="sec-title reveal">Investis sur<br>la meilleure version de toi</h2>
+    <div class="price-grid">
+      <div class="plan reveal">
+        <div class="pname">Starter</div>
+        <div class="pdesc">Pour démarrer sans pression</div>
+        <div class="price"><span class="amt">29</span><span class="per">€ / mois</span></div>
+        <div class="note">Sans engagement · Résiliable à tout moment</div>
+        <ul>
+          <li><span class="chk">✓</span> Accès salle 6h–23h</li>
+          <li><span class="chk">✓</span> Espace musculation & cardio</li>
+          <li><span class="chk">✓</span> Appli de suivi IRONWORKS</li>
+          <li class="off"><span class="chk">✕</span> Cours collectifs illimités</li>
+          <li class="off"><span class="chk">✕</span> Coaching personnalisé</li>
+        </ul>
+        <a href="#contact" class="btn ghost">Choisir Starter</a>
+      </div>
+      <div class="plan feat reveal">
+        <div class="badge">Le plus choisi</div>
+        <div class="pname">Performance</div>
+        <div class="pdesc">L'équilibre parfait pour progresser</div>
+        <div class="price"><span class="amt">49</span><span class="per">€ / mois</span></div>
+        <div class="note">Accès 24/7 · Engagement 3 mois</div>
+        <ul>
+          <li><span class="chk">✓</span> Accès illimité 24/7</li>
+          <li><span class="chk">✓</span> Cours collectifs illimités</li>
+          <li><span class="chk">✓</span> 1 bilan coach / mois</li>
+          <li><span class="chk">✓</span> Espace sauna & récupération</li>
+          <li><span class="chk">✓</span> Appli + plan d'entraînement</li>
+        </ul>
+        <a href="#contact" class="btn">Choisir Performance</a>
+      </div>
+      <div class="plan reveal">
+        <div class="pname">Elite</div>
+        <div class="pdesc">Pour ceux qui ne lâchent rien</div>
+        <div class="price"><span class="amt">89</span><span class="per">€ / mois</span></div>
+        <div class="note">Accès 24/7 · Coaching dédié inclus</div>
+        <ul>
+          <li><span class="chk">✓</span> Tout l'offre Performance</li>
+          <li><span class="chk">✓</span> 4 sessions coaching privé / mois</li>
+          <li><span class="chk">✓</span> Plan nutrition personnalisé</li>
+          <li><span class="chk">✓</span> Accès invité illimité</li>
+          <li><span class="chk">✓</span> Serviette & boissons offertes</li>
+        </ul>
+        <a href="#contact" class="btn ghost">Choisir Elite</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="wrap">
+    <div class="sec-tag reveal">Ils ont transformé leur vie</div>
+    <h2 class="sec-title reveal">La communauté<br>IRONWORKS parle</h2>
+    <div class="rev-grid">
+      <div class="rev reveal">
+        <div class="stars">★★★★★</div>
+        <p>"En 6 mois j'ai pris 8 kg de muscle. Les coachs sont au top, toujours là pour corriger et motiver. Ambiance électrique, jamais envie de rater une séance."</p>
+        <div class="who"><div class="av" style="background:#c6ff00">TM</div><div><b>Thomas M.</b><span>Membre depuis 2 ans</span></div></div>
+      </div>
+      <div class="rev reveal">
+        <div class="stars">★★★★★</div>
+        <p>"Le cours de boxe est une tuerie. Je me défoule, je progresse et le matériel est impeccable. La meilleure salle où je sois allée, et de loin."</p>
+        <div class="who"><div class="av" style="background:#00d9ff">SL</div><div><b>Sarah L.</b><span>Membre Performance</span></div></div>
+      </div>
+      <div class="rev reveal">
+        <div class="stars">★★★★★</div>
+        <p>"Coaching Elite = résultats. Mon coach a bâti un plan sur mesure, nutrition incluse. -14 kg et une forme que je n'avais jamais eue. Merci IRONWORKS."</p>
+        <div class="who"><div class="av" style="background:#ff0080">KB</div><div><b>Karim B.</b><span>Membre Elite</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / CONTACT -->
+<section class="cta" id="contact">
+  <div class="cta-inner reveal">
+    <div class="cta-grid">
+      <div>
+        <div class="sec-tag">Essai gratuit</div>
+        <h2>Première séance<br><span class="out">offerte</span></h2>
+        <p>Pas d'engagement, pas de blabla. Viens tester la box, rencontre nos coachs et ressens l'énergie IRONWORKS. On s'occupe du reste.</p>
+        <div class="pts">
+          <span><span class="chk">✓</span> Séance d'essai 100% gratuite</span>
+          <span><span class="chk">✓</span> Bilan forme & objectifs avec un coach</span>
+          <span><span class="chk">✓</span> Accès complet aux équipements</span>
+        </div>
+      </div>
+      <form class="form" id="trialForm" novalidate>
+        <label for="fn">Prénom</label>
+        <input id="fn" type="text" placeholder="Ton prénom" required>
+        <label for="em">Email</label>
+        <input id="em" type="email" placeholder="ton@email.fr" required>
+        <label for="ph">Téléphone</label>
+        <input id="ph" type="tel" placeholder="06 00 00 00 00">
+        <label for="pg">Programme qui t'intéresse</label>
+        <select id="pg">
+          <option>Musculation</option>
+          <option>Cross-Training</option>
+          <option>Boxe & Combat</option>
+          <option>HIIT & Cardio</option>
+          <option>Coaching Privé</option>
+        </select>
+        <button type="submit" class="btn">Réserver mon essai gratuit →</button>
+        <div class="form-msg" id="formMsg" role="status"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#top" class="logo"><span class="mark"><span>I</span></span>IRON<span class="volt">WORKS</span></a>
+        <p>La salle de sport et le coaching qui forgent les corps et l'esprit. Rejoins une communauté qui ne connaît pas le mot abandon.</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="TikTok">TT</a>
+          <a href="#" aria-label="YouTube">YT</a>
+          <a href="#" aria-label="Facebook">FB</a>
+        </div>
+      </div>
+      <div>
+        <h4>Programmes</h4>
+        <a href="#programs">Musculation</a>
+        <a href="#programs">Cross-Training</a>
+        <a href="#programs">Boxe & Combat</a>
+        <a href="#programs">Coaching Privé</a>
+      </div>
+      <div>
+        <h4>Infos</h4>
+        <a href="#pricing">Abonnements</a>
+        <a href="#reviews">Avis</a>
+        <a href="#contact">Essai gratuit</a>
+        <a href="#">Horaires</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p>14 rue de la Forge<br>69007 Lyon</p>
+        <p>04 78 00 00 00</p>
+        <p>hello@ironworks.fr</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 IRONWORKS — Tous droits réservés.</span>
+      <span>Mentions légales · Confidentialité · CGV</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  document.body.classList.remove('no-js');
+
+  /* ---- Safety net: reveal everything after 1.8s no matter what ---- */
+  var safety = setTimeout(function(){
+    document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');});
+  },1800);
+
+  /* ---- Header scroll state ---- */
+  var header = document.getElementById('top');
+  function onScroll(){
+    if(window.scrollY > 24){ header.classList.add('scrolled'); }
+    else { header.classList.remove('scrolled'); }
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+
+  /* ---- Mobile menu ---- */
+  var burger = document.getElementById('burger');
+  var navLinks = document.getElementById('navLinks');
+  if(burger && navLinks){
+    burger.addEventListener('click',function(){ navLinks.classList.toggle('open'); });
+    navLinks.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click',function(){ navLinks.classList.remove('open'); });
+    });
+  }
+
+  /* ---- Scroll reveal via IntersectionObserver ---- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---- Animated counters ---- */
+  function animateCounter(el){
+    var target = parseFloat(el.getAttribute('data-target')) || 0;
+    var suffix = el.getAttribute('data-suffix') || '';
+    var dur = 1600, start = null;
+    function step(ts){
+      if(!start) start = ts;
+      var p = Math.min((ts - start)/dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      var val = Math.floor(eased * target);
+      el.textContent = val.toLocaleString('fr-FR') + suffix;
+      if(p < 1){ requestAnimationFrame(step); }
+      else { el.textContent = target.toLocaleString('fr-FR') + suffix; }
+    }
+    requestAnimationFrame(step);
+  }
+  var counters = document.querySelectorAll('.counter');
+  if('IntersectionObserver' in window){
+    var cio = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ animateCounter(e.target); cio.unobserve(e.target); }
+      });
+    },{threshold:0.5});
+    counters.forEach(function(c){ cio.observe(c); });
+  } else {
+    counters.forEach(function(c){
+      var t = parseFloat(c.getAttribute('data-target'))||0;
+      c.textContent = t.toLocaleString('fr-FR') + (c.getAttribute('data-suffix')||'');
+    });
+  }
+
+  /* ---- Trial form ---- */
+  var form = document.getElementById('trialForm');
+  var msg = document.getElementById('formMsg');
+  if(form){
+    form.addEventListener('submit',function(ev){
+      ev.preventDefault();
+      var fn = document.getElementById('fn').value.trim();
+      var em = document.getElementById('em').value.trim();
+      if(!fn || !em || em.indexOf('@') === -1){
+        msg.style.color = '#ff5a5a';
+        msg.textContent = 'Merci de renseigner ton prénom et un email valide.';
+        return;
+      }
+      msg.style.color = '#c6ff00';
+      msg.textContent = 'C\'est parti ' + fn + ' ! On te recontacte sous 24h pour ton essai gratuit.';
+      form.reset();
+    });
+  }
+})();
+</script>
+</body>
+</html>

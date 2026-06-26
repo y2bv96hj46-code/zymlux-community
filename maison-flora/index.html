@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Maison Flora — Atelier floral & créations végétales</title>
+<meta name="description" content="Maison Flora, atelier floral artisanal. Bouquets de saison, fleurs de mariage, abonnements et compositions sur-mesure. Cueillis avec soin, composés avec poésie." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --sauge:#7c8a6b;
+    --sauge-fonce:#5e6b4f;
+    --creme:#f6f3ea;
+    --creme-2:#efe9da;
+    --rose:#e3bfb6;
+    --rose-clair:#f3ddd6;
+    --terra:#c17a5b;
+    --terra-clair:#dca082;
+    --encre:#3a3a32;
+    --gris:#6f6f64;
+    --blanc:#fffdf8;
+    --serif:'Fraunces', Georgia, serif;
+    --sans:'Jost', system-ui, sans-serif;
+    --r-blob:62% 38% 46% 54% / 56% 49% 51% 44%;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans);
+    color:var(--encre);
+    background:var(--creme);
+    line-height:1.7;
+    font-weight:300;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{font-family:var(--serif);font-weight:400;line-height:1.05;letter-spacing:-.01em}
+  .it{font-style:italic;font-weight:300}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{width:100%;max-width:1240px;margin:0 auto;padding:0 28px}
+  .eyebrow{
+    font-family:var(--sans);font-size:.72rem;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--terra);font-weight:400;
+    display:inline-flex;align-items:center;gap:.7em;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--terra);display:inline-block;opacity:.6}
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(246,243,234,.82);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(124,138,107,.16);
+    transition:padding .4s ease, box-shadow .4s ease;
+  }
+  header.shrink{box-shadow:0 8px 30px -22px rgba(58,58,50,.4)}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;transition:padding .4s ease}
+  header.shrink .nav{padding:11px 0}
+  .logo{font-family:var(--serif);font-size:1.5rem;letter-spacing:.04em;display:flex;align-items:center;gap:.5em}
+  .logo .mark{
+    width:30px;height:30px;border-radius:var(--r-blob);
+    background:radial-gradient(circle at 35% 30%, var(--rose), var(--terra));
+    display:inline-block;flex:none;
+    animation:morph 12s ease-in-out infinite;
+  }
+  .logo small{font-family:var(--sans);font-size:.6rem;letter-spacing:.34em;text-transform:uppercase;color:var(--gris);display:block;margin-top:2px}
+  nav ul{display:flex;gap:34px;list-style:none;align-items:center}
+  nav a{font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;position:relative;color:var(--encre);transition:color .3s}
+  nav a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--terra);transition:width .35s ease}
+  nav a:hover{color:var(--terra)}
+  nav a:hover::after{width:100%}
+  .btn{
+    font-family:var(--sans);font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;
+    padding:13px 26px;border-radius:40px;border:1px solid var(--sauge);
+    background:var(--sauge);color:var(--creme);cursor:pointer;
+    transition:all .35s ease;display:inline-block;white-space:nowrap;
+  }
+  .btn:hover{background:var(--sauge-fonce);transform:translateY(-2px);box-shadow:0 12px 24px -14px rgba(94,107,79,.7)}
+  .btn.ghost{background:transparent;color:var(--sauge-fonce)}
+  .btn.ghost:hover{background:var(--sauge);color:var(--creme)}
+  .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px}
+  .burger span{width:24px;height:2px;background:var(--encre);border-radius:2px;transition:.3s}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;padding:90px 0 110px;overflow:hidden}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center}
+  .hero h1{font-size:clamp(3rem,8vw,6.4rem);letter-spacing:-.025em}
+  .hero h1 .it{color:var(--terra)}
+  .hero p.lead{font-size:1.12rem;color:var(--gris);max-width:30ch;margin:30px 0 38px}
+  .hero-cta{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .hero-stats{display:flex;gap:38px;margin-top:54px;flex-wrap:wrap}
+  .hero-stats .s b{font-family:var(--serif);font-size:2rem;display:block;color:var(--sauge-fonce)}
+  .hero-stats .s span{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gris)}
+  .hero-art{position:relative;height:520px}
+  .blob{
+    position:absolute;border-radius:var(--r-blob);
+    animation:morph 14s ease-in-out infinite;
+  }
+  .blob.main{
+    inset:0;
+    background:
+      radial-gradient(circle at 70% 20%, rgba(255,255,255,.55), transparent 40%),
+      linear-gradient(150deg, var(--rose-clair), var(--terra-clair) 55%, var(--rose));
+    box-shadow:0 40px 80px -40px rgba(193,122,91,.55);
+  }
+  .blob.b2{
+    width:180px;height:180px;right:-30px;top:-26px;
+    background:linear-gradient(140deg,var(--sauge),var(--sauge-fonce));
+    animation-duration:18s;animation-direction:reverse;opacity:.92;
+  }
+  .blob.b3{
+    width:120px;height:120px;left:-34px;bottom:30px;
+    background:linear-gradient(140deg,var(--creme-2),var(--rose));
+    animation-duration:16s;
+  }
+  .hero-badge{
+    position:absolute;left:-18px;top:48%;background:var(--blanc);
+    border-radius:20px;padding:14px 18px;box-shadow:0 20px 40px -24px rgba(58,58,50,.5);
+    display:flex;align-items:center;gap:12px;max-width:230px;
+  }
+  .hero-badge .dot{width:38px;height:38px;border-radius:50%;flex:none;background:radial-gradient(circle at 35% 30%,var(--rose),var(--terra))}
+  .hero-badge b{font-family:var(--serif);font-size:1rem;display:block}
+  .hero-badge span{font-size:.7rem;color:var(--gris)}
+  /* floating petals */
+  .petal{position:absolute;border-radius:62% 38% 46% 54% / 56% 49% 51% 44%;opacity:.5;pointer-events:none}
+
+  /* ---------- MARQUEE ---------- */
+  .marquee{border-top:1px solid rgba(124,138,107,.18);border-bottom:1px solid rgba(124,138,107,.18);overflow:hidden;background:var(--creme-2)}
+  .marquee-track{display:flex;gap:0;white-space:nowrap;animation:slide 32s linear infinite}
+  .marquee-track span{font-family:var(--serif);font-style:italic;font-size:1.5rem;color:var(--sauge-fonce);padding:18px 34px;display:inline-flex;align-items:center;gap:34px}
+  .marquee-track span::after{content:"✿";font-style:normal;color:var(--terra);font-size:1rem}
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{position:relative}
+  .sec{padding:108px 0}
+  .sec-head{max-width:640px;margin-bottom:58px}
+  .sec-head h2{font-size:clamp(2.3rem,5vw,3.8rem);margin-top:18px}
+  .sec-head p{color:var(--gris);margin-top:18px;font-size:1.05rem}
+
+  /* ---------- CRÉATIONS ---------- */
+  .creations{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  .card{
+    background:var(--blanc);border-radius:26px;overflow:hidden;
+    box-shadow:0 24px 50px -36px rgba(58,58,50,.4);
+    transition:transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s;
+    display:flex;flex-direction:column;
+  }
+  .card:hover{transform:translateY(-10px);box-shadow:0 36px 64px -34px rgba(58,58,50,.5)}
+  .card .ph{height:230px;position:relative;overflow:hidden}
+  .card .ph::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.45),transparent 45%)}
+  .ph-1{background:linear-gradient(150deg,var(--rose-clair),var(--terra-clair))}
+  .ph-2{background:linear-gradient(150deg,#e7e3cf,var(--sauge))}
+  .ph-3{background:linear-gradient(150deg,var(--rose),#caa28f)}
+  .card .body{padding:26px 26px 30px}
+  .card h3{font-size:1.55rem;margin-bottom:10px}
+  .card h3 .it{color:var(--terra)}
+  .card p{color:var(--gris);font-size:.95rem;margin-bottom:18px}
+  .card .more{font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sauge-fonce);display:inline-flex;align-items:center;gap:8px;transition:gap .3s}
+  .card:hover .more{gap:14px}
+
+  /* ---------- ATELIER ---------- */
+  .atelier{background:var(--sauge);color:var(--creme)}
+  .atelier .eyebrow{color:var(--rose-clair)}
+  .atelier .eyebrow::before{background:var(--rose-clair)}
+  .atelier-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center}
+  .atelier h2{color:var(--creme);font-size:clamp(2.3rem,5vw,3.8rem)}
+  .atelier h2 .it{color:var(--rose-clair)}
+  .atelier p{color:rgba(246,243,234,.82);margin-top:22px;font-size:1.05rem}
+  .atelier .sign{font-family:var(--serif);font-style:italic;font-size:1.7rem;color:var(--rose-clair);margin-top:30px}
+  .atelier-art{position:relative;height:440px}
+  .atelier-art .blob.main{
+    background:
+      radial-gradient(circle at 30% 25%,rgba(255,255,255,.4),transparent 45%),
+      linear-gradient(150deg,var(--creme-2),var(--rose) 70%,var(--terra-clair));
+    box-shadow:0 40px 90px -40px rgba(0,0,0,.4);
+  }
+  .atelier-art .arch{
+    position:absolute;inset:30px;border-radius:50% 50% 8px 8px;
+    background:linear-gradient(160deg,var(--rose-clair),var(--terra-clair));
+    box-shadow:0 30px 60px -34px rgba(0,0,0,.4);
+  }
+  .vals{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:38px}
+  .vals .v{border-top:1px solid rgba(246,243,234,.3);padding-top:14px}
+  .vals .v b{font-family:var(--serif);font-size:1.15rem;display:block;color:var(--creme)}
+  .vals .v span{font-size:.82rem;color:rgba(246,243,234,.72)}
+
+  /* ---------- BOUTIQUE ---------- */
+  .shop{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  .prod{background:var(--blanc);border-radius:22px;overflow:hidden;box-shadow:0 18px 40px -32px rgba(58,58,50,.45);transition:transform .4s ease}
+  .prod:hover{transform:translateY(-8px)}
+  .prod .ph{height:180px;position:relative}
+  .prod .tag{position:absolute;top:12px;left:12px;background:var(--blanc);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;border-radius:30px;color:var(--terra)}
+  .prod .body{padding:20px}
+  .prod h4{font-size:1.2rem;margin-bottom:4px}
+  .prod .desc{font-size:.82rem;color:var(--gris);min-height:34px}
+  .prod .foot{display:flex;align-items:center;justify-content:space-between;margin-top:16px}
+  .prod .price{font-family:var(--serif);font-size:1.3rem;color:var(--sauge-fonce)}
+  .prod .add{width:38px;height:38px;border-radius:50%;border:1px solid var(--sauge);background:transparent;color:var(--sauge-fonce);font-size:1.2rem;cursor:pointer;transition:.3s;line-height:1}
+  .prod .add:hover{background:var(--sauge);color:var(--creme)}
+  .pp1{background:linear-gradient(150deg,var(--rose-clair),var(--rose))}
+  .pp2{background:linear-gradient(150deg,#e7e3cf,var(--sauge))}
+  .pp3{background:linear-gradient(150deg,var(--terra-clair),var(--terra))}
+  .pp4{background:linear-gradient(150deg,var(--creme-2),var(--terra-clair))}
+
+  /* ---------- AVIS ---------- */
+  .avis{background:var(--creme-2)}
+  .testis{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  .testi{background:var(--blanc);border-radius:26px;padding:34px 30px;box-shadow:0 20px 46px -38px rgba(58,58,50,.4);display:flex;flex-direction:column}
+  .testi .stars{color:var(--terra);letter-spacing:3px;margin-bottom:16px;font-size:.9rem}
+  .testi blockquote{font-family:var(--serif);font-size:1.2rem;font-style:italic;line-height:1.45;color:var(--encre);flex:1}
+  .testi .who{display:flex;align-items:center;gap:12px;margin-top:24px}
+  .testi .av{width:42px;height:42px;border-radius:50%;flex:none}
+  .testi .who b{font-family:var(--sans);font-weight:500;font-size:.92rem;display:block}
+  .testi .who span{font-size:.76rem;color:var(--gris)}
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  .contact h2{font-size:clamp(2.3rem,5vw,3.8rem)}
+  .contact h2 .it{color:var(--terra)}
+  .contact .info{margin-top:36px;display:flex;flex-direction:column;gap:22px}
+  .contact .info .row{display:flex;gap:16px;align-items:flex-start}
+  .contact .info .ic{width:42px;height:42px;border-radius:14px;flex:none;background:var(--rose-clair);display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--terra)}
+  .contact .info b{display:block;font-family:var(--serif);font-size:1.05rem}
+  .contact .info span{font-size:.9rem;color:var(--gris)}
+  form{background:var(--blanc);border-radius:28px;padding:38px;box-shadow:0 26px 60px -42px rgba(58,58,50,.5)}
+  .field{margin-bottom:20px}
+  .field label{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gris);display:block;margin-bottom:8px}
+  .field input,.field textarea,.field select{
+    width:100%;font-family:var(--sans);font-size:.95rem;font-weight:300;color:var(--encre);
+    padding:14px 16px;border:1px solid rgba(124,138,107,.3);border-radius:14px;background:var(--creme);
+    transition:border-color .3s, box-shadow .3s;
+  }
+  .field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--sauge);box-shadow:0 0 0 4px rgba(124,138,107,.14)}
+  .field textarea{resize:vertical;min-height:96px}
+  form .btn{width:100%;text-align:center;margin-top:6px;border:none;font-size:.82rem}
+  .form-note{font-size:.8rem;color:var(--gris);text-align:center;margin-top:14px}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--encre);color:var(--creme);padding:78px 0 34px}
+  .foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px}
+  footer .logo{color:var(--creme)}
+  footer p{color:rgba(246,243,234,.6);font-size:.92rem;margin-top:18px;max-width:34ch}
+  .foot-col h5{font-family:var(--sans);font-weight:500;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--rose-clair);margin-bottom:18px}
+  .foot-col a{display:block;color:rgba(246,243,234,.7);font-size:.92rem;padding:5px 0;transition:color .3s}
+  .foot-col a:hover{color:var(--rose-clair)}
+  .foot-bottom{border-top:1px solid rgba(246,243,234,.14);margin-top:54px;padding-top:26px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:.82rem;color:rgba(246,243,234,.5)}
+
+  /* ---------- ANIMATIONS ---------- */
+  @keyframes morph{
+    0%,100%{border-radius:62% 38% 46% 54% / 56% 49% 51% 44%}
+    33%{border-radius:42% 58% 64% 36% / 41% 62% 38% 59%}
+    66%{border-radius:54% 46% 38% 62% / 60% 42% 58% 40%}
+  }
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+  .float{animation:floaty 6s ease-in-out infinite}
+
+  /* reveal: visible by default, JS only enhances */
+  .reveal{opacity:1;transform:none;transition:opacity 1s ease, transform 1s cubic-bezier(.2,.8,.2,1)}
+  .js .reveal{opacity:0;transform:translateY(34px)}
+  .js .reveal.in{opacity:1;transform:none}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .js .reveal{opacity:1!important;transform:none!important}
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:980px){
+    .hero-grid{grid-template-columns:1fr;gap:60px}
+    .hero-art{height:420px;max-width:460px;margin:0 auto;width:100%}
+    .creations,.testis{grid-template-columns:1fr 1fr}
+    .shop{grid-template-columns:1fr 1fr}
+    .atelier-grid{grid-template-columns:1fr;gap:44px}
+    .atelier-art{max-width:460px;margin:0 auto;width:100%}
+    .contact-grid{grid-template-columns:1fr;gap:40px}
+    .foot-grid{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:680px){
+    nav ul,.nav .btn{display:none}
+    .burger{display:flex}
+    .mobile-nav{
+      position:fixed;inset:0;z-index:60;background:var(--creme);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+      transform:translateX(100%);transition:transform .45s cubic-bezier(.2,.8,.2,1);
+    }
+    .mobile-nav.open{transform:translateX(0)}
+    .mobile-nav a{font-family:var(--serif);font-size:1.9rem;padding:10px 0}
+    .mobile-nav .btn{display:inline-block;margin-top:20px}
+    .mobile-nav .close{position:absolute;top:24px;right:26px;font-size:2rem;background:none;border:none;cursor:pointer;color:var(--encre)}
+    .sec{padding:78px 0}
+    .creations,.testis,.shop{grid-template-columns:1fr}
+    .hero{padding:54px 0 70px}
+    .hero-stats{gap:26px}
+    .foot-grid{grid-template-columns:1fr}
+    .wrap{padding:0 22px}
+    .hero-badge{display:none}
+  }
+  @media(max-width:400px){
+    .wrap{padding:0 18px}
+    .hero h1{font-size:2.7rem}
+    .logo{font-size:1.3rem}
+    form{padding:28px 22px}
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="wrap nav">
+    <a href="#top" class="logo">
+      <span class="mark"></span>
+      <span>Maison Flora<small>Atelier floral</small></span>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="#creations">Créations</a></li>
+        <li><a href="#atelier">L'atelier</a></li>
+        <li><a href="#boutique">Boutique</a></li>
+        <li><a href="#avis">Avis</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="#contact" class="btn">Commander</a>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="close" id="closeNav" aria-label="Fermer le menu">×</button>
+  <a href="#creations">Créations</a>
+  <a href="#atelier">L'atelier</a>
+  <a href="#boutique">Boutique</a>
+  <a href="#avis">Avis</a>
+  <a href="#contact">Contact</a>
+  <a href="#contact" class="btn">Commander</a>
+</div>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <span class="eyebrow">Atelier floral · Cueilli avec soin</span>
+      <h1>L'art floral, <span class="it">comme une<br/>caresse</span> du jardin.</h1>
+      <p class="lead">Bouquets de saison, fleurs de mariage et compositions sur-mesure, imaginés au gré des récoltes et de vos émotions.</p>
+      <div class="hero-cta">
+        <a href="#boutique" class="btn">Découvrir nos bouquets</a>
+        <a href="#atelier" class="btn ghost">Notre histoire</a>
+      </div>
+      <div class="hero-stats">
+        <div class="s"><b>+1200</b><span>Bouquets composés</span></div>
+        <div class="s"><b>98%</b><span>De fleurs locales</span></div>
+        <div class="s"><b>4,9/5</b><span>Avis clients</span></div>
+      </div>
+    </div>
+    <div class="hero-art float">
+      <div class="blob main"></div>
+      <div class="blob b2"></div>
+      <div class="blob b3"></div>
+      <div class="hero-badge">
+        <span class="dot"></span>
+        <span><b>Bouquet du jour</b><span>Frais cueilli ce matin</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Fleurs de saison</span><span>Mariages</span><span>Abonnements floraux</span><span>Compositions sur-mesure</span><span>Cueillette locale</span>
+    <span>Fleurs de saison</span><span>Mariages</span><span>Abonnements floraux</span><span>Compositions sur-mesure</span><span>Cueillette locale</span>
+  </div>
+</div>
+
+<!-- CRÉATIONS -->
+<section class="sec" id="creations">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Nos créations</span>
+      <h2>Des fleurs <span class="it">pour chaque</span> instant.</h2>
+      <p>Chaque composition est unique, façonnée à la main selon l'arrivage du jour et la lumière de la saison.</p>
+    </div>
+    <div class="creations">
+      <article class="card reveal">
+        <div class="ph ph-1"></div>
+        <div class="body">
+          <h3>Bouquets <span class="it">de saison</span></h3>
+          <p>Des assemblages spontanés et colorés, renouvelés chaque semaine au rythme de la nature.</p>
+          <a href="#boutique" class="more">Voir les bouquets →</a>
+        </div>
+      </article>
+      <article class="card reveal">
+        <div class="ph ph-2"></div>
+        <div class="body">
+          <h3>Fleurs de <span class="it">mariage</span></h3>
+          <p>Scénographies florales, bouquets de mariée et arches romantiques pensés sur-mesure pour votre grand jour.</p>
+          <a href="#contact" class="more">Demander un devis →</a>
+        </div>
+      </article>
+      <article class="card reveal">
+        <div class="ph ph-3"></div>
+        <div class="body">
+          <h3>Abonnements <span class="it">fleuris</span></h3>
+          <p>Recevez un bouquet frais chaque semaine ou chaque mois, livré à votre porte avec une note poétique.</p>
+          <a href="#boutique" class="more">Choisir ma formule →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ATELIER -->
+<section class="sec atelier" id="atelier">
+  <div class="wrap atelier-grid">
+    <div class="atelier-art reveal float">
+      <div class="blob main"></div>
+      <div class="arch"></div>
+    </div>
+    <div class="reveal">
+      <span class="eyebrow">Notre atelier</span>
+      <h2>Une histoire née <span class="it">au creux d'un jardin.</span></h2>
+      <p>Maison Flora a vu le jour en 2014, dans un petit atelier baigné de lumière. Tout a commencé par l'envie simple de partager la beauté brute des fleurs, telles qu'on les trouve au matin, encore couvertes de rosée.</p>
+      <p>Nous travaillons main dans la main avec des producteurs locaux et cultivons une partie de nos fleurs nous-mêmes. Chaque tige est choisie, chaque bouquet raconte une saison, une émotion, une rencontre.</p>
+      <div class="vals">
+        <div class="v"><b>Local</b><span>Producteurs à moins de 30 km</span></div>
+        <div class="v"><b>De saison</b><span>Au rythme de la nature</span></div>
+        <div class="v"><b>Fait main</b><span>Chaque pièce est unique</span></div>
+      </div>
+      <p class="sign">— Camille &amp; Léa, fondatrices</p>
+    </div>
+  </div>
+</section>
+
+<!-- BOUTIQUE -->
+<section class="sec" id="boutique">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">La boutique</span>
+      <h2>À <span class="it">cueillir</span> dès maintenant.</h2>
+      <p>Une sélection de nos pièces préférées, prêtes à être offertes ou à embellir votre intérieur.</p>
+    </div>
+    <div class="shop">
+      <article class="prod reveal">
+        <div class="ph pp1"><span class="tag">Best-seller</span></div>
+        <div class="body">
+          <h4>Rosée du matin</h4>
+          <p class="desc">Roses anciennes & eucalyptus</p>
+          <div class="foot"><span class="price">45 €</span><button class="add" aria-label="Ajouter">+</button></div>
+        </div>
+      </article>
+      <article class="prod reveal">
+        <div class="ph pp2"><span class="tag">De saison</span></div>
+        <div class="body">
+          <h4>Champ libre</h4>
+          <p class="desc">Fleurs des champs & graminées</p>
+          <div class="foot"><span class="price">38 €</span><button class="add" aria-label="Ajouter">+</button></div>
+        </div>
+      </article>
+      <article class="prod reveal">
+        <div class="ph pp3"><span class="tag">Nouveau</span></div>
+        <div class="body">
+          <h4>Soleil couchant</h4>
+          <p class="desc">Renoncules terracotta & dahlias</p>
+          <div class="foot"><span class="price">52 €</span><button class="add" aria-label="Ajouter">+</button></div>
+        </div>
+      </article>
+      <article class="prod reveal">
+        <div class="ph pp4"><span class="tag">Abonnement</span></div>
+        <div class="body">
+          <h4>Le rendez-vous</h4>
+          <p class="desc">Un bouquet frais / semaine</p>
+          <div class="foot"><span class="price">29 €<span style="font-size:.7rem;color:var(--gris)">/sem</span></span><button class="add" aria-label="Ajouter">+</button></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- AVIS -->
+<section class="sec avis" id="avis">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Ils nous ont confié leurs fleurs</span>
+      <h2>Des mots <span class="it">qui fleurissent.</span></h2>
+    </div>
+    <div class="testis">
+      <figure class="testi reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote>« Le bouquet de mariée était d'une délicatesse folle. Tout le monde m'a demandé d'où venaient ces fleurs. Un vrai souvenir. »</blockquote>
+        <div class="who">
+          <span class="av" style="background:linear-gradient(140deg,var(--rose),var(--terra))"></span>
+          <span><b>Élise M.</b><span>Mariage à Annecy</span></span>
+        </div>
+      </figure>
+      <figure class="testi reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote>« Mon abonnement est devenu mon petit rituel du vendredi. À chaque fois, une surprise pleine de poésie. »</blockquote>
+        <div class="who">
+          <span class="av" style="background:linear-gradient(140deg,var(--sauge),var(--sauge-fonce))"></span>
+          <span><b>Thomas R.</b><span>Abonné depuis 2 ans</span></span>
+        </div>
+      </figure>
+      <figure class="testi reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote>« Un accueil chaleureux et des fleurs incroyablement fraîches. On sent l'amour du métier dans chaque création. »</blockquote>
+        <div class="who">
+          <span class="av" style="background:linear-gradient(140deg,var(--terra-clair),var(--terra))"></span>
+          <span><b>Sophie L.</b><span>Cliente fidèle</span></span>
+        </div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec contact" id="contact">
+  <div class="wrap contact-grid">
+    <div class="reveal">
+      <span class="eyebrow">Contact & commande</span>
+      <h2>Composons <span class="it">ensemble.</span></h2>
+      <p style="color:var(--gris);margin-top:20px;max-width:36ch">Une commande, un événement, un simple bonjour ? Écrivez-nous, nous répondons sous 24 h avec le sourire.</p>
+      <div class="info">
+        <div class="row"><span class="ic">✿</span><span><b>L'atelier</b><span>12 rue des Glycines, 74000 Annecy</span></span></div>
+        <div class="row"><span class="ic">✆</span><span><b>Téléphone</b><span>04 50 12 34 56</span></span></div>
+        <div class="row"><span class="ic">✉</span><span><b>Email</b><span>bonjour@maison-flora.fr</span></span></div>
+        <div class="row"><span class="ic">☼</span><span><b>Horaires</b><span>Mar – Sam · 9h30 – 19h00</span></span></div>
+      </div>
+    </div>
+    <form class="reveal" id="orderForm" novalidate>
+      <div class="field">
+        <label for="nom">Votre nom</label>
+        <input id="nom" name="nom" type="text" placeholder="Camille Dupont" required />
+      </div>
+      <div class="field">
+        <label for="email">Votre email</label>
+        <input id="email" name="email" type="email" placeholder="camille@email.fr" required />
+      </div>
+      <div class="field">
+        <label for="type">Votre demande</label>
+        <select id="type" name="type">
+          <option>Un bouquet</option>
+          <option>Fleurs de mariage</option>
+          <option>Un abonnement</option>
+          <option>Une composition sur-mesure</option>
+          <option>Autre</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="msg">Votre message</label>
+        <textarea id="msg" name="msg" placeholder="Dites-nous tout sur le moment à fleurir…"></textarea>
+      </div>
+      <button type="submit" class="btn">Envoyer ma demande</button>
+      <p class="form-note" id="formNote">Réponse sous 24 h · sans engagement</p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="#top" class="logo"><span class="mark"></span><span>Maison Flora<small>Atelier floral</small></span></a>
+        <p>L'art floral cueilli avec soin et composé avec poésie, au rythme des saisons.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Explorer</h5>
+        <a href="#creations">Créations</a>
+        <a href="#atelier">L'atelier</a>
+        <a href="#boutique">Boutique</a>
+        <a href="#avis">Avis</a>
+      </div>
+      <div class="foot-col">
+        <h5>Services</h5>
+        <a href="#boutique">Bouquets de saison</a>
+        <a href="#contact">Mariages</a>
+        <a href="#boutique">Abonnements</a>
+        <a href="#contact">Sur-mesure</a>
+      </div>
+      <div class="foot-col">
+        <h5>Suivez-nous</h5>
+        <a href="#contact">Instagram</a>
+        <a href="#contact">Pinterest</a>
+        <a href="#contact">Newsletter</a>
+        <a href="#contact">Nous écrire</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Maison Flora · Tous droits réservés</span>
+      <span>Conçu avec amour & pétales 🌸</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    "use strict";
+    // Mark JS active so reveal animations apply (graceful fallback otherwise)
+    document.documentElement.classList.add('js');
+
+    // Safety net: ensure everything is visible after 1.8s no matter what
+    var safety = setTimeout(function(){
+      document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+    }, 1800);
+
+    document.addEventListener('DOMContentLoaded', function(){
+      // Sticky header shrink
+      var header = document.getElementById('header');
+      var onScroll = function(){
+        if(window.scrollY > 30){ header.classList.add('shrink'); }
+        else { header.classList.remove('shrink'); }
+      };
+      window.addEventListener('scroll', onScroll, {passive:true});
+      onScroll();
+
+      // Reveal on scroll
+      var reveals = document.querySelectorAll('.reveal');
+      if('IntersectionObserver' in window){
+        var io = new IntersectionObserver(function(entries){
+          entries.forEach(function(e){
+            if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+          });
+        }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+        reveals.forEach(function(el){ io.observe(el); });
+      } else {
+        reveals.forEach(function(el){ el.classList.add('in'); });
+        clearTimeout(safety);
+      }
+
+      // Mobile nav
+      var burger = document.getElementById('burger');
+      var nav = document.getElementById('mobileNav');
+      var close = document.getElementById('closeNav');
+      var openNav = function(){ nav.classList.add('open'); };
+      var closeNav = function(){ nav.classList.remove('open'); };
+      if(burger) burger.addEventListener('click', openNav);
+      if(close) close.addEventListener('click', closeNav);
+      nav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeNav); });
+
+      // Form (demo)
+      var form = document.getElementById('orderForm');
+      var note = document.getElementById('formNote');
+      if(form){
+        form.addEventListener('submit', function(ev){
+          ev.preventDefault();
+          var nom = document.getElementById('nom').value.trim();
+          var email = document.getElementById('email').value.trim();
+          if(!nom || !email){
+            note.textContent = 'Merci d’indiquer votre nom et votre email ✨';
+            note.style.color = 'var(--terra)';
+            return;
+          }
+          note.textContent = 'Merci ' + nom + ' ! Votre demande s’est envolée vers l’atelier 🌸';
+          note.style.color = 'var(--sauge-fonce)';
+          form.reset();
+        });
+      }
+    });
+  })();
+</script>
+</body>
+</html>

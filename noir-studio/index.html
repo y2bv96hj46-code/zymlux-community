@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NOIR STUDIO — Studio photo & création visuelle</title>
+<meta name="description" content="NOIR STUDIO — Studio photographique et créatif. Portrait, mariage, corporate et mode. Une esthétique radicale en noir et blanc." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --noir:#0a0a0a;
+    --blanc:#f4f3f1;
+    --gris:#8a8a8a;
+    --gris-fonce:#161616;
+    --gris-clair:#cfcecb;
+    --accent:#c8a96a; /* micro-accent doré sable */
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+  body{
+    background:var(--noir);
+    color:var(--blanc);
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:300;
+    line-height:1.5;
+    overflow-x:hidden;
+    cursor:none;
+  }
+  @media (hover:none){ body{cursor:auto;} }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  ::selection{background:var(--accent);color:var(--noir);}
+
+  .wrap{max-width:1440px;margin:0 auto;padding:0 6vw;}
+
+  /* ---------- Curseur custom ---------- */
+  .cursor,.cursor-dot{
+    position:fixed;top:0;left:0;pointer-events:none;z-index:9999;
+    border-radius:50%;mix-blend-mode:difference;
+    transform:translate(-50%,-50%);
+  }
+  .cursor{width:34px;height:34px;border:1px solid var(--blanc);transition:width .3s var(--ease),height .3s var(--ease),background .3s var(--ease);}
+  .cursor-dot{width:5px;height:5px;background:var(--blanc);}
+  .cursor.grow{width:70px;height:70px;background:var(--blanc);}
+  @media (hover:none){ .cursor,.cursor-dot{display:none;} }
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed;top:0;left:0;width:100%;z-index:900;
+    padding:26px 6vw;display:flex;align-items:center;justify-content:space-between;
+    transition:background .5s var(--ease),padding .5s var(--ease),border-color .5s var(--ease);
+    border-bottom:1px solid transparent;
+  }
+  header.scrolled{
+    background:rgba(10,10,10,.72);backdrop-filter:blur(14px);
+    padding:16px 6vw;border-bottom:1px solid rgba(255,255,255,.07);
+  }
+  .logo{font-weight:500;letter-spacing:.45em;font-size:15px;text-transform:uppercase;display:flex;align-items:center;gap:.55em;}
+  .logo b{font-weight:500;}
+  .logo .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);}
+  nav{display:flex;align-items:center;gap:42px;}
+  nav .links{display:flex;gap:38px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;}
+  nav .links a{position:relative;color:var(--gris-clair);transition:color .3s;}
+  nav .links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--blanc);transition:width .4s var(--ease);}
+  nav .links a:hover{color:var(--blanc);}
+  nav .links a:hover::after{width:100%;}
+  .btn-book{
+    border:1px solid rgba(255,255,255,.35);padding:13px 24px;border-radius:40px;
+    font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--blanc);
+    transition:background .4s var(--ease),color .4s var(--ease),border-color .4s var(--ease);white-space:nowrap;
+  }
+  .btn-book:hover{background:var(--blanc);color:var(--noir);border-color:var(--blanc);}
+  .burger{display:none;flex-direction:column;gap:6px;background:none;border:none;cursor:none;padding:6px;}
+  .burger span{width:26px;height:1.5px;background:var(--blanc);transition:.4s var(--ease);}
+
+  /* ---------- Hero ---------- */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;position:relative;padding-top:120px;}
+  .hero .eyebrow{display:flex;align-items:center;gap:14px;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gris);margin-bottom:38px;}
+  .hero .eyebrow .line{width:48px;height:1px;background:var(--gris);}
+  .hero h1{
+    font-family:"Cormorant",serif;font-weight:300;
+    font-size:clamp(3.4rem,13vw,12rem);line-height:.92;letter-spacing:-.02em;
+  }
+  .hero h1 .it{font-style:italic;color:var(--accent);}
+  .hero h1 .ow{display:inline-block;overflow:hidden;vertical-align:bottom;}
+  .hero h1 .ow span{display:inline-block;transform:translateY(110%);transition:transform 1s var(--ease);}
+  .hero.in h1 .ow span{transform:translateY(0);}
+  .hero-bottom{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:30px;margin-top:60px;}
+  .hero-bottom p{max-width:380px;color:var(--gris-clair);font-size:16px;line-height:1.7;}
+  .scroll-hint{display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--gris);}
+  .scroll-hint .arrow{width:1px;height:46px;background:var(--gris);position:relative;overflow:hidden;}
+  .scroll-hint .arrow::after{content:"";position:absolute;top:0;left:0;width:100%;height:50%;background:var(--blanc);animation:scrolldn 2s var(--ease) infinite;}
+  @keyframes scrolldn{0%{transform:translateY(-100%);}100%{transform:translateY(200%);}}
+
+  /* ---------- Reveal utility (visible par défaut) ---------- */
+  .reveal{opacity:1;transform:none;}
+  body.js .reveal{opacity:0;transform:translateY(40px);transition:opacity 1s var(--ease),transform 1s var(--ease);}
+  body.js .reveal.shown{opacity:1;transform:none;}
+
+  /* ---------- Section commun ---------- */
+  section{position:relative;padding:11vh 0;}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:8vh;}
+  .sec-head .num{font-size:13px;letter-spacing:.2em;color:var(--accent);}
+  .sec-head h2{font-family:"Cormorant",serif;font-weight:300;font-size:clamp(2.4rem,7vw,6rem);line-height:1;letter-spacing:-.01em;}
+  .sec-head h2 .it{font-style:italic;}
+
+  /* ---------- Services ---------- */
+  .services-list{border-top:1px solid rgba(255,255,255,.12);}
+  .service{
+    display:grid;grid-template-columns:60px 1fr auto;align-items:center;gap:30px;
+    padding:42px 10px;border-bottom:1px solid rgba(255,255,255,.12);
+    transition:padding .5s var(--ease),background .5s var(--ease);position:relative;
+  }
+  .service .s-idx{font-size:13px;color:var(--gris);}
+  .service .s-name{font-family:"Cormorant",serif;font-size:clamp(1.8rem,4.5vw,3.4rem);font-weight:300;transition:transform .5s var(--ease),color .5s var(--ease);}
+  .service .s-desc{font-size:14px;color:var(--gris);max-width:300px;text-align:right;}
+  .service .s-arrow{font-size:22px;color:var(--gris);transition:transform .5s var(--ease),color .5s var(--ease);}
+  .service:hover{padding-left:34px;background:linear-gradient(90deg,rgba(255,255,255,.03),transparent);}
+  .service:hover .s-name{transform:translateX(10px);color:var(--accent);}
+  .service:hover .s-arrow{transform:translate(8px,-8px);color:var(--blanc);}
+
+  /* ---------- Portfolio ---------- */
+  .pf-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:22px;}
+  .pf-item{position:relative;overflow:hidden;cursor:none;background:#111;}
+  .pf-item .ph{width:100%;height:100%;transition:transform 1.1s var(--ease),filter 1.1s var(--ease);transform:scale(1.02);filter:grayscale(1);}
+  .pf-item:hover .ph{transform:scale(1.08);filter:grayscale(.4);}
+  .pf-item .cap{
+    position:absolute;left:0;bottom:0;width:100%;padding:24px;
+    display:flex;justify-content:space-between;align-items:flex-end;
+    background:linear-gradient(0deg,rgba(0,0,0,.7),transparent);
+    opacity:0;transform:translateY(12px);transition:opacity .5s var(--ease),transform .5s var(--ease);
+  }
+  .pf-item:hover .cap{opacity:1;transform:translateY(0);}
+  .pf-item .cap .t{font-family:"Cormorant",serif;font-size:1.5rem;font-weight:300;}
+  .pf-item .cap .c{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gris-clair);}
+  .pf-item.big{grid-column:span 7;aspect-ratio:4/3;}
+  .pf-item.tall{grid-column:span 5;aspect-ratio:3/4;}
+  .pf-item.sq{grid-column:span 4;aspect-ratio:1/1;}
+  .pf-item.wide{grid-column:span 8;aspect-ratio:16/9;}
+
+  /* placeholders dégradés (faux clichés N&B) */
+  .ph{background:#161616;}
+  .ph.g1{background:linear-gradient(135deg,#2a2a2a 0%,#0c0c0c 70%);}
+  .ph.g2{background:radial-gradient(circle at 30% 25%,#3a3a3a 0%,#0d0d0d 60%);}
+  .ph.g3{background:linear-gradient(200deg,#1c1c1c,#363636 45%,#0a0a0a);}
+  .ph.g4{background:repeating-linear-gradient(115deg,#161616,#161616 14px,#1f1f1f 14px,#1f1f1f 28px);}
+  .ph.g5{background:radial-gradient(circle at 70% 80%,#2e2e2e,#0a0a0a 65%);}
+  .ph.g6{background:linear-gradient(45deg,#0a0a0a,#2b2b2b 50%,#101010);}
+  .ph.g7{background:conic-gradient(from 210deg at 60% 40%,#0c0c0c,#303030,#0c0c0c);}
+
+  /* ---------- À propos ---------- */
+  .about{display:grid;grid-template-columns:1fr 1fr;gap:8vw;align-items:center;}
+  .about .ph-portrait{aspect-ratio:3/4;}
+  .about-text h3{font-family:"Cormorant",serif;font-weight:300;font-size:clamp(1.9rem,3.6vw,3rem);line-height:1.15;margin-bottom:30px;}
+  .about-text h3 .it{font-style:italic;color:var(--accent);}
+  .about-text p{color:var(--gris-clair);font-size:16px;line-height:1.8;margin-bottom:22px;max-width:46ch;}
+  .stats{display:flex;gap:50px;margin-top:46px;flex-wrap:wrap;}
+  .stat .n{font-family:"Cormorant",serif;font-size:3rem;font-weight:300;line-height:1;}
+  .stat .l{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gris);margin-top:8px;}
+
+  /* ---------- Avis ---------- */
+  .reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .review{border:1px solid rgba(255,255,255,.1);padding:40px 32px;transition:border-color .5s var(--ease),transform .5s var(--ease);}
+  .review:hover{border-color:rgba(255,255,255,.3);transform:translateY(-6px);}
+  .review .stars{color:var(--accent);letter-spacing:.2em;font-size:13px;margin-bottom:24px;}
+  .review p{font-family:"Cormorant",serif;font-style:italic;font-size:1.45rem;font-weight:300;line-height:1.45;color:var(--blanc);margin-bottom:28px;}
+  .review .who{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gris);}
+
+  /* ---------- Contact ---------- */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:start;}
+  .contact-left h2{font-family:"Cormorant",serif;font-weight:300;font-size:clamp(2.6rem,7vw,6.5rem);line-height:.95;letter-spacing:-.01em;}
+  .contact-left h2 .it{font-style:italic;color:var(--accent);}
+  .contact-left .meta{margin-top:48px;display:flex;flex-direction:column;gap:26px;}
+  .contact-left .meta .row .k{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gris);margin-bottom:7px;}
+  .contact-left .meta .row .v{font-size:18px;}
+  form{display:flex;flex-direction:column;gap:30px;}
+  .field{position:relative;}
+  .field input,.field select,.field textarea{
+    width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.2);
+    color:var(--blanc);font-family:inherit;font-size:16px;font-weight:300;padding:14px 0;outline:none;
+    transition:border-color .4s var(--ease);
+  }
+  .field select{cursor:none;}
+  .field select option{background:#111;color:var(--blanc);}
+  .field textarea{resize:vertical;min-height:90px;}
+  .field label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gris);display:block;margin-bottom:6px;}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);}
+  .field input::placeholder,.field textarea::placeholder{color:#555;}
+  .submit{
+    align-self:flex-start;background:var(--blanc);color:var(--noir);border:none;
+    padding:18px 42px;border-radius:40px;font-family:inherit;font-size:13px;letter-spacing:.16em;
+    text-transform:uppercase;cursor:none;transition:transform .4s var(--ease),background .4s var(--ease),color .4s var(--ease);
+  }
+  .submit:hover{transform:translateY(-3px);}
+  .form-note{font-size:12px;color:var(--accent);min-height:16px;}
+
+  /* ---------- Footer ---------- */
+  footer{padding:9vh 6vw 40px;border-top:1px solid rgba(255,255,255,.1);}
+  .foot-top{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:40px;}
+  .foot-big{font-family:"Cormorant",serif;font-weight:300;font-size:clamp(2.6rem,9vw,8rem);line-height:.9;letter-spacing:-.02em;}
+  .foot-soc{display:flex;flex-direction:column;gap:12px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--gris-clair);}
+  .foot-soc a:hover{color:var(--blanc);}
+  .foot-bot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-top:7vh;padding-top:26px;border-top:1px solid rgba(255,255,255,.08);font-size:12px;letter-spacing:.08em;color:var(--gris);}
+
+  /* marquee */
+  .marquee{overflow:hidden;white-space:nowrap;border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1);padding:30px 0;}
+  .marquee .track{display:inline-flex;gap:60px;animation:marq 28s linear infinite;}
+  .marquee .track span{font-family:"Cormorant",serif;font-style:italic;font-size:clamp(1.6rem,4vw,3rem);font-weight:300;color:var(--gris);}
+  .marquee .track span b{color:var(--accent);font-weight:300;}
+  @keyframes marq{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1024px){
+    .about{grid-template-columns:1fr;gap:50px;}
+    .reviews{grid-template-columns:1fr;}
+    .contact-grid{grid-template-columns:1fr;gap:60px;}
+    .pf-item.big,.pf-item.tall,.pf-item.sq,.pf-item.wide{grid-column:span 6;aspect-ratio:4/3;}
+  }
+  @media (max-width:760px){
+    nav .links,.btn-book{display:none;}
+    .burger{display:flex;}
+    nav.open .links{
+      display:flex;flex-direction:column;position:fixed;inset:0;background:var(--noir);
+      justify-content:center;align-items:center;gap:36px;font-size:24px;z-index:880;
+    }
+    nav.open .links a{color:var(--blanc);}
+    .service{grid-template-columns:auto 1fr;gap:16px;}
+    .service .s-desc{display:none;}
+    .service .s-arrow{display:none;}
+    .pf-item.big,.pf-item.tall,.pf-item.sq,.pf-item.wide{grid-column:span 12;aspect-ratio:4/3;}
+    .hero-bottom{flex-direction:column;align-items:flex-start;}
+    .scroll-hint{display:none;}
+  }
+  @media (max-width:390px){
+    .wrap{padding:0 22px;}
+    header{padding:18px 22px;}
+    header.scrolled{padding:14px 22px;}
+    .logo{letter-spacing:.3em;font-size:13px;}
+    .hero{padding-top:140px;}
+    .stats{gap:32px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Curseur custom -->
+<div class="cursor" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+
+<!-- Header -->
+<header id="header">
+  <div class="logo"><span class="dot"></span><b>NOIR</b> STUDIO</div>
+  <nav id="nav">
+    <div class="links">
+      <a href="#services">Services</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#about">À propos</a>
+      <a href="#avis">Avis</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="btn-book" data-hover>Réserver une séance</a>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<!-- Hero -->
+<section class="hero wrap" id="hero">
+  <div class="eyebrow reveal"><span class="line"></span>Studio photo &amp; création visuelle — Paris</div>
+  <h1>
+    <span class="ow"><span>L'art de</span></span><br/>
+    <span class="ow"><span>la <span class="it">lumière</span></span></span><br/>
+    <span class="ow"><span>en noir.</span></span>
+  </h1>
+  <div class="hero-bottom">
+    <p class="reveal">Nous capturons l'essentiel. Des images intemporelles, dépouillées du superflu, où le contraste raconte plus que la couleur.</p>
+    <div class="scroll-hint reveal">Défiler<span class="arrow"></span></div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>Portrait <b>·</b> Mariage <b>·</b> Corporate <b>·</b> Mode <b>·</b> Éditorial <b>·</b></span>
+    <span>Portrait <b>·</b> Mariage <b>·</b> Corporate <b>·</b> Mode <b>·</b> Éditorial <b>·</b></span>
+  </div>
+</div>
+
+<!-- Services -->
+<section id="services" class="wrap">
+  <div class="sec-head reveal">
+    <span class="num">01 —</span>
+    <h2>Nos <span class="it">prestations</span></h2>
+  </div>
+  <div class="services-list">
+    <div class="service reveal">
+      <span class="s-idx">/01</span>
+      <span class="s-name">Portrait</span>
+      <span class="s-desc">Studio ou extérieur. Une lecture sensible et brute du visage.</span>
+      <span class="s-arrow">↗</span>
+    </div>
+    <div class="service reveal">
+      <span class="s-idx">/02</span>
+      <span class="s-name">Mariage</span>
+      <span class="s-desc">Reportage discret, émotions vraies, esthétique documentaire.</span>
+      <span class="s-arrow">↗</span>
+    </div>
+    <div class="service reveal">
+      <span class="s-idx">/03</span>
+      <span class="s-name">Corporate</span>
+      <span class="s-desc">Portraits d'équipe, identité de marque, image institutionnelle.</span>
+      <span class="s-arrow">↗</span>
+    </div>
+    <div class="service reveal">
+      <span class="s-idx">/04</span>
+      <span class="s-name">Mode</span>
+      <span class="s-desc">Direction artistique, lookbooks et campagnes éditoriales.</span>
+      <span class="s-arrow">↗</span>
+    </div>
+  </div>
+</section>
+
+<!-- Portfolio -->
+<section id="portfolio" class="wrap">
+  <div class="sec-head reveal">
+    <span class="num">02 —</span>
+    <h2>Sélection de <span class="it">travaux</span></h2>
+  </div>
+  <div class="pf-grid">
+    <div class="pf-item big reveal" data-hover>
+      <div class="ph g2"></div>
+      <div class="cap"><span class="t">Silhouette</span><span class="c">Portrait · 2025</span></div>
+    </div>
+    <div class="pf-item tall reveal" data-hover>
+      <div class="ph g3"></div>
+      <div class="cap"><span class="t">Camille</span><span class="c">Mode · 2025</span></div>
+    </div>
+    <div class="pf-item sq reveal" data-hover>
+      <div class="ph g6"></div>
+      <div class="cap"><span class="t">Cérémonie</span><span class="c">Mariage · 2024</span></div>
+    </div>
+    <div class="pf-item sq reveal" data-hover>
+      <div class="ph g1"></div>
+      <div class="cap"><span class="t">Atelier</span><span class="c">Corporate · 2025</span></div>
+    </div>
+    <div class="pf-item sq reveal" data-hover>
+      <div class="ph g5"></div>
+      <div class="cap"><span class="t">Contre-jour</span><span class="c">Portrait · 2024</span></div>
+    </div>
+    <div class="pf-item wide reveal" data-hover>
+      <div class="ph g7"></div>
+      <div class="cap"><span class="t">Maison close</span><span class="c">Éditorial · 2025</span></div>
+    </div>
+    <div class="pf-item sq reveal" data-hover>
+      <div class="ph g4"></div>
+      <div class="cap"><span class="t">Lignes</span><span class="c">Architecture · 2024</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- À propos -->
+<section id="about" class="wrap">
+  <div class="about">
+    <div class="ph-portrait ph g3 reveal"></div>
+    <div class="about-text">
+      <div class="sec-head reveal" style="margin-bottom:36px;">
+        <span class="num">03 —</span>
+        <h2>Le <span class="it">studio</span></h2>
+      </div>
+      <h3 class="reveal">Fondé en 2014, NOIR STUDIO cultive une <span class="it">obsession</span> pour la simplicité.</h3>
+      <p class="reveal">Niché au cœur du 11ᵉ arrondissement, notre studio est un espace de 120m² baigné de lumière naturelle, conçu comme un atelier autant que comme un sanctuaire visuel.</p>
+      <p class="reveal">Nous croyons qu'une image n'a pas besoin de couleur pour émouvoir. Le noir et blanc impose une honnêteté : il ne reste que la forme, la matière, le regard.</p>
+      <div class="stats reveal">
+        <div class="stat"><div class="n">11</div><div class="l">Années</div></div>
+        <div class="stat"><div class="n">640+</div><div class="l">Séances</div></div>
+        <div class="stat"><div class="n">17</div><div class="l">Prix &amp; mentions</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Avis -->
+<section id="avis" class="wrap">
+  <div class="sec-head reveal">
+    <span class="num">04 —</span>
+    <h2>Ils nous font <span class="it">confiance</span></h2>
+  </div>
+  <div class="reviews">
+    <div class="review reveal">
+      <div class="stars">★★★★★</div>
+      <p>« Une direction artistique d'une rare exigence. Nos portraits corporate ont transformé l'image de toute l'entreprise. »</p>
+      <div class="who">Élise Marchand — Maison Vautier</div>
+    </div>
+    <div class="review reveal">
+      <div class="stars">★★★★★</div>
+      <p>« Ils ont saisi notre mariage sans jamais s'imposer. Des clichés intemporels, justes, bouleversants. »</p>
+      <div class="who">Thomas &amp; Léa — Paris</div>
+    </div>
+    <div class="review reveal">
+      <div class="stars">★★★★★</div>
+      <p>« Le studio le plus minimal et le plus précis avec lequel j'aie travaillé en quinze ans de mode. »</p>
+      <div class="who">Nadia Reyes — Styliste</div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="wrap">
+  <div class="contact-grid">
+    <div class="contact-left">
+      <h2 class="reveal">Réservons<br/>votre <span class="it">séance.</span></h2>
+      <div class="meta">
+        <div class="row reveal"><div class="k">Atelier</div><div class="v">34 rue Saint-Maur, 75011 Paris</div></div>
+        <div class="row reveal"><div class="k">Courriel</div><div class="v">bonjour@noirstudio.fr</div></div>
+        <div class="row reveal"><div class="k">Téléphone</div><div class="v">+33 1 84 25 09 17</div></div>
+      </div>
+    </div>
+    <form id="bookForm" class="reveal" novalidate>
+      <div class="field">
+        <label for="f-name">Nom complet</label>
+        <input id="f-name" type="text" placeholder="Votre nom" required />
+      </div>
+      <div class="field">
+        <label for="f-email">Courriel</label>
+        <input id="f-email" type="email" placeholder="vous@exemple.fr" required />
+      </div>
+      <div class="field">
+        <label for="f-type">Type de séance</label>
+        <select id="f-type" required>
+          <option value="">Sélectionner…</option>
+          <option>Portrait</option>
+          <option>Mariage</option>
+          <option>Corporate</option>
+          <option>Mode / Éditorial</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-msg">Votre projet</label>
+        <textarea id="f-msg" placeholder="Dites-nous tout…"></textarea>
+      </div>
+      <button type="submit" class="submit" data-hover>Envoyer la demande</button>
+      <div class="form-note" id="formNote" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="foot-top">
+    <div class="foot-big">NOIR<br/>STUDIO<span style="color:var(--accent);">.</span></div>
+    <div class="foot-soc">
+      <a href="#" data-hover>Instagram</a>
+      <a href="#" data-hover>Behance</a>
+      <a href="#" data-hover>Pinterest</a>
+      <a href="#" data-hover>LinkedIn</a>
+    </div>
+  </div>
+  <div class="foot-bot">
+    <span>© 2026 NOIR STUDIO — Tous droits réservés</span>
+    <span>Conçu à Paris · Mentions légales · Confidentialité</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  // Filet de sécurité : si JS s'exécute, on active les transitions reveal.
+  // Mais on garantit la visibilité quoi qu'il arrive (setTimeout + visible par défaut).
+  try{
+    document.body.classList.add("js");
+  }catch(e){}
+
+  // --- Curseur custom ---
+  var cursor=document.querySelector(".cursor");
+  var dot=document.querySelector(".cursor-dot");
+  var cx=window.innerWidth/2, cy=window.innerHeight/2, dx=cx, dy=cy;
+  if(cursor && dot && !matchMedia("(hover:none)").matches){
+    window.addEventListener("mousemove",function(e){
+      cx=e.clientX;cy=e.clientY;
+      dot.style.left=cx+"px";dot.style.top=cy+"px";
+    });
+    (function render(){
+      dx+=(cx-dx)*0.18; dy+=(cy-dy)*0.18;
+      cursor.style.left=dx+"px";cursor.style.top=dy+"px";
+      requestAnimationFrame(render);
+    })();
+    document.querySelectorAll("a,button,[data-hover],.service,.pf-item").forEach(function(el){
+      el.addEventListener("mouseenter",function(){cursor.classList.add("grow");});
+      el.addEventListener("mouseleave",function(){cursor.classList.remove("grow");});
+    });
+  }
+
+  // --- Header scrolled ---
+  var header=document.getElementById("header");
+  function onScroll(){
+    if(window.scrollY>40){header.classList.add("scrolled");}
+    else{header.classList.remove("scrolled");}
+  }
+  window.addEventListener("scroll",onScroll,{passive:true});
+  onScroll();
+
+  // --- Menu mobile ---
+  var burger=document.getElementById("burger");
+  var nav=document.getElementById("nav");
+  if(burger && nav){
+    burger.addEventListener("click",function(){nav.classList.toggle("open");});
+    nav.querySelectorAll(".links a").forEach(function(a){
+      a.addEventListener("click",function(){nav.classList.remove("open");});
+    });
+  }
+
+  // --- Hero kinetic ---
+  requestAnimationFrame(function(){
+    var hero=document.getElementById("hero");
+    if(hero){hero.classList.add("in");}
+  });
+
+  // --- Reveal au scroll ---
+  var reveals=document.querySelectorAll(".reveal");
+  function showAll(){reveals.forEach(function(el){el.classList.add("shown");});}
+
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          en.target.classList.add("shown");
+          io.unobserve(en.target);
+        }
+      });
+    },{threshold:0.12,rootMargin:"0px 0px -8% 0px"});
+    reveals.forEach(function(el){io.observe(el);});
+  }else{
+    showAll();
+  }
+
+  // FILET DE SÉCURITÉ : tout devient visible après 1.8s quoi qu'il arrive.
+  setTimeout(showAll,1800);
+  // Au chargement complet aussi
+  window.addEventListener("load",function(){setTimeout(showAll,300);});
+
+  // --- Formulaire ---
+  var form=document.getElementById("bookForm");
+  var note=document.getElementById("formNote");
+  if(form){
+    form.addEventListener("submit",function(e){
+      e.preventDefault();
+      var name=document.getElementById("f-name").value.trim();
+      var email=document.getElementById("f-email").value.trim();
+      var type=document.getElementById("f-type").value;
+      if(!name||!email||!type){
+        note.textContent="Merci de compléter les champs requis.";
+        note.style.color="#c97a6a";
+        return;
+      }
+      note.style.color="var(--accent)";
+      note.textContent="Merci "+name+". Votre demande a bien été envoyée — réponse sous 24h.";
+      form.reset();
+    });
+  }
+})();
+</script>
+</body>
+</html>
