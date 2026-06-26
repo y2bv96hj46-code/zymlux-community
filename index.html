@@ -92,6 +92,15 @@ header.scr{background:rgba(6,6,8,.82);backdrop-filter:blur(16px);border-bottom:1
 .chip{font-family:inherit;font-size:.84rem;color:var(--mut);background:var(--card);border:1px solid var(--line);padding:8px 14px;border-radius:50px;cursor:pointer;transition:.3s}
 .chip:hover{color:var(--txt);border-color:var(--c1);transform:translateY(-2px)}
 .chip.active{color:#06060a;background:var(--grad);border-color:transparent;font-weight:600}
+.builder{margin-top:24px;display:flex;flex-direction:column;gap:12px;max-width:450px}
+.biz-input{background:var(--card);border:1px solid var(--line);color:var(--txt);padding:13px 16px;border-radius:12px;font-family:inherit;font-size:.95rem;transition:.3s}
+.biz-input:focus{outline:none;border-color:var(--c1);box-shadow:0 0 0 3px rgba(123,92,255,.18)}
+.swatches{display:flex;gap:10px}
+.sw{width:28px;height:28px;border-radius:50%;background:var(--s);border:2px solid transparent;cursor:pointer;transition:.2s;padding:0}
+.sw:hover{transform:scale(1.12)}
+.sw.active{border-color:#fff;box-shadow:0 0 0 2px var(--s)}
+.mock .screen iframe{width:100%;height:100%;border:0;display:block;background:#0b0b0f}
+@media(max-width:900px){.builder{margin-inline:auto}.swatches{justify-content:center}}
 @media(max-width:900px){.hero-grid2{grid-template-columns:1fr;gap:40px}.hero-copy{text-align:center}.hero-copy .hero-actions,.picker{justify-content:center}.mock .screen{height:380px}}
 
 /* marquee */
@@ -318,23 +327,28 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
         <a href="#avant-apres" class="btn btn-out">Voir la différence</a>
       </div>
       <p class="hero-note reveal d4">✦ Exemple offert · Sans engagement · Livré en 7 jours</p>
-      <div class="picker reveal d4">
-        <span class="picker-lbl">Votre métier ?</span>
-        <button class="chip active" type="button">🪒 Barbier</button>
-        <button class="chip" type="button">💅 Beauté</button>
-        <button class="chip" type="button">🍽️ Resto</button>
-        <button class="chip" type="button">🔧 Artisan</button>
+      <div class="builder reveal d4">
+        <span class="picker-lbl">✨ Construisez le vôtre, en direct :</span>
+        <input id="bizname" class="biz-input" type="text" maxlength="22" placeholder="Nom de votre commerce" value="Chez Marco" aria-label="Nom de votre commerce">
+        <div class="picker">
+          <button class="chip active" type="button">🪒 Barbier</button>
+          <button class="chip" type="button">💅 Beauté</button>
+          <button class="chip" type="button">🍽️ Resto</button>
+          <button class="chip" type="button">🔧 Artisan</button>
+        </div>
+        <div class="swatches" aria-label="Couleur">
+          <button class="sw active" type="button" style="--s:#7b5cff" data-c="#7b5cff" aria-label="Violet"></button>
+          <button class="sw" type="button" style="--s:#19e3c0" data-c="#19e3c0" aria-label="Turquoise"></button>
+          <button class="sw" type="button" style="--s:#ff5fa2" data-c="#ff5fa2" aria-label="Rose"></button>
+          <button class="sw" type="button" style="--s:#f4a300" data-c="#f4a300" aria-label="Or"></button>
+          <button class="sw" type="button" style="--s:#e3261f" data-c="#e3261f" aria-label="Rouge"></button>
+        </div>
       </div>
     </div>
     <div class="mock reveal d2">
-      <div class="bar"><i></i><i></i><i></i><span class="url" id="mockurl">🔒 atelierblade.fr</span></div>
-      <div class="screen" id="screen">
-        <img class="slide on" src="media/barber-full.jpg" data-url="atelierblade.fr" alt="Site barbier créé par nos soins">
-        <img class="slide" src="media/nails-full.jpg" data-url="bellanails.fr" alt="Site onglerie">
-        <img class="slide" src="media/resto-full.jpg" data-url="lecomptoir.fr" alt="Site restaurant">
-        <img class="slide" src="media/plombier-full.jpg" data-url="martin-plomberie.fr" alt="Site plombier">
-      </div>
-      <div class="badge-live"><i></i> DÉMO LIVE</div>
+      <div class="bar"><i></i><i></i><i></i><span class="url" id="mockurl">🔒 chez-marco.fr</span></div>
+      <div class="screen" id="screen"><iframe id="livesite" title="Aperçu de votre site en direct"></iframe></div>
+      <div class="badge-live"><i></i> GÉNÉRÉ EN DIRECT</div>
     </div>
   </div>
 </section>
@@ -581,25 +595,70 @@ addEventListener('mousemove',e=>{if(drag)setBA(e.clientX)});
 addEventListener('mouseup',()=>drag=false);
 ba.addEventListener('touchstart',e=>setBA(e.touches[0].clientX),{passive:true});
 ba.addEventListener('touchmove',e=>setBA(e.touches[0].clientX),{passive:true});
-// showreel + configurateur : le visiteur choisit son métier, le mockup suit
-const slides=[...document.querySelectorAll('.mock .slide')];
-const mockurl=document.getElementById('mockurl');
-const chips=[...document.querySelectorAll('.chip')];
-let si=0,idle=0;
-function showSlide(i){
-  if(!slides.length)return;
-  slides[si].classList.remove('on');
-  si=(i+slides.length)%slides.length;
-  const s=slides[si];
-  s.style.animation='none';void s.offsetWidth;s.style.animation='';
-  s.classList.add('on');
-  if(mockurl)mockurl.textContent='🔒 '+s.dataset.url;
-  chips.forEach((c,k)=>c.classList.toggle('active',k===si));
-}
-if(slides.length){
-  setInterval(()=>{if(idle>0){idle--;return;}showSlide(si+1)},6000);
-  chips.forEach((c,k)=>c.addEventListener('click',()=>{showSlide(k);idle=3;}));
-}
+// === GÉNÉRATEUR DE SITE EN DIRECT (le visiteur voit SON site se construire) ===
+(function(){
+  var iframe=document.getElementById('livesite');
+  var mockurl=document.getElementById('mockurl');
+  var input=document.getElementById('bizname');
+  var chips=[].slice.call(document.querySelectorAll('.chip'));
+  var sws=[].slice.call(document.querySelectorAll('.sw'));
+  if(!iframe)return;
+  var TYPES=[
+    {k:'Barbier',tag:"L'art de la coupe, sur-mesure.",cta:'Réserver',eyebrow:'Barbier · Salon',items:['Coupe','Barbe','Rasage trad.'],emoji:'🪒'},
+    {k:'Beauté',tag:'Sublimez votre beauté, en toute douceur.',cta:'Prendre RDV',eyebrow:'Institut · Beauté',items:['Soins','Ongles','Épilation'],emoji:'💅'},
+    {k:'Resto',tag:'Une cuisine qui a du goût.',cta:'Réserver une table',eyebrow:'Restaurant',items:['Entrées','Plats','Desserts'],emoji:'🍽️'},
+    {k:'Artisan',tag:'Un travail soigné, garanti.',cta:'Devis gratuit',eyebrow:'Artisan · Dépannage',items:['Dépannage','Installation','Rénovation'],emoji:'🔧'}
+  ];
+  var st={name:'Chez Marco',type:0,color:'#7b5cff'};
+  var touched=false;
+  function esc(s){return String(s||'').replace(/[<>&"]/g,function(c){return({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'})[c]})}
+  function slug(s){return (s||'site').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'site'}
+  function build(){
+    var d=TYPES[st.type],c=st.color,nm=esc(st.name||'Votre Commerce');
+    return '<!doctype html><html lang=fr><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1">'+
+    '<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&display=swap" rel=stylesheet>'+
+    '<style>*{margin:0;box-sizing:border-box}body{font-family:Inter,sans-serif;background:#0c0c11;color:#f4f4f6;overflow:hidden}'+
+    'h1,h2,.lg{font-family:"Space Grotesk",sans-serif}'+
+    '.bn{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid #20202e}'+
+    '.bn .lo{font-family:"Space Grotesk";font-weight:700;font-size:17px;display:flex;gap:7px;align-items:center}'+
+    '.bn .dot{width:9px;height:9px;border-radius:50%;background:'+c+'}'+
+    '.bn .nv{display:flex;gap:16px;font-size:12px;color:#9a9aac}'+
+    '.cta{background:'+c+';color:#06060a;font-weight:600;border:0;padding:9px 16px;border-radius:50px;font-size:12px;text-decoration:none;display:inline-block}'+
+    '.hero{padding:34px 22px 26px;position:relative}'+
+    '.eb{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:'+c+';font-weight:600}'+
+    '.hero h1{font-size:34px;line-height:1.05;margin:10px 0 12px}'+
+    '.hero h1 b{color:'+c+'}'+
+    '.hero p{color:#9a9aac;font-size:14px;max-width:300px;margin-bottom:18px}'+
+    '.pills{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}'+
+    '.pill{border:1px solid #20202e;border-radius:50px;padding:7px 13px;font-size:12px;color:#cfcfe0;background:#13131b}'+
+    '.glow{position:absolute;width:240px;height:240px;border-radius:50%;background:'+c+';filter:blur(80px);opacity:.30;top:-40px;right:-40px}'+
+    '.strip{display:flex;gap:10px;padding:0 22px 22px}'+
+    '.strip div{flex:1;height:60px;border-radius:10px;background:linear-gradient(135deg,'+c+'33,#15151f)}'+
+    '</style></head><body>'+
+    '<div class=bn><div class=lo><span class=dot></span>'+nm+'</div><div class=nv><span>Accueil</span><span>Services</span><span>Contact</span></div><a class=cta>'+esc(d.cta)+'</a></div>'+
+    '<div class=hero><div class=glow></div><div class=eb>'+esc(d.eyebrow)+'</div>'+
+    '<h1>'+nm+'<br><b>'+esc(d.k==="Resto"?"vous régale.":d.k==="Artisan"?"à votre service.":"vous attend.")+'</b></h1>'+
+    '<p>'+esc(d.tag)+'</p><a class=cta>'+esc(d.cta)+' →</a>'+
+    '<div class=pills>'+d.items.map(function(i){return '<span class=pill>'+esc(i)+'</span>'}).join('')+'</div></div>'+
+    '<div class=strip><div></div><div></div><div></div></div>'+
+    '</body></html>';
+  }
+  function render(){
+    iframe.srcdoc=build();
+    if(mockurl)mockurl.textContent='🔒 '+slug(st.name)+'.fr';
+    chips.forEach(function(c,k){c.classList.toggle('active',k===st.type)});
+    sws.forEach(function(s){s.classList.toggle('active',s.dataset.c===st.color)});
+  }
+  // interactions
+  if(input)input.addEventListener('input',function(){touched=true;st.name=input.value;render()});
+  chips.forEach(function(c,k){c.addEventListener('click',function(){touched=true;st.type=k;render()})});
+  sws.forEach(function(s){s.addEventListener('click',function(){touched=true;st.color=s.dataset.c;render()})});
+  // démo auto tant que le visiteur n'a pas touché
+  var demo=[{name:'Chez Marco',type:0,color:'#7b5cff'},{name:'Bella Nails',type:1,color:'#ff5fa2'},{name:'Le Comptoir',type:2,color:'#f4a300'},{name:'Dupont Élec',type:3,color:'#19e3c0'}];
+  var di=0;
+  setInterval(function(){if(touched)return;di=(di+1)%demo.length;st=Object.assign({},demo[di]);if(input)input.value=st.name;render()},4200);
+  render();
+})();
 // fond de particules anime (hero)
 (function(){
   var c=document.getElementById('fx');if(!c)return;
