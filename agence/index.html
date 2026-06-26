@@ -113,6 +113,7 @@ header.scr{background:rgba(6,6,8,.82);backdrop-filter:blur(16px);border-bottom:1
 .mock .badge-live{position:absolute;top:54px;right:16px;background:var(--grad);color:#06060a;font-size:.7rem;font-weight:700;padding:5px 11px;border-radius:50px;z-index:3;display:flex;align-items:center;gap:6px}
 .mock .badge-live i{width:7px;height:7px;border-radius:50%;background:#06060a;animation:pulse 1.4s infinite}
 .fx{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.55}
+.spot{position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(380px circle at var(--mx,70%) var(--my,35%),rgba(123,92,255,.20),transparent 62%);transition:background .12s linear}
 .picker{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:24px}
 .picker-lbl{font-size:.8rem;color:var(--mut);margin-right:2px}
 .chip{font-family:inherit;font-size:.84rem;color:var(--mut);background:var(--card);border:1px solid var(--line);padding:8px 14px;border-radius:50px;cursor:pointer;transition:.3s}
@@ -366,6 +367,7 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
   <div class="grid-bg"></div>
   <div class="orb orb1" id="o1"></div><div class="orb orb2" id="o2"></div>
   <canvas class="fx" id="fx"></canvas>
+  <div class="spot" id="spot"></div>
   <div class="wrap hero-grid2">
     <div class="hero-copy">
       <div class="pill reveal"><span class="live"></span> 3 places dispo ce mois-ci</div>
@@ -680,6 +682,8 @@ addEventListener('mousemove',e=>{
   const o1=document.getElementById('o1'),o2=document.getElementById('o2');
   if(o1)o1.style.transform=`translate(${x*40}px,${y*40}px)`;
   if(o2)o2.style.transform=`translate(${-x*40}px,${-y*40}px)`;
+  var sp=document.getElementById('spot'),hero=document.querySelector('.hero');
+  if(sp&&hero){var r=hero.getBoundingClientRect();sp.style.setProperty('--mx',(e.clientX-r.left)+'px');sp.style.setProperty('--my',(e.clientY-r.top)+'px')}
 });
 // custom cursor
 const cur=document.getElementById('cur'),cd=document.getElementById('curdot');
