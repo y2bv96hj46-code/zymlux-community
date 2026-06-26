@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>INKHAUS — Studio de tatouage haut de gamme · Paris</title>
+<meta name="description" content="INKHAUS, studio de tatouage d'exception à Paris. Flash, pièces custom, cover-up. Encre, précision, audace." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --black:#0a0a0a;
+    --ink:#0a0a0a;
+    --paper:#f4f1ea;
+    --red:#e3261f;
+    --grey:#8c8c8c;
+    --line:#272727;
+    --maxw:1440px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--black);
+    color:var(--paper);
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    line-height:1.5;
+  }
+  /* film grain overlay */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:9999;
+    opacity:.05;
+    mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  ::selection{background:var(--red);color:#fff;}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+  .anton{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:-.02em;line-height:.86;}
+  .archivo{font-family:'Archivo Black',sans-serif;text-transform:uppercase;}
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:sticky;top:0;z-index:1000;
+    background:rgba(10,10,10,.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    height:74px;
+  }
+  .logo{
+    font-family:'Anton',sans-serif;
+    font-size:26px;letter-spacing:.04em;
+    text-transform:uppercase;
+    display:flex;align-items:center;gap:8px;
+  }
+  .logo .dot{color:var(--red);}
+  nav.links{display:flex;gap:34px;align-items:center;}
+  nav.links a{
+    font-size:12px;text-transform:uppercase;letter-spacing:.16em;
+    font-weight:600;color:var(--grey);transition:color .25s;
+  }
+  nav.links a:hover{color:var(--paper);}
+  .btn{
+    display:inline-block;
+    background:var(--red);color:#fff;
+    font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;
+    padding:14px 22px;border:none;cursor:pointer;
+    transition:transform .2s, background .25s;
+    font-family:'Inter',sans-serif;
+  }
+  .btn:hover{background:#fff;color:var(--black);transform:translateY(-2px);}
+  .btn-ghost{background:transparent;border:1px solid var(--paper);color:var(--paper);}
+  .btn-ghost:hover{background:var(--paper);color:var(--black);}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:8px;}
+  .burger span{width:26px;height:2px;background:var(--paper);display:block;transition:.3s;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:60px 0 40px;
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+  .hero h1{
+    font-size:clamp(72px,18vw,260px);
+    margin:0;
+  }
+  .hero h1 .red{color:var(--red);}
+  .hero h1 .out{
+    -webkit-text-stroke:2px var(--paper);
+    color:transparent;
+  }
+  .hero-sub{
+    display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;
+    gap:24px;margin-top:24px;
+  }
+  .hero-sub p{max-width:440px;color:#cfcabf;font-size:16px;}
+  .hero-meta{display:flex;gap:40px;}
+  .hero-meta .num{font-family:'Anton',sans-serif;font-size:48px;color:var(--red);line-height:1;}
+  .hero-meta .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--grey);margin-top:6px;}
+  .hero-cta{display:flex;gap:14px;margin-top:28px;flex-wrap:wrap;}
+
+  /* ---------- MARQUEE ---------- */
+  .marquee{
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    background:var(--red);color:#000;
+    overflow:hidden;white-space:nowrap;
+    padding:14px 0;
+  }
+  .marquee .track{display:inline-block;will-change:transform;animation:scroll 26s linear infinite;}
+  .marquee span{
+    font-family:'Archivo Black',sans-serif;text-transform:uppercase;
+    font-size:24px;letter-spacing:.02em;padding:0 26px;
+  }
+  .marquee span .o{-webkit-text-stroke:1.5px #000;color:transparent;}
+  @keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:110px 0;border-bottom:1px solid var(--line);}
+  .eyebrow{
+    display:flex;align-items:center;gap:14px;
+    font-size:12px;text-transform:uppercase;letter-spacing:.2em;color:var(--red);
+    font-weight:700;margin-bottom:26px;
+  }
+  .eyebrow::before{content:"";width:42px;height:2px;background:var(--red);}
+  .sec-title{font-size:clamp(44px,8vw,120px);margin-bottom:18px;}
+  .sec-title .out{-webkit-text-stroke:1.5px var(--paper);color:transparent;}
+
+  /* ---------- PRESTATIONS ---------- */
+  .services{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--line);margin-top:40px;}
+  .svc{
+    padding:46px 40px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+    position:relative;transition:background .3s,color .3s;overflow:hidden;
+  }
+  .svc:nth-child(2n){border-right:none;}
+  .svc:nth-last-child(-n+2){border-bottom:none;}
+  .svc .idx{font-family:'Anton',sans-serif;font-size:18px;color:var(--red);}
+  .svc h3{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:40px;margin:14px 0 14px;letter-spacing:-.01em;}
+  .svc p{color:#bdb8ad;font-size:15px;max-width:420px;}
+  .svc .price{margin-top:22px;font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:var(--grey);font-weight:600;}
+  .svc:hover{background:var(--red);color:#fff;}
+  .svc:hover .idx,.svc:hover p,.svc:hover .price{color:#fff;}
+
+  /* ---------- GALLERY ---------- */
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    grid-auto-rows:200px;
+    gap:14px;margin-top:40px;
+  }
+  .tile{
+    position:relative;overflow:hidden;border:1px solid var(--line);
+    display:flex;align-items:flex-end;
+  }
+  .tile .g{position:absolute;inset:0;transition:transform .6s ease;}
+  .tile:hover .g{transform:scale(1.08);}
+  .tile .cap{
+    position:relative;z-index:2;padding:16px;
+    font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:13px;
+    letter-spacing:.05em;
+    background:linear-gradient(transparent,rgba(0,0,0,.7));width:100%;
+  }
+  .tile .cap small{display:block;color:var(--red);font-size:10px;letter-spacing:.18em;margin-bottom:3px;}
+  .tile.big{grid-column:span 2;grid-row:span 2;}
+  .tile.tall{grid-row:span 2;}
+  .g1{background:linear-gradient(135deg,#1a1a1a,#000 60%,#3a0c0a);}
+  .g2{background:linear-gradient(160deg,#e3261f,#2a0604 70%);}
+  .g3{background:linear-gradient(120deg,#222,#0a0a0a);}
+  .g4{background:radial-gradient(circle at 30% 20%,#444,#000 70%);}
+  .g5{background:linear-gradient(200deg,#0a0a0a,#e3261f 130%);}
+  .g6{background:repeating-linear-gradient(45deg,#111,#111 14px,#1c1c1c 14px,#1c1c1c 28px);}
+  .g7{background:radial-gradient(circle at 70% 80%,#5a0e0a,#000 65%);}
+  .g8{background:linear-gradient(135deg,#2b2b2b,#000);}
+
+  /* ---------- ARTISTS ---------- */
+  .artists{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px;}
+  .artist{border:1px solid var(--line);background:#0e0e0e;transition:transform .3s,border-color .3s;}
+  .artist:hover{transform:translateY(-6px);border-color:var(--red);}
+  .artist .ph{height:340px;position:relative;overflow:hidden;}
+  .artist .ph .num{
+    position:absolute;right:14px;bottom:0;
+    font-family:'Anton',sans-serif;font-size:120px;color:rgba(255,255,255,.08);line-height:.8;
+  }
+  .artist .info{padding:24px;}
+  .artist h3{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:32px;}
+  .artist .role{color:var(--red);font-size:12px;text-transform:uppercase;letter-spacing:.14em;font-weight:700;margin:6px 0 12px;}
+  .artist p{color:#aaa49a;font-size:14px;}
+  .a1{background:linear-gradient(160deg,#2a2a2a,#000);}
+  .a2{background:linear-gradient(160deg,#3a0c0a,#000);}
+  .a3{background:linear-gradient(160deg,#1c1c1c,#101010);}
+
+  /* ---------- REVIEWS ---------- */
+  .reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px;}
+  .review{border:1px solid var(--line);padding:34px;background:#0d0d0d;}
+  .review .stars{color:var(--red);letter-spacing:4px;font-size:16px;margin-bottom:18px;}
+  .review blockquote{font-size:18px;line-height:1.5;font-weight:500;}
+  .review .who{margin-top:24px;font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--grey);}
+  .review .who b{color:var(--paper);}
+
+  /* ---------- BOOKING ---------- */
+  .booking{background:var(--paper);color:var(--ink);border-bottom:none;}
+  .booking .eyebrow{color:var(--red);}
+  .booking .sec-title .out{-webkit-text-stroke:1.5px var(--ink);}
+  .book-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;margin-top:40px;}
+  .book-grid .lead{font-size:18px;max-width:440px;color:#333;}
+  .infos{margin-top:34px;display:grid;gap:22px;}
+  .infos .row{border-top:1px solid #d8d3c8;padding-top:14px;}
+  .infos .row .k{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--red);font-weight:700;}
+  .infos .row .v{font-size:18px;font-weight:600;margin-top:4px;}
+  form{display:grid;gap:16px;}
+  form label{font-size:11px;text-transform:uppercase;letter-spacing:.14em;font-weight:700;color:#555;}
+  form input,form select,form textarea{
+    width:100%;padding:14px 16px;border:1px solid #c9c4b8;background:#fff;
+    font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);
+  }
+  form input:focus,form select:focus,form textarea:focus{outline:2px solid var(--red);border-color:var(--red);}
+  .field{display:grid;gap:7px;}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  form .btn{justify-self:start;}
+  .form-note{font-size:12px;color:#777;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--black);padding:90px 0 40px;}
+  .foot-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:40px;}
+  .foot-logo{font-family:'Anton',sans-serif;font-size:clamp(60px,12vw,160px);text-transform:uppercase;line-height:.85;}
+  .foot-logo .red{color:var(--red);}
+  .foot-cols{display:flex;gap:70px;flex-wrap:wrap;}
+  .foot-cols h4{font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--red);margin-bottom:16px;}
+  .foot-cols a,.foot-cols p{display:block;color:#aaa49a;font-size:14px;margin-bottom:10px;transition:color .2s;}
+  .foot-cols a:hover{color:var(--paper);}
+  .foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-top:70px;padding-top:24px;border-top:1px solid var(--line);font-size:12px;color:var(--grey);text-transform:uppercase;letter-spacing:.1em;}
+
+  /* ---------- REVEAL ---------- */
+  .reveal{transform:translateY(28px);opacity:1;transition:opacity .8s ease,transform .8s ease;}
+  .js-on .reveal{opacity:0;}
+  .reveal.in{opacity:1;transform:none;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:980px){
+    .artists,.reviews{grid-template-columns:1fr;}
+    .gallery{grid-template-columns:repeat(2,1fr);}
+    .book-grid{grid-template-columns:1fr;gap:44px;}
+  }
+  @media(max-width:760px){
+    .wrap{padding:0 20px;}
+    nav.links{display:none;}
+    .nav .btn{display:none;}
+    .burger{display:flex;}
+    nav.links.open{
+      display:flex;flex-direction:column;position:absolute;top:74px;left:0;right:0;
+      background:#0a0a0a;border-bottom:1px solid var(--line);padding:24px 20px;gap:22px;
+    }
+    nav.links.open a{font-size:15px;color:var(--paper);}
+    .services{grid-template-columns:1fr;}
+    .svc{border-right:none!important;}
+    .svc:nth-last-child(-n+2){border-bottom:1px solid var(--line);}
+    .svc:last-child{border-bottom:none;}
+    .hero-meta{gap:26px;}
+    .hero-meta .num{font-size:36px;}
+    section{padding:74px 0;}
+    .tile.big{grid-column:span 2;grid-row:span 1;}
+  }
+  @media(max-width:440px){
+    .wrap{padding:0 16px;}
+    .nav{height:62px;}
+    .logo{font-size:21px;}
+    .hero{padding:40px 0 30px;}
+    .hero-meta{flex-wrap:wrap;gap:20px 30px;}
+    .svc{padding:34px 24px;}
+    .svc h3{font-size:32px;}
+    .gallery{grid-template-columns:1fr;grid-auto-rows:170px;}
+    .tile.big{grid-column:span 1;}
+    .review{padding:26px;}
+    .marquee span{font-size:18px;padding:0 18px;}
+    .two{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo">INK<span class="dot">·</span>HAUS</a>
+    <nav class="links" id="menu">
+      <a href="#prestations">Prestations</a>
+      <a href="#galerie">Galerie</a>
+      <a href="#artistes">Artistes</a>
+      <a href="#avis">Avis</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="#contact" class="btn">Prendre RDV</a>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top" style="border-bottom:1px solid var(--line)">
+  <div class="wrap hero-grid">
+    <h1 class="anton reveal">
+      L'ENCRE<br><span class="out">N'OUBLIE</span><br><span class="red">JAMAIS.</span>
+    </h1>
+    <div class="hero-sub reveal">
+      <p>Studio de tatouage haut de gamme au cœur de Paris. Flash audacieux, pièces sur-mesure et cover-up maîtrisés — réalisés par une poignée d'artistes obsédés par la ligne juste.</p>
+      <div class="hero-meta">
+        <div>
+          <div class="num">14</div>
+          <div class="lbl">ans de pratique</div>
+        </div>
+        <div>
+          <div class="num">6K+</div>
+          <div class="lbl">pièces signées</div>
+        </div>
+        <div>
+          <div class="num">5.0</div>
+          <div class="lbl">note moyenne</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-cta reveal">
+      <a href="#contact" class="btn">Réserver une séance</a>
+      <a href="#galerie" class="btn btn-ghost">Voir le portfolio</a>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>FLASH</span><span class="o">— CUSTOM —</span><span>COVER-UP</span><span class="o">— BLACKWORK —</span><span>FINE LINE</span><span class="o">— PARIS 11ᵉ —</span>
+    <span>FLASH</span><span class="o">— CUSTOM —</span><span>COVER-UP</span><span class="o">— BLACKWORK —</span><span>FINE LINE</span><span class="o">— PARIS 11ᵉ —</span>
+  </div>
+</div>
+
+<!-- PRESTATIONS -->
+<section id="prestations">
+  <div class="wrap">
+    <div class="eyebrow reveal">01 — Ce que l'on fait</div>
+    <h2 class="sec-title anton reveal">NOS <span class="out">PRESTATIONS</span></h2>
+    <div class="services">
+      <div class="svc reveal">
+        <div class="idx">01</div>
+        <h3>Flash</h3>
+        <p>Des dessins déjà conçus par nos artistes, prêts à être posés. Pièces fortes, exécution rapide, prix maîtrisé.</p>
+        <div class="price">À partir de 120 €</div>
+      </div>
+      <div class="svc reveal">
+        <div class="idx">02</div>
+        <h3>Pièce Custom</h3>
+        <p>Un projet pensé pour vous seul. Consultation, croquis exclusif puis réalisation. De l'idée à la peau.</p>
+        <div class="price">Sur devis · dès 180 € / h</div>
+      </div>
+      <div class="svc reveal">
+        <div class="idx">03</div>
+        <h3>Cover-Up</h3>
+        <p>Transformer un ancien tatouage en une œuvre dont vous serez fier. Notre spécialité technique.</p>
+        <div class="price">Sur devis après diagnostic</div>
+      </div>
+      <div class="svc reveal">
+        <div class="idx">04</div>
+        <h3>Blackwork &amp; Fine Line</h3>
+        <p>Noir profond, géométrie, ornemental ou trait fin millimétré. Le contraste poussé à l'extrême.</p>
+        <div class="price">À partir de 150 €</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIE -->
+<section id="galerie">
+  <div class="wrap">
+    <div class="eyebrow reveal">02 — Le portfolio</div>
+    <h2 class="sec-title anton reveal">LA <span class="out">GALERIE</span></h2>
+    <div class="gallery">
+      <div class="tile big reveal"><div class="g g2"></div><div class="cap"><small>Blackwork</small>Dragon dorsal</div></div>
+      <div class="tile reveal"><div class="g g1"></div><div class="cap"><small>Fine line</small>Florale</div></div>
+      <div class="tile tall reveal"><div class="g g7"></div><div class="cap"><small>Custom</small>Sleeve mythologique</div></div>
+      <div class="tile reveal"><div class="g g3"></div><div class="cap"><small>Flash</small>Dague &amp; rose</div></div>
+      <div class="tile reveal"><div class="g g4"></div><div class="cap"><small>Réalisme</small>Portrait noir</div></div>
+      <div class="tile reveal"><div class="g g6"></div><div class="cap"><small>Ornemental</small>Mandala</div></div>
+      <div class="tile tall reveal"><div class="g g5"></div><div class="cap"><small>Cover-up</small>Renaissance</div></div>
+      <div class="tile reveal"><div class="g g8"></div><div class="cap"><small>Lettrage</small>Script main libre</div></div>
+      <div class="tile reveal"><div class="g g1"></div><div class="cap"><small>Géométrie</small>Sacré</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTISTES -->
+<section id="artistes">
+  <div class="wrap">
+    <div class="eyebrow reveal">03 — La maison</div>
+    <h2 class="sec-title anton reveal">LES <span class="out">ARTISTES</span></h2>
+    <div class="artists">
+      <div class="artist reveal">
+        <div class="ph a1"><div class="num">01</div></div>
+        <div class="info">
+          <h3>Mara Voss</h3>
+          <div class="role">Fondatrice · Blackwork</div>
+          <p>14 ans de métier. Le noir saturé et la composition dorsale comme signature. Rendez-vous rares, exigeants.</p>
+        </div>
+      </div>
+      <div class="artist reveal">
+        <div class="ph a2"><div class="num">02</div></div>
+        <div class="info">
+          <h3>Elias Roth</h3>
+          <div class="role">Réalisme &amp; Cover-up</div>
+          <p>Spécialiste du portrait et du sauvetage de pièces ratées. La lumière dans l'ombre, à l'aiguille.</p>
+        </div>
+      </div>
+      <div class="artist reveal">
+        <div class="ph a3"><div class="num">03</div></div>
+        <div class="info">
+          <h3>Nina Kade</h3>
+          <div class="role">Fine line &amp; Ornemental</div>
+          <p>Le trait fin poussé à l'obsession. Botanique, géométrie, bijoux de peau d'une précision chirurgicale.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AVIS -->
+<section id="avis">
+  <div class="wrap">
+    <div class="eyebrow reveal">04 — Ils témoignent</div>
+    <h2 class="sec-title anton reveal">LES <span class="out">AVIS</span></h2>
+    <div class="reviews">
+      <div class="review reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote>« Mara a transformé une idée vague en une pièce dorsale que je n'oserai plus jamais cacher. Studio impeccable, écoute totale. »</blockquote>
+        <div class="who"><b>Camille D.</b> — Custom dorsal</div>
+      </div>
+      <div class="review reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote>« Un cover-up que trois studios avaient refusé. Elias l'a rendu invisible et magnifique. Je recommande les yeux fermés. »</blockquote>
+        <div class="who"><b>Yanis B.</b> — Cover-up avant-bras</div>
+      </div>
+      <div class="review reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote>« Le fine line de Nina est d'une finesse irréelle. Hygiène irréprochable, ambiance posée. Le meilleur studio de Paris. »</blockquote>
+        <div class="who"><b>Léa M.</b> — Fine line poignet</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING / CONTACT -->
+<section id="contact" class="booking">
+  <div class="wrap">
+    <div class="eyebrow reveal">05 — Passez à l'acte</div>
+    <h2 class="sec-title anton reveal">PRENDRE <span class="out">RDV</span></h2>
+    <div class="book-grid">
+      <div class="reveal">
+        <p class="lead">Décrivez votre projet : style, emplacement, taille et disponibilités. Nous revenons vers vous sous 48 h avec un devis et une proposition de créneau.</p>
+        <div class="infos">
+          <div class="row"><div class="k">Adresse</div><div class="v">27 rue de la Roquette, 75011 Paris</div></div>
+          <div class="row"><div class="k">Horaires</div><div class="v">Mar – Sam · 11h – 20h</div></div>
+          <div class="row"><div class="k">Contact</div><div class="v">bonjour@inkhaus.fr · 01 84 25 09 17</div></div>
+        </div>
+      </div>
+      <form id="bookForm" novalidate>
+        <div class="two">
+          <div class="field"><label for="nom">Nom</label><input id="nom" name="nom" type="text" placeholder="Votre nom" required /></div>
+          <div class="field"><label for="tel">Téléphone</label><input id="tel" name="tel" type="tel" placeholder="06 ..." /></div>
+        </div>
+        <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" placeholder="vous@email.fr" required /></div>
+        <div class="field">
+          <label for="presta">Prestation</label>
+          <select id="presta" name="presta">
+            <option>Flash</option>
+            <option>Pièce custom</option>
+            <option>Cover-up</option>
+            <option>Blackwork / Fine line</option>
+            <option>Je ne sais pas encore</option>
+          </select>
+        </div>
+        <div class="field"><label for="projet">Votre projet</label><textarea id="projet" name="projet" rows="4" placeholder="Style, emplacement, taille, références..."></textarea></div>
+        <button type="submit" class="btn">Envoyer la demande</button>
+        <p class="form-note" id="formNote">Réponse sous 48 h. Aucun acompte demandé avant validation.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-logo">INK<span class="red">HAUS</span></div>
+      <div class="foot-cols">
+        <div>
+          <h4>Navigation</h4>
+          <a href="#prestations">Prestations</a>
+          <a href="#galerie">Galerie</a>
+          <a href="#artistes">Artistes</a>
+          <a href="#contact">Réserver</a>
+        </div>
+        <div>
+          <h4>Suivez-nous</h4>
+          <a href="#">Instagram</a>
+          <a href="#">TikTok</a>
+          <a href="#">Pinterest</a>
+        </div>
+        <div>
+          <h4>Studio</h4>
+          <p>27 rue de la Roquette</p>
+          <p>75011 Paris</p>
+          <p>bonjour@inkhaus.fr</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 INKHAUS — Tous droits réservés</span>
+      <span>Encre · Précision · Audace</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    "use strict";
+    // mark JS active so reveal can hide before animating
+    document.body.classList.add('js-on');
+
+    var revealEls = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+
+    function showAll(){
+      revealEls.forEach(function(el){ el.classList.add('in'); });
+    }
+
+    // IntersectionObserver reveal
+    try{
+      if('IntersectionObserver' in window){
+        var io = new IntersectionObserver(function(entries){
+          entries.forEach(function(e){
+            if(e.isIntersecting){
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          });
+        },{threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+        revealEls.forEach(function(el){ io.observe(el); });
+      } else {
+        showAll();
+      }
+    }catch(err){
+      showAll();
+    }
+
+    // SAFETY NET: reveal everything no matter what after 1.8s
+    setTimeout(showAll, 1800);
+    // also reveal once fully loaded (belt + suspenders)
+    window.addEventListener('load', function(){ setTimeout(showAll, 200); });
+
+    // mobile menu
+    var burger = document.getElementById('burger');
+    var menu = document.getElementById('menu');
+    if(burger && menu){
+      burger.addEventListener('click', function(){
+        menu.classList.toggle('open');
+      });
+      menu.addEventListener('click', function(ev){
+        if(ev.target.tagName === 'A'){ menu.classList.remove('open'); }
+      });
+    }
+
+    // form (no real backend — graceful fake submit)
+    var form = document.getElementById('bookForm');
+    var note = document.getElementById('formNote');
+    if(form){
+      form.addEventListener('submit', function(ev){
+        ev.preventDefault();
+        var nom = document.getElementById('nom');
+        var email = document.getElementById('email');
+        if(!nom.value.trim() || !email.value.trim()){
+          if(note){ note.textContent = 'Merci de renseigner au moins votre nom et votre email.'; note.style.color = '#e3261f'; }
+          return;
+        }
+        if(note){ note.textContent = 'Demande envoyée — merci ' + nom.value.trim() + ' ! Nous revenons vers vous sous 48 h.'; note.style.color = '#111'; }
+        form.reset();
+      });
+    }
+  })();
+</script>
+</body>
+</html>
