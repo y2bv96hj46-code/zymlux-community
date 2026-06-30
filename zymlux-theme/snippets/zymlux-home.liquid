@@ -1,4 +1,4 @@
-{%- comment -%} Zymlux — Serenity Acupressure Set · immersive editorial homepage (self-contained) {%- endcomment -%}
+{%- comment -%} Zymlux — Serenity Acupressure Set · immersive editorial homepage w/ scroll FX (self-contained) {%- endcomment -%}
 {%- assign purl = '/products/acupressure-mat-neck-pillow-set' -%}
 {%- assign img = 'https://cdn.shopify.com/s/files/1/1012/8821/4857/files/' -%}
 
@@ -23,7 +23,6 @@
 #zx *{box-sizing:border-box;margin:0;padding:0}
 #zx img{display:block;max-width:100%}
 #zx ::selection{background:rgba(200,112,79,.2)}
-#zx .serif{font-family:var(--serif)}
 #zx h1,#zx h2,#zx h3{font-family:var(--serif);font-weight:300;color:var(--ink2);letter-spacing:-.02em;line-height:1.05}
 #zx h1 em,#zx h2 em,#zx .em{font-style:italic;font-weight:300;color:var(--clay)}
 #zx p{max-width:64ch}
@@ -47,8 +46,6 @@
 #zx .btn-light:hover{background:#fff;transform:translateY(-3px)}
 #zx .btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
 #zx .btn-ghost:hover{border-color:var(--ink);transform:translateY(-3px)}
-#zx .btn-ghost.light{color:var(--cream);border-color:var(--line-d)}
-#zx .btn-ghost.light:hover{border-color:var(--cream);background:rgba(255,255,255,.06)}
 #zx .btn .arr{transition:transform .4s ease}
 #zx .btn:hover .arr{transform:translateX(5px)}
 
@@ -59,6 +56,12 @@
 #zx .reveal{opacity:0;transform:translateY(26px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1)}
 #zx .reveal.is-in{opacity:1;transform:none}
 #zx .reveal.d1{transition-delay:.1s}#zx .reveal.d2{transition-delay:.2s}#zx .reveal.d3{transition-delay:.3s}
+/* curtain reveal for images */
+#zx .cliprv{clip-path:inset(0 0 100% 0);transition:clip-path 1.3s cubic-bezier(.2,.7,.2,1)}
+#zx .cliprv.is-in{clip-path:inset(0 0 0 0)}
+/* parallax image sizing */
+#zx .pwrap{position:relative;overflow:hidden}
+#zx .pimg{position:absolute;left:0;top:-16%;width:100%;height:132%;object-fit:cover;will-change:transform;backface-visibility:hidden}
 
 /* header */
 #zx-head{position:absolute;top:0;left:0;right:0;z-index:30;display:flex;justify-content:center;
@@ -71,21 +74,21 @@
 
 /* HERO full-screen */
 #zx .hero{position:relative;min-height:100svh;min-height:100vh;display:flex;align-items:flex-end;overflow:hidden}
-#zx .hero-bg{position:absolute;inset:0;z-index:0}
-#zx .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 32%;transform:scale(1.06);transition:transform 12s ease}
-#zx .hero.is-in .hero-bg img{transform:scale(1)}
+#zx .hero-bg{position:absolute;inset:0;z-index:0;transform:scale(1.08);transition:transform 11s ease}
+#zx .hero.is-in .hero-bg{transform:scale(1)}
+#zx .hero-bg img{position:absolute;left:0;top:-9%;width:100%;height:118%;object-fit:cover;object-position:50% 30%;will-change:transform}
 #zx .hero::after{content:"";position:absolute;inset:0;z-index:1;
-  background:linear-gradient(180deg,rgba(30,36,33,.34) 0%,rgba(30,36,33,0) 26%,rgba(30,36,33,.12) 56%,rgba(30,36,33,.74) 100%)}
+  background:linear-gradient(180deg,rgba(28,33,30,.42) 0%,rgba(28,33,30,.05) 30%,rgba(28,33,30,.2) 58%,rgba(28,33,30,.8) 100%)}
 #zx .hero-inner{position:relative;z-index:2;width:100%;max-width:var(--wide);margin:0 auto;
   padding:0 var(--pad-x) clamp(3.5rem,7vw,6rem)}
 #zx .hero-inner .eyebrow{color:var(--gold)}
 #zx .hero-inner .eyebrow::before{background:var(--gold)}
-#zx .hero h1{color:var(--cream);font-size:clamp(2.9rem,1.6rem + 6vw,5.8rem);margin:24px 0 0;max-width:16ch;
-  text-shadow:0 2px 40px rgba(20,24,22,.3)}
+#zx .hero h1{color:var(--cream);font-size:clamp(2.6rem,1.5rem + 5vw,5rem);margin:22px 0 0;max-width:18ch;
+  text-shadow:0 2px 40px rgba(20,24,22,.35)}
 #zx .hero h1 em{color:#F0C9B2}
-#zx .hero-sub{color:rgba(244,239,231,.92);font-size:clamp(1.05rem,1rem + .5vw,1.3rem);line-height:1.6;
-  margin:22px 0 0;max-width:42ch}
-#zx .hero-row{display:flex;flex-wrap:wrap;align-items:center;gap:18px 28px;margin-top:36px}
+#zx .hero-sub{color:rgba(244,239,231,.94);font-size:clamp(1.08rem,1rem + .6vw,1.4rem);line-height:1.55;
+  margin:22px 0 0;max-width:40ch}
+#zx .hero-row{display:flex;flex-wrap:wrap;align-items:center;gap:18px 28px;margin-top:38px}
 #zx .hero-price{display:flex;align-items:baseline;gap:11px;color:var(--cream)}
 #zx .hero-price .now{font-family:var(--serif);font-weight:400;font-size:1.7rem}
 #zx .hero-price .was{font-size:.95rem;color:rgba(244,239,231,.6);text-decoration:line-through}
@@ -105,7 +108,6 @@
 
 /* section bases */
 #zx .sec{padding:var(--pad-y) var(--pad-x)}
-#zx .wrap{max-width:var(--wide);margin:0 auto}
 #zx .section-head{max-width:var(--head);margin:0 auto;text-align:center}
 #zx .section-head h2{font-size:clamp(2.1rem,1.5rem + 2.6vw,3.4rem);margin:20px 0 0}
 #zx .section-head .lead{margin:22px auto 0}
@@ -119,9 +121,8 @@
 #zx .manifesto .rule{width:1px;height:54px;background:linear-gradient(var(--gold),transparent);margin:40px auto 0}
 
 /* SPLIT band — image bleeds to screen edge */
-#zx .split{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;min-height:clamp(520px,72vh,760px)}
+#zx .split{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;min-height:clamp(520px,74vh,780px)}
 #zx .split .media{position:relative;overflow:hidden}
-#zx .split .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 #zx .split .copy{display:flex;flex-direction:column;justify-content:center;padding:clamp(3rem,7vw,7rem) clamp(1.6rem,5vw,6rem)}
 #zx .split .copy.pad-r{padding-right:clamp(1.6rem,7vw,8rem)}
 #zx .split h2{font-size:clamp(2rem,1.4rem + 2.6vw,3.2rem);margin:20px 0 0}
@@ -129,10 +130,19 @@
 #zx .split .body{margin-top:16px}
 #zx .split.flip .media{order:2}
 
+/* STATS band */
+#zx .stats{background:var(--cream2);text-align:center}
+#zx .stats .row{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr)}
+#zx .stats .cell{padding:14px 18px}
+#zx .stats .cell + .cell{border-left:1px solid var(--line)}
+#zx .stats .n{font-family:var(--serif);font-weight:300;font-size:clamp(3rem,2rem + 4.5vw,5.2rem);color:var(--ink2);line-height:.95}
+#zx .stats .n .u{color:var(--clay);font-size:.42em;font-style:italic}
+#zx .stats .l{margin-top:12px;font:500 .72rem/1.5 var(--sans);text-transform:uppercase;letter-spacing:.18em;color:var(--soft)}
+@media(max-width:680px){#zx .stats .row{grid-template-columns:1fr;gap:8px}#zx .stats .cell + .cell{border-left:0;border-top:1px solid var(--line)}}
+
 /* FULL-BLEED cinematic */
-#zx .cine{position:relative;min-height:clamp(560px,86vh,860px);display:grid;place-items:center;text-align:center;overflow:hidden}
-#zx .cine img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
-#zx .cine::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,33,30,.5),rgba(28,33,30,.34) 45%,rgba(28,33,30,.66))}
+#zx .cine{position:relative;min-height:clamp(560px,88vh,880px);display:grid;place-items:center;text-align:center;overflow:hidden}
+#zx .cine::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(26,31,28,.52),rgba(26,31,28,.34) 45%,rgba(26,31,28,.7))}
 #zx .cine .bc{position:relative;z-index:2;max-width:680px;padding:48px var(--pad-x);color:var(--cream)}
 #zx .cine h2{color:var(--cream);font-size:clamp(2.2rem,1.4rem + 3.4vw,4rem);margin:20px 0 0}
 #zx .cine p{color:rgba(244,239,231,.92);margin:20px auto 0;max-width:44ch;font-size:1.05rem}
@@ -194,9 +204,8 @@
 #zx .faq .ans p{padding:0 4px 26px;max-width:64ch;color:var(--muted)}
 
 /* final cinematic */
-#zx .final{position:relative;min-height:clamp(560px,80vh,800px);display:grid;place-items:center;text-align:center;overflow:hidden}
-#zx .final img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
-#zx .final::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,33,30,.55),rgba(28,33,30,.72))}
+#zx .final{position:relative;min-height:clamp(560px,82vh,820px);display:grid;place-items:center;text-align:center;overflow:hidden}
+#zx .final::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(26,31,28,.56),rgba(26,31,28,.74))}
 #zx .final .bc{position:relative;z-index:2;max-width:680px;padding:48px var(--pad-x);color:var(--cream)}
 #zx .final h2{color:var(--cream);font-size:clamp(2.3rem,1.5rem + 3.4vw,4.2rem);margin:20px auto 0;max-width:16ch}
 #zx .final p{color:rgba(244,239,231,.9);margin:22px auto 0}
@@ -220,7 +229,7 @@
 
 @media(max-width:860px){
   #zx .split{grid-template-columns:1fr}
-  #zx .split .media{min-height:62vh}
+  #zx .split .media{min-height:64vh}
   #zx .split.flip .media{order:0}
   #zx .steps{grid-template-columns:1fr;gap:36px}
   #zx .give{grid-template-columns:auto 1fr;gap:20px}
@@ -228,7 +237,8 @@
 @media(prefers-reduced-motion:reduce){
   #zx *,#zx *::before,#zx *::after{animation:none!important;transition:none!important}
   #zx .reveal{opacity:1!important;transform:none!important}
-  #zx .hero-bg img{transform:none!important}
+  #zx .cliprv{clip-path:none!important}
+  #zx .hero-bg,#zx .pimg{transform:none!important}
   #zx-bar,#zx-head{transition:none!important}
 }
 </style>
@@ -252,13 +262,13 @@
 
   <!-- HERO full-screen -->
   <section class="hero" id="zxhero">
-    <div class="hero-bg"><img src="{{ img }}pexels-photo-6453915.jpg?v=1782829005&amp;width=1800" alt="A woman resting calmly in soft morning light" width="1800" height="2250" loading="eager" fetchpriority="high" decoding="async"></div>
+    <div class="hero-bg"><img data-px="34" src="{{ img }}pexels-photo-6453915.jpg?v=1782829005&amp;width=1800" alt="A woman relaxing on the Serenity acupressure set in soft morning light" width="1800" height="2250" loading="eager" fetchpriority="high" decoding="async"></div>
     <div class="hero-inner">
-      <span class="eyebrow">The Serenity Set &#183; Acupressure ritual</span>
-      <h1>Twenty quiet minutes, and the day <em>lets go</em>.</h1>
-      <p class="hero-sub">An acupressure mat and contoured neck pillow, made for the slow hour between the day and sleep.</p>
+      <span class="eyebrow">Acupressure mat &amp; neck pillow set</span>
+      <h1>Melt away neck, shoulder &amp; back tension &#8212; in <em>20 minutes</em>.</h1>
+      <p class="hero-sub">A drug-free evening ritual that relaxes the body, quiets the mind, and helps you fall asleep &#8212; naturally.</p>
       <div class="hero-row">
-        <a href="{{ purl }}" class="btn btn-light">Begin the ritual <svg class="ico sm arr" style="stroke:currentColor"><use href="#zxi-arrow"></use></svg></a>
+        <a href="{{ purl }}" class="btn btn-light">Shop the set <svg class="ico sm arr" style="stroke:currentColor"><use href="#zxi-arrow"></use></svg></a>
         <span class="hero-price"><span class="now">$49.99</span><span class="was">$99.99</span></span>
       </div>
     </div>
@@ -271,7 +281,7 @@
       <span><svg class="ico"><use href="#zxi-truck"></use></svg> Free US shipping</span>
       <span><svg class="ico"><use href="#zxi-shield"></use></svg> 60-night trial</span>
       <span><svg class="ico"><use href="#zxi-lock"></use></svg> Secure checkout</span>
-      <span><svg class="ico"><use href="#zxi-leaf"></use></svg> Drug-free</span>
+      <span><svg class="ico"><use href="#zxi-leaf"></use></svg> Drug-free relief</span>
     </div>
   </section>
 
@@ -286,12 +296,21 @@
 
   <!-- PROBLEM split -->
   <section class="split">
-    <div class="media reveal"><img src="{{ img }}pexels-photo-3822622.jpg?v=1782829094&amp;width=1100" alt="A woman easing tension in her neck and shoulders" width="1100" height="1375" loading="lazy" decoding="async"></div>
+    <div class="media pwrap cliprv"><img class="pimg" data-px="48" src="{{ img }}pexels-photo-3822622.jpg?v=1782829094&amp;width=1100" alt="A woman easing tension in her neck and shoulders" width="1100" height="1375" loading="lazy" decoding="async"></div>
     <div class="copy pad-r reveal d1">
       <span class="eyebrow">The evening you know</span>
       <h2>You carry the day in your shoulders.</h2>
       <p class="lead">A tight neck. A mind still running. The body braced long after the work is done.</p>
       <p class="body">The Serenity Set gives all of it somewhere to land &#8212; a few honest minutes that tell the nervous system it&#39;s finally safe to rest.</p>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="sec stats">
+    <div class="row">
+      <div class="cell reveal"><div class="n">20<span class="u">min</span></div><div class="l">A day is all it takes</div></div>
+      <div class="cell reveal d1"><div class="n">6,000<span class="u">+</span></div><div class="l">Pressure points</div></div>
+      <div class="cell reveal d2"><div class="n">60<span class="u">nights</span></div><div class="l">Money-back trial</div></div>
     </div>
   </section>
 
@@ -304,14 +323,14 @@
     <div class="gives-list">
       <div class="give reveal"><div class="ic"><svg class="ico"><use href="#zxi-moon"></use></svg></div><div class="tx"><h3>A quieter mind</h3><p>Lie back, breathe, and let the day downshift. Often the simple cue to be still is all the body needs.</p></div><div class="idx">01</div></div>
       <div class="give reveal d1"><div class="ic"><svg class="ico"><use href="#zxi-release"></use></svg></div><div class="tx"><h3>Neck &amp; shoulders, released</h3><p>Thousands of contact points press evenly across the back, while the pillow reaches the curve a flat mat can&#39;t.</p></div><div class="idx">02</div></div>
-      <div class="give reveal d2"><div class="ic"><svg class="ico"><use href="#zxi-rest"></use></svg></div><div class="tx"><h3>An easier evening</h3><p>A calm wind-down to mark the end of the day &#8212; no screen, no pill, nothing to charge.</p></div><div class="idx">03</div></div>
+      <div class="give reveal d2"><div class="ic"><svg class="ico"><use href="#zxi-rest"></use></svg></div><div class="tx"><h3>Deeper, easier sleep</h3><p>A calm wind-down that helps you drift off &#8212; no screen, no pill, nothing to charge.</p></div><div class="idx">03</div></div>
     </div>
   </section>
 
   <!-- CINEMATIC candle -->
-  <section class="cine reveal">
-    <img src="{{ img }}pexels-photo-7445026.jpg?v=1782829008&amp;width=1900" alt="A calm, candlelit bedroom in the evening" width="1900" height="1267" loading="lazy" decoding="async">
-    <div class="bc">
+  <section class="cine">
+    <img class="pimg" data-px="70" src="{{ img }}pexels-photo-7445026.jpg?v=1782829008&amp;width=1900" alt="A calm, candlelit bedroom in the evening" width="1900" height="1267" loading="lazy" decoding="async">
+    <div class="bc reveal">
       <span class="eyebrow center light">Made for the last hour of the day</span>
       <h2>Trade the late-night scroll for stillness</h2>
       <p>When the lights go low and the day is finally yours.</p>
@@ -321,7 +340,7 @@
 
   <!-- MATERIALS split flip -->
   <section class="split flip">
-    <div class="media reveal"><img src="{{ img }}pexels-photo-7794365.jpg?v=1782829005&amp;width=1100" alt="Close-up of natural linen-textured fabric" width="1100" height="1375" loading="lazy" decoding="async"></div>
+    <div class="media pwrap cliprv"><img class="pimg" data-px="48" src="{{ img }}pexels-photo-7794365.jpg?v=1782829005&amp;width=1100" alt="Close-up of natural linen-textured fabric" width="1100" height="1375" loading="lazy" decoding="async"></div>
     <div class="copy reveal d1">
       <span class="eyebrow">Made of real things</span>
       <h2>Texture your skin actually wants.</h2>
@@ -390,13 +409,13 @@
   </section>
 
   <!-- FINAL cinematic -->
-  <section class="final reveal">
-    <img src="{{ img }}pexels-photo-6453915.jpg?v=1782829005&amp;width=1900" alt="A woman resting calmly" width="1900" height="1267" loading="lazy" decoding="async">
-    <div class="bc">
+  <section class="final">
+    <img class="pimg" data-px="60" src="{{ img }}pexels-photo-6453915.jpg?v=1782829005&amp;width=1900" alt="A woman resting calmly" width="1900" height="1267" loading="lazy" decoding="async">
+    <div class="bc reveal">
       <span class="eyebrow center light">Tonight</span>
       <h2>Give your evenings somewhere to land</h2>
       <p>The Serenity Acupressure Mat &amp; Neck Pillow Set &#8212; $49.99, with sixty nights to decide.</p>
-      <a href="{{ purl }}" class="btn btn-light">Begin the ritual <svg class="ico sm arr" style="stroke:currentColor"><use href="#zxi-arrow"></use></svg></a>
+      <a href="{{ purl }}" class="btn btn-light">Shop the set <svg class="ico sm arr" style="stroke:currentColor"><use href="#zxi-arrow"></use></svg></a>
     </div>
   </section>
 
@@ -414,19 +433,40 @@
 (function(){
   var zx=document.getElementById('zx');if(!zx)return;
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var items=zx.querySelectorAll('.reveal');
+  var items=zx.querySelectorAll('.reveal,.cliprv');
   if(reduce||!('IntersectionObserver'in window)){items.forEach(function(el){el.classList.add('is-in');});}
   else{
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target);}});},{threshold:.14,rootMargin:'0px 0px -8% 0px'});
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -7% 0px'});
     items.forEach(function(el){io.observe(el);});
   }
   var hero=document.getElementById('zxhero');if(hero)hero.classList.add('is-in');
+
+  /* parallax */
+  var pe=[].slice.call(zx.querySelectorAll('[data-px]'));
+  var ticking=false;
+  function px(){
+    ticking=false;
+    var vh=window.innerHeight;
+    for(var i=0;i<pe.length;i++){
+      var el=pe[i],r=el.getBoundingClientRect();
+      if(r.bottom<-300||r.top>vh+300)continue;
+      var mid=r.top+r.height/2;
+      var prog=(mid-vh/2)/(vh/2+r.height/2);
+      if(prog>1)prog=1;if(prog<-1)prog=-1;
+      var f=parseFloat(el.getAttribute('data-px'))||40;
+      el.style.transform='translate3d(0,'+(-prog*f).toFixed(1)+'px,0)';
+    }
+  }
+  function onScrollPx(){if(!ticking){ticking=true;requestAnimationFrame(px);}}
+  if(!reduce){window.addEventListener('scroll',onScrollPx,{passive:true});window.addEventListener('resize',onScrollPx,{passive:true});px();}
+
+  /* sticky bar + header */
   var bar=document.getElementById('zx-bar'),head=document.getElementById('zx-head');
-  var onScroll=function(){
+  function chrome(){
     var b=hero?hero.getBoundingClientRect().bottom:0;
     if(b<80){bar&&bar.classList.add('show');head&&head.classList.add('solid');}
     else{bar&&bar.classList.remove('show');head&&head.classList.remove('solid');}
-  };
-  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  }
+  window.addEventListener('scroll',chrome,{passive:true});chrome();
 })();
 </script>
