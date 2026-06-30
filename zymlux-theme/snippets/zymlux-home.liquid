@@ -68,28 +68,19 @@
 #zx .pwrap{position:relative;overflow:hidden}
 #zx .pimg{position:absolute;left:0;top:-16%;width:100%;height:132%;object-fit:cover;will-change:transform;backface-visibility:hidden}
 
-/* HEADER */
-#zx-head{position:absolute;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;
-  padding:24px clamp(18px,4vw,40px);transition:background .4s,padding .4s,box-shadow .4s}
-#zx-head .mark{font-family:var(--serif);font-weight:400;font-size:1.3rem;letter-spacing:.4em;color:var(--cream);
-  padding-left:.4em;transition:color .4s;text-decoration:none}
-#zx-head::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(18,23,20,.55),rgba(18,23,20,0));transition:opacity .4s;pointer-events:none}
-#zx-head.solid::before{opacity:0}
-#zx-head .mark{text-shadow:0 1px 16px rgba(15,18,15,.5)}
-#zx-head.solid .mark{text-shadow:none}
-#zx-head .actions{display:flex;align-items:center;gap:12px}
-#zx-head .zx-cart{display:grid;place-items:center;width:34px;height:40px}
-#zx-head .zx-cart .ico{stroke:var(--cream)}
-#zx-head.solid .zx-cart .ico{stroke:var(--ink)}
-#zx-burger{filter:drop-shadow(0 1px 6px rgba(15,18,15,.45))}
-#zx-head.solid #zx-burger{filter:none}
-#zx-head.solid{position:fixed;background:rgba(244,239,231,.93);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
-  padding:14px clamp(18px,4vw,40px);box-shadow:0 1px 0 var(--line-2)}
-#zx-head.solid .mark{color:var(--ink)}
-#zx-head.solid #zx-burger span{background:var(--ink)}
-#zx-burger{width:40px;height:40px;display:grid;align-content:center;gap:6px;background:none;border:0;cursor:pointer;justify-items:end}
-#zx-burger span{display:block;height:1.5px;width:26px;background:var(--cream);transition:transform .4s,opacity .3s,width .4s,background .4s}
-#zx-burger span:nth-child(2){width:18px}
+/* HEADER (solid top bar: menu · logo · cart) */
+#zx-head{position:sticky;top:0;z-index:40;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  padding:11px clamp(16px,4vw,36px);background:rgba(244,239,231,.97);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line-2);transition:box-shadow .4s}
+#zx-head.solid{box-shadow:0 8px 26px -18px rgba(31,39,35,.55)}
+#zx-head .logo{justify-self:center;display:flex;align-items:center;gap:8px;text-decoration:none;min-height:34px}
+#zx-head .logo .mark{font-family:var(--serif);font-weight:400;font-size:1.25rem;letter-spacing:.36em;color:var(--ink);padding-left:.36em}
+#zx-head .logo img{height:32px;width:auto;display:block;object-fit:contain}
+#zx-head .ico{width:22px;height:22px;fill:none;stroke:var(--ink2);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+#zx-head .zx-cart{justify-self:end;display:grid;place-items:center;width:40px;height:40px}
+#zx-burger{justify-self:start;width:40px;height:40px;display:grid;align-content:center;gap:6px;background:none;border:0;cursor:pointer;justify-items:start}
+#zx-burger span{display:block;height:1.6px;width:24px;background:var(--ink2);transition:width .4s}
+#zx-burger span:nth-child(2){width:16px}
 
 /* MENU overlay */
 #zx-menu{position:fixed;inset:0;z-index:50;background:var(--ink);color:var(--cream);
@@ -117,12 +108,12 @@
 body.zx-lock{overflow:hidden}
 
 /* HERO */
-#zx .hero{position:relative;min-height:100svh;min-height:100vh;display:flex;align-items:flex-end;overflow:hidden}
+#zx .hero{position:relative;min-height:calc(100vh - 58px);min-height:calc(100svh - 58px);display:flex;align-items:flex-end;overflow:hidden}
 #zx .hero-bg{position:absolute;inset:0;z-index:0;transform:scale(1.08);transition:transform 11s ease}
 #zx .hero.is-in .hero-bg{transform:scale(1)}
 #zx .hero-bg img{position:absolute;left:0;top:-9%;width:100%;height:118%;object-fit:cover;object-position:50% 28%;will-change:transform}
 #zx .hero::after{content:"";position:absolute;inset:0;z-index:1;
-  background:linear-gradient(180deg,rgba(20,26,22,.28) 0%,rgba(20,26,22,0) 24%,rgba(20,26,22,0) 50%,rgba(20,26,22,.66) 100%)}
+  background:linear-gradient(180deg,rgba(20,26,22,.12) 0%,rgba(20,26,22,0) 30%,rgba(20,26,22,.42) 62%,rgba(20,26,22,.82) 100%)}
 #zx .hero-inner{position:relative;z-index:2;width:100%;max-width:var(--wide);margin:0 auto;
   padding:0 var(--pad-x) clamp(3.5rem,7vw,6rem)}
 #zx .hero h1{color:var(--cream);font-size:clamp(2.6rem,1.5rem + 5vw,5rem);margin:22px 0 0;max-width:18ch;
@@ -130,6 +121,7 @@ body.zx-lock{overflow:hidden}
 #zx .hero-sub{color:rgba(244,239,231,.95);font-size:clamp(1.08rem,1rem + .6vw,1.4rem);line-height:1.55;
   margin:22px 0 0;max-width:40ch;text-shadow:0 1px 16px rgba(12,15,12,.6)}
 #zx .hero .eyebrow{text-shadow:0 1px 12px rgba(12,15,12,.5)}
+#zx .hero h1 .grad{background:none;-webkit-text-fill-color:#F2D7BB;color:#F2D7BB}
 #zx .hero-row{display:flex;flex-wrap:wrap;align-items:center;gap:18px 28px;margin-top:38px}
 #zx .hero-price{display:flex;align-items:baseline;gap:11px;color:var(--cream)}
 #zx .hero-price .now{font-family:var(--serif);font-weight:400;font-size:1.7rem}
@@ -301,11 +293,15 @@ body.zx-lock{overflow:hidden}
 </svg>
 
 <header id="zx-head">
-  <a href="#zxtop" class="mark">ZYMLUX</a>
-  <div class="actions">
-    <a href="/cart" class="zx-cart" aria-label="Cart"><svg class="ico sm"><use href="#zxi-bag"></use></svg></a>
-    <button id="zx-burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
-  </div>
+  <button id="zx-burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+  <a href="/" class="logo" aria-label="{{ shop.name }}">
+    {%- if settings.logo != blank -%}
+      <img src="{{ settings.logo | image_url: width: 360 }}" alt="{{ shop.name }}" width="180" height="40">
+    {%- else -%}
+      <span class="mark">ZYMLUX</span>
+    {%- endif -%}
+  </a>
+  <a href="{{ routes.cart_url }}" class="zx-cart" aria-label="Cart"><svg class="ico"><use href="#zxi-bag"></use></svg></a>
 </header>
 
 <nav id="zx-menu" aria-hidden="true">
