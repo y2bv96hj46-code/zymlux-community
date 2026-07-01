@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zymlux Trend — Veille produits & boutiques e-commerce</title>
+<meta name="description" content="Espionne les vraies boutiques Shopify et les pubs Meta en temps réel. Nouveaux produits, prix, promos, best-sellers. Outil de veille pour le dropshipping.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070708;--bg2:#0d0d12;--card:#12121a;--card2:#171722;--line:#212130;--line2:#2c2c3e;
+  --txt:#f4f4f6;--mut:#9a9aac;--faint:#63636f;
+  --c1:#7b5cff;--c2:#19e3c0;--grad:linear-gradient(120deg,#7b5cff,#19e3c0);
+  --good:#3ee08f;--warn:#ffb15d;--bad:#ff6b6b;
+  --ease:cubic-bezier(.22,1,.36,1);--radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-weight:300;line-height:1.55;min-height:100svh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(80% 55% at 50% -10%,rgba(123,92,255,.12),transparent 55%),radial-gradient(60% 50% at 100% 100%,rgba(25,227,192,.06),transparent 55%),linear-gradient(180deg,var(--bg2),var(--bg))}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif;font-weight:600}
+button{font-family:inherit;cursor:pointer;color:inherit}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+::selection{background:rgba(123,92,255,.3)}
+*{scrollbar-width:thin;scrollbar-color:#2c2c3e transparent}
+::-webkit-scrollbar{width:9px;height:9px}::-webkit-scrollbar-thumb{background:#2c2c3e;border-radius:10px;border:2px solid transparent;background-clip:content-box}
+
+.top{position:sticky;top:0;z-index:50;height:64px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 clamp(16px,4vw,40px);border-bottom:1px solid var(--line);background:rgba(7,7,8,.78);backdrop-filter:blur(14px)}
+.brand{font-family:'Space Grotesk';font-weight:700;font-size:1.12rem;display:flex;align-items:center;gap:10px;white-space:nowrap}
+.brand .dot{width:11px;height:11px;border-radius:50%;background:var(--grad);box-shadow:0 0 14px rgba(123,92,255,.6)}
+.brand small{font-weight:400;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--mut);font-family:'Inter'}
+.search{flex:1;max-width:420px;position:relative;display:flex;align-items:center}
+.search svg{position:absolute;left:14px;width:16px;height:16px;color:var(--faint)}
+.search input{width:100%;background:var(--card);border:1px solid var(--line);border-radius:50px;padding:11px 16px 11px 40px;color:var(--txt);font-size:.9rem;font-family:inherit;transition:.3s var(--ease)}
+.search input:focus{outline:none;border-color:var(--c1);box-shadow:0 0 0 4px rgba(123,92,255,.1)}
+.search input::placeholder{color:var(--faint)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--grad);color:#06060a;font-weight:600;padding:11px 18px;border-radius:50px;border:0;font-size:.86rem;transition:.3s var(--ease);white-space:nowrap}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(123,92,255,.4)}
+.btn:disabled{opacity:.5;transform:none;box-shadow:none;cursor:wait}
+.btn-out{background:transparent;border:1px solid var(--line2);color:var(--txt)}
+.btn-out:hover{border-color:#fff;transform:translateY(-2px);box-shadow:none}
+.btn-sm{padding:8px 14px;font-size:.8rem}
+@media(max-width:760px){.brand small{display:none}.search{max-width:none}.hide-sm{display:none}}
+
+.tabs{display:flex;gap:4px;padding:14px clamp(16px,4vw,40px) 0;flex-wrap:wrap}
+.tab{background:transparent;border:1px solid transparent;border-radius:50px;padding:9px 18px;font-size:.88rem;color:var(--mut);font-weight:500;display:flex;align-items:center;gap:8px;transition:.25s var(--ease)}
+.tab:hover{color:var(--txt);background:var(--card)}
+.tab.act{color:var(--txt);background:var(--card2);border-color:var(--line2)}
+.tab .cnt{font-size:.7rem;background:rgba(123,92,255,.18);color:#b9a6ff;padding:1px 8px;border-radius:50px}
+
+.wrap{padding:clamp(16px,4vw,40px);max-width:1400px;margin:0 auto}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}
+.kpi{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;position:relative;overflow:hidden}
+.kpi::after{content:"";position:absolute;top:-30px;right:-30px;width:90px;height:90px;background:radial-gradient(circle,rgba(123,92,255,.16),transparent 70%)}
+.kpi .lbl{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
+.kpi .val{font-family:'Space Grotesk';font-size:1.75rem;font-weight:700;letter-spacing:-.02em}
+.kpi .chg{font-size:.76rem;margin-top:4px;color:var(--mut)}
+.up{color:var(--good)}.down{color:var(--bad)}
+@media(max-width:860px){.kpis{grid-template-columns:repeat(2,1fr)}}
+
+.filters{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:22px;display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end}
+.fgroup{display:flex;flex-direction:column;gap:7px}
+.fgroup label{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);padding-left:2px}
+select,input.mini{background:var(--card2);border:1px solid var(--line2);border-radius:10px;padding:9px 13px;color:var(--txt);font-size:.86rem;font-family:inherit;transition:.25s var(--ease)}
+select:focus,input.mini:focus{outline:none;border-color:var(--c1)}
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.chip{background:var(--card2);border:1px solid var(--line2);border-radius:50px;padding:7px 14px;font-size:.8rem;color:var(--mut);transition:.2s var(--ease);white-space:nowrap}
+.chip:hover{color:var(--txt);border-color:var(--c1)}
+.chip.act{background:var(--grad);color:#06060a;border-color:transparent;font-weight:600}
+.reset{background:transparent;border:1px solid var(--line2);border-radius:10px;padding:9px 14px;font-size:.82rem;color:var(--mut)}
+.reset:hover{color:var(--txt);border-color:var(--bad)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:.3s var(--ease);position:relative;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-4px);border-color:var(--line2);box-shadow:0 20px 44px rgba(0,0,0,.5)}
+.thumb{height:210px;position:relative;background:var(--card2);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb .ph{font-size:3rem;opacity:.4}
+.heart{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;background:rgba(7,7,8,.6);backdrop-filter:blur(6px);border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:1rem;transition:.2s var(--ease);z-index:2}
+.heart:hover{transform:scale(1.12);border-color:var(--bad)}
+.tag{position:absolute;top:10px;left:10px;font-size:.68rem;font-weight:600;padding:4px 10px;border-radius:50px;backdrop-filter:blur(6px);z-index:2}
+.tag.new{background:rgba(62,224,143,.85);color:#04140c}
+.tag.promo{background:rgba(255,107,107,.85);color:#1a0606;top:auto;bottom:10px}
+.body{padding:14px 15px;display:flex;flex-direction:column;gap:9px;flex:1}
+.store-line{font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--c2);display:flex;align-items:center;gap:6px}
+.body h3{font-size:.96rem;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.5em}
+.ptype{font-size:.72rem;color:var(--faint)}
+.foot{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding-top:10px;border-top:1px solid var(--line);margin-top:auto}
+.price{font-family:'Space Grotesk';font-weight:700;font-size:1.2rem}
+.was{font-size:.8rem;color:var(--faint);text-decoration:line-through;margin-left:6px;font-weight:400}
+.disc{font-size:.74rem;font-weight:600;color:#ff9b9b;background:rgba(255,107,107,.14);padding:3px 8px;border-radius:50px}
+.na{font-size:.72rem;color:var(--warn)}
+
+.stores{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.store{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;transition:.3s var(--ease)}
+.store:hover{border-color:var(--line2)}
+.store .s-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.store h3{font-size:1.05rem}
+.store .url{font-size:.78rem;color:var(--c2)}
+.store .s-meta{display:flex;gap:18px;font-size:.82rem;color:var(--mut);margin-bottom:14px;flex-wrap:wrap}
+.store .s-meta b{color:var(--txt);font-family:'Space Grotesk'}
+.store .s-actions{display:flex;gap:8px;flex-wrap:wrap}
+.dot-st{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px}
+.err{font-size:.74rem;color:var(--bad);margin-top:8px}
+
+.addbar{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:22px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.addbar input{flex:1;min-width:200px}
+
+.ad{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.ad .kw{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--c2)}
+.ad h4{font-size:.98rem}
+.ad .meta{font-size:.78rem;color:var(--mut)}
+
+.empty{text-align:center;padding:70px 20px;color:var(--mut);grid-column:1/-1}
+.empty .big{font-size:3rem;margin-bottom:14px}
+.empty h3{font-size:1.3rem;margin-bottom:8px;color:var(--txt)}
+.count-line{color:var(--mut);font-size:.85rem;margin-bottom:16px}
+.count-line b{color:var(--txt);font-weight:600}
+
+.modal-bg{position:fixed;inset:0;z-index:100;background:rgba(4,4,6,.7);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:.35s var(--ease)}
+.modal-bg.on{opacity:1;pointer-events:auto}
+.modal{background:var(--card);border:1px solid var(--line2);border-radius:22px;max-width:760px;width:100%;max-height:90svh;overflow-y:auto;transform:translateY(20px) scale(.98);transition:.4s var(--ease)}
+.modal-bg.on .modal{transform:none}
+.m-top{display:grid;grid-template-columns:240px 1fr;gap:0}
+.m-img{background:var(--card2);min-height:240px;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:22px 0 0 0}
+.m-img img{width:100%;height:100%;object-fit:cover}
+.m-info{padding:24px;position:relative}
+.m-close{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;background:var(--card2);border:1px solid var(--line2);font-size:1.05rem}
+.m-close:hover{border-color:var(--bad)}
+.m-info h2{font-size:1.35rem;margin:6px 0 4px}
+.m-info .sub{color:var(--mut);font-size:.85rem;margin-bottom:16px}
+.m-price{font-family:'Space Grotesk';font-size:1.9rem;font-weight:700}
+.m-body{padding:0 24px 26px}
+.m-chart{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:18px;margin:18px 0}
+.m-chart h4{font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:var(--mut);margin-bottom:12px;font-weight:600}
+.row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:.9rem}
+.row:last-child{border:0}.row span:first-child{color:var(--mut)}
+.m-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+@media(max-width:620px){.m-top{grid-template-columns:1fr}.m-img{border-radius:22px 22px 0 0;min-height:200px}}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(160%);z-index:200;background:var(--card2);border:1px solid var(--c1);border-radius:12px;padding:13px 22px;font-size:.9rem;box-shadow:0 16px 44px rgba(0,0,0,.5);transition:.45s var(--ease);max-width:90vw;text-align:center}
+.toast.on{transform:translateX(-50%)}
+footer{text-align:center;padding:36px 20px;color:var(--faint);font-size:.82rem;border-top:1px solid var(--line);margin-top:50px}
+footer a{color:var(--c2)}
+.banner{background:rgba(255,177,93,.08);border:1px solid rgba(255,177,93,.28);border-radius:12px;padding:14px 16px;font-size:.86rem;color:#ffcf9b;margin-bottom:22px}
+.banner a{color:#fff;text-decoration:underline}
+.spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#06060a;border-radius:50%;animation:sp .7s linear infinite;display:inline-block}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="../index.html"><span class="dot"></span>Zymlux<span class="grad">Trend</span><small>Veille e-com</small></a>
+  <div class="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg>
+    <input id="search" type="text" placeholder="Rechercher un produit, une boutique…">
+  </div>
+  <button class="btn hide-sm" id="scanBtn">⚡ Scanner</button>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button class="tab act" data-view="products">🔥 Produits</button>
+  <button class="tab" data-view="stores">🏪 Boutiques <span class="cnt" id="stCnt">0</span></button>
+  <button class="tab" data-view="ads">📣 Pubs <span class="cnt" id="adCnt">0</span></button>
+  <button class="tab" data-view="favs">⭐ Favoris <span class="cnt" id="favCnt">0</span></button>
+</nav>
+
+<main class="wrap">
+  <div id="cfgBanner"></div>
+  <div class="kpis" id="kpis"></div>
+
+  <!-- PRODUITS -->
+  <section id="view-products">
+    <div class="filters">
+      <div class="fgroup" style="flex:1 1 100%">
+        <label>Catégorie (type de produit)</label>
+        <div class="chips" id="typeChips"><button class="chip act" data-t="">Toutes</button></div>
+      </div>
+      <div class="fgroup">
+        <label>Boutique</label>
+        <select id="fStore"><option value="">Toutes</option></select>
+      </div>
+      <div class="fgroup">
+        <label>Prix</label>
+        <select id="fPrice">
+          <option value="">Tous</option>
+          <option value="0-25">&lt; 25 €</option>
+          <option value="25-50">25–50 €</option>
+          <option value="50-100">50–100 €</option>
+          <option value="100-999999">&gt; 100 €</option>
+        </select>
+      </div>
+      <div class="fgroup">
+        <label>Filtre</label>
+        <select id="fFlag">
+          <option value="">Tous</option>
+          <option value="new">🆕 Nouveautés (7j)</option>
+          <option value="promo">🏷️ En promo</option>
+          <option value="soldout">⚠️ Épuisés</option>
+        </select>
+      </div>
+      <div class="fgroup">
+        <label>Trier par</label>
+        <select id="fSort">
+          <option value="recent">Plus récents</option>
+          <option value="discount">Grosse promo</option>
+          <option value="price-desc">Prix décroissant</option>
+          <option value="price-asc">Prix croissant</option>
+          <option value="position">Best-sellers</option>
+        </select>
+      </div>
+      <button class="reset" id="reset">Réinitialiser</button>
+    </div>
+    <p class="count-line"><b id="pCount">0</b> produits · sur <b id="pTotal">0</b> collectés</p>
+    <div class="grid" id="pGrid"></div>
+  </section>
+
+  <!-- BOUTIQUES -->
+  <section id="view-stores" style="display:none">
+    <div class="addbar">
+      <input class="mini" id="newStore" placeholder="Ajouter une boutique concurrente — ex : ma-boutique.com">
+      <button class="btn btn-sm" id="addStore">+ Ajouter & scanner</button>
+      <span style="font-size:.8rem;color:var(--mut)">Colle le domaine d'une boutique Shopify à surveiller.</span>
+    </div>
+    <div class="stores" id="sGrid"></div>
+  </section>
+
+  <!-- PUBS -->
+  <section id="view-ads" style="display:none">
+    <div class="addbar">
+      <input class="mini" id="newKw" placeholder="Mot-clé à surveiller — ex : coussin cervical">
+      <select id="newKwCountry" class="mini" style="max-width:140px">
+        <option value="FR">🇫🇷 France</option><option value="US">🇺🇸 US</option><option value="UK">🇬🇧 UK</option>
+        <option value="DE">🇩🇪 DE</option><option value="ES">🇪🇸 ES</option>
+      </select>
+      <button class="btn btn-sm" id="addKw">+ Surveiller</button>
+    </div>
+    <div class="grid" id="adGrid"></div>
+  </section>
+
+  <!-- FAVORIS -->
+  <section id="view-favs" style="display:none">
+    <p class="count-line"><b id="fCount">0</b> produits sauvegardés</p>
+    <div class="grid" id="fGrid"></div>
+  </section>
+</main>
+
+<footer>Zymlux <span class="grad">Trend</span> — veille e-commerce en temps réel · <a href="../index.html">Retour à Zymlux</a></footer>
+
+<div class="modal-bg" id="modalBg"><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="../assets/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+/* ============================================================
+   ZYMLUX TREND — interface (lit les vraies données Supabase)
+   ============================================================ */
+const CFG = window.ZYMLUX_CONFIG || {};
+let sb = null;
+if (CFG.SUPABASE_URL && CFG.SUPABASE_ANON_KEY && window.supabase) {
+  sb = window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY);
+} else {
+  document.getElementById("cfgBanner").innerHTML =
+    `<div class="banner">⚠️ Supabase non configuré. Renseigne <code>assets/config.js</code> puis installe <code>supabase-trend.sql</code>. Voir <a href="../TREND-SETUP.md">TREND-SETUP.md</a>.</div>`;
+}
+
+let PRODUCTS = [], STORES = [], ADS = [];
+const state = { q:"", type:"", store:"", price:"", flag:"", sort:"recent", view:"products" };
+const FAV_KEY = "zymlux_trend_favs";
+let favs = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]"));
+
+/* ---------- format ---------- */
+const eur = n => n==null ? "—" : (Number(n).toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2})+" €");
+const short = n => n>=1000 ? (n/1000).toFixed(n>=10000?0:1).replace(".0","")+"k" : String(n);
+const daysAgo = d => Math.floor((Date.now()-new Date(d).getTime())/864e5);
+const isNew = p => daysAgo(p.first_seen) <= 7;
+const discount = p => (p.compare_at && p.price && p.compare_at>p.price) ? Math.round((1-p.price/p.compare_at)*100) : 0;
+
+/* ---------- chargement ---------- */
+async function loadAll(){
+  if(!sb) return;
+  const [pr, st, ad] = await Promise.all([
+    sb.from("tt_products").select("*, store:tt_stores(name,domain)").order("first_seen",{ascending:false}).limit(1000),
+    sb.from("tt_stores").select("*").order("product_count",{ascending:false}),
+    sb.from("tt_ads").select("*").order("seen_at",{ascending:false}).limit(120),
+  ]);
+  PRODUCTS = pr.data || []; STORES = st.data || []; ADS = ad.data || [];
+  hydrate();
+}
+function hydrate(){
+  // chips types
+  const types = [...new Set(PRODUCTS.map(p=>p.product_type).filter(Boolean))].sort().slice(0,14);
+  document.getElementById("typeChips").innerHTML =
+    `<button class="chip act" data-t="">Toutes</button>` +
+    types.map(t=>`<button class="chip" data-t="${esc(t)}">${esc(t)}</button>`).join("");
+  // stores select
+  document.getElementById("fStore").innerHTML =
+    `<option value="">Toutes</option>` +
+    STORES.filter(s=>s.product_count>0).map(s=>`<option value="${s.id}">${esc(s.name||s.domain)} (${s.product_count})</option>`).join("");
+  document.getElementById("stCnt").textContent = STORES.length;
+  document.getElementById("adCnt").textContent = ADS.length;
+  saveFavs();
+  renderKpis(); render();
+}
+
+/* ---------- KPIs ---------- */
+function renderKpis(){
+  const news = PRODUCTS.filter(isNew).length;
+  const promos = PRODUCTS.filter(p=>discount(p)>0).length;
+  const scanned = STORES.filter(s=>s.last_scanned_at).length;
+  document.getElementById("kpis").innerHTML = `
+    <div class="kpi"><div class="lbl">Produits collectés</div><div class="val">${short(PRODUCTS.length)}</div><div class="chg">sur ${STORES.length} boutiques</div></div>
+    <div class="kpi"><div class="lbl">Nouveautés (7j)</div><div class="val up">${news}</div><div class="chg">produits fraîchement ajoutés</div></div>
+    <div class="kpi"><div class="lbl">En promo</div><div class="val">${promos} <span style="font-size:.9rem;color:var(--mut)">🏷️</span></div><div class="chg">prix barré détecté</div></div>
+    <div class="kpi"><div class="lbl">Boutiques scannées</div><div class="val">${scanned}/${STORES.length}</div><div class="chg">${ADS.length} pubs suivies</div></div>`;
+}
+
+/* ---------- filtrage produits ---------- */
+function filtered(){
+  let list = PRODUCTS.filter(p=>{
+    if(state.type && p.product_type!==state.type) return false;
+    if(state.store && p.store_id!==state.store) return false;
+    if(state.price){const[a,b]=state.price.split("-").map(Number); if(p.price==null||p.price<a||p.price>b) return false;}
+    if(state.flag==="new" && !isNew(p)) return false;
+    if(state.flag==="promo" && discount(p)===0) return false;
+    if(state.flag==="soldout" && p.available) return false;
+    if(state.q){const q=state.q.toLowerCase();
+      const hay=(p.title+" "+(p.product_type||"")+" "+(p.store?.name||"")+" "+(p.vendor||"")).toLowerCase();
+      if(!hay.includes(q)) return false;}
+    return true;
+  });
+  const s=state.sort;
+  list.sort((a,b)=>{
+    if(s==="recent") return new Date(b.first_seen)-new Date(a.first_seen);
+    if(s==="discount") return discount(b)-discount(a);
+    if(s==="price-desc") return (b.price||0)-(a.price||0);
+    if(s==="price-asc") return (a.price||0)-(b.price||0);
+    if(s==="position") return (a.position??9e9)-(b.position??9e9);
+  });
+  return list;
+}
+
+/* ---------- carte produit ---------- */
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function card(p){
+  const d=discount(p), on=favs.has(p.id);
+  const img = p.image ? `<img loading="lazy" src="${esc(p.image)}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="ph" style="display:none">📦</div>`
+                      : `<div class="ph">📦</div>`;
+  return `<article class="card" onclick="openModal('${p.id}')">
+    <div class="thumb">
+      ${img}
+      ${isNew(p)?'<span class="tag new">🆕 Nouveau</span>':''}
+      ${d?`<span class="tag promo">-${d}%</span>`:''}
+      <button class="heart" onclick="toggleFav('${p.id}',event)">${on?'❤️':'🤍'}</button>
+    </div>
+    <div class="body">
+      <div class="store-line">🏪 ${esc(p.store?.name||p.store?.domain||'—')}</div>
+      <h3>${esc(p.title)}</h3>
+      ${p.product_type?`<div class="ptype">${esc(p.product_type)}</div>`:''}
+      <div class="foot">
+        <div class="price">${p.price!=null?eur(p.price):'—'}${p.compare_at&&p.compare_at>p.price?`<span class="was">${eur(p.compare_at)}</span>`:''}</div>
+        ${!p.available?'<span class="na">Épuisé</span>':d?`<span class="disc">-${d}%</span>`:''}
+      </div>
+    </div>
+  </article>`;
+}
+
+/* ---------- render ---------- */
+function render(){
+  if(state.view==="products"){
+    const list=filtered();
+    document.getElementById("pCount").textContent=list.length;
+    document.getElementById("pTotal").textContent=PRODUCTS.length;
+    document.getElementById("pGrid").innerHTML = list.length ? list.map(card).join("")
+      : empty(PRODUCTS.length? "Aucun produit ne correspond à ces filtres."
+        : "Ta base est vide. Clique sur ⚡ Scanner (ou onglet Boutiques) pour lancer la première collecte.");
+  } else if(state.view==="stores"){
+    renderStores();
+  } else if(state.view==="ads"){
+    document.getElementById("adGrid").innerHTML = ADS.length ? ADS.map(adCard).join("")
+      : empty("Aucune pub collectée. Ajoute des mots-clés et lance le scan des pubs (nécessite un token Meta — voir TREND-SETUP.md).");
+  } else if(state.view==="favs"){
+    const list=PRODUCTS.filter(p=>favs.has(p.id));
+    document.getElementById("fCount").textContent=list.length;
+    document.getElementById("fGrid").innerHTML = list.length ? list.map(card).join("")
+      : empty("Aucun favori. Clique sur 🤍 sur un produit pour le sauvegarder.");
+  }
+}
+function empty(msg){return `<div class="empty"><div class="big">🔍</div><h3>Rien à afficher</h3><p>${msg}</p></div>`;}
+
+/* ---------- boutiques ---------- */
+function renderStores(){
+  document.getElementById("sGrid").innerHTML = STORES.length ? STORES.map(s=>{
+    const scanned = s.last_scanned_at ? `il y a ${daysAgo(s.last_scanned_at)}j` : "jamais";
+    const col = s.last_error ? "var(--bad)" : s.last_scanned_at ? "var(--good)" : "var(--warn)";
+    return `<div class="store">
+      <div class="s-head">
+        <div><h3>${esc(s.name||s.domain)}</h3><div class="url">${esc(s.domain)}</div></div>
+        <span style="font-size:.75rem;color:var(--mut)"><span class="dot-st" style="background:${col}"></span>${s.active?'actif':'inactif'}</span>
+      </div>
+      <div class="s-meta">
+        <span><b>${s.product_count}</b> produits</span>
+        <span>scan : <b>${scanned}</b></span>
+      </div>
+      <div class="s-actions">
+        <button class="btn btn-out btn-sm" onclick="scanStore('${s.id}',this)">⚡ Scanner</button>
+        <a class="btn btn-out btn-sm" href="https://${esc(s.domain)}" target="_blank" rel="noopener">Visiter</a>
+        <button class="btn btn-out btn-sm" onclick="viewStore('${s.id}')">Voir produits</button>
+      </div>
+      ${s.last_error?`<div class="err">⚠️ ${esc(s.last_error)}</div>`:''}
+    </div>`;
+  }).join("") : empty("Aucune boutique. Ajoute-en une ci-dessus.");
+}
+function adCard(a){
+  return `<div class="ad">
+    <div class="kw">🔎 ${esc(a.keyword)} · ${esc(a.country)}</div>
+    <h4>${esc(a.page_name||'Annonceur')}</h4>
+    <div class="meta">${a.platforms?esc(a.platforms):'—'}${a.started?` · depuis le ${esc(a.started)}`:''}</div>
+    ${a.snapshot_url?`<a class="btn btn-out btn-sm" href="${esc(a.snapshot_url)}" target="_blank" rel="noopener">Voir la pub ↗</a>`:''}
+  </div>`;
+}
+
+/* ---------- modal détail produit ---------- */
+async function openModal(id){
+  const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
+  const d=discount(p), on=favs.has(p.id);
+  const link = p.store?.domain && p.handle ? `https://${p.store.domain}/products/${p.handle}` : null;
+  document.getElementById("modal").innerHTML=`
+    <div class="m-top">
+      <div class="m-img">${p.image?`<img src="${esc(p.image)}" alt="">`:'<div class="ph" style="font-size:3rem;opacity:.4">📦</div>'}</div>
+      <div class="m-info">
+        <button class="m-close" onclick="closeModal()">✕</button>
+        <div class="store-line">🏪 ${esc(p.store?.name||p.store?.domain||'—')}${isNew(p)?' · 🆕 nouveau':''}</div>
+        <h2>${esc(p.title)}</h2>
+        <div class="sub">${p.product_type?esc(p.product_type)+' · ':''}vu il y a ${daysAgo(p.first_seen)}j · ${p.variants_count||0} variante(s)</div>
+        <div class="m-price">${p.price!=null?eur(p.price):'—'}${p.compare_at&&p.compare_at>p.price?`<span class="was">${eur(p.compare_at)}</span> <span class="disc">-${d}%</span>`:''}</div>
+      </div>
+    </div>
+    <div class="m-body">
+      <div class="m-chart"><h4>📈 Historique de prix</h4><div id="chartBox" style="height:80px;display:flex;align-items:center;color:var(--faint);font-size:.85rem">Chargement…</div></div>
+      <div class="row"><span>Disponibilité</span><span>${p.available?'✅ En stock':'⚠️ Épuisé'}</span></div>
+      <div class="row"><span>Rang catalogue</span><span>${p.position!=null?'#'+(p.position+1):'—'}</span></div>
+      <div class="row"><span>Mis en ligne (boutique)</span><span>${p.published_at?new Date(p.published_at).toLocaleDateString('fr-FR'):'—'}</span></div>
+      <div class="m-actions">
+        <button class="btn" onclick="toggleFav('${p.id}',event);openModal('${p.id}')">${on?'❤️ Dans les favoris':'🤍 Ajouter aux favoris'}</button>
+        ${link?`<a class="btn btn-out" href="${esc(link)}" target="_blank" rel="noopener">Voir la fiche ↗</a>`:''}
+        <a class="btn btn-out" href="https://www.aliexpress.com/wholesale?SearchText=${encodeURIComponent(p.title)}" target="_blank" rel="noopener">🔎 Sourcer</a>
+      </div>
+    </div>`;
+  document.getElementById("modalBg").classList.add("on");
+  document.body.style.overflow="hidden";
+  // historique de prix
+  if(sb){
+    const {data}=await sb.from("tt_snapshots").select("ts,price").eq("product_id",id).order("ts").limit(60);
+    const box=document.getElementById("chartBox");
+    const pts=(data||[]).filter(s=>s.price!=null);
+    box.innerHTML = pts.length>=2 ? sparkline(pts.map(s=>s.price)) : "Historique en cours de constitution (reviens après quelques scans).";
+  }
+}
+function closeModal(){document.getElementById("modalBg").classList.remove("on");document.body.style.overflow="";}
+document.getElementById("modalBg").addEventListener("click",e=>{if(e.target.id==="modalBg")closeModal();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
+function sparkline(vals){
+  const w=100,h=70,max=Math.max(...vals),min=Math.min(...vals),rng=(max-min)||1;
+  const pts=vals.map((v,i)=>`${(i/(vals.length-1)*w).toFixed(1)},${(h-((v-min)/rng)*(h-10)-5).toFixed(1)}`).join(" ");
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="width:100%;height:80px">
+    <polyline points="${pts}" fill="none" stroke="#7b5cff" stroke-width="2" stroke-linejoin="round"/>
+  </svg>`;
+}
+
+/* ---------- favoris ---------- */
+function saveFavs(){localStorage.setItem(FAV_KEY,JSON.stringify([...favs]));document.getElementById("favCnt").textContent=favs.size;}
+function toggleFav(id,ev){ev&&ev.stopPropagation();
+  if(favs.has(id)){favs.delete(id);toast("Retiré des favoris");}else{favs.add(id);toast("⭐ Ajouté aux favoris");}
+  saveFavs();render();}
+
+/* ---------- actions robot ---------- */
+async function invoke(fn,body){
+  if(!sb) return {error:"Supabase non configuré"};
+  const {data,error}=await sb.functions.invoke(fn,{body:body||{}});
+  return error?{error:error.message}:data;
+}
+document.getElementById("scanBtn").onclick=async function(){
+  this.disabled=true;const old=this.innerHTML;this.innerHTML='<span class="spin"></span> Scan…';
+  toast("⚡ Collecte en cours… (peut prendre 1–2 min)");
+  const r=await invoke("tt-scan");
+  toast(r.error?("Erreur : "+r.error):`✅ Scan terminé — ${r.stores||0} boutiques`);
+  await loadAll();
+  this.disabled=false;this.innerHTML=old;
+};
+async function scanStore(id,btn){
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>';
+  const r=await invoke("tt-scan",{store_id:id});
+  toast(r.error?("Erreur : "+r.error):"✅ Boutique scannée");
+  await loadAll();
+}
+function viewStore(id){
+  state.view="products";state.store=id;
+  document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("act",x.dataset.view==="products"));
+  showView();document.getElementById("fStore").value=id;render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.getElementById("addStore").onclick=async function(){
+  const inp=document.getElementById("newStore");
+  let dom=inp.value.trim().replace(/^https?:\/\//,"").replace(/\/.*$/,"").toLowerCase();
+  if(!dom||!dom.includes(".")){toast("Entre un domaine valide (ex : boutique.com)");return;}
+  this.disabled=true;
+  const {data,error}=await sb.from("tt_stores").upsert({domain:dom,name:dom,source:"manuel"},{onConflict:"domain"}).select().single();
+  if(error){toast("Erreur : "+error.message);this.disabled=false;return;}
+  inp.value="";toast("🏪 Boutique ajoutée — scan en cours…");
+  await invoke("tt-scan",{store_id:data.id});
+  await loadAll();this.disabled=false;
+};
+document.getElementById("addKw").onclick=async function(){
+  const inp=document.getElementById("newKw");const kw=inp.value.trim();
+  const country=document.getElementById("newKwCountry").value;
+  if(!kw){toast("Entre un mot-clé");return;}
+  this.disabled=true;
+  const {error}=await sb.from("tt_keywords").upsert({keyword:kw,country},{onConflict:"keyword,country"});
+  if(error){toast("Erreur : "+error.message);this.disabled=false;return;}
+  inp.value="";toast("🔎 Mot-clé ajouté — collecte des pubs…");
+  const r=await invoke("tt-ads");
+  if(r.skipped) toast("Mot-clé enregistré. Token Meta requis pour collecter les pubs (voir TREND-SETUP.md).");
+  await loadAll();this.disabled=false;
+};
+
+/* ---------- UI ---------- */
+function showView(){
+  ["products","stores","ads","favs"].forEach(v=>
+    document.getElementById("view-"+v).style.display = state.view===v?"":"none");
+}
+function initUI(){
+  document.getElementById("typeChips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;
+    document.querySelectorAll("#typeChips .chip").forEach(x=>x.classList.remove("act"));b.classList.add("act");
+    state.type=b.dataset.t;render();});
+  document.getElementById("fStore").onchange=e=>{state.store=e.target.value;render();};
+  document.getElementById("fPrice").onchange=e=>{state.price=e.target.value;render();};
+  document.getElementById("fFlag").onchange=e=>{state.flag=e.target.value;render();};
+  document.getElementById("fSort").onchange=e=>{state.sort=e.target.value;render();};
+  document.getElementById("search").addEventListener("input",e=>{state.q=e.target.value;render();});
+  document.getElementById("reset").onclick=()=>{
+    Object.assign(state,{q:"",type:"",store:"",price:"",flag:"",sort:"recent"});
+    ["search","fStore","fPrice","fFlag"].forEach(id=>document.getElementById(id).value="");
+    document.getElementById("fSort").value="recent";
+    document.querySelectorAll("#typeChips .chip").forEach((x,i)=>x.classList.toggle("act",i===0));
+    render();
+  };
+  document.getElementById("tabs").addEventListener("click",e=>{const b=e.target.closest(".tab");if(!b)return;
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("act"));b.classList.add("act");
+    state.view=b.dataset.view;showView();render();});
+}
+
+/* ---------- toast ---------- */
+let toastT;
+function toast(m){const t=document.getElementById("toast");t.innerHTML=m;t.classList.add("on");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("on"),3200);}
+
+/* ---------- go ---------- */
+initUI(); saveFavs();
+if(sb) loadAll(); else render();
+</script>
+</body>
+</html>
