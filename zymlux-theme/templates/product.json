@@ -219,150 +219,6 @@
         "padding_bottom": 64
       }
     },
-    "solution": {
-      "type": "rich-text",
-      "blocks": {
-        "caption": {
-          "type": "caption",
-          "settings": {
-            "caption": "The reset",
-            "text_style": "caption-with-letter-spacing"
-          }
-        },
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Your nightly reset, in one simple ritual",
-            "heading_size": "h1"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>The Serenity set is built around one idea: give your body a clear cue to let go. Lie back on the mat, rest your neck on the contoured pillow, and within minutes a warm, tingling wave settles in. <strong>6,000+ acupressure points</strong> stimulate circulation and ease tension across your back, shoulders, and neck — drug-free, screen-free, in just 20 minutes.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "caption",
-        "heading",
-        "text"
-      ],
-      "settings": {
-        "color_scheme": "scheme-1",
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "full_width": true,
-        "padding_top": 72,
-        "padding_bottom": 48
-      }
-    },
-    "how_to": {
-      "type": "rich-text",
-      "blocks": {
-        "caption": {
-          "type": "caption",
-          "settings": {
-            "caption": "How to use it",
-            "text_style": "caption-with-letter-spacing"
-          }
-        },
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Four steps to a calmer night",
-            "heading_size": "h1"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p><strong>1. Set up</strong> — lay the mat on a bed, couch, or floor; position the pillow for your neck.<br><strong>2. Ease on</strong> — lie back slowly. Try a thin shirt first, then bare skin as you adjust.<br><strong>3. Settle in</strong> — breathe slowly for 20–30 minutes as warmth spreads and muscles release.<br><strong>4. Make it a ritual</strong> — use it in the hour before bed to signal your body it's time to rest.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "caption",
-        "heading",
-        "text"
-      ],
-      "settings": {
-        "color_scheme": "scheme-3",
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "full_width": true,
-        "padding_top": 64,
-        "padding_bottom": 64
-      }
-    },
-    "inside": {
-      "type": "rich-text",
-      "blocks": {
-        "caption": {
-          "type": "caption",
-          "settings": {
-            "caption": "In the box",
-            "text_style": "caption-with-letter-spacing"
-          }
-        },
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "What's included",
-            "heading_size": "h1"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<ul><li>1 × Serenity Acupressure Mat (6,000+ stimulation points)</li><li>1 × Contoured acupressure neck pillow</li><li>1 × Soft-touch removable cover</li><li>1 × Carry bag for storage &amp; travel</li><li>1 × Quick-start wind-down guide</li></ul>"
-          }
-        }
-      },
-      "block_order": [
-        "caption",
-        "heading",
-        "text"
-      ],
-      "settings": {
-        "color_scheme": "scheme-1",
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "full_width": true,
-        "padding_top": 56,
-        "padding_bottom": 48
-      }
-    },
-    "reassurance": {
-      "type": "rich-text",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Try it for 60 nights, risk-free",
-            "heading_size": "h2"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p><strong>Free US shipping</strong> — ships from our US warehouse in 3–7 business days.<br><strong>60-night money-back trial</strong> — use it every evening; if it's not for you, send it back for a full refund.<br><strong>Secure checkout</strong> — Visa, Mastercard, Apple Pay, Shop Pay.</p><p><em>The Serenity set is a relaxation and wellness aid. It is not a medical device and does not diagnose, treat, or cure any condition. If you are pregnant or have a medical condition, consult your doctor before use.</em></p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "text"
-      ],
-      "settings": {
-        "color_scheme": "scheme-1",
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "full_width": true,
-        "padding_top": 48,
-        "padding_bottom": 56
-      }
-    },
     "reviews": {
       "type": "apps",
       "blocks": {
@@ -465,51 +321,38 @@
       }
     },
     "final_cta": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div style=\"position:relative;min-height:72vh;display:grid;place-items:center;text-align:center;overflow:hidden\">\n  <img src=\"https://cdn.shopify.com/s/files/1/1012/8821/4857/files/blackgold-inuse.png?v=1782855518\" alt=\"Woman relaxing on the Serenity acupressure mat\" style=\"position:absolute;inset:0;width:100%;height:100%;object-fit:cover\" loading=\"lazy\">\n  <div style=\"position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,23,20,.55),rgba(18,23,20,.78))\"></div>\n  <div style=\"position:relative;max-width:640px;padding:72px 26px;color:#F4EFE7\">\n    <p style=\"font:500 .72rem/1 'Inter',sans-serif;text-transform:uppercase;letter-spacing:.3em;color:#C2A06A;margin:0 0 18px\">Tonight</p>\n    <p style=\"font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(28px,5.4vw,52px);line-height:1.1;margin:0\">Give your evenings somewhere to land.</p>\n    <p style=\"font-family:'Inter',sans-serif;font-size:15px;color:rgba(244,239,231,.88);margin:20px auto 0;max-width:44ch\">The Serenity Acupressure Mat &amp; Neck Pillow Set &mdash; $49.99, with sixty nights to decide.</p>\n    <a href=\"#MainContent\" style=\"display:inline-flex;align-items:center;gap:10px;margin-top:32px;background:#F4EFE7;color:#1F2723;text-decoration:none;font:500 13px/1 'Inter',sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:18px 36px\">Shop the set</a>\n  </div>\n</div>",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "story": {
+      "type": "zymlux-product-story",
+      "settings": {}
+    },
+    "fineprint": {
       "type": "rich-text",
       "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Give your body the reset it's been asking for",
-            "heading_size": "h1"
-          }
-        },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Free US shipping · 60-night money-back trial · Secure checkout.</p>"
-          }
-        },
-        "buttons": {
-          "type": "button",
-          "settings": {
-            "button_label": "Add My Serenity Set — $49.99",
-            "button_link": "#MainContent",
-            "button_style_secondary": false
+            "text": "<p><em>The Serenity Set is a relaxation and wellness aid, not a medical device; it does not diagnose, treat, or cure any condition. If you are pregnant or have a medical condition, consult your doctor before use. Free US shipping — orders dispatched within 1–2 business days.</em></p>"
           }
         }
       },
       "block_order": [
-        "heading",
-        "text",
-        "buttons"
+        "text"
       ],
       "settings": {
-        "color_scheme": "scheme-4",
+        "color_scheme": "scheme-1",
         "desktop_content_position": "center",
         "content_alignment": "center",
         "full_width": true,
-        "padding_top": 72,
-        "padding_bottom": 88
-      }
-    },
-    "cine": {
-      "type": "custom-liquid",
-      "settings": {
-        "custom_liquid": "<div style=\"position:relative;border-radius:14px;overflow:hidden;min-height:54vh;display:grid;place-items:center;max-width:1100px;margin:0 auto\">\n  <img src=\"https://cdn.shopify.com/s/files/1/1012/8821/4857/files/blackgold-hero.png?v=1782855518\" alt=\"The Serenity acupressure set in a calm, candlelit bedroom\" style=\"position:absolute;inset:0;width:100%;height:100%;object-fit:cover\">\n  <div style=\"position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,24,21,.4),rgba(20,24,21,.66))\"></div>\n  <div style=\"position:relative;text-align:center;color:#F4EFE7;max-width:600px;padding:64px 26px\">\n    <p style=\"font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(26px,5vw,42px);line-height:1.15;margin:0\">Twenty quiet minutes &mdash; and the day finally lets go.</p>\n  </div>\n</div>",
-        "color_scheme": "scheme-1",
-        "padding_top": 0,
-        "padding_bottom": 0
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     }
   },
@@ -517,13 +360,10 @@
     "main",
     "trust_marquee",
     "symptoms",
-    "solution",
-    "cine",
-    "how_to",
-    "inside",
-    "reassurance",
+    "story",
     "reviews",
     "faq",
+    "fineprint",
     "final_cta"
   ]
 }
