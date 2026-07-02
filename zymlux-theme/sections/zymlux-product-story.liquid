@@ -1,4 +1,4 @@
-{%- comment -%} Zymlux — product story (self-contained, matches homepage design language) {%- endcomment -%}
+{%- comment -%} Zymlux — product story v2 (full below-the-fold experience, one design voice) {%- endcomment -%}
 {%- assign img = 'https://cdn.shopify.com/s/files/1/1012/8821/4857/files/' -%}
 
 <style>
@@ -7,11 +7,10 @@
   --line:rgba(43,52,46,.14);--line-d:rgba(244,239,231,.16);
   --serif:'Fraunces',Georgia,serif;--sans:'Inter','Helvetica Neue',Arial,sans-serif;
   font-family:var(--sans);color:var(--muted);line-height:1.7;overflow:hidden;background:var(--cream);
-  -webkit-font-smoothing:antialiased}
+  -webkit-font-smoothing:antialiased;font-size:16px}
 #zxs *{box-sizing:border-box;margin:0;padding:0}
 #zxs img{display:block;max-width:100%}
 #zxs h2,#zxs h3{font-family:var(--serif);font-weight:300;color:var(--ink2);letter-spacing:-.02em;line-height:1.1}
-#zxs .em{font-style:italic;font-weight:300;color:var(--clay)}
 #zxs .grad{background:linear-gradient(95deg,var(--gold2),var(--gold) 55%,var(--clay));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;font-style:italic}
 #zxs .eyebrow{display:inline-flex;align-items:center;gap:13px;font:500 .72rem/1 var(--sans);text-transform:uppercase;letter-spacing:.3em;color:var(--gold)}
 #zxs .eyebrow::before{content:"";width:30px;height:1px;background:var(--gold)}
@@ -23,6 +22,24 @@
 #zxs .cliprv.is-in{clip-path:inset(0 0 0 0)}
 #zxs .pwrap{position:relative;overflow:hidden}
 #zxs .pimg{position:absolute;left:0;top:-14%;width:100%;height:128%;object-fit:cover;will-change:transform;backface-visibility:hidden}
+
+/* marquee */
+#zxs .marq{background:var(--ink);color:var(--gold);overflow:hidden;border-top:1px solid rgba(194,160,106,.14);border-bottom:1px solid rgba(194,160,106,.14);padding:15px 0}
+#zxs .marq .track{display:inline-flex;white-space:nowrap;will-change:transform;animation:zxsmarq 32s linear infinite}
+#zxs .marq span{display:inline-flex;align-items:center;font:500 .78rem/1 var(--sans);text-transform:uppercase;letter-spacing:.24em;color:rgba(226,203,160,.92)}
+#zxs .marq .sep{margin:0 26px;color:var(--gold);opacity:.7}
+@keyframes zxsmarq{to{transform:translateX(-50%)}}
+
+/* symptoms */
+#zxs .sympt{background:var(--paper);text-align:center;padding:clamp(4.5rem,8.5vw,8rem) clamp(1.4rem,4vw,4rem)}
+#zxs .sympt h2{font-size:clamp(2rem,1.4rem + 2.6vw,3.3rem);margin:18px 0 0}
+#zxs .sympt .intro{margin:18px auto 0;max-width:46ch;color:var(--soft)}
+#zxs .slist{max-width:620px;margin:clamp(2rem,4vw,3rem) auto 0;text-align:left}
+#zxs .slist .s{display:flex;gap:18px;align-items:baseline;padding:15px 4px;border-bottom:1px solid var(--line);font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.02rem,.95rem + .5vw,1.25rem);line-height:1.5;color:var(--ink2)}
+#zxs .slist .s:first-child{border-top:1px solid var(--line)}
+#zxs .slist .s i{flex:none;font-style:normal;font-family:var(--sans);font-size:.62rem;letter-spacing:.1em;color:var(--gold);transform:translateY(-2px)}
+#zxs .sympt .foot{margin:30px auto 0;max-width:46ch;color:var(--muted)}
+#zxs .sympt .foot em{color:var(--clay);font-family:var(--serif)}
 
 /* manifesto */
 #zxs .manif{background:var(--ink);color:var(--cream);text-align:center;padding:clamp(5rem,9vw,8.5rem) clamp(1.4rem,4vw,4rem)}
@@ -78,6 +95,27 @@
 #zxs .btn{display:inline-flex;align-items:center;gap:10px;font:500 .86rem/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:17px 32px;cursor:pointer;border:1px solid var(--ink2);color:var(--ink2);background:transparent;margin-top:30px;transition:transform .4s cubic-bezier(.2,.7,.2,1),background .3s,color .3s}
 #zxs .btn:hover{background:var(--ink2);color:var(--cream);transform:translateY(-3px)}
 
+/* honest reviews */
+#zxs .revs{background:var(--cream);text-align:center;padding:clamp(4.5rem,8vw,7rem) clamp(1.4rem,4vw,4rem)}
+#zxs .revs h2{font-size:clamp(1.8rem,1.3rem + 1.8vw,2.6rem);margin:18px 0 0}
+#zxs .revs p{max-width:56ch;margin:20px auto 0}
+#zxs .revs .stars{display:inline-flex;gap:8px;margin-top:24px}
+#zxs .revs .stars svg{width:21px;height:21px;stroke:var(--gold);fill:none;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+
+/* faq */
+#zxs .faqsec{background:var(--paper);padding:clamp(4.5rem,8vw,7rem) clamp(1.4rem,4vw,4rem)}
+#zxs .faqsec .head{text-align:center}
+#zxs .faqsec h2{font-size:clamp(1.9rem,1.4rem + 2.2vw,3rem);margin:18px 0 0}
+#zxs .faq{max-width:720px;margin:clamp(2rem,4vw,3rem) auto 0}
+#zxs details{border-bottom:1px solid var(--line)}
+#zxs details:first-of-type{border-top:1px solid var(--line)}
+#zxs summary{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 4px;cursor:pointer;list-style:none;font:400 1.12rem/1.4 var(--serif);color:var(--ink2)}
+#zxs summary::-webkit-details-marker{display:none}
+#zxs summary .chev{transition:transform .3s ease;flex:none;width:17px;height:17px;stroke:var(--clay);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+#zxs details[open] summary .chev{transform:rotate(180deg)}
+#zxs .ans{padding:0 4px 22px;font-size:.95rem;color:var(--muted);max-width:60ch}
+#zxs .fine{max-width:620px;margin:clamp(2.5rem,4vw,3.5rem) auto 0;text-align:center;font-size:.78rem;color:var(--soft);font-style:italic}
+
 @media(max-width:860px){
   #zxs .split{grid-template-columns:1fr}
   #zxs .split .media{min-height:60vh}
@@ -88,10 +126,35 @@
   #zxs .reveal{opacity:1!important;transform:none!important}
   #zxs .cliprv{clip-path:none!important}
   #zxs .pimg{transform:none!important}
+  #zxs .marq .track{animation:none!important}
 }
 </style>
 
 <div id="zxs">
+
+  <!-- MARQUEE -->
+  <div class="marq" aria-hidden="true"><div class="track">
+    <span>Drug-free relief<span class="sep">&#10022;</span>6,000+ pressure points<span class="sep">&#10022;</span>60-night money-back trial<span class="sep">&#10022;</span>Free US shipping<span class="sep">&#10022;</span>A nightly ritual<span class="sep">&#10022;</span></span>
+    <span>Drug-free relief<span class="sep">&#10022;</span>6,000+ pressure points<span class="sep">&#10022;</span>60-night money-back trial<span class="sep">&#10022;</span>Free US shipping<span class="sep">&#10022;</span>A nightly ritual<span class="sep">&#10022;</span></span>
+  </div></div>
+
+  <!-- SYMPTOMS -->
+  <section class="sympt">
+    <div class="reveal">
+      <span class="eyebrow center">If this is your evening</span>
+      <h2>Sound familiar?</h2>
+      <p class="intro">You don&rsquo;t have to explain it. You just recognize it:</p>
+    </div>
+    <div class="slist">
+      <div class="s reveal"><i>01</i>Your shoulders are up by your ears by 3pm &#8212; and they stay there.</div>
+      <div class="s reveal"><i>02</i>Your neck is tight and stiff from a day at the desk and on your phone.</div>
+      <div class="s reveal d1"><i>03</i>You scroll to relax, and somehow end up more wound up.</div>
+      <div class="s reveal d1"><i>04</i>Your mind won&rsquo;t power down when your head finally hits the pillow.</div>
+      <div class="s reveal d2"><i>05</i>You wake up already tense, like the day started without you.</div>
+      <div class="s reveal d2"><i>06</i>You&rsquo;ve tried to &ldquo;just relax&rdquo; &#8212; and it never quite works.</div>
+    </div>
+    <p class="foot reveal">If even one line landed, <em>it&rsquo;s not in your head</em> &#8212; and twenty quiet minutes can change it.</p>
+  </section>
 
   <!-- MANIFESTO -->
   <section class="manif">
@@ -169,6 +232,29 @@
       <p>Use the Serenity Set every evening for sixty nights. If your shoulders, your evenings or your sleep aren&rsquo;t the better for it, send it back for a full refund &#8212; return shipping on us.</p>
       <a class="btn" href="#MainContent">Choose your set</a>
     </div>
+  </section>
+
+  <!-- HONEST REVIEWS -->
+  <section class="revs">
+    <div class="reveal">
+      <span class="eyebrow center">Reviews, when they&rsquo;re real</span>
+      <h2>A new ritual, honestly new.</h2>
+      <p>We&rsquo;ve just launched, so we&rsquo;re not borrowing anyone else&rsquo;s words. Verified reviews from real customers will appear here as the first sets find their homes. Until then, the 60-night trial carries the risk &#8212; not you.</p>
+      <div class="stars" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4l2.3 4.7 5.2.8-3.8 3.7.9 5.1L12 16l-4.6 2.4.9-5.1L4.5 9.5l5.2-.8L12 4Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 4l2.3 4.7 5.2.8-3.8 3.7.9 5.1L12 16l-4.6 2.4.9-5.1L4.5 9.5l5.2-.8L12 4Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 4l2.3 4.7 5.2.8-3.8 3.7.9 5.1L12 16l-4.6 2.4.9-5.1L4.5 9.5l5.2-.8L12 4Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 4l2.3 4.7 5.2.8-3.8 3.7.9 5.1L12 16l-4.6 2.4.9-5.1L4.5 9.5l5.2-.8L12 4Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 4l2.3 4.7 5.2.8-3.8 3.7.9 5.1L12 16l-4.6 2.4.9-5.1L4.5 9.5l5.2-.8L12 4Z"/></svg></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faqsec">
+    <div class="head reveal"><span class="eyebrow center">Good to know</span><h2>Your questions, answered</h2></div>
+    <div class="faq reveal">
+      <details><summary>Will it hurt the first time?<svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></summary><div class="ans">Expect an intense, prickly warmth for the first minute &#8212; it&rsquo;s normal, and it fades into a pleasant tingle as your body relaxes. Sensitive skin? Start over a thin shirt, then move to bare skin.</div></details>
+      <details><summary>How often should I use it?<svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary><div class="ans">Around twenty minutes, most evenings &#8212; though even ten helps. Many people use it in the hour before bed, and some drift off entirely.</div></details>
+      <details><summary>How does the &ldquo;buy 2, get 1 free&rdquo; offer work?<svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary><div class="ans">Choose &ldquo;3 Sets&rdquo; above (or add 3 to your cart) and the price of one is removed automatically at checkout &#8212; no code needed. Mix colors freely.</div></details>
+      <details><summary>What&rsquo;s in the set?<svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary><div class="ans">The acupressure mat, the contoured neck pillow and a carry bag. No fragrance, no batteries, nothing to charge. The cover is removable and easy to wash.</div></details>
+      <details><summary>Shipping &amp; returns?<svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary><div class="ans">Free US shipping, dispatched within 1&#8211;2 business days. A 60-night trial with free returns if it isn&rsquo;t for you.</div></details>
+    </div>
+    <p class="fine">The Serenity Set is a relaxation and wellness aid, not a medical device; it does not diagnose, treat, or cure any condition. If you are pregnant or have a medical condition, consult your doctor before use.</p>
   </section>
 
 </div>
