@@ -1,0 +1,369 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "hero_badges": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div style=\"display:flex;flex-wrap:wrap;gap:8px;margin:0 0 6px\"><span style=\"background:#C8704F;color:#fff;font-size:12px;font-weight:600;letter-spacing:.04em;padding:5px 10px;border-radius:6px\">SAVE 50% TODAY</span><span style=\"background:#7A8F78;color:#fff;font-size:12px;font-weight:600;letter-spacing:.04em;padding:5px 10px;border-radius:6px\">FREE US SHIPPING</span><span style=\"background:#3E4A45;color:#fff;font-size:12px;font-weight:600;letter-spacing:.04em;padding:5px 10px;border-radius:6px\">60-NIGHT TRIAL</span></div>"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "rating_g7NF6Y": {
+          "type": "rating",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "bundle_offer": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<style>\n.zxbo{margin:6px 0 12px;font-family:'Inter',sans-serif}\n.zxbo-h{font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#7A8F78;margin:0 0 10px}\n.zxbo-opt{position:relative;display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;background:#FBF9F4;border:1.5px solid rgba(62,74,69,.16);border-radius:10px;padding:15px 16px;margin:0 0 10px;transition:border-color .2s,box-shadow .2s}\n.zxbo-opt:last-of-type{margin-bottom:0}\n.zxbo-opt.is-active{border-color:#C8704F;box-shadow:0 0 0 1px #C8704F}\n.zxbo-radio{flex:none;width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(62,74,69,.35);display:grid;place-items:center}\n.zxbo-opt.is-active .zxbo-radio{border-color:#C8704F}\n.zxbo-opt.is-active .zxbo-radio::after{content:\"\";width:10px;height:10px;border-radius:50%;background:#C8704F}\n.zxbo-main{flex:1}\n.zxbo-main b{display:block;font-size:15px;color:#3E4A45;font-weight:600}\n.zxbo-sub{display:block;font-size:12.5px;color:#6B746E;margin-top:2px}\n.zxbo-price{flex:none;text-align:right;font-size:15px;font-weight:700;color:#3E4A45;white-space:nowrap}\n.zxbo-price s{display:block;font-size:12px;font-weight:400;color:#9aa39d}\n.zxbo-tag{position:absolute;top:-10px;right:14px;background:#C8704F;color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:5px}\n.zxbo-note{font-size:12px;color:#6B746E;margin:9px 2px 0;text-align:center}\n</style>\n<div class=\"zxbo\">\n  <p class=\"zxbo-h\">Choose your set</p>\n  <button type=\"button\" class=\"zxbo-opt is-active\" data-zxqty=\"1\">\n    <span class=\"zxbo-radio\"></span>\n    <span class=\"zxbo-main\"><b>1 Set</b><span class=\"zxbo-sub\">One reset, just for you</span></span>\n    <span class=\"zxbo-price\">$49.99</span>\n  </button>\n  <button type=\"button\" class=\"zxbo-opt\" data-zxqty=\"3\">\n    <span class=\"zxbo-tag\">Buy 2, get 1 free</span>\n    <span class=\"zxbo-radio\"></span>\n    <span class=\"zxbo-main\"><b>3 Sets</b><span class=\"zxbo-sub\">Keep one, gift two &mdash; best value</span></span>\n    <span class=\"zxbo-price\"><s>$149.97</s>$99.98</span>\n  </button>\n  <p class=\"zxbo-note\">Your free set is applied automatically at checkout.</p>\n</div>\n<script>\n(function(){\n  function form(){return document.querySelector('form[action*=\"/cart/add\"]');}\n  function setQty(q){\n    var f=form();if(f){var i=f.querySelector('input[name=\"quantity\"]');\n      if(!i){i=document.createElement('input');i.type='hidden';i.name='quantity';f.appendChild(i);}\n      i.value=q;i.dispatchEvent(new Event('change',{bubbles:true}));}\n    document.querySelectorAll('.quantity__input').forEach(function(v){v.value=q;v.dispatchEvent(new Event('change',{bubbles:true}));});\n  }\n  var opts=document.querySelectorAll('.zxbo .zxbo-opt');\n  opts.forEach(function(o){o.addEventListener('click',function(){\n    opts.forEach(function(x){x.classList.remove('is-active');});\n    o.classList.add('is-active');setQty(o.getAttribute('data-zxqty'));});});\n})();\n</script>"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": false
+          }
+        },
+        "guarantee_line": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<p style=\"text-align:center;margin:10px 0 0;color:#3E4A45;font-weight:500\">60-night money-back guarantee &mdash; love it or your money back.</p>"
+          }
+        },
+        "trust_badges": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div style=\"display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 14px;margin:14px 0 0;font-size:13px;color:#3E4A45\">\n  <span>Secure checkout</span><span style=\"opacity:.35\">&middot;</span>\n  <span>Free US shipping</span><span style=\"opacity:.35\">&middot;</span>\n  <span>60-night returns</span><span style=\"opacity:.35\">&middot;</span>\n  <span>Drug-free &amp; screen-free</span>\n</div>"
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "hero_badges",
+        "title",
+        "rating_g7NF6Y",
+        "price",
+        "variant_picker",
+        "bundle_offer",
+        "buy_buttons",
+        "guarantee_line",
+        "trust_badges",
+        "description",
+        "share"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail_slider",
+        "mobile_thumbnails": "show",
+        "media_position": "left",
+        "image_zoom": "hover",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 28,
+        "padding_bottom": 48
+      }
+    },
+    "trust_marquee": {
+      "type": "trust-marquee",
+      "blocks": {
+        "b1": {
+          "type": "badge",
+          "settings": {
+            "icon_style": "shield",
+            "icon": "",
+            "text": "60-night money-back trial"
+          }
+        },
+        "b2": {
+          "type": "badge",
+          "settings": {
+            "icon_style": "none",
+            "icon": "",
+            "text": "Free US shipping"
+          }
+        },
+        "b3": {
+          "type": "badge",
+          "settings": {
+            "icon_style": "sparkle",
+            "icon": "",
+            "text": "Ships from US warehouse"
+          }
+        },
+        "b4": {
+          "type": "badge",
+          "settings": {
+            "icon_style": "lock",
+            "icon": "",
+            "text": "Secure checkout"
+          }
+        },
+        "b5": {
+          "type": "badge",
+          "settings": {
+            "icon_style": "sparkle",
+            "icon": "",
+            "text": "A drug-free nightly ritual"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "speed": 35,
+        "padding_top": 14,
+        "padding_bottom": 14
+      }
+    },
+    "symptoms": {
+      "type": "respire-symptoms",
+      "blocks": {
+        "s1": {
+          "type": "symptom",
+          "settings": {
+            "text": "Your shoulders are up by your ears by 3pm — and they stay there."
+          }
+        },
+        "s2": {
+          "type": "symptom",
+          "settings": {
+            "text": "Your neck is tight and stiff from a day at the desk and on your phone."
+          }
+        },
+        "s3": {
+          "type": "symptom",
+          "settings": {
+            "text": "You scroll to relax and somehow end up more wound up."
+          }
+        },
+        "s4": {
+          "type": "symptom",
+          "settings": {
+            "text": "Your mind won't power down when your head finally hits the pillow."
+          }
+        },
+        "s5": {
+          "type": "symptom",
+          "settings": {
+            "text": "You wake up already tense, like the day started without you."
+          }
+        },
+        "s6": {
+          "type": "symptom",
+          "settings": {
+            "text": "You've tried to \"just relax\" — and it never quite works."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "s6"
+      ],
+      "settings": {
+        "eyebrow": "If this is your evening",
+        "heading": "Sound familiar?",
+        "intro": "You don't have to explain it. You just recognize this:",
+        "footer_line": "<p>If even one line landed, <em>it's not in your head</em> — and twenty quiet minutes can change it.</p>",
+        "color_scheme": "scheme-3",
+        "animations_reveal_on_scroll": true,
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "reviews": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_MmRUVf": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_MmRUVf"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "blocks": {
+        "q1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Will it hurt the first time?",
+            "icon": "question_mark",
+            "row_content": "<p>Expect an intense prickly warmth for the first minute — it's normal and fades into a pleasant tingle as your body relaxes. Sensitive skin? Wear a thin t-shirt at first, then graduate to bare skin.</p>",
+            "page": ""
+          }
+        },
+        "q2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How often should I use it?",
+            "icon": "lightning_bolt",
+            "row_content": "<p>Nightly is great, but there's no wrong dose. Many people do 20–30 minutes before bed; others use it after a long day or a hard workout.</p>",
+            "page": ""
+          }
+        },
+        "q3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Does the neck pillow come with it?",
+            "icon": "heart",
+            "row_content": "<p>Yes — every set includes both the mat and the contoured neck pillow, plus a carry bag.</p>",
+            "page": ""
+          }
+        },
+        "q4": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Can I wash the cover?",
+            "icon": "sparkle",
+            "row_content": "<p>Yes. The cover is removable for easy spot-cleaning or a gentle machine wash. Air dry to keep it soft.</p>",
+            "page": ""
+          }
+        },
+        "q5": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How fast is shipping?",
+            "icon": "box",
+            "row_content": "<p>Orders ship within 1–2 business days from our US warehouse and arrive in 3–7 business days. Free shipping over $50.</p>",
+            "page": ""
+          }
+        },
+        "q6": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What if it's not for me?",
+            "icon": "shield",
+            "row_content": "<p>You have 60 nights. If it doesn't earn a place in your routine, send it back for a full refund — no hassle.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6"
+      ],
+      "settings": {
+        "caption": "",
+        "heading": "Your questions, answered",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "row",
+        "container_color_scheme": "background-2",
+        "color_scheme": "scheme-1",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "final_cta": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div style=\"position:relative;min-height:72vh;display:grid;place-items:center;text-align:center;overflow:hidden\">\n  <img src=\"https://cdn.shopify.com/s/files/1/1012/8821/4857/files/blackgold-inuse.png?v=1782855518\" alt=\"Woman relaxing on the Serenity acupressure mat\" style=\"position:absolute;inset:0;width:100%;height:100%;object-fit:cover\" loading=\"lazy\">\n  <div style=\"position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,23,20,.55),rgba(18,23,20,.78))\"></div>\n  <div style=\"position:relative;max-width:640px;padding:72px 26px;color:#F4EFE7\">\n    <p style=\"font:500 .72rem/1 'Inter',sans-serif;text-transform:uppercase;letter-spacing:.3em;color:#C2A06A;margin:0 0 18px\">Tonight</p>\n    <p style=\"font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(28px,5.4vw,52px);line-height:1.1;margin:0\">Give your evenings somewhere to land.</p>\n    <p style=\"font-family:'Inter',sans-serif;font-size:15px;color:rgba(244,239,231,.88);margin:20px auto 0;max-width:44ch\">The Serenity Acupressure Mat &amp; Neck Pillow Set &mdash; $49.99, with sixty nights to decide.</p>\n    <a href=\"#MainContent\" style=\"display:inline-flex;align-items:center;gap:10px;margin-top:32px;background:#F4EFE7;color:#1F2723;text-decoration:none;font:500 13px/1 'Inter',sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:18px 36px\">Shop the set</a>\n  </div>\n</div>",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "story": {
+      "type": "zymlux-product-story",
+      "settings": {}
+    },
+    "fineprint": {
+      "type": "rich-text",
+      "blocks": {
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p><em>The Serenity Set is a relaxation and wellness aid, not a medical device; it does not diagnose, treat, or cure any condition. If you are pregnant or have a medical condition, consult your doctor before use. Free US shipping — orders dispatched within 1–2 business days.</em></p>"
+          }
+        }
+      },
+      "block_order": [
+        "text"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "full_width": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "trust_marquee",
+    "symptoms",
+    "story",
+    "reviews",
+    "faq",
+    "fineprint",
+    "final_cta"
+  ]
+}
