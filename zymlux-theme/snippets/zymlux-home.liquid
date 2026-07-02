@@ -2,13 +2,7 @@
 {%- assign purl = '/products/acupressure-mat-neck-pillow-set' -%}
 {%- assign img = 'https://cdn.shopify.com/s/files/1/1012/8821/4857/files/' -%}
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
 <style>
-/* Homepage only: hide the theme's native header group (announcement bar, Craft header, verbs marquee, header app blocks) so only the Zymlux immersive header shows */
-[id$="__announcement-bar"],[id$="__header"],[id$="__marquee-verbs"],[id$="__177998046086fb30c1"],[id$="__17799804048a7a78e7"]{display:none!important}
 #zx,#zx-head,#zx-menu,#zx-bar,#zx-promo{
   --cream:#F4EFE7; --cream2:#EBE3D5; --paper:#FBF9F4;
   --ink:#1F2723; --ink2:#36423C; --muted:#4A554F; --soft:#6B746E;
@@ -36,6 +30,8 @@
 #zx .eyebrow::before{content:"";width:30px;height:1px;background:var(--gold)}
 #zx .eyebrow.center{justify-content:center}
 #zx .eyebrow.center::after{content:"";width:30px;height:1px;background:var(--gold)}
+#zx .gives .eyebrow,#zx .science .eyebrow,#zx .trial .eyebrow,#zx .reviews .eyebrow,#zx .split .eyebrow,#zx .section-head .eyebrow{color:#7D6130}
+#zx .gives .eyebrow::before,#zx .science .eyebrow::before,#zx .trial .eyebrow::before,#zx .reviews .eyebrow::before,#zx .split .eyebrow::before,#zx .section-head .eyebrow::before,#zx .gives .eyebrow.center::after,#zx .science .eyebrow.center::after,#zx .trial .eyebrow.center::after,#zx .reviews .eyebrow.center::after,#zx .section-head .eyebrow.center::after{background:#7D6130}
 
 /* film grain */
 #zx-grain{position:fixed;inset:0;z-index:5;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
@@ -306,7 +302,7 @@ body.zx-lock{overflow:hidden}
 
 <div id="zx-promo" aria-label="Announcements">
   <span class="pm on">&#10022;&nbsp; 10% off your first order with code <b>WELCOME10</b> &nbsp;&#10022;</span>
-  <span class="pm">Free US shipping over $50 &#183; ships in 1&#8211;2 business days</span>
+  <span class="pm">Free U.S. shipping &#183; ships in 1&#8211;2 business days</span>
   <span class="pm">60-night money-back trial &#183; returns on us</span>
 </div>
 
@@ -357,8 +353,8 @@ body.zx-lock{overflow:hidden}
 
   <!-- MARQUEE -->
   <div class="marq" aria-hidden="true"><div class="track">
-    <span>Drug-free relief<span class="sep">&#10022;</span>6,000+ pressure points<span class="sep">&#10022;</span>60-night money-back trial<span class="sep">&#10022;</span>Free US shipping<span class="sep">&#10022;</span>Ships from the US<span class="sep">&#10022;</span>A nightly ritual<span class="sep">&#10022;</span></span>
-    <span>Drug-free relief<span class="sep">&#10022;</span>6,000+ pressure points<span class="sep">&#10022;</span>60-night money-back trial<span class="sep">&#10022;</span>Free US shipping<span class="sep">&#10022;</span>Ships from the US<span class="sep">&#10022;</span>A nightly ritual<span class="sep">&#10022;</span></span>
+    <span>Drug-free relief<span class="sep">&#10022;</span>6,000+ pressure points<span class="sep">&#10022;</span>60-night money-back trial<span class="sep">&#10022;</span>Free US shipping<span class="sep">&#10022;</span>A nightly ritual<span class="sep">&#10022;</span></span>
+    <span>Drug-free relief<span class="sep">&#10022;</span>6,000+ pressure points<span class="sep">&#10022;</span>60-night money-back trial<span class="sep">&#10022;</span>Free US shipping<span class="sep">&#10022;</span>A nightly ritual<span class="sep">&#10022;</span></span>
   </div></div>
 
   <!-- MANIFESTO -->
@@ -470,7 +466,6 @@ body.zx-lock{overflow:hidden}
       <span class="eyebrow center">Reviews, when they&#39;re real</span>
       <h2>A new ritual, honestly new.</h2>
       <p>We&#39;ve just launched, so we&#39;re not borrowing anyone else&#39;s words. Verified reviews from real customers will appear here through Judge.me as the first sets find their homes. Until then, the 60-night trial carries the risk &#8212; not you.</p>
-      <div class="stars" aria-hidden="true"><svg class="ico"><use href="#zxi-star"></use></svg><svg class="ico"><use href="#zxi-star"></use></svg><svg class="ico"><use href="#zxi-star"></use></svg><svg class="ico"><use href="#zxi-star"></use></svg><svg class="ico"><use href="#zxi-star"></use></svg></div>
     </div>
   </section>
 

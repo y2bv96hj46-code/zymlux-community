@@ -15,6 +15,8 @@
 #zxs .eyebrow{display:inline-flex;align-items:center;gap:13px;font:500 .72rem/1 var(--sans);text-transform:uppercase;letter-spacing:.3em;color:var(--gold)}
 #zxs .eyebrow::before{content:"";width:30px;height:1px;background:var(--gold)}
 #zxs .eyebrow.center::after{content:"";width:30px;height:1px;background:var(--gold)}
+#zxs .sympt .eyebrow,#zxs .split .eyebrow,#zxs .cmpsec .eyebrow,#zxs .trial .eyebrow,#zxs .revs .eyebrow,#zxs .faqsec .eyebrow{color:#7D6130}
+#zxs .sympt .eyebrow::before,#zxs .split .eyebrow::before,#zxs .cmpsec .eyebrow::before,#zxs .trial .eyebrow::before,#zxs .revs .eyebrow::before,#zxs .faqsec .eyebrow::before,#zxs .sympt .eyebrow.center::after,#zxs .cmpsec .eyebrow.center::after,#zxs .trial .eyebrow.center::after,#zxs .revs .eyebrow.center::after,#zxs .faqsec .eyebrow.center::after{background:#7D6130}
 #zxs .reveal{opacity:0;transform:translateY(26px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1)}
 #zxs .reveal.is-in{opacity:1;transform:none}
 #zxs .reveal.d1{transition-delay:.12s}#zxs .reveal.d2{transition-delay:.24s}
@@ -99,8 +101,6 @@
 #zxs .revs{background:var(--cream);text-align:center;padding:clamp(4.5rem,8vw,7rem) clamp(1.4rem,4vw,4rem)}
 #zxs .revs h2{font-size:clamp(1.8rem,1.3rem + 1.8vw,2.6rem);margin:18px 0 0}
 #zxs .revs p{max-width:56ch;margin:20px auto 0}
-#zxs .revs .stars{display:inline-flex;gap:8px;margin-top:24px}
-#zxs .revs .stars svg{width:21px;height:21px;stroke:var(--gold);fill:none;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
 
 /* faq */
 #zxs .faqsec{background:var(--paper);padding:clamp(4.5rem,8vw,7rem) clamp(1.4rem,4vw,4rem)}
@@ -240,7 +240,6 @@
       <span class="eyebrow center">Reviews, when they&rsquo;re real</span>
       <h2>A new ritual, honestly new.</h2>
       <p>We&rsquo;ve just launched, so we&rsquo;re not borrowing anyone else&rsquo;s words. Verified reviews from real customers will appear here as the first sets find their homes. Until then, the 60-night trial carries the risk &#8212; not you.</p>
-      <div class="stars" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4l2.3 4.7 5.2.8-3.8 3.7.9 5.1L12 16l-4.6 2.4.9-5.1L4.5 9.5l5.2-.8L12 4Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 4l2.3 4.7 5.2.8-3.8 3.7.9 5.1L12 16l-4.6 2.4.9-5.1L4.5 9.5l5.2-.8L12 4Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 4l2.3 4.7 5.2.8-3.8 3.7.9 5.1L12 16l-4.6 2.4.9-5.1L4.5 9.5l5.2-.8L12 4Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 4l2.3 4.7 5.2.8-3.8 3.7.9 5.1L12 16l-4.6 2.4.9-5.1L4.5 9.5l5.2-.8L12 4Z"/></svg><svg viewBox="0 0 24 24"><path d="M12 4l2.3 4.7 5.2.8-3.8 3.7.9 5.1L12 16l-4.6 2.4.9-5.1L4.5 9.5l5.2-.8L12 4Z"/></svg></div>
     </div>
   </section>
 
@@ -250,9 +249,9 @@
     <div class="faq reveal">
       <details><summary>Will it hurt the first time?<svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></summary><div class="ans">Expect an intense, prickly warmth for the first minute &#8212; it&rsquo;s normal, and it fades into a pleasant tingle as your body relaxes. Sensitive skin? Start over a thin shirt, then move to bare skin.</div></details>
       <details><summary>How often should I use it?<svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary><div class="ans">Around twenty minutes, most evenings &#8212; though even ten helps. Many people use it in the hour before bed, and some drift off entirely.</div></details>
-      <details><summary>How does the &ldquo;buy 2, get 1 free&rdquo; offer work?<svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary><div class="ans">Choose &ldquo;3 Sets&rdquo; above (or add 3 to your cart) and the price of one is removed automatically at checkout &#8212; no code needed. Mix colors freely.</div></details>
+      <details><summary>How does the &ldquo;buy 2, get 1 free&rdquo; offer work?<svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary><div class="ans">Choose &ldquo;3 Sets&rdquo; above and the price of one is removed automatically at checkout &#8212; no code needed. To mix colors, add each color to your cart separately: the offer applies as soon as 3 sets are in the cart.</div></details>
       <details><summary>What&rsquo;s in the set?<svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary><div class="ans">The acupressure mat, the contoured neck pillow and a carry bag. No fragrance, no batteries, nothing to charge. The cover is removable and easy to wash.</div></details>
-      <details><summary>Shipping &amp; returns?<svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary><div class="ans">Free US shipping, dispatched within 1&#8211;2 business days. A 60-night trial with free returns if it isn&rsquo;t for you.</div></details>
+      <details><summary>Shipping &amp; returns?<svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary><div class="ans">Free U.S. shipping on every order &#8212; dispatched within 1&#8211;2 business days, delivered within 3&#8211;7. A 60-night trial with free returns if it isn&rsquo;t for you.</div></details>
     </div>
     <p class="fine">The Serenity Set is a relaxation and wellness aid, not a medical device; it does not diagnose, treat, or cure any condition. If you are pregnant or have a medical condition, consult your doctor before use.</p>
   </section>
