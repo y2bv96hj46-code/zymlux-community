@@ -1,0 +1,37 @@
+{%- comment -%} Zymlux — Buy 2 Get 1 Free nudge inside the cart drawer footer {%- endcomment -%}
+{%- liquid
+  assign zx_units = 0
+  for item in cart.items
+    if item.product.handle == 'acupressure-mat-neck-pillow-set'
+      assign zx_units = zx_units | plus: item.quantity
+    endif
+  endfor
+  assign zx_missing = 3 | minus: zx_units
+-%}
+{%- if zx_units > 0 -%}
+<style>
+.zx-bundle-nudge{margin:0 0 12px;padding:13px 15px;background:#FBF9F4;border:1px solid rgba(43,52,46,.15);border-radius:10px;font-family:'Inter',sans-serif}
+.zx-bundle-nudge.ok{border-color:rgba(122,143,120,.55);background:#F0F3EF}
+.zx-bn-t{margin:0;font:700 10.5px/1 'Inter',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#9E4F2E}
+.zx-bundle-nudge.ok .zx-bn-t{color:#5B6E59}
+.zx-bn-s{margin:6px 0 0;font-size:12.5px;line-height:1.5;color:#4A554F}
+.zx-bn-a{display:inline-block;margin-top:7px;font:600 12px/1 'Inter',sans-serif;color:#1F2723;text-decoration:underline;text-underline-offset:3px}
+.zx-bn-bar{margin-top:9px;height:4px;border-radius:99px;background:rgba(43,52,46,.12);overflow:hidden}
+.zx-bn-fill{height:100%;background:#B58F4F;border-radius:99px;transition:width .4s ease}
+.zx-bundle-nudge.ok .zx-bn-fill{background:#7A8F78}
+</style>
+{%- if zx_units < 3 -%}
+<div class="zx-bundle-nudge">
+  <p class="zx-bn-t">Buy 2, get 1 free</p>
+  <p class="zx-bn-s">Add {{ zx_missing }} more set{% if zx_missing > 1 %}s{% endif %} and your 3rd is <strong>free</strong> &mdash; $49.99 off at checkout.</p>
+  <a class="zx-bn-a" href="/products/acupressure-mat-neck-pillow-set">Choose {% if zx_missing > 1 %}your colors{% else %}a color{% endif %} &rarr;</a>
+  <div class="zx-bn-bar" aria-hidden="true"><div class="zx-bn-fill" style="width:{{ zx_units | times: 100 | divided_by: 3 }}%"></div></div>
+</div>
+{%- else -%}
+<div class="zx-bundle-nudge ok">
+  <p class="zx-bn-t">Free set unlocked</p>
+  <p class="zx-bn-s">Buy 2, Get 1 Free is applied automatically at checkout.</p>
+  <div class="zx-bn-bar" aria-hidden="true"><div class="zx-bn-fill" style="width:100%"></div></div>
+</div>
+{%- endif -%}
+{%- endif -%}
