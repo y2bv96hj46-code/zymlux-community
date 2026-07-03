@@ -129,8 +129,8 @@
   },
   "order": [
     "main",
-    "story",
     "reviews",
+    "story",
     "final_cta"
   ]
 }
