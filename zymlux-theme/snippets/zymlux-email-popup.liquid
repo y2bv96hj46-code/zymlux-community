@@ -1,0 +1,80 @@
+{%- comment -%}
+  Zymlux — delayed / exit-intent email capture popup.
+  Offers WELCOME10 (10% off first order). Shows once, then stays quiet:
+  7 days after a dismiss, ~forever after a successful signup.
+{%- endcomment -%}
+{%- unless request.design_mode or request.page_type == 'cart' -%}
+<style>
+#zx-pop{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:20px;font-family:'Inter',sans-serif}
+#zx-pop[hidden]{display:none}
+.zx-pop-ov{position:absolute;inset:0;background:rgba(18,23,20,.62);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.zx-pop-card{position:relative;width:min(430px,100%);background:#F4EFE7;border-radius:16px;padding:40px 32px 30px;box-shadow:0 30px 80px rgba(0,0,0,.35);animation:zxPopIn .45s cubic-bezier(.2,.7,.2,1)}
+@keyframes zxPopIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.zx-pop-x{position:absolute;top:10px;right:10px;width:38px;height:38px;border:0;background:transparent;color:#5A645E;font-size:24px;line-height:1;cursor:pointer;border-radius:50%;display:grid;place-items:center}
+.zx-pop-x:hover{background:rgba(43,52,46,.08)}
+.zx-pop-eb{margin:0 0 12px;font-size:10.5px;font-weight:500;line-height:1;text-transform:uppercase;letter-spacing:.3em;color:#7D6130}
+.zx-pop-h{margin:0;font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(26px,5vw,32px);line-height:1.12;letter-spacing:-.01em;color:#36423C}
+.zx-pop-s{margin:12px 0 0;font-size:13.5px;line-height:1.65;color:#4A554F}
+.zx-pop-row{display:flex;gap:8px;margin-top:18px}
+.zx-pop-mail{flex:1;min-width:0;background:#FBF9F4;border:1px solid rgba(43,52,46,.25);border-radius:8px;padding:13px 14px;font-family:'Inter',sans-serif;font-size:14px;color:#1F2723}
+.zx-pop-mail:focus{outline:2px solid #1F2723;outline-offset:1px}
+.zx-pop-btn{border:0;background:#1F2723;color:#FBF3E8;border-radius:8px;font-family:'Inter',sans-serif;font-size:11.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:14px 18px;cursor:pointer;white-space:nowrap;transition:background .3s}
+.zx-pop-btn:hover{background:#0E1310}
+.zx-pop-fine{margin:12px 0 0;font-size:11px;color:#8a938d;text-align:center}
+.zx-pop-code{margin:20px 0 0;text-align:center;background:#FBF9F4;border:1px dashed rgba(43,52,46,.4);border-radius:10px;padding:16px;font-family:'Inter',sans-serif;font-size:20px;font-weight:600;letter-spacing:.18em;color:#1F2723}
+.zx-pop-err{margin:12px 0 0;font-size:12.5px;color:#9E4F2E}
+.zx-pop-done .zx-pop-btn{width:100%;margin-top:18px}
+html.zx-pop-lock{overflow:hidden}
+</style>
+<div id="zx-pop" hidden aria-hidden="true">
+  <div class="zx-pop-ov" data-zx-close></div>
+  <div class="zx-pop-card" role="dialog" aria-modal="true" aria-labelledby="zx-pop-h">
+    <button type="button" class="zx-pop-x" data-zx-close aria-label="Close">&times;</button>
+    {%- form 'customer', id: 'zx-pop-form' -%}
+      {%- if form.posted_successfully? -%}
+        <div class="zx-pop-done" data-zx-success>
+          <p class="zx-pop-eb">Welcome to Zymlux</p>
+          <h2 class="zx-pop-h" id="zx-pop-h">Here is your 10% off</h2>
+          <p class="zx-pop-s">Use this code at checkout &mdash; it applies on top of any current offer.</p>
+          <p class="zx-pop-code">WELCOME10</p>
+          <button type="button" class="zx-pop-btn" data-zx-close>Start shopping</button>
+        </div>
+      {%- else -%}
+        <p class="zx-pop-eb">A welcome gift</p>
+        <h2 class="zx-pop-h" id="zx-pop-h">Take 10% off your first order</h2>
+        <p class="zx-pop-s">Leave your email and your code appears right here. No noise &mdash; we only write about resting well.</p>
+        {%- if form.errors -%}
+          <p class="zx-pop-err" data-zx-error>Please enter a valid email address and try again.</p>
+        {%- endif -%}
+        <input type="hidden" name="contact[tags]" value="newsletter,popup">
+        <div class="zx-pop-row">
+          <input type="email" class="zx-pop-mail" name="contact[email]" placeholder="Your email" required autocomplete="email" aria-label="Email address">
+          <button type="submit" class="zx-pop-btn">Get my code</button>
+        </div>
+        <p class="zx-pop-fine">One-time code &middot; unsubscribe anytime</p>
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+</div>
+<script>
+(function(){
+  var pop=document.getElementById('zx-pop');if(!pop)return;
+  var KEY='zx_pop_until';
+  var posted=pop.querySelector('[data-zx-success]');
+  var errored=pop.querySelector('[data-zx-error]');
+  function open(){pop.hidden=false;pop.setAttribute('aria-hidden','false');document.documentElement.classList.add('zx-pop-lock');}
+  function close(){pop.hidden=true;pop.setAttribute('aria-hidden','true');document.documentElement.classList.remove('zx-pop-lock');
+    var days=posted?3650:7;
+    try{localStorage.setItem(KEY,String(Date.now()+days*864e5));}catch(e){}}
+  pop.querySelectorAll('[data-zx-close]').forEach(function(b){b.addEventListener('click',close);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!pop.hidden)close();});
+  if(posted||errored){open();return;}
+  var until=0;try{until=parseInt(localStorage.getItem(KEY)||'0',10);}catch(e){}
+  if(Date.now()<until)return;
+  var shown=false;
+  function trigger(){if(shown)return;shown=true;open();}
+  setTimeout(trigger,18000);
+  document.addEventListener('mouseout',function(e){if(!e.relatedTarget&&e.clientY<=0)trigger();});
+})();
+</script>
+{%- endunless -%}
