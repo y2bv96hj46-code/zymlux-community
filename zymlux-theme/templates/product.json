@@ -67,12 +67,19 @@
           "settings": {
             "custom_liquid": "<style>\n#zx-pbar{position:fixed;left:0;right:0;bottom:0;z-index:45;background:rgba(244,239,231,.96);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid rgba(43,52,46,.14);transform:translateY(105%);transition:transform .4s cubic-bezier(.2,.7,.2,1)}\n#zx-pbar.show{transform:none}\n#zx-pbar .in{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px clamp(16px,4vw,32px) calc(11px + env(safe-area-inset-bottom))}\n#zx-pbar .nm{font-family:'Fraunces',Georgia,serif;font-size:1.02rem;color:#36423C}\n#zx-pbar .pr{font:500 .9rem/1 'Inter',sans-serif;color:#5A645E;margin-left:10px}\n#zx-pbar button{display:inline-flex;align-items:center;background:#1F2723;color:#FBF3E8;border:0;border-radius:2px;cursor:pointer;font:500 .8rem/1 'Inter',sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:15px 26px;white-space:nowrap;transition:background .3s}\n#zx-pbar button:hover{background:#0E1310}\n#zx-pbar .lt{display:flex;align-items:baseline;flex-wrap:wrap;min-width:0}\n@media(max-width:520px){#zx-pbar .nm{display:none}}\n</style>\n<div id=\"zx-pbar\" aria-hidden=\"true\">\n  <div class=\"in\">\n    <div class=\"lt\"><span class=\"nm\">Serenity Acupressure Set</span><span class=\"pr\" id=\"zx-pbar-price\">$49.99</span></div>\n    <button type=\"button\" id=\"zx-pbar-btn\">Add to cart</button>\n  </div>\n</div>\n<script>\n(function(){\n  var SID='{{ section.id }}';\n  var bar=document.getElementById('zx-pbar');if(!bar)return;\n  function form(){return document.getElementById('product-form-'+SID)||document.querySelector('form[action*=\"/cart/add\"]');}\n  var f=form();if(!f)return;\n  document.getElementById('zx-pbar-btn').addEventListener('click',function(){\n    if(window.zxApplyQty)window.zxApplyQty();\n    var ff=form();var s=ff&&ff.querySelector('.product-form__submit');\n    if(s){s.click();}else if(ff&&ff.requestSubmit){ff.requestSubmit();}\n  });\n  if('IntersectionObserver' in window){\n    var io=new IntersectionObserver(function(es){es.forEach(function(e){\n      var show=!e.isIntersecting&&e.boundingClientRect.top<0;\n      bar.classList.toggle('show',show);\n      bar.setAttribute('aria-hidden',show?'false':'true');\n    });},{threshold:0});\n    io.observe(f);\n  }\n})();\n</script>"
           }
+        },
+        "zx_rating": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div class=\"zx-jmbadge\" style=\"margin:0 0 4px\">{{ product.metafields.judgeme.badge }}</div>"
+          }
         }
       },
       "block_order": [
         "zx_style",
         "hero_badges",
         "title",
+        "zx_rating",
         "price",
         "variant_picker",
         "bundle_offer",
@@ -109,11 +116,21 @@
     "story": {
       "type": "zymlux-product-story",
       "settings": {}
+    },
+    "reviews": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div style=\"background:#F4EFE7;padding:clamp(3.5rem,7vw,6rem) clamp(1.4rem,4vw,4rem)\">\n  <div style=\"max-width:1100px;margin:0 auto\">\n    <div style=\"text-align:center;margin-bottom:30px\">\n      <p style=\"font:500 11.5px/1 'Inter',sans-serif;text-transform:uppercase;letter-spacing:.3em;color:#7D6130;margin:0 0 16px\">From real customers</p>\n      <h2 style=\"font-family:'Fraunces',Georgia,serif;font-weight:300;letter-spacing:-.02em;color:#36423C;font-size:clamp(28px,4.5vw,44px);margin:0\">In their own words</h2>\n    </div>\n    <div style=\"clear:both\"></div>\n    <div id=\"judgeme_product_reviews\" class=\"jdgm-widget jdgm-review-widget\" data-id=\"{{ product.id }}\">{{ product.metafields.judgeme.widget }}</div>\n  </div>\n</div>",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
     }
   },
   "order": [
     "main",
     "story",
+    "reviews",
     "final_cta"
   ]
 }

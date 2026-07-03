@@ -463,9 +463,16 @@ body.zx-lock{overflow:hidden}
   <!-- REVIEWS -->
   <section class="sec reviews">
     <div class="inner reveal">
-      <span class="eyebrow center">Reviews, when they&#39;re real</span>
+      {%- assign zx_jm = all_products['acupressure-mat-neck-pillow-set'].metafields.judgeme.review_widget_data.value -%}
+      <span class="eyebrow center">From real customers</span>
+      {%- if zx_jm and zx_jm.number_of_reviews > 0 -%}
+      <h2>Rated {{ zx_jm.average_rating }}/5 by the people who sleep on it.</h2>
+      <p>{{ zx_jm.number_of_reviews }} verified customer reviews &#8212; the sharp first minute, the warm ease that follows, in their own words.</p>
+      {%- else -%}
       <h2>A new ritual, honestly new.</h2>
-      <p>We&#39;ve just launched, so we&#39;re not borrowing anyone else&#39;s words. Verified reviews from real customers will appear here through Judge.me as the first sets find their homes. Until then, the 60-night trial carries the risk &#8212; not you.</p>
+      <p>Verified reviews from real customers will appear here as the first sets find their homes. Until then, the 60-night trial carries the risk &#8212; not you.</p>
+      {%- endif -%}
+      <a href="{{ purl }}#judgeme_product_reviews" class="btn btn-ghost" style="margin-top:30px">Read the reviews <svg class="ico sm arr" style="stroke:currentColor"><use href="#zxi-arrow"></use></svg></a>
     </div>
   </section>
 
