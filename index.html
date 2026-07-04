@@ -7,16 +7,16 @@
 <meta name="description" content="Studio de création de sites web pour commerces et indépendants. Réservation en ligne, visibilité Google, design premium. Exemple gratuit sous 48h.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#060608; --bg2:#0c0c11; --card:#111119; --line:#20202e;
-  --txt:#f5f5f8; --mut:#9a9aac;
-  --c1:#7b5cff; --c2:#19e3c0; --grad:linear-gradient(120deg,#7b5cff,#19e3c0);
+  --bg:#0b0a06; --bg2:#120f08; --card:#171206; --line:#2b2310;
+  --txt:#f5efe0; --mut:#b3a585;
+  --c1:#c9a24b; --c2:#e7c878; --grad:linear-gradient(120deg,#c9a24b,#e7c878);
   --ease:cubic-bezier(.22,1,.36,1);
 }
 /* moteur d'ambiance : le site se redessine en direct */
-html[data-vibe="or"]{--bg:#0b0a06;--bg2:#120f08;--card:#171206;--line:#2b2310;--txt:#f5efe0;--mut:#b3a585;--c1:#c9a24b;--c2:#e7c878;--grad:linear-gradient(120deg,#c9a24b,#e7c878)}
+html[data-vibe="neon"]{--bg:#060608;--bg2:#0c0c11;--card:#111119;--line:#20202e;--txt:#f5f5f8;--mut:#9a9aac;--c1:#7b5cff;--c2:#19e3c0;--grad:linear-gradient(120deg,#7b5cff,#19e3c0)}
 html[data-vibe="emeraude"]{--bg:#05100b;--bg2:#08160f;--card:#0c1c14;--line:#163a2a;--txt:#eafff5;--mut:#8fb6a4;--c1:#16c172;--c2:#7ee0a8;--grad:linear-gradient(120deg,#16c172,#7ee0a8)}
 html[data-vibe="corail"]{--bg:#100808;--bg2:#160b0a;--card:#1c0f0d;--line:#3a201c;--txt:#fff0ec;--mut:#c2a59f;--c1:#ff5d5d;--c2:#ffb15d;--grad:linear-gradient(120deg,#ff5d5d,#ffb15d)}
 html[data-vibe="glace"]{--bg:#06090f;--bg2:#0a0f18;--card:#0e1420;--line:#1c2940;--txt:#eaf3ff;--mut:#90a4c2;--c1:#2e8bff;--c2:#7ad0ff;--grad:linear-gradient(120deg,#2e8bff,#7ad0ff)}
@@ -36,17 +36,12 @@ body,header,.card,.panel,.proj,.plan,.rcard,.step,.tile,.rev,.s-item,.btn-out,.c
 .spy a:hover::after{opacity:1;transform:translateY(-50%) translateX(0)}
 @media(max-width:960px){.spy{display:none}}
 @media(max-width:600px){.vibe .vibe-lbl{display:none}.vibe{left:12px;bottom:12px;padding:8px 10px}}
-/* easter egg */
-.egg{position:fixed;left:50%;top:24px;transform:translateX(-50%) translateY(-160%);z-index:9998;background:var(--card);border:1px solid var(--c1);color:var(--txt);padding:14px 24px;border-radius:14px;box-shadow:0 16px 44px rgba(0,0,0,.55);transition:.55s var(--ease);font-size:.95rem;text-align:center;max-width:92vw}
-.egg.show{transform:translateX(-50%) translateY(0)}
-.egg b{color:transparent;background:var(--grad);-webkit-background-clip:text;background-clip:text;font-weight:700}
-#confetti{position:fixed;inset:0;z-index:9997;pointer-events:none}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
-h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif;letter-spacing:-.02em;line-height:1.04}
+h1,h2,h3,.dsp{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-.015em;line-height:1.08}
 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .eyebrow{font-size:.76rem;letter-spacing:3px;text-transform:uppercase;color:var(--c2);font-weight:600}
 
@@ -59,7 +54,7 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif;letter-spacing:-.02em;line-
 @media(pointer:coarse){#cur,#curdot{display:none}}
 
 .btn{position:relative;display:inline-flex;align-items:center;gap:9px;background:var(--grad);color:#06060a;font-weight:600;padding:15px 28px;border-radius:50px;transition:.35s var(--ease);border:none;cursor:pointer;font-size:.95rem;overflow:hidden}
-.btn:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(123,92,255,.45)}
+.btn:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(201,162,75,.45)}
 .btn-out{background:transparent;border:1px solid var(--line);color:var(--txt)}
 .btn-out:hover{background:#fff;color:#000;border-color:#fff;box-shadow:none}
 
@@ -115,14 +110,14 @@ header.scr{background:rgba(6,6,8,.82);backdrop-filter:blur(16px);border-bottom:1
 .mock .badge-live{position:absolute;top:54px;right:16px;background:var(--grad);color:#06060a;font-size:.7rem;font-weight:700;padding:5px 11px;border-radius:50px;z-index:3;display:flex;align-items:center;gap:6px}
 .mock .badge-live i{width:7px;height:7px;border-radius:50%;background:#06060a;animation:pulse 1.4s infinite}
 .fx{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.55}
-.spot{position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(380px circle at var(--mx,70%) var(--my,35%),rgba(123,92,255,.20),transparent 62%);transition:background .12s linear}
+.spot{position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(380px circle at var(--mx,70%) var(--my,35%),rgba(201,162,75,.20),transparent 62%);transition:background .12s linear}
 /* profondeur lumineuse (cohesion d'ensemble) */
 .glowsec{position:relative;overflow:hidden}
-.glowsec::before{content:"";position:absolute;left:50%;top:34%;transform:translateX(-50%);width:760px;height:440px;max-width:92%;background:radial-gradient(ellipse,rgba(123,92,255,.10),transparent 70%);z-index:0;pointer-events:none}
+.glowsec::before{content:"";position:absolute;left:50%;top:34%;transform:translateX(-50%);width:760px;height:440px;max-width:92%;background:radial-gradient(ellipse,rgba(201,162,75,.10),transparent 70%);z-index:0;pointer-events:none}
 .glowsec .wrap{position:relative;z-index:1}
 /* manifeste cinematique */
 .manifesto{padding:130px 0;text-align:center}
-.mani{font-family:'Space Grotesk';font-weight:700;font-size:clamp(1.7rem,4.6vw,3.4rem);line-height:1.3;max-width:920px;margin:0 auto;letter-spacing:-.01em}
+.mani{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.7rem,4.6vw,3.4rem);line-height:1.3;max-width:920px;margin:0 auto;letter-spacing:-.01em}
 .mani .w{opacity:.13;transition:opacity .55s var(--ease),filter .55s var(--ease);filter:blur(2px);display:inline-block}
 .mani .w.on{opacity:1;filter:blur(0)}
 .mani .g{color:transparent;background:var(--grad);-webkit-background-clip:text;background-clip:text}
@@ -161,7 +156,7 @@ section{padding:110px 0}
 .panel ul{list-style:none;display:flex;flex-direction:column;gap:14px}
 .panel li{display:flex;gap:12px;color:var(--mut)}
 .panel.bad li::before{content:"✕";color:#ff6b6b;font-weight:700}
-.panel.good{border-color:rgba(123,92,255,.4);background:linear-gradient(160deg,rgba(123,92,255,.08),var(--card))}
+.panel.good{border-color:rgba(201,162,75,.4);background:linear-gradient(160deg,rgba(201,162,75,.08),var(--card))}
 .panel.good li{color:var(--txt)}
 .panel.good li::before{content:"✓";color:var(--c2);font-weight:700}
 
@@ -171,7 +166,7 @@ section{padding:110px 0}
 .card:hover{transform:translateY(-6px);border-color:transparent;box-shadow:0 24px 60px rgba(0,0,0,.5)}
 .card::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 100% 0,rgba(25,227,192,.1),transparent 55%);opacity:0;transition:.4s}
 .card:hover::before{opacity:1}
-.card .ic{width:54px;height:54px;border-radius:14px;background:var(--grad);display:grid;place-items:center;font-size:1.5rem;margin-bottom:18px}
+.card .ic{font-family:'Fraunces',serif;font-size:1rem;font-weight:600;color:var(--c2);letter-spacing:3px;margin-bottom:16px}
 .card h3{font-size:1.25rem;margin-bottom:10px}
 .card p{color:var(--mut);font-size:.95rem}
 
@@ -191,7 +186,7 @@ section{padding:110px 0}
 /* portfolio */
 .work{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
 .proj{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--card);transition:.4s var(--ease)}
-.proj:hover{transform:translateY(-8px);border-color:rgba(123,92,255,.5)}
+.proj:hover{transform:translateY(-8px);border-color:rgba(201,162,75,.5)}
 .proj .chrome{height:30px;background:#13131b;display:flex;align-items:center;gap:6px;padding:0 14px;border-bottom:1px solid var(--line)}
 .proj .chrome i{width:9px;height:9px;border-radius:50%;background:#3a3a46}
 .proj .shot{aspect-ratio:16/10;overflow:hidden;background:#0a0a0e}
@@ -219,7 +214,7 @@ section{padding:110px 0}
 /* results */
 .results{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
 .rcard{border:1px solid var(--line);border-radius:18px;padding:32px 26px;background:var(--card);text-align:center;transition:.4s var(--ease)}
-.rcard:hover{transform:translateY(-6px);border-color:rgba(123,92,255,.5)}
+.rcard:hover{transform:translateY(-6px);border-color:rgba(201,162,75,.5)}
 .rcard .rnum{font-family:'Space Grotesk';font-size:3.2rem;font-weight:700;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .rcard p{color:var(--mut);font-size:.9rem;margin-top:12px}.rcard p b{color:var(--txt)}
 /* testimonials marquee */
@@ -233,7 +228,7 @@ section{padding:110px 0}
 /* pricing */
 .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
 .plan{border:1px solid var(--line);border-radius:20px;padding:34px;background:var(--card);display:flex;flex-direction:column;position:relative}
-.plan.feat{border-color:transparent;background:linear-gradient(160deg,rgba(123,92,255,.14),var(--card));box-shadow:0 0 0 1px rgba(123,92,255,.5)}
+.plan.feat{border-color:transparent;background:linear-gradient(160deg,rgba(201,162,75,.14),var(--card));box-shadow:0 0 0 1px rgba(201,162,75,.5)}
 .plan .tag{font-size:.76rem;text-transform:uppercase;letter-spacing:2px;color:var(--c2);font-weight:600}
 .badge-pop{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--grad);color:#06060a;font-size:.72rem;font-weight:700;padding:5px 14px;border-radius:50px;letter-spacing:1px}
 .plan .price{font-family:'Space Grotesk';font-size:2.7rem;font-weight:700;margin:14px 0 4px}
@@ -248,8 +243,8 @@ section{padding:110px 0}
 .cmp th,.cmp td{padding:16px 18px;text-align:center;border-bottom:1px solid var(--line);font-size:.95rem}
 .cmp th{font-family:'Space Grotesk';font-weight:700;font-size:1.05rem}
 .cmp td:first-child,.cmp th:first-child{text-align:left;color:var(--mut)}
-.cmp .us{background:linear-gradient(180deg,rgba(123,92,255,.12),transparent);border-left:1px solid rgba(123,92,255,.4);border-right:1px solid rgba(123,92,255,.4)}
-.cmp .us.top{border-top:1px solid rgba(123,92,255,.4);border-radius:14px 14px 0 0}
+.cmp .us{background:linear-gradient(180deg,rgba(201,162,75,.12),transparent);border-left:1px solid rgba(201,162,75,.4);border-right:1px solid rgba(201,162,75,.4)}
+.cmp .us.top{border-top:1px solid rgba(201,162,75,.4);border-radius:14px 14px 0 0}
 .cmp .yes{color:var(--c2);font-weight:700}.cmp .no{color:#ff6b6b}
 .cmp .uslab{color:transparent;background:var(--grad);-webkit-background-clip:text;background-clip:text}
 /* FAQ */
@@ -267,7 +262,7 @@ section{padding:110px 0}
 .guarantee .shield{font-size:1.6rem}
 
 /* cta */
-.cta{position:relative;border:1px solid var(--line);border-radius:26px;padding:74px 30px;text-align:center;background:radial-gradient(80% 130% at 50% 0,rgba(123,92,255,.2),transparent 60%),var(--bg2);overflow:hidden}
+.cta{position:relative;border:1px solid var(--line);border-radius:26px;padding:74px 30px;text-align:center;background:radial-gradient(80% 130% at 50% 0,rgba(201,162,75,.2),transparent 60%),var(--bg2);overflow:hidden}
 .cta h2{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:700;margin-bottom:16px}
 .cta p{color:var(--mut);margin-bottom:30px}
 
@@ -277,18 +272,8 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
 .fg h4{margin-bottom:14px;font-family:'Space Grotesk'}
 .copy{text-align:center;border-top:1px solid var(--line);padding-top:24px;color:var(--mut);font-size:.82rem}
 
-.float{position:fixed;bottom:22px;right:22px;z-index:90;box-shadow:0 10px 40px rgba(123,92,255,.5)}
+.float{position:fixed;bottom:22px;right:22px;z-index:90;box-shadow:0 10px 40px rgba(201,162,75,.5)}
 
-/* intro loader */
-.loader{position:fixed;inset:0;z-index:9999;background:var(--bg2);display:grid;place-items:center;animation:loaderOut .85s var(--ease) 1.7s forwards}
-.loader .li{text-align:center;padding:0 24px}
-.loader .lbrand{font-family:'Space Grotesk';font-weight:700;font-size:clamp(1.7rem,5vw,2.6rem);display:flex;align-items:center;gap:11px;justify-content:center;margin-bottom:26px;opacity:0;transform:translateY(16px);animation:fadeUp .7s var(--ease) .1s forwards}
-.loader .lbar{width:min(260px,62vw);height:3px;background:var(--line);border-radius:3px;overflow:hidden;margin:0 auto}
-.loader .lbar span{display:block;height:100%;width:0;background:var(--grad);animation:fillbar 1.55s var(--ease) .15s forwards}
-.loader .lpct{margin-top:15px;color:var(--mut);font-size:.82rem;letter-spacing:2px}
-@keyframes fillbar{to{width:100%}}
-@keyframes fadeUp{to{opacity:1;transform:none}}
-@keyframes loaderOut{to{transform:translateY(-101%);visibility:hidden}}
 /* nav right */
 .nav-right{display:flex;align-items:center;gap:18px}
 /* fullscreen menu */
@@ -329,12 +314,6 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
 <div id="prog"></div>
 <div id="cur"></div><div id="curdot"></div>
 
-<div class="loader" id="loader"><div class="li">
-  <div class="lbrand"><span class="dot"></span>Zymlux <span class="grad">Création</span></div>
-  <div class="lbar"><span></span></div>
-  <div class="lpct" id="lpct">Chargement… 0%</div>
-</div></div>
-
 <header id="hdr">
   <div class="wrap nav">
     <a href="#" class="brand"><span class="dot"></span>Zymlux <span class="grad">Création</span></a>
@@ -368,11 +347,11 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
   <div class="spot" id="spot"></div>
   <div class="wrap hero-grid2">
     <div class="hero-copy">
-      <div class="pill reveal"><span class="live"></span> 3 places dispo ce mois-ci</div>
+      <div class="pill reveal"><span class="live"></span> Studio indépendant — réponse sous 24 h</div>
       <h1 class="reveal d1">Des sites web qui ramènent des <span class="rot grad" id="rot"><span class="on">clients</span><span>réservations</span><span>avis 5★</span><span>revenus</span></span></h1>
       <p class="reveal d2">Pour les barbiers, instituts, restaurants et artisans. Design premium, réservation en ligne, visibilité Google. Vous bossez, on s'occupe du web.</p>
       <div class="hero-actions reveal d3">
-        <a href="#contact" class="btn">✦ Mon exemple gratuit sous 48h →</a>
+        <a href="#contact" class="btn">Mon exemple gratuit sous 48 h →</a>
         <a href="#travaux" class="btn btn-out">Voir les réalisations</a>
       </div>
       <p class="hero-note reveal d4">✦ Sur-mesure, créé à la main · Sans engagement · Livré en 7 jours</p>
@@ -419,7 +398,7 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
       <p>À gauche, ce que la plupart des commerces ont aujourd'hui. À droite, ce qu'on leur livre.</p>
     </div>
     <div class="ba reveal d1" id="ba">
-      <div class="side after"><span class="tag">Après ✨</span><span class="lbl grad">Site moderne</span><span class="sub">Réservation en ligne · Google · Mobile</span></div>
+      <div class="side after"><span class="tag">Après</span><span class="lbl grad">Site moderne</span><span class="sub">Réservation en ligne · Google · Mobile</span></div>
       <div class="side before" id="baBefore"><span class="tag">Avant</span><span class="lbl">Page Facebook</span><span class="sub">Daté · pas de résa · invisible</span></div>
       <div class="handle" id="baHandle"></div>
       <div class="grip" id="baGrip">⇄</div>
@@ -436,14 +415,14 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
       <h2>Chaque jour sans site,<br>c'est des clients chez le concurrent</h2>
     </div>
     <div class="cols">
-      <div class="panel bad reveal"><h3>😓 Sans nous</h3><ul>
+      <div class="panel bad reveal"><h3>Aujourd'hui</h3><ul>
         <li>Juste une page Facebook ou rien</li>
         <li>Réservations par téléphone, en plein travail</li>
         <li>Invisible sur Google</li>
         <li>Aucune vitrine du travail</li>
         <li>Des rendez-vous oubliés</li>
       </ul></div>
-      <div class="panel good reveal d1"><h3>🚀 Avec nous</h3><ul>
+      <div class="panel good reveal d1"><h3>Avec votre site</h3><ul>
         <li>Un site pro et moderne à votre image</li>
         <li>Réservation 24/7, même la nuit</li>
         <li>Visible sur Google en premier</li>
@@ -459,12 +438,12 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
   <div class="wrap">
     <div class="head reveal"><span class="eyebrow">Nos services</span><h2>Une vraie machine à clients</h2><p>On ne vend pas un site. On installe un système qui travaille pour vous.</p></div>
     <div class="cards">
-      <div class="card reveal"><div class="ic">🎨</div><h3>Création de site</h3><p>Sur-mesure, rapide, moderne, 100% mobile, à votre image.</p></div>
-      <div class="card reveal d1"><div class="ic">📅</div><h3>Réservation en ligne</h3><p>Vos clients réservent 24/7. Rappels SMS automatiques.</p></div>
-      <div class="card reveal d2"><div class="ic">🔍</div><h3>Visibilité Google</h3><p>On vous fait remonter quand les clients du coin cherchent.</p></div>
-      <div class="card reveal"><div class="ic">⭐</div><h3>Avis clients</h3><p>Un système simple pour récolter des avis 5★ en continu.</p></div>
-      <div class="card reveal d1"><div class="ic">📸</div><h3>Galerie & visuels</h3><p>On met en valeur vos réalisations avant même la visite.</p></div>
-      <div class="card reveal d2"><div class="ic">🔧</div><h3>Maintenance</h3><p>Mises à jour & support. Vous ne touchez à rien.</p></div>
+      <div class="card reveal"><div class="ic">01</div><h3>Création de site</h3><p>Sur-mesure, rapide, moderne, 100% mobile, à votre image.</p></div>
+      <div class="card reveal d1"><div class="ic">02</div><h3>Réservation en ligne</h3><p>Vos clients réservent 24/7. Rappels SMS automatiques.</p></div>
+      <div class="card reveal d2"><div class="ic">03</div><h3>Visibilité Google</h3><p>On vous fait remonter quand les clients du coin cherchent.</p></div>
+      <div class="card reveal"><div class="ic">04</div><h3>Avis clients</h3><p>Un système simple pour récolter des avis 5★ en continu.</p></div>
+      <div class="card reveal d1"><div class="ic">05</div><h3>Galerie & visuels</h3><p>On met en valeur vos réalisations avant même la visite.</p></div>
+      <div class="card reveal d2"><div class="ic">06</div><h3>Maintenance</h3><p>Mises à jour & support. Vous ne touchez à rien.</p></div>
     </div>
   </div>
 </section>
@@ -578,7 +557,7 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
         <ul><li>Tout le pack Pro</li><li>Gestion réseaux sociaux</li><li>Campagnes & promos</li><li>Suivi mensuel</li></ul>
         <a href="#contact" class="btn btn-out">Discutons-en</a></div>
     </div>
-    <div class="guarantee reveal"><span class="shield">🛡️</span> <span><b>Satisfait ou vous ne payez rien.</b> On vous montre votre site avant. S'il ne vous plaît pas, vous ne devez rien.</span></div>
+    <div class="guarantee reveal"><span class="shield">✦</span> <span><b>Satisfait ou vous ne payez rien.</b> On vous montre votre site avant. S'il ne vous plaît pas, vous ne devez rien.</span></div>
   </div>
 </section>
 
@@ -617,7 +596,7 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
       <p style="color:var(--mut);margin-top:8px">On vous recontacte sous 24&nbsp;h avec votre exemple gratuit.</p>
     </div>
     <form id="form-contact" class="reveal d1" style="display:flex;flex-direction:column;gap:14px" action="https://formsubmit.co/cyril.chabane@outlook.fr" method="POST">
-      <input type="hidden" name="_subject" value="🔥 Nouvelle demande — Zymlux Création">
+      <input type="hidden" name="_subject" value="Nouvelle demande — Zymlux Création">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_next" value="https://communaute.zymlux.fr/?sent=1#contact">
@@ -650,8 +629,6 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
 
 <a href="#contact" class="btn float">Devis gratuit →</a>
 
-<div class="egg" id="egg">🎉 Bien joué, petit curieux ! Code <b>ZYMLUX10</b> = −10% sur ton site 🎁</div>
-<canvas id="confetti"></canvas>
 
 <nav class="spy" aria-label="Navigation rapide">
   <a href="#" data-s="top" data-l="Accueil" class="act"></a>
@@ -664,9 +641,9 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
 </nav>
 
 <div class="vibe" title="Ce site se redessine en direct">
-  <span class="vibe-lbl">🎨 Change l'ambiance du site →</span>
-  <button class="vbtn act" type="button" data-v="" style="--d:#7b5cff" aria-label="Néon"></button>
-  <button class="vbtn" type="button" data-v="or" style="--d:#c9a24b" aria-label="Or"></button>
+  <span class="vibe-lbl">Votre couleur, votre ambiance :</span>
+  <button class="vbtn act" type="button" data-v="" style="--d:#c9a24b" aria-label="Or"></button>
+  <button class="vbtn" type="button" data-v="neon" style="--d:#7b5cff" aria-label="Néon"></button>
   <button class="vbtn" type="button" data-v="emeraude" style="--d:#16c172" aria-label="Émeraude"></button>
   <button class="vbtn" type="button" data-v="corail" style="--d:#ff5d5d" aria-label="Corail"></button>
   <button class="vbtn" type="button" data-v="glace" style="--d:#2e8bff" aria-label="Glace"></button>
@@ -712,7 +689,7 @@ addEventListener('mousemove',e=>{
 const cur=document.getElementById('cur'),cd=document.getElementById('curdot');
 addEventListener('mousemove',e=>{cur.style.left=cd.style.left=e.clientX+'px';cur.style.top=cd.style.top=e.clientY+'px';});
 document.querySelectorAll('a,button,.proj,.card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.style.width='52px';cur.style.height='52px';cur.style.background='rgba(123,92,255,.15)'});
+  el.addEventListener('mouseenter',()=>{cur.style.width='52px';cur.style.height='52px';cur.style.background='rgba(201,162,75,.15)'});
   el.addEventListener('mouseleave',()=>{cur.style.width='34px';cur.style.height='34px';cur.style.background='transparent'});
 });
 // before/after slider
@@ -751,7 +728,7 @@ ba.addEventListener('touchmove',e=>setBA(e.touches[0].clientX),{passive:true});
   function tick(){
     x.clearRect(0,0,w,h);
     for(var i=0;i<pts.length;i++){var p=pts[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;
-      x.beginPath();x.arc(p.x,p.y,1.5,0,7);x.fillStyle='rgba(123,92,255,.7)';x.fill();}
+      x.beginPath();x.arc(p.x,p.y,1.5,0,7);x.fillStyle='rgba(201,162,75,.7)';x.fill();}
     for(var a=0;a<pts.length;a++)for(var b=a+1;b<pts.length;b++){
       var dx=pts[a].x-pts[b].x,dy=pts[a].y-pts[b].y,d=Math.sqrt(dx*dx+dy*dy);
       if(d<120){x.globalAlpha=1-d/120;x.strokeStyle='rgba(25,227,192,.22)';x.lineWidth=1;x.beginPath();x.moveTo(pts[a].x,pts[a].y);x.lineTo(pts[b].x,pts[b].y);x.stroke();x.globalAlpha=1;}
@@ -763,8 +740,6 @@ ba.addEventListener('touchmove',e=>setBA(e.touches[0].clientX),{passive:true});
 // menu plein écran
 function openMenu(){document.getElementById('mm').classList.add('open');document.body.style.overflow='hidden'}
 function closeMenu(){document.getElementById('mm').classList.remove('open');document.body.style.overflow=''}
-// compteur du loader (visuel)
-(function(){var el=document.getElementById('lpct');if(!el)return;var n=0;var t=setInterval(function(){n=Math.min(100,n+Math.ceil(Math.random()*11));el.textContent='Chargement… '+n+'%';if(n>=100)clearInterval(t)},110);})();
 // boutons magnétiques (desktop)
 if(matchMedia('(pointer:fine)').matches){
   document.querySelectorAll('.btn').forEach(function(btn){
@@ -794,24 +769,6 @@ document.querySelectorAll('.qa button').forEach(function(b){b.addEventListener('
   var ids=['top','creer','avant-apres','services','travaux','tarifs','contact'];
   var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var id=e.target.id||'top';dots.forEach(function(a){a.classList.toggle('act',a.getAttribute('data-s')===id)})}})},{rootMargin:'-45% 0px -45% 0px'});
   ids.forEach(function(id){var el=document.getElementById(id);if(el)so.observe(el)});
-})();
-// easter egg : code Konami (ou 5 tics sur le logo) -> confettis + code promo
-(function(){
-  var seq=[38,38,40,40,37,39,37,39,66,65],i=0,fired=false;
-  addEventListener('keydown',function(e){i=(e.keyCode===seq[i])?i+1:0;if(i===seq.length){i=0;egg()}});
-  var dot=document.querySelector('.brand .dot'),dc=0;
-  if(dot)dot.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();dc++;if(dc>=5){dc=0;egg()}});
-  function egg(){
-    var t=document.getElementById('egg');if(t){t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(function(){t.classList.remove('show')},6500)}
-    confetti();
-  }
-  function confetti(){
-    var c=document.getElementById('confetti');if(!c)return;var x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
-    var cols=['#7b5cff','#19e3c0','#ff5fa2','#f4a300','#2e8bff'],P=[];
-    for(var k=0;k<150;k++)P.push({x:Math.random()*c.width,y:-20-Math.random()*c.height,r:4+Math.random()*7,vy:2+Math.random()*4,vx:-2+Math.random()*4,col:cols[k%cols.length],a:Math.random()*6});
-    var t0=Date.now();
-    (function loop(){x.clearRect(0,0,c.width,c.height);for(var j=0;j<P.length;j++){var p=P[j];p.y+=p.vy;p.x+=p.vx;p.a+=.12;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.col;x.fillRect(-p.r/2,-p.r/2,p.r,p.r*.6);x.restore()}if(Date.now()-t0<4000)requestAnimationFrame(loop);else x.clearRect(0,0,c.width,c.height)})();
-  }
 })();
 // effet 3D au survol du portfolio (desktop)
 if(matchMedia('(pointer:fine)').matches){
