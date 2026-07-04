@@ -150,33 +150,82 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
 <script>
 (function(){
   var TYPES=[
-    {k:'Barbier',emoji:'🪒',eyebrow:'Barbier · Salon',slogan:"L'art de la coupe, sur-mesure.",cta:'Réserver',serv:[['Coupe signature','Shampoing + coiffage'],['Taille de barbe','Au cordeau'],['Rasage traditionnel','Serviette chaude']]},
-    {k:'Beauté',emoji:'💅',eyebrow:'Institut · Beauté',slogan:'Sublimez votre beauté, en douceur.',cta:'Prendre RDV',serv:[['Soins du visage','Éclat & hydratation'],['Pose & nail art','Mains de rêve'],['Épilation','Précise & soignée']]},
-    {k:'Restaurant',emoji:'🍽️',eyebrow:'Restaurant',slogan:'Une cuisine qui a du goût.',cta:'Réserver une table',serv:[['Entrées','De saison'],['Plats signature','Faits maison'],['Desserts','Gourmands']]},
-    {k:'Artisan',emoji:'🔧',eyebrow:'Artisan · Dépannage',slogan:'Un travail soigné, garanti.',cta:'Devis gratuit',serv:[['Dépannage','Intervention rapide'],['Installation','Aux normes'],['Rénovation','Clé en main']]},
-    {k:'Coach',emoji:'💪',eyebrow:'Coach · Sport',slogan:'Dépassez vos limites.',cta:'Séance d’essai',serv:[['Coaching perso','Programme sur-mesure'],['Cours collectifs','Énergie de groupe'],['Nutrition','Plan adapté']]},
-    {k:'Fleuriste',emoji:'🌸',eyebrow:'Atelier floral',slogan:'La beauté, au naturel.',cta:'Commander',serv:[['Bouquets','Compositions du jour'],['Mariages','Décoration florale'],['Abonnements','Fleurs chaque semaine']]},
-    {k:'Café',emoji:'☕',eyebrow:'Café · Salon de thé',slogan:'Le bon café, simplement.',cta:'Voir la carte',serv:[['Cafés','Torréfaction maison'],['Pâtisseries','Faites maison'],['Brunch','Tous les week-ends']]},
-    {k:'Tatoueur',emoji:'🖋️',eyebrow:'Studio de tatouage',slogan:"L'encre qui vous ressemble.",cta:'Prendre RDV',serv:[['Flash','Modèles dispo'],['Sur-mesure','Votre projet'],['Cover-up','On rattrape tout']]},
-    {k:'Photographe',emoji:'📸',eyebrow:'Studio photo',slogan:'Vos instants, sublimés.',cta:'Réserver une séance',serv:[['Portrait','Studio ou extérieur'],['Mariage','Le grand jour'],['Entreprise','Image pro']]},
-    {k:'Garage',emoji:'🚗',eyebrow:'Garage · Auto',slogan:'Votre voiture entre de bonnes mains.',cta:'Prendre RDV',serv:[['Entretien','Révision complète'],['Réparation','Toutes marques'],['Pneus','Montage rapide']]},
-    {k:'Immobilier',emoji:'🏠',eyebrow:'Agence immobilière',slogan:'Le bien de vos rêves vous attend.',cta:'Estimer mon bien',serv:[['Achat','Biens sélectionnés'],['Vente','Estimation gratuite'],['Location','Accompagnement']]},
-    {k:'Dentiste',emoji:'🦷',eyebrow:'Cabinet dentaire',slogan:'Votre sourire, notre priorité.',cta:'Prendre RDV',serv:[['Soins','Caries & détartrage'],['Esthétique','Blanchiment'],['Implants','Solutions durables']]}
+    {k:'Barbier',emoji:'🪒',eyebrow:'Barbier · Salon',slogan:"L'art de la coupe, sur-mesure.",cta:'Réserver',hours:'Mar–Sam · 9h–19h',
+      sub:'Réservez votre créneau en 30 secondes — sans attendre au téléphone.',
+      serv:[['Coupe signature','Shampoing + coiffage','dès 22 €'],['Taille de barbe','Au cordeau','dès 12 €'],['Rasage traditionnel','Serviette chaude','dès 25 €']],
+      stats:[['4,9/5','sur Google'],['0 attente','sur rendez-vous'],['+8 ans','de métier']],
+      revs:[['Meilleur barbier du quartier, dégradé impeccable à chaque fois.','Karim'],['On sent le geste du métier. La serviette chaude, un régal.','Thomas'],['Je réserve en ligne le matin, je suis coupé le soir. Parfait.','Hugo']]},
+    {k:'Beauté',emoji:'💅',eyebrow:'Institut · Beauté',slogan:'Sublimez votre beauté, en douceur.',cta:'Prendre RDV',hours:'Mar–Sam · 9h30–19h',
+      sub:'Prenez rendez-vous en ligne à toute heure, on s’occupe du reste.',
+      serv:[['Soins du visage','Éclat & hydratation','dès 45 €'],['Pose & nail art','Mains de rêve','dès 35 €'],['Épilation','Précise & soignée','dès 15 €']],
+      stats:[['4,9/5','sur Google'],['RDV 24/7','réservation en ligne'],['+6 ans','d’expérience']],
+      revs:[['Pose gel impeccable, qui tient plus de trois semaines.','Julie'],['Institut cocon, on ressort détendue et rayonnante.','Sarah'],['Enfin un institut où on réserve en ligne en 30 secondes.','Emma']]},
+    {k:'Restaurant',emoji:'🍽️',eyebrow:'Restaurant',slogan:'Une cuisine qui a du goût.',cta:'Réserver une table',hours:'Mar–Dim · 12h–14h · 19h–22h',
+      sub:'Réservez votre table en ligne, midi et soir.',
+      serv:[['Entrées','De saison','dès 9 €'],['Plats signature','Faits maison','dès 18 €'],['Desserts','Gourmands','dès 8 €']],
+      stats:[['Fait maison','produits frais'],['4,8/5','sur Google'],['80 couverts','salle & terrasse']],
+      revs:[['Le plat du jour était parfait, service aux petits soins.','Claire'],['Notre cantine du dimanche. La carte change, jamais déçus.','Antoine'],['Réservé en ligne à 11h, table à midi. Efficace et délicieux.','Nadia']]},
+    {k:'Artisan',emoji:'🔧',eyebrow:'Artisan · Dépannage',slogan:'Un travail soigné, garanti.',cta:'Devis gratuit',hours:'Lun–Ven · 8h–18h',
+      sub:'Demandez votre devis gratuit — réponse sous 24 h.',
+      serv:[['Dépannage','Intervention rapide','dès 80 €'],['Installation','Aux normes','sur devis'],['Rénovation','Clé en main','sur devis']],
+      stats:[['-1h','délai de rappel'],['Garantie','pièces & main-d’œuvre'],['Devis','gratuit sous 24h']],
+      revs:[['Fuite réparée le jour même, tarif annoncé respecté.','Michel'],['Travail propre, chantier nickel derrière. Sérieux.','Isabelle'],['Devis clair reçu en 2h, intervention parfaite.','Laurent']]},
+    {k:'Coach',emoji:'💪',eyebrow:'Coach · Sport',slogan:'Dépassez vos limites.',cta:'Séance d’essai',hours:'Lun–Sam · 7h–21h',
+      sub:'Réservez votre séance d’essai — la première est offerte.',
+      serv:[['Coaching perso','Programme sur-mesure','dès 40 €'],['Cours collectifs','Énergie de groupe','dès 12 €'],['Nutrition','Plan adapté','dès 60 €']],
+      stats:[['-6 kg','en moyenne en 3 mois'],['+300','séances coachées'],['4,9/5','sur Google']],
+      revs:[['10 kilos en 6 mois, sans jamais lâcher. Merci coach !','Mehdi'],['Les séances passent trop vite, ambiance au top.','Laura'],['Programme réaliste, suivi sérieux, résultats visibles.','Pauline']]},
+    {k:'Fleuriste',emoji:'🌸',eyebrow:'Atelier floral',slogan:'La beauté, au naturel.',cta:'Commander',hours:'Mar–Dim · 9h–19h30',
+      sub:'Commandez en ligne — livraison le jour même.',
+      serv:[['Bouquets','Compositions du jour','dès 25 €'],['Mariages','Décoration florale','sur devis'],['Abonnements','Fleurs chaque semaine','dès 19 €/mois']],
+      stats:[['Fleurs','fraîches chaque matin'],['Livraison','le jour même'],['4,9/5','sur Google']],
+      revs:[['Bouquet magnifique, livré en 2h. Ma mère a pleuré.','Camille'],['Notre mariage était somptueux, merci mille fois.','Élodie'],['Abonnée depuis un an : superbes surprises chaque semaine.','Anne']]},
+    {k:'Café',emoji:'☕',eyebrow:'Café · Salon de thé',slogan:'Le bon café, simplement.',cta:'Voir la carte',hours:'Lun–Dim · 8h–18h',
+      sub:'Retrouvez la carte, les horaires — et réservez votre brunch.',
+      serv:[['Cafés','Torréfaction maison','dès 2,50 €'],['Pâtisseries','Faites maison','dès 4 €'],['Brunch','Tous les week-ends','24 €/pers.']],
+      stats:[['Torréfié','sur place'],['100%','fait maison'],['4,8/5','sur Google']],
+      revs:[['Le meilleur flat white de la ville, tout simplement.','Lucas'],['Le brunch du samedi vaut le détour. Réservez !','Manon'],['Cosy, bon wifi, cookies dangereux. J’y vis.','Théo']]},
+    {k:'Tatoueur',emoji:'🖋️',eyebrow:'Studio de tatouage',slogan:"L'encre qui vous ressemble.",cta:'Prendre RDV',hours:'Mar–Sam · 11h–19h',
+      sub:'Envoyez votre projet — réponse sous 48 h.',
+      serv:[['Flash','Modèles dispo','dès 80 €'],['Sur-mesure','Votre projet','sur devis'],['Cover-up','On rattrape tout','sur étude']],
+      stats:[['Hygiène','matériel stérile certifié'],['+10 ans','d’aiguille'],['5/5','sur Google']],
+      revs:[['Trait fin superbe, cicatrisation parfaite. Merci !','Alex'],['Il a compris mon idée mieux que moi. Résultat dingue.','Morgane'],['Cover-up réussi sur un vieux tatouage raté. Chapeau.','Kevin']]},
+    {k:'Photographe',emoji:'📸',eyebrow:'Studio photo',slogan:'Vos instants, sublimés.',cta:'Réserver une séance',hours:'Sur rendez-vous',
+      sub:'Vérifiez les disponibilités et réservez votre séance.',
+      serv:[['Portrait','Studio ou extérieur','dès 120 €'],['Mariage','Le grand jour','dès 900 €'],['Entreprise','Image pro','sur devis']],
+      stats:[['+120','mariages capturés'],['48h','livraison des aperçus'],['5/5','sur Google']],
+      revs:[['Nos photos de mariage sont sublimes, on les regarde en boucle.','Marion'],['Séance portrait détendue, résultat très pro.','David'],['Photos corporate livrées en 48h, équipe ravie.','Sophie']]},
+    {k:'Garage',emoji:'🚗',eyebrow:'Garage · Auto',slogan:'Votre voiture entre de bonnes mains.',cta:'Prendre RDV',hours:'Lun–Sam · 8h–19h',
+      sub:'Prenez rendez-vous en ligne — devis transparent avant toute intervention.',
+      serv:[['Entretien','Révision complète','dès 89 €'],['Réparation','Toutes marques','sur devis'],['Pneus','Montage rapide','dès 45 €']],
+      stats:[['Toutes','marques'],['Prêt','de véhicule offert'],['4,8/5','sur Google']],
+      revs:[['Diagnostic honnête, facture conforme au devis.','Patrick'],['Révision + pneus dans la journée, voiture de prêt offerte.','Céline'],['Enfin un garage qui explique avant de facturer.','Romain']]},
+    {k:'Immobilier',emoji:'🏠',eyebrow:'Agence immobilière',slogan:'Le bien de vos rêves vous attend.',cta:'Estimer mon bien',hours:'Lun–Sam · 9h–19h',
+      sub:'Estimez votre bien gratuitement, en 2 minutes.',
+      serv:[['Achat','Recherche personnalisée','sur mandat'],['Vente','Estimation offerte','sous 48h'],['Location','Gestion locative','dès 5,9 %']],
+      stats:[['21 jours','délai moyen de vente'],['+150','biens vendus'],['4,9/5','sur Google']],
+      revs:[['Appartement vendu en 3 semaines au prix estimé.','Nathalie'],['Accompagnement parfait pour notre premier achat.','Julien'],['Gestion locative sans souci depuis 2 ans.','Brigitte']]},
+    {k:'Dentiste',emoji:'🦷',eyebrow:'Cabinet dentaire',slogan:'Votre sourire, notre priorité.',cta:'Prendre RDV',hours:'Lun–Ven · 9h–18h',
+      sub:'Prenez rendez-vous en ligne — urgences acceptées.',
+      serv:[['Soins','Caries & détartrage','conventionné'],['Esthétique','Blanchiment','dès 290 €'],['Implants','Solutions durables','sur devis']],
+      stats:[['Urgences','prises le jour même'],['Sans stress','approche douce'],['4,9/5','sur Google']],
+      revs:[['Même les enfants y vont sans stress, c’est dire.','Aurélie'],['Urgence prise le jour même, plus aucune douleur.','Franck'],['Explications claires, soins sans douleur. Rassurant.','Martine']]}
   ];
   var COLORS=['#7b5cff','#19e3c0','#ff5fa2','#f4a300','#e3261f','#2e8bff','#16c172'];
   var STYLES=[
-    {k:'Moderne',font:'Space Grotesk',w:'600;700',h1:'50px',tt:'none',it:false},
-    {k:'Élégant',font:'Fraunces',w:'500;600',h1:'54px',tt:'none',it:true},
-    {k:'Audacieux',font:'Anton',w:'',h1:'70px',tt:'uppercase',it:false}
+    {k:'Moderne',font:'Space Grotesk',w:'600;700',h1:'50px',tt:'none',it:false,lay:'split',r:'16px',br:'50px'},
+    {k:'Élégant',font:'Fraunces',w:'500;600',h1:'52px',tt:'none',it:true,lay:'center',r:'22px',br:'50px'},
+    {k:'Audacieux',font:'Anton',w:'',h1:'64px',tt:'uppercase',it:false,lay:'bold',r:'8px',br:'10px'}
   ];
-  var st={name:'Chez Marco',slogan:'',type:0,color:'#7b5cff',style:0,theme:'dark',city:'Lille',phone:'06 12 34 56 78',photo:''};
+  var st={name:'Chez Marco',slogan:'',type:0,color:'#7b5cff',style:0,theme:'dark',city:'Lille',phone:'06 12 34 56 78',photo:'',page:'home'};
   // restaurer depuis l'URL (sites partagés)
   try{var q=new URLSearchParams(location.search);
     if(q.get('n'))st.name=q.get('n');
     if(q.get('s'))st.slogan=q.get('s');
     if(q.get('t')!=null)st.type=Math.max(0,Math.min(TYPES.length-1,parseInt(q.get('t'),10)||0));
-    if(q.get('ly')!=null)st.style=Math.max(0,Math.min(2,parseInt(q.get('ly'),10)||0));
-    if(q.get('c'))st.color='#'+q.get('c').replace('#','');
+    if(q.get('ly')!=null)st.style=Math.max(0,Math.min(STYLES.length-1,parseInt(q.get('ly'),10)||0));
+    var qc=(q.get('c')||'').replace('#','');
+    if(/^[0-9a-fA-F]{3}$|^[0-9a-fA-F]{6}$/.test(qc))st.color='#'+qc;
     if(q.get('th'))st.theme=q.get('th')==='light'?'light':'dark';
     if(q.get('city'))st.city=q.get('city');
     if(q.get('p'))st.phone=q.get('p');
@@ -185,7 +234,9 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
   function esc(s){return String(s||'').replace(/[<>&"]/g,function(c){return({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'})[c]})}
   function slug(s){return (s||'site').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'site'}
 
-  function build(){
+  function build(page){
+    page=page||st.page||'home';
+    if(['home','services','about','contact'].indexOf(page)<0)page='home';
     var d=TYPES[st.type],c=st.color,nm=esc(st.name||'Votre Commerce');
     var slog=esc(st.slogan||d.slogan);
     var S=STYLES[st.style]||STYLES[0];
@@ -193,59 +244,66 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
     var ini=(st.name||'S').replace(/[^A-Za-zÀ-ÿ ]/g,'').split(/\s+/).filter(Boolean).slice(0,2).map(function(w){return w.charAt(0)}).join('').toUpperCase()||'S';
     var dark=st.theme==='dark';
     var bg=dark?'#0e0e13':'#ffffff', tx=dark?'#f3f3f7':'#16161d', mut=dark?'#9a9aac':'#6a6a78', card=dark?'#17171f':'#f5f6f8', line=dark?'#23232f':'#e9e9f0';
-    var serv=d.serv.map(function(s){return '<div class=sc><div class=ic></div><h3>'+esc(s[0])+'</h3><p>'+esc(s[1])+'</p></div>'}).join('');
+    var serv=d.serv.map(function(s){return '<div class=sc><div class=ic></div><h3>'+esc(s[0])+'</h3><p>'+esc(s[1])+'</p><span class=pr>'+esc(s[2])+'</span></div>'}).join('');
     var pv=st.photo?('background-image:url('+st.photo+');background-size:cover;background-position:center'):('background:linear-gradient(135deg,'+c+'55,'+card+')');
-    var revs='<div class=rv><div class=stx>★★★★★</div><p>« Service au top, je recommande à 100%. »</p><b>— Julie</b></div><div class=rv><div class=stx>★★★★★</div><p>« Accueil parfait et résultat impeccable. »</p><b>— Marc</b></div><div class=rv><div class=stx>★★★★★</div><p>« Réservation hyper simple, que du bonheur. »</p><b>— Sofia</b></div>';
+    var revs=d.revs.map(function(r){return '<div class=rv><div class=stx>★★★★★</div><p>« '+esc(r[0])+' »</p><b>— '+esc(r[1])+'</b></div>'}).join('');
+    var stats3='<div class=stat>'+d.stats.map(function(s){return '<div><b>'+esc(s[0])+'</b><span>'+esc(s[1])+'</span></div>'}).join('')+'</div>';
+    var heroStats='<div class=stat><div><b>'+esc(d.stats[0][0])+'</b><span>'+esc(d.stats[0][1])+'</span></div><div><b>'+esc(d.stats[1][0])+'</b><span>'+esc(d.stats[1][1])+'</span></div><div><b>'+esc(st.city)+'</b><span>& alentours</span></div></div>';
     var steps='<div class=stp><span>1</span><h4>Vous réservez</h4><p>En ligne, en 30 secondes.</p></div><div class=stp><span>2</span><h4>On s\'occupe de tout</h4><p>Avec soin et savoir-faire.</p></div><div class=stp><span>3</span><h4>Vous repartez ravi</h4><p>Et vous revenez !</p></div>';
-    return '<!doctype html><html lang=fr><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1">'+
-    '<link href="https://fonts.googleapis.com/css2?family='+fam+'&family=Inter:wght@400;500&display=swap" rel=stylesheet>'+
+    var heroCopy='<div class=eb>'+esc(d.eyebrow)+' · '+esc(st.city)+'</div>'+
+      '<h1>'+slog+'</h1>'+
+      '<p>Bienvenue chez <b>'+nm+'</b>. '+esc(d.sub)+'</p>'+
+      '<div class=row><a class=cta data-go=contact>'+esc(d.cta)+' &rarr;</a><a class=ghost data-go=services>Voir nos services</a></div>'+heroStats;
+    var heroBlock=S.lay==='split'
+      ?'<div class=hgrid><div>'+heroCopy+'</div><div class=hvis style="'+pv+'"></div></div>'
+      :S.lay==='center'
+      ?'<div class=centered>'+heroCopy+'</div><div class=hband style="'+pv+'"></div>'
+      :heroCopy+'<div class=hband style="'+pv+'"></div>';
+    return '<!doctype html><html lang=fr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">'+
+    // media=print + onload : la police charge sans bloquer le rendu ni le script de navigation
+    '<link href="https://fonts.googleapis.com/css2?family='+fam+'&family=Inter:wght@400;500&display=swap" rel=stylesheet media=print onload="this.media=\'all\'">'+
     '<style>*{margin:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:Inter,sans-serif;background:'+bg+';color:'+tx+'}'+
     'h1,h2,h3,.lg{font-family:"'+ff+'",sans-serif}a{color:inherit;text-decoration:none}'+
-    '.cta{background:'+c+';color:#fff;font-weight:600;border:0;padding:12px 22px;border-radius:50px;font-size:14px;display:inline-block;cursor:pointer}'+
-    '.ghost{border:1px solid '+line+';color:'+tx+';padding:12px 22px;border-radius:50px;font-size:14px;cursor:pointer;background:none}'+
+    '.cta{background:'+c+';color:#fff;font-weight:600;border:0;padding:12px 22px;border-radius:'+S.br+';font-size:14px;display:inline-block;cursor:pointer}'+
+    '.ghost{border:1px solid '+line+';color:'+tx+';padding:12px 22px;border-radius:'+S.br+';font-size:14px;cursor:pointer;background:none}'+
     '.wrap{max-width:1000px;margin:0 auto;padding:0 26px}'+
     'header{position:sticky;top:0;z-index:9;display:flex;align-items:center;justify-content:space-between;padding:14px 26px;background:'+bg+'ee;backdrop-filter:blur(8px);border-bottom:1px solid '+line+'}'+
     '.lo{font-family:"'+ff+'";font-weight:700;font-size:18px;display:flex;gap:9px;align-items:center}.lo .mono{width:30px;height:30px;border-radius:9px;background:'+c+';color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}'+
-    'nav{display:flex;gap:5px}nav button{background:none;border:0;color:'+mut+';font-family:inherit;font-size:13px;cursor:pointer;padding:7px 13px;border-radius:50px;transition:.2s}nav button:hover{color:'+tx+'}nav button.act{color:#fff;background:'+c+'}'+
+    'nav{display:flex;gap:5px}nav button{background:none;border:0;color:'+mut+';font-family:inherit;font-size:13px;cursor:pointer;padding:7px 13px;border-radius:'+S.br+';transition:.2s}nav button:hover{color:'+tx+'}nav button.act{color:#fff;background:'+c+'}'+
     '.page{display:none}.page.on{display:block;animation:fp .5s ease}@keyframes fp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}'+
     '.hero{position:relative;padding:60px 0 48px;overflow:hidden}'+
     '.glow{position:absolute;width:340px;height:340px;border-radius:50%;background:'+c+';filter:blur(110px);opacity:.22;top:-80px;right:-60px}'+
     '.eb{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:'+c+';font-weight:600}'+
-    '.hero h1{font-size:'+S.h1+';line-height:1.03;margin:14px 0 16px;max-width:680px;text-transform:'+S.tt+';font-style:'+(S.it?'italic':'normal')+'}'+
+    '.hero h1{font-size:'+S.h1+';line-height:1.03;margin:14px 0 16px;max-width:'+(S.lay==='bold'?'100%':'680px')+';text-transform:'+S.tt+';font-style:'+(S.it?'italic':'normal')+'}'+
     '.hero p{color:'+mut+';font-size:17px;max-width:440px;margin-bottom:24px}'+
     '.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}'+
     '.stat{display:flex;gap:34px;margin-top:32px}.stat b{font-family:"'+ff+'";font-size:26px;color:'+c+';display:block}.stat span{font-size:12px;color:'+mut+'}'+
-    '.hgrid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}.hvis{aspect-ratio:4/3;border-radius:18px;border:1px solid '+line+'}'+
-    '.revs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.rv{background:'+card+';border:1px solid '+line+';border-radius:14px;padding:18px}.rv .stx{color:'+c+';font-size:13px;margin-bottom:8px}.rv p{font-size:13px;color:'+mut+'}.rv b{display:block;margin-top:10px;font-size:12px}'+
-    '.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}.stp{background:'+card+';border:1px solid '+line+';border-radius:14px;padding:20px}.stp span{display:inline-flex;width:30px;height:30px;border-radius:50%;background:'+c+';color:#fff;align-items:center;justify-content:center;font-weight:700;font-size:14px;margin-bottom:10px}.stp h4{font-size:15px;margin-bottom:4px}.stp p{font-size:12px;color:'+mut+'}'+
+    '.hgrid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}.hvis{aspect-ratio:4/3;border-radius:'+S.r+';border:1px solid '+line+'}'+
+    '.centered{text-align:center;max-width:660px;margin:0 auto}.centered p{margin-left:auto;margin-right:auto}.centered .row{justify-content:center}.centered .stat{justify-content:center}.centered h1{margin-left:auto;margin-right:auto}'+
+    '.hband{height:190px;border-radius:'+S.r+';border:1px solid '+line+';margin-top:36px}'+
+    '.revs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.rv{background:'+card+';border:1px solid '+line+';border-radius:'+S.r+';padding:18px}.rv .stx{color:'+c+';font-size:13px;margin-bottom:8px}.rv p{font-size:13px;color:'+mut+'}.rv b{display:block;margin-top:10px;font-size:12px}'+
+    '.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}.stp{background:'+card+';border:1px solid '+line+';border-radius:'+S.r+';padding:20px}.stp span{display:inline-flex;width:30px;height:30px;border-radius:50%;background:'+c+';color:#fff;align-items:center;justify-content:center;font-weight:700;font-size:14px;margin-bottom:10px}.stp h4{font-size:15px;margin-bottom:4px}.stp p{font-size:12px;color:'+mut+'}'+
     'section.s{padding:48px 0}'+
     '.h2{font-size:30px;margin-bottom:8px}.lead{color:'+mut+';margin-bottom:26px;font-size:15px;max-width:520px}'+
     '.serv{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}'+
-    '.sc{background:'+card+';border:1px solid '+line+';border-radius:16px;padding:22px}'+
+    '.sc{background:'+card+';border:1px solid '+line+';border-radius:'+S.r+';padding:22px}'+
     '.sc .ic{width:42px;height:42px;border-radius:12px;background:'+c+';opacity:.9;margin-bottom:12px}'+
     '.sc h3{font-size:17px;margin-bottom:5px}.sc p{color:'+mut+';font-size:13px}.sc .pr{color:'+c+';font-weight:700;margin-top:10px;display:block;font-family:"'+ff+'"}'+
     '.about{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}'+
-    '.about .pic{aspect-ratio:4/3;border-radius:16px;background:linear-gradient(135deg,'+c+'55,'+card+')}'+
+    '.about .pic{aspect-ratio:4/3;border-radius:'+S.r+';background:linear-gradient(135deg,'+c+'55,'+card+')}'+
     '.vals{list-style:none;margin:16px 0 22px;display:flex;flex-direction:column;gap:9px}.vals li{color:'+mut+';font-size:14px;padding-left:18px;position:relative}.vals li:before{content:"✦";position:absolute;left:0;color:'+c+'}'+
-    '.contact{display:grid;grid-template-columns:1fr 1fr;gap:22px}.ci{background:'+card+';border:1px solid '+line+';border-radius:16px;padding:24px}.ci h3{font-size:16px;margin-bottom:12px}.ci p{color:'+mut+';font-size:14px;margin-bottom:8px}'+
+    '.contact{display:grid;grid-template-columns:1fr 1fr;gap:22px}.ci{background:'+card+';border:1px solid '+line+';border-radius:'+S.r+';padding:24px}.ci h3{font-size:16px;margin-bottom:12px}.ci p{color:'+mut+';font-size:14px;margin-bottom:8px}'+
     '.fl{display:flex;flex-direction:column;gap:10px}.fl input,.fl textarea{background:'+bg+';border:1px solid '+line+';color:'+tx+';padding:11px;border-radius:10px;font-family:inherit;font-size:13px}'+
-    '.band{text-align:center;background:'+card+';border:1px solid '+line+';border-radius:20px;padding:38px;margin-top:34px}.band h2{font-size:26px;margin-bottom:8px}.band p{color:'+mut+';margin-bottom:16px}'+
+    '.band{text-align:center;background:'+card+';border:1px solid '+line+';border-radius:'+S.r+';padding:38px;margin-top:34px}.band h2{font-size:26px;margin-bottom:8px}.band p{color:'+mut+';margin-bottom:16px}'+
     'footer{padding:26px;border-top:1px solid '+line+';color:'+mut+';font-size:12px;text-align:center}'+
-    '@media(max-width:720px){.hero h1{font-size:34px}.serv,.about,.contact,.hgrid,.revs,.steps{grid-template-columns:1fr}nav{display:none}.stat{gap:22px}.hvis{display:none}}'+
+    '@media(max-width:720px){.hero h1{font-size:34px}.serv,.about,.contact,.hgrid,.revs,.steps{grid-template-columns:1fr}nav{display:none}.stat{gap:22px}.hvis{display:none}.hband{height:120px}}'+
     '</style></head><body>'+
     '<header><div class=lo><span class=mono>'+esc(ini)+'</span>'+nm+'</div>'+
-    '<nav><button data-p=home class=act>Accueil</button><button data-p=services>Services</button><button data-p=about>À propos</button><button data-p=contact>Contact</button></nav>'+
+    '<nav><button data-p=home>Accueil</button><button data-p=services>Services</button><button data-p=about>À propos</button><button data-p=contact>Contact</button></nav>'+
     '<a class=cta data-go=contact>'+esc(d.cta)+'</a></header>'+
     // PAGE ACCUEIL
     '<main class=page id=p-home>'+
-    '<div class=hero><div class=wrap><div class=glow></div><div class=hgrid><div>'+
-    '<div class=eb>'+esc(d.eyebrow)+' · '+esc(st.city)+'</div>'+
-    '<h1>'+slog+'</h1>'+
-    '<p>Bienvenue chez <b>'+nm+'</b>. Réservez en ligne en quelques secondes, 7j/7.</p>'+
-    '<div class=row><a class=cta data-go=contact>'+esc(d.cta)+' &rarr;</a><a class=ghost data-go=services>Voir nos services</a></div>'+
-    '<div class=stat><div><b>4,9/5</b><span>+200 avis</span></div><div><b>7j/7</b><span>disponible</span></div><div><b>'+esc(st.city)+'</b><span>& alentours</span></div></div>'+
-    '</div><div class=hvis style="'+pv+'"></div></div>'+
-    '</div></div>'+
+    '<div class=hero><div class=wrap><div class=glow></div>'+heroBlock+'</div></div>'+
     '<section class=s><div class=wrap><div class=eb>Aperçu</div><div class=h2>Nos prestations</div><div class=serv>'+serv+'</div></div></section>'+
     '<section class=s><div class=wrap><div class=eb>Avis clients</div><div class=h2>Ils nous recommandent</div><div class=revs>'+revs+'</div></div></section>'+
     '</main>'+
@@ -258,16 +316,16 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
     // PAGE A PROPOS
     '<main class=page id=p-about>'+
     '<section class=s><div class=wrap><div class=about><div class=pic style="'+pv+'"></div><div><div class=eb>À propos</div><div class=h2>'+nm+', votre adresse de confiance</div><p class=lead>Une équipe passionnée, un accueil chaleureux et un vrai savoir-faire. Venez vivre l’expérience '+nm+'.</p><ul class=vals><li>Savoir-faire reconnu</li><li>Accueil chaleureux & sur-mesure</li><li>Produits et matériel de qualité</li></ul><a class=cta data-go=contact>'+esc(d.cta)+' &rarr;</a></div></div>'+
-    '<div class=stat><div><b>+10 ans</b><span>d’expérience</span></div><div><b>+2000</b><span>clients satisfaits</span></div><div><b>4,9/5</b><span>note moyenne</span></div></div>'+
+    stats3+
     '</div></section></main>'+
     // PAGE CONTACT
     '<main class=page id=p-contact>'+
     '<section class=s><div class=wrap><div class=eb>Contact</div><div class=h2>On vous attend</div><div class=contact>'+
-    '<div class=ci><h3>Coordonnées</h3><p>📍 '+esc(st.city)+'</p><p>📞 '+esc(st.phone)+'</p><p>🕒 Lun–Sam · 9h–19h</p><br><a class=cta data-go=contact>'+esc(d.cta)+' &rarr;</a></div>'+
-    '<div class=ci><h3>Écrivez-nous</h3><div class=fl><input placeholder="Votre nom"><input placeholder="Téléphone"><textarea rows=3 placeholder="Votre message"></textarea><a class=cta>Envoyer</a></div></div>'+
+    '<div class=ci><h3>Coordonnées</h3><p>📍 '+esc(st.city)+'</p><p>📞 '+esc(st.phone)+'</p><p>🕒 '+esc(d.hours)+'</p><br><a class=cta href="tel:'+esc(String(st.phone||'').replace(/[^+0-9]/g,''))+'">'+esc(d.cta)+' &rarr;</a></div>'+
+    '<div class=ci><h3>Écrivez-nous</h3><div class=fl id=demo-form><input placeholder="Votre nom"><input placeholder="Téléphone"><textarea rows=3 placeholder="Votre message"></textarea><a class=cta id=send>Envoyer</a></div><div id=demo-ok style="display:none;color:'+c+';font-weight:600;padding:6px 0">✓ Message envoyé ! Sur votre vrai site, il arrive directement par email ou SMS.</div></div>'+
     '</div></div></section></main>'+
     '<footer>© 2026 '+nm+' — '+esc(st.city)+' · Site créé avec Zymlux Création</footer>'+
-    '<script>(function(){var P=["home","services","about","contact"],i=0,t=false;function go(id){var x=P.indexOf(id);if(x<0)x=0;i=x;var ps=document.querySelectorAll(".page");for(var k=0;k<ps.length;k++)ps[k].classList.toggle("on",ps[k].id==="p-"+id);var nb=document.querySelectorAll("nav button");for(var j=0;j<nb.length;j++)nb[j].classList.toggle("act",nb[j].getAttribute("data-p")===id);window.scrollTo(0,0)}var cl=document.querySelectorAll("[data-p],[data-go]");for(var a=0;a<cl.length;a++){cl[a].addEventListener("click",function(){t=true;go(this.getAttribute("data-p")||this.getAttribute("data-go"))})}go("home");setInterval(function(){if(t)return;i=(i+1)%P.length;go(P[i])},3600)})();<\/script>'+
+    '<script>(function(){function go(id){var ps=document.querySelectorAll(".page");for(var k=0;k<ps.length;k++)ps[k].classList.toggle("on",ps[k].id==="p-"+id);var nb=document.querySelectorAll("nav button");for(var j=0;j<nb.length;j++)nb[j].classList.toggle("act",nb[j].getAttribute("data-p")===id);window.scrollTo(0,0);try{parent.postMessage({zymluxPage:id},"*")}catch(e){}}var cl=document.querySelectorAll("[data-p],[data-go]");for(var a=0;a<cl.length;a++){cl[a].addEventListener("click",function(){go(this.getAttribute("data-p")||this.getAttribute("data-go"))})}go("'+page+'");var sb=document.getElementById("send");if(sb)sb.addEventListener("click",function(){var f=document.getElementById("demo-form"),o=document.getElementById("demo-ok");if(f)f.style.display="none";if(o)o.style.display="block"});})();<\/script>'+
     '</body></html>';
   }
 
@@ -279,6 +337,10 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
     if(claim)claim.href='../#contact';
   }
   function debounced(){clearTimeout(T);T=setTimeout(render,260)}
+  // mémoriser la page consultée dans l'aperçu (pour ne pas revenir à l'accueil à chaque frappe)
+  window.addEventListener('message',function(e){
+    if(e&&e.data&&typeof e.data.zymluxPage==='string')st.page=e.data.zymluxPage;
+  });
 
   // build type chips
   var typeWrap=document.getElementById('f-type');
@@ -332,7 +394,7 @@ h1,h2,h3,.dsp{font-family:'Space Grotesk',sans-serif}
   function shareURL(){var p=new URLSearchParams();p.set('n',st.name);if(st.slogan)p.set('s',st.slogan);p.set('t',st.type);p.set('ly',st.style);p.set('c',st.color.replace('#',''));p.set('th',st.theme);p.set('city',st.city);p.set('p',st.phone);return location.origin+location.pathname+'?'+p.toString()}
   // télécharger le vrai fichier HTML
   document.getElementById('dl').addEventListener('click',function(){
-    var blob=new Blob([build()],{type:'text/html;charset=utf-8'});
+    var blob=new Blob([build('home')],{type:'text/html;charset=utf-8'});
     var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=slug(st.name)+'.html';
     document.body.appendChild(a);a.click();setTimeout(function(){a.remove();URL.revokeObjectURL(a.href)},100);
     note('✅ Votre site est téléchargé !');

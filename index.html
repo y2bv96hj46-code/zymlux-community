@@ -780,8 +780,8 @@ ba.addEventListener('touchmove',e=>setBA(e.touches[0].clientX),{passive:true});
   function slug(s){return (s||'site').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'site'}
   function build(){
     var d=TYPES[st.type],c=st.color,nm=esc(st.name||'Votre Commerce');
-    return '<!doctype html><html lang=fr><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1">'+
-    '<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&display=swap" rel=stylesheet>'+
+    return '<!doctype html><html lang=fr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">'+
+    '<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&display=swap" rel=stylesheet media=print onload="this.media=\'all\'">'+
     '<style>*{margin:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:Inter,sans-serif;background:#0c0c11;color:#f4f4f6}'+
     'h1,h2,.lg{font-family:"Space Grotesk",sans-serif}'+
     '.bn{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid #20202e}'+
