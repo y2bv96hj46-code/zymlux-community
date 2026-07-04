@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATELIER BLADE — Barbier premium à Paris | Coupe, barbe & rasage traditionnel</title>
+<meta name="description" content="Barbier haut de gamme à Paris. Coupe sur-mesure, taille de barbe, rasage à l'ancienne. Réservation en ligne 7j/7.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e0e10; --bg2:#15151a; --card:#1a1a20; --line:#26262f;
+  --or:#c9a24b; --or2:#e7c878; --txt:#f3f1ea; --mut:#9a99a3;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;line-height:1.65;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+h1,h2,h3,.display{font-family:'Bebas Neue',sans-serif;font-weight:400;letter-spacing:.5px;line-height:.98}
+.or{color:var(--or)}
+.eyebrow{font-family:'Inter';font-size:.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--or);font-weight:600}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:9px;background:var(--or);color:#1a1408;font-weight:600;padding:15px 30px;border-radius:2px;transition:.35s var(--ease);border:none;cursor:pointer;font-size:.95rem;letter-spacing:.3px}
+.btn:hover{background:var(--or2);transform:translateY(-3px);box-shadow:0 14px 30px rgba(201,162,75,.28)}
+.btn-out{background:transparent;border:1px solid var(--line);color:var(--txt)}
+.btn-out:hover{background:#fff;color:#000;border-color:#fff;box-shadow:none}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(34px);transition:1s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:100;transition:.4s var(--ease)}
+header.scrolled{background:rgba(14,14,16,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:84px}
+.brand{font-family:'Bebas Neue';font-size:1.7rem;letter-spacing:2px}
+.brand .or{margin-left:2px}
+.links{display:flex;gap:34px;align-items:center}
+.links a{font-size:.9rem;color:var(--mut);letter-spacing:.5px;transition:.3s;position:relative}
+.links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--or);transition:.3s var(--ease)}
+.links a:hover{color:var(--txt)}.links a:hover::after{width:100%}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px}
+.burger span{width:26px;height:2px;background:var(--txt);transition:.3s}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding-top:84px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:
+   radial-gradient(60% 80% at 75% 30%,rgba(201,162,75,.16),transparent 60%),
+   radial-gradient(50% 60% at 10% 90%,rgba(201,162,75,.08),transparent 60%),
+   linear-gradient(180deg,#0e0e10,#0b0b0d);z-index:-2}
+.grain{position:absolute;inset:0;z-index:-1;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center;width:100%}
+.hero h1{font-size:clamp(3.4rem,8vw,6.6rem);text-transform:uppercase}
+.hero h1 .or{display:block}
+.hero .lede{color:var(--mut);font-size:1.12rem;max-width:460px;margin:22px 0 34px}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap}
+.hero-side{border:1px solid var(--line);border-radius:4px;background:linear-gradient(180deg,rgba(255,255,255,.03),transparent);padding:30px}
+.hero-side .price-row{display:flex;justify-content:space-between;padding:15px 0;border-bottom:1px solid var(--line)}
+.hero-side .price-row:last-child{border:none}
+.hero-side .price-row b{font-family:'Bebas Neue';font-size:1.5rem;color:var(--or)}
+.hero-side .nm{font-weight:500}.hero-side .ds{font-size:.82rem;color:var(--mut)}
+.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);color:var(--mut);font-size:.75rem;letter-spacing:2px;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px}
+.scroll-hint::after{content:"";width:1px;height:38px;background:linear-gradient(var(--or),transparent);animation:drop 1.8s infinite}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* MARQUEE */
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0;overflow:hidden;white-space:nowrap;background:var(--bg2)}
+.marquee div{display:inline-block;animation:slide 22s linear infinite}
+.marquee span{font-family:'Bebas Neue';font-size:1.6rem;letter-spacing:2px;margin:0 28px;color:var(--mut)}
+.marquee span .or{color:var(--or)}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTION base */
+section{padding:110px 0}
+.head{max-width:640px;margin-bottom:60px}
+.head h2{font-size:clamp(2.4rem,5vw,3.6rem);text-transform:uppercase;margin:14px 0 16px}
+.head p{color:var(--mut)}
+.center{text-align:center}.center .head{margin-inline:auto}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:50px 0;background:var(--bg2)}
+.stat{text-align:center}
+.stat .num{font-family:'Bebas Neue';font-size:3.4rem;color:var(--or);line-height:1}
+.stat .lab{color:var(--mut);font-size:.85rem;letter-spacing:1px;text-transform:uppercase;margin-top:6px}
+
+/* SERVICES bento */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:18px}
+.tile{border:1px solid var(--line);border-radius:6px;padding:28px;display:flex;flex-direction:column;justify-content:space-between;background:var(--card);transition:.4s var(--ease);position:relative;overflow:hidden}
+.tile:hover{border-color:var(--or);transform:translateY(-5px)}
+.tile::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 100% at 100% 0,rgba(201,162,75,.12),transparent 55%);opacity:0;transition:.4s}
+.tile:hover::before{opacity:1}
+.tile .ico{font-size:1.9rem}
+.tile h3{font-size:1.7rem;letter-spacing:1px}
+.tile p{color:var(--mut);font-size:.9rem}
+.tile .tag{font-family:'Bebas Neue';color:var(--or);font-size:1.3rem}
+.t-wide{grid-column:span 2}.t-tall{grid-row:span 2}
+.feature{background:linear-gradient(160deg,#1d1810,#15151a);border-color:#33291280}
+.feature .big{font-family:'Bebas Neue';font-size:2.6rem;line-height:1}
+
+/* SPLIT / about */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.frame{aspect-ratio:4/5;border-radius:6px;border:1px solid var(--line);background:
+   linear-gradient(135deg,#222028,#161620);display:grid;place-items:center;position:relative;overflow:hidden}
+.frame span{font-family:'Bebas Neue';font-size:1.4rem;color:var(--mut);letter-spacing:2px}
+.frame::after{content:"";position:absolute;inset:14px;border:1px solid rgba(201,162,75,.3);border-radius:3px}
+.checklist{list-style:none;margin-top:24px;display:flex;flex-direction:column;gap:14px}
+.checklist li{display:flex;gap:13px;align-items:flex-start}
+.checklist li::before{content:"✦";color:var(--or);font-size:1rem;margin-top:3px}
+
+/* GALLERY */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.shot{aspect-ratio:1;border:1px solid var(--line);border-radius:6px;background:linear-gradient(135deg,#23222a,#17171e);display:grid;place-items:center;color:var(--mut);font-family:'Bebas Neue';letter-spacing:2px;transition:.4s var(--ease);cursor:pointer}
+.shot:hover{transform:scale(1.02);border-color:var(--or);color:var(--or)}
+
+/* REVIEWS */
+.revs{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.revcard{border:1px solid var(--line);border-radius:6px;padding:30px;background:var(--card)}
+.revcard .st{color:var(--or);letter-spacing:3px;margin-bottom:14px}
+.revcard p{color:var(--txt);opacity:.92}
+.revcard .who{margin-top:18px;display:flex;align-items:center;gap:12px}
+.revcard .av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--or),#7a5e23);display:grid;place-items:center;font-weight:700;color:#1a1408}
+.revcard .who b{font-size:.92rem}.revcard .who span{font-size:.8rem;color:var(--mut)}
+
+/* FAQ */
+.faq{max-width:760px;margin:0 auto}
+.q{border-bottom:1px solid var(--line)}
+.q button{width:100%;background:none;border:none;color:var(--txt);text-align:left;padding:24px 0;font-size:1.08rem;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:inherit}
+.q .plus{color:var(--or);font-size:1.5rem;transition:.3s var(--ease)}
+.q.open .plus{transform:rotate(45deg)}
+.q .ans{max-height:0;overflow:hidden;transition:.45s var(--ease);color:var(--mut)}
+.q.open .ans{max-height:200px;padding-bottom:24px}
+
+/* CTA */
+.bigcta{position:relative;text-align:center;border:1px solid var(--line);border-radius:8px;padding:70px 30px;background:radial-gradient(80% 130% at 50% 0,rgba(201,162,75,.14),transparent 60%),var(--bg2);overflow:hidden}
+.bigcta h2{font-size:clamp(2.6rem,6vw,4.4rem);text-transform:uppercase;margin-bottom:16px}
+.bigcta p{color:var(--mut);margin-bottom:30px}
+
+/* CONTACT */
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:50px}
+.iline{display:flex;gap:16px;margin-bottom:22px}
+.iline .ic{width:46px;height:46px;border:1px solid var(--line);border-radius:4px;display:grid;place-items:center;font-size:1.2rem;flex-shrink:0}
+.iline b{display:block}.iline span{color:var(--mut);font-size:.92rem}
+form{display:flex;flex-direction:column;gap:14px}
+form input,form textarea,form select{background:var(--card);border:1px solid var(--line);color:var(--txt);padding:15px;border-radius:4px;font-family:inherit;font-size:.95rem;transition:.3s}
+form input:focus,form textarea:focus,form select:focus{outline:none;border-color:var(--or)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--line);padding:56px 0 28px;background:var(--bg2)}
+.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:36px;margin-bottom:36px}
+.fgrid h4{font-family:'Bebas Neue';letter-spacing:1px;color:var(--or);margin-bottom:14px;font-size:1.2rem}
+.fgrid a,.fgrid p{display:block;color:var(--mut);font-size:.9rem;margin-bottom:9px;transition:.3s}
+.fgrid a:hover{color:var(--txt)}
+.copy{text-align:center;border-top:1px solid var(--line);padding-top:24px;color:var(--mut);font-size:.82rem}
+
+/* floating book btn (mobile) */
+.float-book{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:90;display:none}
+
+@media(max-width:900px){
+  .links{display:none}.burger{display:flex}
+  .hero-grid,.split,.cgrid{grid-template-columns:1fr}
+  .stats,.bento,.grid3,.revs,.fgrid{grid-template-columns:1fr 1fr}
+  .t-wide,.t-tall{grid-column:auto;grid-row:auto}
+  .bento{grid-auto-rows:auto}
+  .tile{min-height:170px}
+}
+@media(max-width:560px){
+  .stats,.bento,.grid3,.revs,.fgrid{grid-template-columns:1fr}
+  .float-book{display:block}
+  .nav{height:70px}
+}
+
+/* mobile menu */
+.mmenu{position:fixed;inset:0;background:var(--bg);z-index:120;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px;transform:translateY(-100%);transition:.5s var(--ease)}
+.mmenu.open{transform:none}
+.mmenu a{font-family:'Bebas Neue';font-size:2.2rem;letter-spacing:2px}
+.mmenu .x{position:absolute;top:26px;right:26px;font-size:2rem;background:none;border:none;color:var(--txt);cursor:pointer}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a href="#" class="brand">ATELIER<span class="or">BLADE</span></a>
+    <nav class="links">
+      <a href="#services">Prestations</a>
+      <a href="#atelier">L'atelier</a>
+      <a href="#avis">Avis</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="#contact" class="btn" style="padding:11px 22px">Réserver</a>
+    <button class="burger" onclick="document.getElementById('mm').classList.add('open')"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="mmenu" id="mm">
+  <button class="x" onclick="document.getElementById('mm').classList.remove('open')">✕</button>
+  <a href="#services" onclick="closeM()">Prestations</a>
+  <a href="#atelier" onclick="closeM()">L'atelier</a>
+  <a href="#avis" onclick="closeM()">Avis</a>
+  <a href="#faq" onclick="closeM()">FAQ</a>
+  <a href="#contact" onclick="closeM()">Contact</a>
+  <a href="#contact" class="btn" onclick="closeM()">Réserver</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div><div class="grain"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow reveal">Barbier premium · Paris 11e</span>
+      <h1 class="reveal d1">L'art de<span class="or">la coupe</span></h1>
+      <p class="lede reveal d2">Coupe sur-mesure, taille de barbe au cordeau et rasage traditionnel à la serviette chaude. Une parenthèse, pas juste un passage.</p>
+      <div class="hero-actions reveal d3">
+        <a href="#contact" class="btn">Réserver un créneau →</a>
+        <a href="#services" class="btn btn-out">Voir les prestations</a>
+      </div>
+    </div>
+    <div class="hero-side reveal d2">
+      <div class="price-row"><div><div class="nm">Coupe signature</div><div class="ds">Shampoing + coiffage</div></div><b>28€</b></div>
+      <div class="price-row"><div><div class="nm">Coupe + barbe</div><div class="ds">Le combo complet</div></div><b>42€</b></div>
+      <div class="price-row"><div><div class="nm">Rasage traditionnel</div><div class="ds">Serviette chaude</div></div><b>30€</b></div>
+      <div class="price-row"><div><div class="nm">Le rituel VIP</div><div class="ds">Coupe + barbe + soins</div></div><b>60€</b></div>
+    </div>
+  </div>
+  <div class="scroll-hint">Défiler</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div>
+    <span>COUPE SUR-MESURE <span class="or">✦</span></span><span>BARBE AU CORDEAU <span class="or">✦</span></span>
+    <span>RASAGE TRADITIONNEL <span class="or">✦</span></span><span>SOINS DU VISAGE <span class="or">✦</span></span>
+    <span>COUPE SUR-MESURE <span class="or">✦</span></span><span>BARBE AU CORDEAU <span class="or">✦</span></span>
+    <span>RASAGE TRADITIONNEL <span class="or">✦</span></span><span>SOINS DU VISAGE <span class="or">✦</span></span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="num" data-count="12">0</div><div class="lab">Ans d'expérience</div></div>
+  <div class="stat"><div class="num" data-count="8400">0</div><div class="lab">Clients satisfaits</div></div>
+  <div class="stat"><div class="num" data-count="4.9" data-dec="1">0</div><div class="lab">Note Google /5</div></div>
+  <div class="stat"><div class="num" data-count="7">0</div><div class="lab">Jours sur 7</div></div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">Nos prestations</span>
+      <h2>Le savoir-faire,<br>jusqu'au dernier détail</h2>
+      <p>Chaque geste est pensé. Du diagnostic du visage à la finition au rasoir, on ne laisse rien au hasard.</p>
+    </div>
+    <div class="bento">
+      <div class="tile feature t-wide t-tall reveal">
+        <div class="ico">✂️</div>
+        <div>
+          <div class="big">Coupe<br>signature</div>
+          <p style="margin-top:12px">Un diagnostic, une coupe pensée pour ta morphologie, un coiffage qui tient toute la journée.</p>
+        </div>
+        <span class="tag">à partir de 28€</span>
+      </div>
+      <div class="tile reveal d1"><div class="ico">🧔</div><h3>Taille de barbe</h3><span class="tag">22€</span></div>
+      <div class="tile reveal d2"><div class="ico">🪒</div><h3>Rasage trad'</h3><span class="tag">30€</span></div>
+      <div class="tile t-wide reveal d2"><div class="ico">💆</div><div><h3>Soins du visage</h3><p>Gommage, masque, serviette chaude — la peau nette et reposée.</p></div><span class="tag">25€</span></div>
+      <div class="tile reveal d3"><div class="ico">👑</div><h3>Rituel VIP</h3><span class="tag">60€</span></div>
+      <div class="tile reveal d3"><div class="ico">👦</div><h3>Coupe enfant</h3><span class="tag">18€</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="atelier" style="background:var(--bg2)">
+  <div class="wrap split">
+    <div class="frame reveal"><span>Photo de l'atelier</span></div>
+    <div class="reveal d1">
+      <span class="eyebrow">L'atelier</span>
+      <h2 style="font-size:clamp(2.2rem,4.5vw,3.4rem);text-transform:uppercase;margin:14px 0 16px">Un lieu, une obsession :<br>le détail</h2>
+      <p style="color:var(--mut)">Pas de chaîne, pas de pression. Un atelier à taille humaine où on prend le temps de bien faire. Du café à l'arrivée, une coupe sans te presser, un résultat dont tu te souviens.</p>
+      <ul class="checklist">
+        <li>Barbiers diplômés, formés aux techniques traditionnelles</li>
+        <li>Produits haut de gamme, matériel désinfecté à chaque client</li>
+        <li>Réservation en ligne, zéro attente</li>
+        <li>Ambiance posée, café offert</li>
+      </ul>
+      <a href="#contact" class="btn" style="margin-top:28px">Réserver ma place →</a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section>
+  <div class="wrap">
+    <div class="head center reveal">
+      <span class="eyebrow">Réalisations</span>
+      <h2>Le travail parle de lui-même</h2>
+    </div>
+    <div class="grid3">
+      <div class="shot reveal">AVANT / APRÈS 1</div>
+      <div class="shot reveal d1">DÉGRADÉ NET</div>
+      <div class="shot reveal d2">BARBE SCULPTÉE</div>
+      <div class="shot reveal">RASAGE TRAD'</div>
+      <div class="shot reveal d1">COUPE CLASSIQUE</div>
+      <div class="shot reveal d2">STYLE MODERNE</div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="avis" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="head center reveal">
+      <span class="eyebrow">Ils reviennent</span>
+      <h2>4,9/5 sur plus de 600 avis</h2>
+    </div>
+    <div class="revs">
+      <div class="revcard reveal"><div class="st">★★★★★</div><p>« Le meilleur barbier de Paris, sans exagérer. On sent le vrai savoir-faire, et le résultat tient des semaines. »</p><div class="who"><div class="av">T</div><div><b>Thomas L.</b><span>Client depuis 2 ans</span></div></div></div>
+      <div class="revcard reveal d1"><div class="st">★★★★★</div><p>« Accueil parfait, café offert, et une coupe au millimètre. Le rasage à la serviette chaude, une tuerie. »</p><div class="who"><div class="av">M</div><div><b>Mehdi K.</b><span>Avis Google</span></div></div></div>
+      <div class="revcard reveal d2"><div class="st">★★★★★</div><p>« Enfin un barbier qui écoute. Réservation en ligne hyper pratique, zéro attente. Je recommande les yeux fermés. »</p><div class="who"><div class="av">A</div><div><b>Antoine R.</b><span>Avis Google</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="head center reveal">
+      <span class="eyebrow">Questions fréquentes</span>
+      <h2>Tout ce qu'il faut savoir</h2>
+    </div>
+    <div class="faq reveal d1">
+      <div class="q"><button onclick="tg(this)">Faut-il réserver à l'avance ? <span class="plus">+</span></button><div class="ans">On conseille la réservation en ligne pour être sûr d'avoir ton créneau, mais on prend aussi sans rendez-vous selon les disponibilités.</div></div>
+      <div class="q"><button onclick="tg(this)">Quels moyens de paiement acceptez-vous ? <span class="plus">+</span></button><div class="ans">Carte bancaire, espèces et paiement sans contact. Les pourboires sont toujours appréciés mais jamais obligatoires.</div></div>
+      <div class="q"><button onclick="tg(this)">Proposez-vous des forfaits ou abonnements ? <span class="plus">+</span></button><div class="ans">Oui, une carte de fidélité (la 10e coupe offerte) et un forfait mensuel "entretien" pour ceux qui passent souvent.</div></div>
+      <div class="q"><button onclick="tg(this)">Combien de temps dure une prestation ? <span class="plus">+</span></button><div class="ans">Comptez 30 min pour une coupe, 45 min pour coupe + barbe, et 1h pour le rituel VIP. On ne te presse jamais.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BIG CTA -->
+<section>
+  <div class="wrap">
+    <div class="bigcta reveal">
+      <h2>Prêt pour la meilleure<br>coupe de ta vie ?</h2>
+      <p>Réserve en 30 secondes. Choisis ton barbier, ton créneau, c'est réglé.</p>
+      <a href="#contact" class="btn">Réserver maintenant →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background:var(--bg2)">
+  <div class="wrap cgrid">
+    <div class="reveal">
+      <span class="eyebrow">Contact & accès</span>
+      <h2 style="font-size:clamp(2.2rem,4.5vw,3.2rem);text-transform:uppercase;margin:14px 0 26px">On t'attend</h2>
+      <div class="iline"><div class="ic">📍</div><div><b>Adresse</b><span>24 rue de la Roquette, 75011 Paris</span></div></div>
+      <div class="iline"><div class="ic">📞</div><div><b>Téléphone</b><span>01 23 45 67 89</span></div></div>
+      <div class="iline"><div class="ic">🕒</div><div><b>Horaires</b><span>Mar–Sam 10h–20h · Dim 10h–14h</span></div></div>
+      <div class="iline"><div class="ic">📷</div><div><b>Instagram</b><span>@atelierblade</span></div></div>
+    </div>
+    <form onsubmit="alert('Démo : la réservation serait envoyée au barbier.');return false;">
+      <input type="text" placeholder="Nom complet" required>
+      <input type="tel" placeholder="Téléphone" required>
+      <select required>
+        <option value="">Choisir une prestation…</option>
+        <option>Coupe signature — 28€</option>
+        <option>Coupe + barbe — 42€</option>
+        <option>Rasage traditionnel — 30€</option>
+        <option>Rituel VIP — 60€</option>
+      </select>
+      <input type="date">
+      <textarea rows="3" placeholder="Une précision ? (optionnel)"></textarea>
+      <button type="submit" class="btn">Confirmer ma réservation →</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <div class="brand" style="margin-bottom:14px">ATELIER<span class="or">BLADE</span></div>
+        <p>Barbier premium au cœur du 11e. L'art de la coupe, le goût du détail.</p>
+      </div>
+      <div><h4>Menu</h4><a href="#services">Prestations</a><a href="#atelier">L'atelier</a><a href="#avis">Avis</a><a href="#faq">FAQ</a></div>
+      <div><h4>Contact</h4><p>24 rue de la Roquette, Paris 11e</p><p>01 23 45 67 89</p><p>@atelierblade</p></div>
+    </div>
+    <div class="copy">© 2026 Atelier Blade — Tous droits réservés · Site conçu par [Ton Nom / Ton Studio]</div>
+  </div>
+</footer>
+
+<a href="#contact" class="btn float-book">Réserver →</a>
+
+<script>
+// header scroll
+const hdr=document.getElementById('hdr');
+addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>30));
+// mobile menu
+function closeM(){document.getElementById('mm').classList.remove('open')}
+// faq
+function tg(b){b.parentElement.classList.toggle('open')}
+// reveal on scroll
+const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// animated counters
+const cio=new IntersectionObserver((es)=>es.forEach(e=>{
+  if(!e.isIntersecting)return; cio.unobserve(e.target);
+  const el=e.target,end=parseFloat(el.dataset.count),dec=+(el.dataset.dec||0);
+  let s=0,dur=1400,t0=null;
+  const step=(t)=>{if(!t0)t0=t;const p=Math.min((t-t0)/dur,1);const v=end*(1-Math.pow(1-p,3));
+    el.textContent=dec?v.toFixed(dec):Math.floor(v).toLocaleString('fr-FR');
+    if(p<1)requestAnimationFrame(step);else el.textContent=dec?end.toFixed(dec):end.toLocaleString('fr-FR');};
+  requestAnimationFrame(step);
+},{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
+</script>
+</body>
+</html>
