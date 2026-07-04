@@ -120,33 +120,13 @@ header.scr{background:rgba(6,6,8,.82);backdrop-filter:blur(16px);border-bottom:1
 .glowsec{position:relative;overflow:hidden}
 .glowsec::before{content:"";position:absolute;left:50%;top:34%;transform:translateX(-50%);width:760px;height:440px;max-width:92%;background:radial-gradient(ellipse,rgba(123,92,255,.10),transparent 70%);z-index:0;pointer-events:none}
 .glowsec .wrap{position:relative;z-index:1}
-/* section generateur intégré */
-.genwrap{border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.55);background:var(--bg2);height:700px;position:relative;z-index:1}
-.genwrap iframe{width:100%;height:100%;border:0;display:block}
-.gen-badge{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;color:var(--c2);border:1px solid var(--line);background:rgba(255,255,255,.03);padding:6px 13px;border-radius:50px;margin-bottom:14px}
-.gen-badge .live{width:7px;height:7px;border-radius:50%;background:#21d07a;box-shadow:0 0 8px #21d07a;animation:pulse 1.5s infinite}
-@media(max-width:900px){.genwrap{height:600px}}
 /* manifeste cinematique */
 .manifesto{padding:130px 0;text-align:center}
 .mani{font-family:'Space Grotesk';font-weight:700;font-size:clamp(1.7rem,4.6vw,3.4rem);line-height:1.3;max-width:920px;margin:0 auto;letter-spacing:-.01em}
 .mani .w{opacity:.13;transition:opacity .55s var(--ease),filter .55s var(--ease);filter:blur(2px);display:inline-block}
 .mani .w.on{opacity:1;filter:blur(0)}
 .mani .g{color:transparent;background:var(--grad);-webkit-background-clip:text;background-clip:text}
-.picker{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:24px}
-.picker-lbl{font-size:.8rem;color:var(--mut);margin-right:2px}
-.chip{font-family:inherit;font-size:.84rem;color:var(--mut);background:var(--card);border:1px solid var(--line);padding:8px 14px;border-radius:50px;cursor:pointer;transition:.3s}
-.chip:hover{color:var(--txt);border-color:var(--c1);transform:translateY(-2px)}
-.chip.active{color:#06060a;background:var(--grad);border-color:transparent;font-weight:600}
-.builder{margin-top:24px;display:flex;flex-direction:column;gap:12px;max-width:450px}
-.biz-input{background:var(--card);border:1px solid var(--line);color:var(--txt);padding:13px 16px;border-radius:12px;font-family:inherit;font-size:.95rem;transition:.3s}
-.biz-input:focus{outline:none;border-color:var(--c1);box-shadow:0 0 0 3px rgba(123,92,255,.18)}
-.swatches{display:flex;gap:10px}
-.sw{width:28px;height:28px;border-radius:50%;background:var(--s);border:2px solid transparent;cursor:pointer;transition:.2s;padding:0}
-.sw:hover{transform:scale(1.12)}
-.sw.active{border-color:#fff;box-shadow:0 0 0 2px var(--s)}
-.mock .screen iframe{width:100%;height:100%;border:0;display:block;background:#0b0b0f}
-@media(max-width:900px){.builder{margin-inline:auto}.swatches{justify-content:center}}
-@media(max-width:900px){.hero-grid2{grid-template-columns:1fr;gap:40px}.hero-copy{text-align:center}.hero-copy .hero-actions,.picker{justify-content:center}.mock .screen{height:380px}}
+@media(max-width:900px){.hero-grid2{grid-template-columns:1fr;gap:40px}.hero-copy{text-align:center}.hero-copy .hero-actions{justify-content:center}.mock .screen{height:380px}}
 
 /* marquee */
 .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;overflow:hidden;white-space:nowrap;background:var(--bg2)}
@@ -392,32 +372,21 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
       <h1 class="reveal d1">Des sites web qui ramènent des <span class="rot grad" id="rot"><span class="on">clients</span><span>réservations</span><span>avis 5★</span><span>revenus</span></span></h1>
       <p class="reveal d2">Pour les barbiers, instituts, restaurants et artisans. Design premium, réservation en ligne, visibilité Google. Vous bossez, on s'occupe du web.</p>
       <div class="hero-actions reveal d3">
-        <a href="generateur/" class="btn">⚡ Créer mon site en direct →</a>
-        <a href="#contact" class="btn btn-out">Être rappelé</a>
+        <a href="#contact" class="btn">✦ Mon exemple gratuit sous 48h →</a>
+        <a href="#travaux" class="btn btn-out">Voir les réalisations</a>
       </div>
-      <p class="hero-note reveal d4">✦ Exemple offert · Sans engagement · Livré en 7 jours</p>
-      <div class="builder reveal d4">
-        <span class="picker-lbl">✨ Construisez le vôtre, en direct :</span>
-        <input id="bizname" class="biz-input" type="text" maxlength="22" placeholder="Nom de votre commerce" value="Chez Marco" aria-label="Nom de votre commerce">
-        <div class="picker">
-          <button class="chip active" type="button">🪒 Barbier</button>
-          <button class="chip" type="button">💅 Beauté</button>
-          <button class="chip" type="button">🍽️ Resto</button>
-          <button class="chip" type="button">🔧 Artisan</button>
-        </div>
-        <div class="swatches" aria-label="Couleur">
-          <button class="sw active" type="button" style="--s:#7b5cff" data-c="#7b5cff" aria-label="Violet"></button>
-          <button class="sw" type="button" style="--s:#19e3c0" data-c="#19e3c0" aria-label="Turquoise"></button>
-          <button class="sw" type="button" style="--s:#ff5fa2" data-c="#ff5fa2" aria-label="Rose"></button>
-          <button class="sw" type="button" style="--s:#f4a300" data-c="#f4a300" aria-label="Or"></button>
-          <button class="sw" type="button" style="--s:#e3261f" data-c="#e3261f" aria-label="Rouge"></button>
-        </div>
-      </div>
+      <p class="hero-note reveal d4">✦ Sur-mesure, créé à la main · Sans engagement · Livré en 7 jours</p>
     </div>
     <div class="mock reveal d2">
-      <div class="bar"><i></i><i></i><i></i><span class="url" id="mockurl">🔒 chez-marco.fr</span></div>
-      <div class="screen" id="screen"><iframe id="livesite" title="Aperçu de votre site en direct"></iframe></div>
-      <div class="badge-live"><i></i> GÉNÉRÉ EN DIRECT</div>
+      <div class="bar"><i></i><i></i><i></i><span class="url" id="mockurl">🔒 atelier-blade.fr</span></div>
+      <div class="screen" id="screen">
+        <img class="slide on" src="media/barber-full.jpg" alt="Site Atelier Blade — barbier" loading="eager">
+        <img class="slide" src="media/nails-full.jpg" alt="Site Bella Nails — onglerie" loading="lazy">
+        <img class="slide" src="media/resto-full.jpg" alt="Site Le Comptoir — restaurant" loading="lazy">
+        <img class="slide" src="media/plombier-full.jpg" alt="Site Martin Plomberie — artisan" loading="lazy">
+        <img class="slide" src="media/inkhaus-full.jpg" alt="Site Inkhaus — studio de tatouage" loading="lazy">
+      </div>
+      <div class="badge-live"><i></i> 100% SUR-MESURE</div>
     </div>
   </div>
 </section>
@@ -428,19 +397,15 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
   <span>BARBIERS <b>✦</b></span><span>INSTITUTS <b>✦</b></span><span>RESTAURANTS <b>✦</b></span><span>ARTISANS <b>✦</b></span><span>COACHS <b>✦</b></span><span>COIFFEURS <b>✦</b></span>
 </div></div>
 
-<!-- GENERATEUR INTEGRE -->
+<!-- SUR-MESURE : LA PROMESSE -->
 <section id="creer" class="glowsec">
   <div class="wrap">
     <div class="head reveal" style="max-width:760px">
-      <span class="gen-badge"><span class="live"></span> Outil exclusif · en direct</span>
-      <h2>Crée ton site <span class="grad">en 30 secondes</span></h2>
-      <p>Tape ton nom, choisis ton métier, ta couleur, ton style — et regarde ton site complet (multi-pages) se construire sous tes yeux. Tu peux même le télécharger. Gratuit, ici, maintenant.</p>
+      <h2>Zéro template. <span class="grad">Votre site, votre univers.</span></h2>
+      <p>On ne remplit pas un modèle tout fait : chaque site est conçu à la main pour <b>votre</b> commerce — vos couleurs, vos photos, votre ambiance, votre métier. La preuve ? Envoyez-nous votre nom : on vous crée <b>un exemple réel, offert, sous 48&nbsp;h</b>. Vous jugez sur pièce.</p>
     </div>
-    <div class="genwrap reveal d1">
-      <iframe src="generateur/index.html" title="Générateur de site Zymlux Création" loading="lazy"></iframe>
-    </div>
-    <div style="text-align:center;margin-top:26px" class="reveal d2">
-      <a href="generateur/" class="btn">Ouvrir le générateur en plein écran →</a>
+    <div style="text-align:center;margin-top:6px" class="reveal d1">
+      <a href="#contact" class="btn">Recevoir mon exemple gratuit →</a>
     </div>
   </div>
 </section>
@@ -690,7 +655,7 @@ footer{border-top:1px solid var(--line);padding:50px 0 30px;background:var(--bg2
 
 <nav class="spy" aria-label="Navigation rapide">
   <a href="#" data-s="top" data-l="Accueil" class="act"></a>
-  <a href="#creer" data-s="creer" data-l="Créer mon site"></a>
+  <a href="#creer" data-s="creer" data-l="Sur-mesure"></a>
   <a href="#avant-apres" data-s="avant-apres" data-l="Avant/Après"></a>
   <a href="#services" data-s="services" data-l="Services"></a>
   <a href="#travaux" data-s="travaux" data-l="Réalisations"></a>
@@ -760,74 +725,21 @@ addEventListener('mousemove',e=>{if(drag)setBA(e.clientX)});
 addEventListener('mouseup',()=>drag=false);
 ba.addEventListener('touchstart',e=>setBA(e.touches[0].clientX),{passive:true});
 ba.addEventListener('touchmove',e=>setBA(e.touches[0].clientX),{passive:true});
-// === GÉNÉRATEUR DE SITE EN DIRECT (le visiteur voit SON site se construire) ===
+// === VITRINE HERO : de vrais sites sur-mesure defilent ===
 (function(){
-  var iframe=document.getElementById('livesite');
+  var slides=[].slice.call(document.querySelectorAll('#screen .slide'));
   var mockurl=document.getElementById('mockurl');
-  var input=document.getElementById('bizname');
-  var chips=[].slice.call(document.querySelectorAll('.chip'));
-  var sws=[].slice.call(document.querySelectorAll('.sw'));
-  if(!iframe)return;
-  var TYPES=[
-    {k:'Barbier',tag:"L'art de la coupe, sur-mesure.",cta:'Réserver',eyebrow:'Barbier · Salon',items:['Coupe','Barbe','Rasage trad.'],emoji:'🪒'},
-    {k:'Beauté',tag:'Sublimez votre beauté, en toute douceur.',cta:'Prendre RDV',eyebrow:'Institut · Beauté',items:['Soins','Ongles','Épilation'],emoji:'💅'},
-    {k:'Resto',tag:'Une cuisine qui a du goût.',cta:'Réserver une table',eyebrow:'Restaurant',items:['Entrées','Plats','Desserts'],emoji:'🍽️'},
-    {k:'Artisan',tag:'Un travail soigné, garanti.',cta:'Devis gratuit',eyebrow:'Artisan · Dépannage',items:['Dépannage','Installation','Rénovation'],emoji:'🔧'}
-  ];
-  var st={name:'Chez Marco',type:0,color:'#7b5cff'};
-  var touched=false;
-  function esc(s){return String(s||'').replace(/[<>&"]/g,function(c){return({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'})[c]})}
-  function slug(s){return (s||'site').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'site'}
-  function build(){
-    var d=TYPES[st.type],c=st.color,nm=esc(st.name||'Votre Commerce');
-    return '<!doctype html><html lang=fr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">'+
-    '<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&display=swap" rel=stylesheet media=print onload="this.media=\'all\'">'+
-    '<style>*{margin:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:Inter,sans-serif;background:#0c0c11;color:#f4f4f6}'+
-    'h1,h2,.lg{font-family:"Space Grotesk",sans-serif}'+
-    '.bn{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid #20202e}'+
-    '.bn .lo{font-family:"Space Grotesk";font-weight:700;font-size:17px;display:flex;gap:7px;align-items:center}'+
-    '.bn .dot{width:9px;height:9px;border-radius:50%;background:'+c+'}'+
-    '.bn .nv{display:flex;gap:16px;font-size:12px;color:#9a9aac}'+
-    '.cta{background:'+c+';color:#06060a;font-weight:600;border:0;padding:9px 16px;border-radius:50px;font-size:12px;text-decoration:none;display:inline-block}'+
-    '.hero{padding:34px 22px 26px;position:relative}'+
-    '.eb{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:'+c+';font-weight:600}'+
-    '.hero h1{font-size:34px;line-height:1.05;margin:10px 0 12px}'+
-    '.hero h1 b{color:'+c+'}'+
-    '.hero p{color:#9a9aac;font-size:14px;max-width:300px;margin-bottom:18px}'+
-    '.pills{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}'+
-    '.pill{border:1px solid #20202e;border-radius:50px;padding:7px 13px;font-size:12px;color:#cfcfe0;background:#13131b}'+
-    '.glow{position:absolute;width:240px;height:240px;border-radius:50%;background:'+c+';filter:blur(80px);opacity:.30;top:-40px;right:-40px}'+
-    '.strip{display:flex;gap:10px;padding:0 22px 22px}'+
-    '.strip div{flex:1;height:60px;border-radius:10px;background:linear-gradient(135deg,'+c+'33,#15151f)}'+
-    '.sv{padding:8px 22px 22px}.sv .t{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:'+c+';font-weight:600;margin-bottom:10px}.sv .g{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.sv .card{background:#13131b;border:1px solid #20202e;border-radius:12px;padding:14px}.sv .ic{width:30px;height:30px;border-radius:8px;background:'+c+';opacity:.9;margin-bottom:8px}.sv h3{font-size:13px;margin-bottom:3px}.sv p{font-size:11px;color:#9a9aac}'+
-    '.band{margin:4px 22px 24px;background:#13131b;border:1px solid #20202e;border-radius:14px;padding:24px;text-align:center}.band h2{font-size:19px;margin-bottom:6px}.band p{font-size:12px;color:#9a9aac;margin-bottom:14px}'+
-    '</style></head><body>'+
-    '<div class=bn><div class=lo><span class=dot></span>'+nm+'</div><div class=nv><span>Accueil</span><span>Services</span><span>Contact</span></div><a class=cta>'+esc(d.cta)+'</a></div>'+
-    '<div class=hero><div class=glow></div><div class=eb>'+esc(d.eyebrow)+'</div>'+
-    '<h1>'+nm+'<br><b>'+esc(d.k==="Resto"?"vous régale.":d.k==="Artisan"?"à votre service.":"vous attend.")+'</b></h1>'+
-    '<p>'+esc(d.tag)+'</p><a class=cta>'+esc(d.cta)+' →</a>'+
-    '<div class=pills>'+d.items.map(function(i){return '<span class=pill>'+esc(i)+'</span>'}).join('')+'</div></div>'+
-    '<div class=strip><div></div><div></div><div></div></div>'+
-    '<div class=sv><div class=t>Nos prestations</div><div class=g>'+d.items.map(function(i){return '<div class=card><div class=ic></div><h3>'+esc(i)+'</h3><p>Sur-mesure</p></div>'}).join('')+'</div></div>'+
-    '<div class=band><h2>Prêt à réserver ?</h2><p>Réservation en ligne, 7j/7</p><a class=cta>'+esc(d.cta)+' &rarr;</a></div>'+
-    '<script>(function(){var y=0,dir=1;function l(){var m=document.body.scrollHeight-window.innerHeight;if(m>2){y+=dir*Math.max(1,m/300);if(y>=m){y=m;dir=-1}else if(y<=0){y=0;dir=1}window.scrollTo(0,y)}requestAnimationFrame(l)}setTimeout(function(){requestAnimationFrame(l)},1400)})();<\/script>'+
-    '</body></html>';
-  }
-  function render(){
-    iframe.srcdoc=build();
-    if(mockurl)mockurl.textContent='🔒 '+slug(st.name)+'.fr';
-    chips.forEach(function(c,k){c.classList.toggle('active',k===st.type)});
-    sws.forEach(function(s){s.classList.toggle('active',s.dataset.c===st.color)});
-  }
-  // interactions
-  if(input)input.addEventListener('input',function(){touched=true;st.name=input.value;render()});
-  chips.forEach(function(c,k){c.addEventListener('click',function(){touched=true;st.type=k;render()})});
-  sws.forEach(function(s){s.addEventListener('click',function(){touched=true;st.color=s.dataset.c;render()})});
-  // démo auto tant que le visiteur n'a pas touché
-  var demo=[{name:'Chez Marco',type:0,color:'#7b5cff'},{name:'Bella Nails',type:1,color:'#ff5fa2'},{name:'Le Comptoir',type:2,color:'#f4a300'},{name:'Dupont Élec',type:3,color:'#19e3c0'}];
-  var di=0;
-  setInterval(function(){if(touched)return;di=(di+1)%demo.length;st=Object.assign({},demo[di]);if(input)input.value=st.name;render()},4200);
-  render();
+  if(!slides.length)return;
+  var urls=['atelier-blade.fr','bella-nails.fr','le-comptoir.fr','martin-plomberie.fr','inkhaus.fr'];
+  var i=0;
+  setInterval(function(){
+    slides[i].classList.remove('on');
+    i=(i+1)%slides.length;
+    var s=slides[i];
+    s.style.animation='none';void s.offsetWidth;s.style.animation='';
+    s.classList.add('on');
+    if(mockurl)mockurl.textContent='\ud83d\udd12 '+urls[i];
+  },6800);
 })();
 // fond de particules anime (hero)
 (function(){
