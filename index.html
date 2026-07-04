@@ -20,6 +20,7 @@
   --serif:'Fraunces',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
+body::before{content:"";position:fixed;inset:0;z-index:1000;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 html{scroll-behavior:smooth}
 body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.65;font-size:16.5px;-webkit-font-smoothing:antialiased}
 ::selection{background:var(--ink);color:var(--paper)}
@@ -40,7 +41,9 @@ html.js .r.in{opacity:1;transform:none}
 
 /* boutons */
 .btn{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);font-weight:500;font-size:.95rem;padding:16px 30px;border-radius:60px;border:1px solid var(--ink);cursor:pointer;transition:.35s var(--ease);font-family:inherit}
+.btn::after{content:"→";transition:transform .35s var(--ease)}
 .btn:hover{background:var(--acc);border-color:var(--acc);transform:translateY(-2px)}
+.btn:hover::after{transform:translateX(4px)}
 .btn.ghost{background:transparent;color:var(--ink)}
 .btn.ghost:hover{background:var(--ink);color:var(--paper);transform:translateY(-2px)}
 .tlink{font-weight:500;border-bottom:1px solid var(--ink);padding-bottom:2px;transition:.25s}
@@ -73,7 +76,18 @@ header.scr{border-color:var(--line)}
 .browser .slide.on{opacity:1;animation:scrollsite 6.4s ease-in-out forwards}
 @keyframes scrollsite{0%,12%{transform:translateY(0)}100%{transform:translateY(calc(-100% + 440px))}}
 .browser-cap{margin-top:14px;font-size:.82rem;color:var(--ink2);text-align:center}
-@media(max-width:920px){.hero-grid{grid-template-columns:1fr;gap:44px}.browser .screen{height:360px}}
+.stage{position:relative;padding:0 0 30px 34px}
+.phone{position:absolute;left:0;bottom:0;width:168px;border:7px solid var(--ink);border-radius:30px;overflow:hidden;background:#0d0d10;box-shadow:0 30px 60px -20px rgba(33,29,23,.5);z-index:3;transform:rotate(-3deg)}
+.phone .pscreen{height:320px;overflow:hidden;position:relative}
+.phone img{width:100%;height:auto;animation:phonescroll 13s ease-in-out infinite alternate}
+@keyframes phonescroll{0%,10%{transform:translateY(0)}90%,100%{transform:translateY(calc(-100% + 320px))}}
+@media(max-width:920px){.hero-grid{grid-template-columns:1fr;gap:44px}.browser .screen{height:360px}.stage{padding-left:0}.phone{display:none}}
+
+/* bandeau de confiance */
+.trust{border-top:1px solid var(--line);margin-top:64px;padding-top:26px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.trust div{font-size:.86rem;color:var(--ink2)}
+.trust b{display:block;font-family:var(--serif);font-weight:560;font-size:1.25rem;color:var(--ink);margin-bottom:2px}
+@media(max-width:760px){.trust{grid-template-columns:repeat(2,1fr)}}
 
 /* bande métiers */
 .strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0;overflow:hidden;white-space:nowrap;background:var(--paper2)}
@@ -86,16 +100,20 @@ header.scr{border-color:var(--line)}
 .work-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:52px;flex-wrap:wrap}
 .work-head h2{font-size:clamp(2rem,4vw,3rem);max-width:560px}
 .works{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
-.wk{display:block;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;transition:.4s var(--ease)}
+.wk{display:block;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;transition:.4s var(--ease);position:relative}
 .wk:hover{transform:translateY(-6px);box-shadow:0 26px 50px -24px rgba(33,29,23,.35)}
-.wk .im{aspect-ratio:4/3;overflow:hidden;background:var(--paper2)}
+.wk.big{grid-column:span 2}
+.wk .im{aspect-ratio:4/3;overflow:hidden;background:var(--paper2);position:relative}
+.wk.big .im{aspect-ratio:8.3/3}
 .wk img{width:100%;height:100%;object-fit:cover;object-position:top;transition:1.2s var(--ease)}
 .wk:hover img{transform:scale(1.04)}
+.wk .im::after{content:"Voir le site →";position:absolute;inset:auto 0 0 0;padding:44px 18px 14px;background:linear-gradient(transparent,rgba(23,20,15,.82));color:#f7f4ee;font-size:.85rem;font-weight:500;opacity:0;transition:.4s var(--ease)}
+.wk:hover .im::after{opacity:1}
 .wk .meta{padding:16px 18px;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
 .wk .meta h3{font-size:1.05rem;font-weight:560}
 .wk .meta span{font-size:.78rem;color:var(--ink2);white-space:nowrap}
-@media(max-width:920px){.works{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:560px){.works{grid-template-columns:1fr}}
+@media(max-width:920px){.works{grid-template-columns:repeat(2,1fr)}.wk.big{grid-column:span 2}.wk.big .im{aspect-ratio:5.5/3}}
+@media(max-width:560px){.works{grid-template-columns:1fr}.wk.big{grid-column:auto}.wk.big .im,.wk .im{aspect-ratio:4/3}}
 
 /* constat */
 .dark{background:var(--ink);color:var(--paper)}
@@ -193,6 +211,13 @@ header.scr{border-color:var(--line)}
 .form-ok p{color:var(--ink2);font-size:.95rem}
 @media(max-width:860px){.contact-grid{grid-template-columns:1fr;gap:44px}}
 
+/* bande finale */
+.finale{background:var(--ink);color:var(--paper);text-align:center;padding:110px 0}
+.finale h2{font-size:clamp(2.2rem,5vw,3.8rem);max-width:760px;margin:0 auto 18px}
+.finale em{color:#d9a06b}
+.finale p{color:#b6ad9c;margin-bottom:36px}
+.finale .btn{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.finale .btn:hover{background:#d9a06b;border-color:#d9a06b}
 /* footer */
 footer{border-top:1px solid var(--line);padding:52px 0 40px;background:var(--paper2)}
 .fgrid{display:flex;justify-content:space-between;gap:36px;flex-wrap:wrap}
@@ -233,6 +258,7 @@ footer{border-top:1px solid var(--line);padding:52px 0 40px;background:var(--pap
       <p class="hero-note r d3">Un aperçu réel de votre futur site, créé à la main sous 48&nbsp;h. Gratuit, sans engagement.</p>
     </div>
     <div class="r d2">
+      <div class="stage">
       <div class="browser">
         <div class="bar"><i></i><i></i><i></i><span class="url" id="mockurl">atelier-blade.fr</span></div>
         <div class="screen" id="screen">
@@ -243,8 +269,16 @@ footer{border-top:1px solid var(--line);padding:52px 0 40px;background:var(--pap
           <img class="slide" src="media/terra-cafe-full.jpg" alt="Site Terra — café de spécialité" loading="lazy">
         </div>
       </div>
+      <div class="phone" aria-hidden="true"><div class="pscreen"><img src="media/nails-full.jpg" alt="" loading="lazy"></div></div>
+      </div>
       <p class="browser-cap">Quelques sites sortis de l'atelier — chacun a son univers.</p>
     </div>
+  </div>
+  <div class="wrap trust r">
+    <div><b>7 jours</b>de la commande à la mise en ligne</div>
+    <div><b>Dès 290 €</b>et 29 €/mois tout compris, sans engagement</div>
+    <div><b>48 h</b>pour recevoir votre exemple gratuit</div>
+    <div><b>Lille</b>un studio indépendant, pas une plateforme</div>
   </div>
 </section>
 
@@ -265,7 +299,7 @@ footer{border-top:1px solid var(--line);padding:52px 0 40px;background:var(--pap
       <a href="#contact" class="tlink">Et le vôtre ? →</a>
     </div>
     <div class="works">
-      <a class="wk r" href="atelier-blade/" target="_blank" rel="noopener"><div class="im"><img src="media/work-barber.jpg" alt="Site Atelier Blade — barbier" loading="lazy"></div><div class="meta"><h3>Atelier Blade</h3><span>Barbier</span></div></a>
+      <a class="wk big r" href="atelier-blade/" target="_blank" rel="noopener"><div class="im"><img src="media/work-barber.jpg" alt="Site Atelier Blade — barbier" loading="lazy"></div><div class="meta"><h3>Atelier Blade</h3><span>Barbier</span></div></a>
       <a class="wk r d1" href="bella-nails/" target="_blank" rel="noopener"><div class="im"><img src="media/work-nails.jpg" alt="Site Bella Nails — onglerie" loading="lazy"></div><div class="meta"><h3>Bella Nails</h3><span>Onglerie</span></div></a>
       <a class="wk r d2" href="le-comptoir/" target="_blank" rel="noopener"><div class="im"><img src="media/work-resto.jpg" alt="Site Le Comptoir — restaurant" loading="lazy"></div><div class="meta"><h3>Le Comptoir</h3><span>Restaurant</span></div></a>
       <a class="wk r" href="martin-plomberie/" target="_blank" rel="noopener"><div class="im"><img src="media/work-plombier.jpg" alt="Site Martin Plomberie — artisan" loading="lazy"></div><div class="meta"><h3>Martin Plomberie</h3><span>Artisan</span></div></a>
@@ -468,6 +502,14 @@ footer{border-top:1px solid var(--line);padding:52px 0 40px;background:var(--pap
         <p class="cnote">Réponse sous 24 h ouvrées · Sans engagement · Aucune carte demandée</p>
       </form>
     </div>
+  </div>
+</section>
+
+<section class="finale">
+  <div class="wrap">
+    <h2 class="r">Votre exemple gratuit <em>vous attend</em>.</h2>
+    <p class="r d1">Créé à la main pour votre commerce, sous 48 h. Vous jugez sur pièce.</p>
+    <a href="#contact" class="btn r d2">Je veux voir mon site</a>
   </div>
 </section>
 
