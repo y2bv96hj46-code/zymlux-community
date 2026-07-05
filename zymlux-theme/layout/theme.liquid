@@ -9,6 +9,10 @@
 
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- else -%}
+      <link rel="icon" type="image/png" sizes="64x64" href="https://cdn.shopify.com/s/files/1/1012/8821/4857/files/logo-zymlux-lune-centr-e.png?v=1779118781&width=64&height=64&crop=center">
+      <link rel="icon" type="image/svg+xml" href="https://cdn.shopify.com/s/files/1/1012/8821/4857/files/zymlux-favicon.svg?v=1778707091">
+      <link rel="apple-touch-icon" href="https://cdn.shopify.com/s/files/1/1012/8821/4857/files/logo-zymlux-lune-centr-e.png?v=1779118781&width=180&height=180&crop=center">
     {%- endif -%}
 
     {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
