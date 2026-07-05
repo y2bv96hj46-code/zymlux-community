@@ -28,6 +28,12 @@
             "custom_liquid": "<div class=\"zx-jmbadge\" style=\"margin:0 0 4px\">{{ product.metafields.judgeme.badge }}</div>"
           }
         },
+        "zx_benefits": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<ul style=\"list-style:none;margin:2px 0 10px;padding:0;font-family:'Inter',sans-serif\">\n<li style=\"display:flex;gap:9px;align-items:baseline;font-size:13.5px;line-height:1.55;color:#4A554F;margin:0 0 6px\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#9E4F2E\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"flex:none;transform:translateY(1px)\" aria-hidden=\"true\"><path d=\"M20 6L9 17l-5-5\"/></svg><span>Melts away neck, shoulder &amp; back tension in about 20 minutes</span></li>\n<li style=\"display:flex;gap:9px;align-items:baseline;font-size:13.5px;line-height:1.55;color:#4A554F;margin:0 0 6px\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#9E4F2E\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"flex:none;transform:translateY(1px)\" aria-hidden=\"true\"><path d=\"M20 6L9 17l-5-5\"/></svg><span>Helps your body switch off before sleep &mdash; drug-free, nothing to charge</span></li>\n<li style=\"display:flex;gap:9px;align-items:baseline;font-size:13.5px;line-height:1.55;color:#4A554F;margin:0\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#9E4F2E\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"flex:none;transform:translateY(1px)\" aria-hidden=\"true\"><path d=\"M20 6L9 17l-5-5\"/></svg><span>6,000+ lotus-shaped acupressure points &middot; washable cover &middot; carry bag</span></li>\n</ul>"
+          }
+        },
         "price": {
           "type": "price",
           "settings": {}
@@ -62,6 +68,12 @@
           "type": "description",
           "settings": {}
         },
+        "zx_minifaq": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div style=\"margin:10px 0 0;font-family:'Inter',sans-serif\">\n<details style=\"border-top:1px solid rgba(43,52,46,.12)\"><summary style=\"cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 2px;font:500 13.5px/1.4 'Inter',sans-serif;color:#36423C\">Does it hurt?<span style=\"color:#C0683F;font-size:16px;line-height:1\">+</span></summary><p style=\"margin:0;padding:0 2px 14px;font-size:13px;line-height:1.65;color:#5A645E\">The first minute feels intensely prickly &mdash; then it melts into a warm, heavy calm. Sensitive? Start over a thin shirt. Most people are hooked by night three.</p></details>\n<details style=\"border-top:1px solid rgba(43,52,46,.12)\"><summary style=\"cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 2px;font:500 13.5px/1.4 'Inter',sans-serif;color:#36423C\">When will I get it?<span style=\"color:#C0683F;font-size:16px;line-height:1\">+</span></summary><p style=\"margin:0;padding:0 2px 14px;font-size:13px;line-height:1.65;color:#5A645E\">Ships within 1&ndash;2 business days, delivered in 3&ndash;7 across the U.S. &mdash; free. You get a tracking link by email, and you can follow your package on our <a href=\"/pages/track-your-order\" style=\"color:#36423C\">Track Your Order</a> page.</p></details>\n<details style=\"border-top:1px solid rgba(43,52,46,.12);border-bottom:1px solid rgba(43,52,46,.12)\"><summary style=\"cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 2px;font:500 13.5px/1.4 'Inter',sans-serif;color:#36423C\">What if it's not for me?<span style=\"color:#C0683F;font-size:16px;line-height:1\">+</span></summary><p style=\"margin:0;padding:0 2px 14px;font-size:13px;line-height:1.65;color:#5A645E\">Sleep on it for up to 60 nights. If it hasn't earned its place in your evenings, email us &mdash; full refund, and the return label is on us.</p></details>\n</div>\n<style>#shopify-section-{{ section.id }} details summary::-webkit-details-marker{display:none}</style>"
+          }
+        },
         "zx_style": {
           "type": "custom_liquid",
           "settings": {
@@ -80,12 +92,14 @@
         "hero_badges",
         "title",
         "zx_rating",
+        "zx_benefits",
         "price",
         "variant_picker",
         "bundle_offer",
         "buy_buttons",
         "guarantee_line",
         "description",
+        "zx_minifaq",
         "zx_sticky"
       ],
       "settings": {

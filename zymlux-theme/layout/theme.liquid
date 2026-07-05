@@ -355,6 +355,27 @@
 
     {% render 'zymlux-email-popup' %}
 
+    {%- comment -%} Hide leftover French lines injected by third-party app scripts (DropMagic) {%- endcomment -%}
+    <script>
+      (function () {
+        var FR = ['Annulation 1 clic', 'Téléchargement immédiat', 'SAV français', 'Garantie 30 nuits'];
+        function kill() {
+          try {
+            FR.forEach(function (s) {
+              var xp = document.evaluate("//*[contains(text(),'" + s + "')]", document.body, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+              for (var i = 0; i < xp.snapshotLength; i++) {
+                var n = xp.snapshotItem(i);
+                var t = n.closest('p,li,span,small,div') || n;
+                t.style.display = 'none';
+              }
+            });
+          } catch (e) {}
+        }
+        if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', kill); } else { kill(); }
+        new MutationObserver(kill).observe(document.documentElement, { childList: true, subtree: true });
+      })();
+    </script>
+
     <ul hidden>
       <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
       <li id="a11y-new-window-message">{{ 'accessibility.link_messages.new_window' | t }}</li>
