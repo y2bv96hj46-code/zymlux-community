@@ -1,0 +1,2333 @@
+/* ============================================================================
+   Zymlux — Premium "cocon nocturne" utility layer
+   Variables, helpers et overrides communs à toutes les sections.
+   Cible : femmes 35-45, premium, charte bleu nuit + or chaud.
+   ============================================================================ */
+
+:root {
+  /* Palette crème doré */
+  --zlx-cream-1: #ECEAE3;          /* fond sections claires */
+  --zlx-cream-2: #F6F3EC;          /* cartes / blocs */
+  --zlx-cream-border: #E3DAC5;     /* bordures sur fond crème */
+  --zlx-cream-text-soft: #5E5745;  /* texte secondaire crème */
+
+  /* Palette bleu nuit */
+  --zlx-navy: #16243f;             /* bleu nuit profond */
+  --zlx-navy-deep: #0d1626;        /* ombres / dégradés */
+  --zlx-navy-soft: #1a2b4a;        /* tonalité héritée */
+  --zlx-navy-text: #f5efe2;        /* texte clair sur navy */
+  --zlx-navy-text-soft: #c3cad8;   /* texte secondaire sur navy */
+
+  /* Or */
+  --zlx-gold: #d4af6a;
+  --zlx-gold-light: #e0bd7c;
+  --zlx-gold-dark: #b9924a;
+  --zlx-gold-rgb: 212, 175, 106;
+
+  /* Espacements & rayons */
+  --zlx-section-py: clamp(56px, 7vw, 110px);
+  --zlx-radius-card: 16px;
+  --zlx-radius-pill: 999px;
+
+  /* Ombres */
+  --zlx-shadow-soft: 0 3px 14px rgba(13, 22, 38, 0.08);
+  --zlx-shadow-card: 0 6px 22px rgba(13, 22, 38, 0.10);
+  --zlx-shadow-card-navy: 0 6px 22px rgba(0, 0, 0, 0.28);
+}
+
+/* ============================================================================
+   1. Filet doré (2px) — coiffe d'une section de titre
+   ============================================================================ */
+.zlx-rule-gold {
+  display: block;
+  width: 72px;
+  height: 2px;
+  margin: 0 auto;
+  background: linear-gradient(90deg, transparent 0%, var(--zlx-gold) 50%, transparent 100%);
+  border: 0;
+}
+
+.zlx-rule-gold--wide {
+  width: 140px;
+}
+
+/* ============================================================================
+   2. Séparateur élégant (losange / point entre 2 traits fins)
+   ============================================================================ */
+.zlx-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 18px auto 22px;
+  max-width: 240px;
+}
+
+.zlx-divider::before,
+.zlx-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--zlx-gold-rgb), 0.55) 50%, transparent);
+}
+
+.zlx-divider__mark {
+  width: 8px;
+  height: 8px;
+  transform: rotate(45deg);
+  background: var(--zlx-gold);
+  box-shadow: 0 0 0 3px rgba(var(--zlx-gold-rgb), 0.18);
+}
+
+/* ============================================================================
+   3. Pastille dorée devant un titre de bénéfice
+   ============================================================================ */
+.zlx-bullet {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.zlx-bullet::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--zlx-gold);
+  box-shadow: 0 0 0 4px rgba(var(--zlx-gold-rgb), 0.18);
+  flex-shrink: 0;
+}
+
+/* ============================================================================
+   4. Badge capsule (bordure fine or, coins arrondis)
+   ============================================================================ */
+.zlx-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  border-radius: var(--zlx-radius-pill);
+  border: 1px solid rgba(var(--zlx-gold-rgb), 0.55);
+  background: rgba(var(--zlx-gold-rgb), 0.08);
+  color: var(--zlx-navy);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* Variante sur fond navy */
+.color-scheme-6 .zlx-capsule,
+.zlx-capsule--on-dark {
+  color: var(--zlx-gold);
+  border-color: rgba(var(--zlx-gold-rgb), 0.7);
+  background: rgba(var(--zlx-gold-rgb), 0.10);
+}
+
+/* ============================================================================
+   5. Ombre carte douce (sur fond clair)
+   ============================================================================ */
+.zlx-shadow-soft { box-shadow: var(--zlx-shadow-soft); }
+.zlx-shadow-card { box-shadow: var(--zlx-shadow-card); }
+
+/* ============================================================================
+   6. Bouton CTA doré (dégradé or vers or foncé, texte bleu nuit)
+   ============================================================================ */
+.zlx-button-gold,
+.zlx-cta-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 32px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--zlx-gold-light) 0%, var(--zlx-gold) 55%, var(--zlx-gold-dark) 100%);
+  color: var(--zlx-navy) !important;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-size: 16px;
+  border: 0;
+  box-shadow: 0 8px 22px rgba(var(--zlx-gold-rgb), 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+  text-decoration: none;
+}
+
+.zlx-button-gold:hover,
+.zlx-cta-gold:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(var(--zlx-gold-rgb), 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  filter: brightness(1.03);
+}
+
+/* ============================================================================
+   7. Override des boutons primaires Craft pour le rendu or premium
+   Touche `.button--primary`, `[name="add"]` (ATC), `button[type="submit"]`
+   à l'intérieur des sections Zymlux (sans casser les boutons Shopify natifs)
+   ============================================================================ */
+.zlx-buy-area .button--primary,
+.zlx-buy-area button[name="add"],
+.zlx-buy-area .product-form__submit,
+.zympro-popup .zympro-popup__submit,
+.zympro-newsletter-cta__button,
+.zlx-cta-zone .button,
+.zlx-cta-zone .button--primary {
+  background: linear-gradient(135deg, var(--zlx-gold-light) 0%, var(--zlx-gold) 55%, var(--zlx-gold-dark) 100%);
+  color: var(--zlx-navy) !important;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(var(--zlx-gold-rgb), 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  border: 0;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.zlx-buy-area .button--primary::before,
+.zlx-buy-area .button--primary::after,
+.zlx-buy-area button[name="add"]::before,
+.zlx-buy-area button[name="add"]::after {
+  display: none;
+}
+
+.zlx-buy-area .button--primary:hover,
+.zlx-buy-area button[name="add"]:hover,
+.zlx-buy-area .product-form__submit:hover,
+.zlx-cta-zone .button--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(var(--zlx-gold-rgb), 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  filter: brightness(1.03);
+}
+
+/* ============================================================================
+   8. Cartes premium sur fond crème
+   ============================================================================ */
+.zlx-card-cream {
+  background: var(--zlx-cream-2);
+  border: 1px solid var(--zlx-cream-border);
+  border-radius: var(--zlx-radius-card);
+  box-shadow: var(--zlx-shadow-soft);
+}
+
+/* ============================================================================
+   9. Espacements généreux pour les sections Zymlux
+   ============================================================================ */
+.zlx-section-spacing {
+  padding-top: var(--zlx-section-py);
+  padding-bottom: var(--zlx-section-py);
+}
+
+/* ============================================================================
+   10. Titres serif élégants — utilitaire optionnel
+   ============================================================================ */
+.zlx-eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--zlx-gold);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.zlx-eyebrow--on-cream { color: var(--zlx-gold-dark); }
+
+/* ============================================================================
+   HERO + image-banner navy fort (.color-scheme-6)
+   Hero d'accueil + CTA finale partagent .banner__box.color-scheme-6
+   ============================================================================ */
+
+/* Voile radial subtil → effet "cocon" sur navy */
+.banner__box.color-scheme-6 {
+  position: relative;
+  isolation: isolate;
+}
+.banner__box.color-scheme-6::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(120% 80% at 50% 0%, rgba(45, 65, 112, 0.55) 0%, rgba(22, 36, 63, 0) 65%);
+  z-index: 0;
+}
+.banner__box.color-scheme-6 > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Filet doré au-dessus du heading */
+.banner__box.color-scheme-6 .banner__heading {
+  position: relative;
+}
+.banner__box.color-scheme-6 .banner__heading::before {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 2px;
+  margin: 0 0 22px;
+  background: linear-gradient(90deg, transparent, var(--zlx-gold), transparent);
+}
+.banner--content-align-center .banner__box.color-scheme-6 .banner__heading::before,
+.banner__box.color-scheme-6.banner__box--center .banner__heading::before {
+  margin-left: auto;
+  margin-right: auto;
+}
+.banner__content--middle-center .banner__box.color-scheme-6 .banner__heading::before,
+.banner__content--top-center .banner__box.color-scheme-6 .banner__heading::before,
+.banner__content--bottom-center .banner__box.color-scheme-6 .banner__heading::before {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Texte secondaire un poil plus contrasté */
+.banner__box.color-scheme-6 .banner__text {
+  color: var(--zlx-navy-text-soft);
+}
+
+/* Boutons hero/banner sur navy → gradient or, texte navy */
+.banner__box.color-scheme-6 .button,
+.banner__box.color-scheme-6 .button.button--primary,
+.banner__box.color-scheme-6 .button.button--secondary {
+  background: linear-gradient(135deg, var(--zlx-gold-light) 0%, var(--zlx-gold) 55%, var(--zlx-gold-dark) 100%);
+  color: var(--zlx-navy) !important;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(var(--zlx-gold-rgb), 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  border: 0;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+.banner__box.color-scheme-6 .button::before,
+.banner__box.color-scheme-6 .button::after {
+  display: none;
+}
+.banner__box.color-scheme-6 .button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(var(--zlx-gold-rgb), 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  filter: brightness(1.04);
+}
+
+/* Espace généreux pour le bouton (zone d'air autour) */
+.banner__box.color-scheme-6 .banner__buttons {
+  margin-top: 28px;
+  position: relative;
+}
+
+/* Séparateur losange or au-dessus du bouton */
+.banner__box.color-scheme-6 .banner__buttons::before {
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin: 0 auto 24px;
+  transform: rotate(45deg);
+  background: var(--zlx-gold);
+  box-shadow: 0 0 0 4px rgba(var(--zlx-gold-rgb), 0.18);
+}
+
+/* Bouton secondaire (variante outline or) si présent en n°2 */
+.banner__box.color-scheme-6 .banner__buttons .button.button--secondary {
+  background: transparent;
+  color: var(--zlx-navy-text) !important;
+  border: 1px solid rgba(var(--zlx-gold-rgb), 0.55);
+  box-shadow: none;
+}
+.banner__box.color-scheme-6 .banner__buttons .button.button--secondary:hover {
+  background: rgba(var(--zlx-gold-rgb), 0.08);
+  border-color: var(--zlx-gold);
+}
+
+/* ============================================================================
+   MULTICOLUMN sur fond crème (how_it_works + benefits)
+   ============================================================================ */
+.multicolumn.color-scheme-1,
+.multicolumn.color-scheme-2 {
+  padding-top: clamp(48px, 5vw, 80px);
+  padding-bottom: clamp(48px, 5vw, 80px);
+}
+
+/* Titre H2 — filet doré au-dessus */
+.multicolumn.color-scheme-1 .multicolumn__title,
+.multicolumn.color-scheme-2 .multicolumn__title {
+  position: relative;
+  text-align: center;
+  margin-bottom: clamp(28px, 3vw, 44px);
+}
+.multicolumn.color-scheme-1 .multicolumn__title::before,
+.multicolumn.color-scheme-2 .multicolumn__title::before {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 2px;
+  margin: 0 auto 18px;
+  background: linear-gradient(90deg, transparent, var(--zlx-gold), transparent);
+}
+.multicolumn.color-scheme-1 .multicolumn__title .title,
+.multicolumn.color-scheme-2 .multicolumn__title .title {
+  color: var(--zlx-navy);
+}
+
+/* Petit séparateur losange entre titre et grille */
+.multicolumn.color-scheme-1 .multicolumn__title::after,
+.multicolumn.color-scheme-2 .multicolumn__title::after {
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin: 18px auto 0;
+  transform: rotate(45deg);
+  background: var(--zlx-gold);
+  box-shadow: 0 0 0 4px rgba(var(--zlx-gold-rgb), 0.16);
+}
+
+/* Cartes — fond crème clair, bordure or, ombre douce */
+.multicolumn.color-scheme-1 .multicolumn-card,
+.multicolumn.color-scheme-2 .multicolumn-card {
+  background: var(--zlx-cream-2);
+  border: 1px solid var(--zlx-cream-border);
+  border-radius: var(--zlx-radius-card);
+  padding: clamp(20px, 2.4vw, 32px) clamp(18px, 2vw, 28px);
+  box-shadow: var(--zlx-shadow-soft);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 100%;
+}
+.multicolumn.color-scheme-1 .multicolumn-card:hover,
+.multicolumn.color-scheme-2 .multicolumn-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--zlx-shadow-card);
+}
+
+/* H3 — pastille dorée devant le titre */
+.multicolumn.color-scheme-1 .multicolumn-card__info h3,
+.multicolumn.color-scheme-2 .multicolumn-card__info h3 {
+  color: var(--zlx-navy);
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 12px;
+}
+.multicolumn.color-scheme-1 .multicolumn-card__info h3::before,
+.multicolumn.color-scheme-2 .multicolumn-card__info h3::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--zlx-gold);
+  box-shadow: 0 0 0 4px rgba(var(--zlx-gold-rgb), 0.18);
+}
+
+/* Centré : pastille passe en losange centré au-dessus */
+.multicolumn.color-scheme-1 .multicolumn-list__item.center .multicolumn-card__info h3,
+.multicolumn.color-scheme-2 .multicolumn-list__item.center .multicolumn-card__info h3 {
+  padding-left: 0;
+}
+.multicolumn.color-scheme-1 .multicolumn-list__item.center .multicolumn-card__info h3::before,
+.multicolumn.color-scheme-2 .multicolumn-list__item.center .multicolumn-card__info h3::before {
+  position: static;
+  display: block;
+  margin: 0 auto 12px;
+}
+
+/* Texte secondaire dans les cartes — taupe chaud */
+.multicolumn.color-scheme-1 .multicolumn-card__info .rte,
+.multicolumn.color-scheme-2 .multicolumn-card__info .rte {
+  color: var(--zlx-cream-text-soft);
+  line-height: 1.6;
+}
+
+/* Image cards : léger filet or autour si présente */
+.multicolumn.color-scheme-1 .multicolumn-card__image-wrapper,
+.multicolumn.color-scheme-2 .multicolumn-card__image-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+/* ============================================================================
+   HOME — Section "Comment ça marche" : icônes dorées au-dessus de chaque étape
+   Cible exclusivement la section `how_it_works` via son ID DOM stable.
+   Surcharge la pastille ronde générique par 3 icônes SVG (mask-image + bg-color
+   pour pouvoir teinter en or via la variable --zlx-gold).
+   ============================================================================ */
+[id$="__how_it_works"] .multicolumn-list__item.center .multicolumn-card__info h3::before {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 14px;
+  background-color: var(--zlx-gold);
+  background-image: none;
+  border-radius: 0;
+  box-shadow: none;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+          mask-position: center;
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+}
+
+/* 1 — Mettez le masque : étincelles (sparkles Lucide) symbole confort premium */
+[id$="__how_it_works"] .multicolumn-list__item.center:nth-of-type(1) .multicolumn-card__info h3::before {
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m12%203-1.9%205.8a2%202%200%200%201-1.287%201.288L3%2012l5.8%201.9a2%202%200%200%201%201.288%201.287L12%2021l1.9-5.8a2%202%200%200%201%201.287-1.288L21%2012l-5.8-1.9a2%202%200%200%201-1.288-1.287Z%22%2F%3E%3Cpath%20d%3D%22M5%203v4%22%2F%3E%3Cpath%20d%3D%22M19%2017v4%22%2F%3E%3Cpath%20d%3D%22M3%205h4%22%2F%3E%3Cpath%20d%3D%22M17%2019h4%22%2F%3E%3C%2Fsvg%3E");
+          mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m12%203-1.9%205.8a2%202%200%200%201-1.287%201.288L3%2012l5.8%201.9a2%202%200%200%201%201.288%201.287L12%2021l1.9-5.8a2%202%200%200%201%201.287-1.288L21%2012l-5.8-1.9a2%202%200%200%201-1.288-1.287Z%22%2F%3E%3Cpath%20d%3D%22M5%203v4%22%2F%3E%3Cpath%20d%3D%22M19%2017v4%22%2F%3E%3Cpath%20d%3D%22M3%205h4%22%2F%3E%3Cpath%20d%3D%22M17%2019h4%22%2F%3E%3C%2Fsvg%3E");
+}
+
+/* 2 — Lancez votre rituel : casque audio (headphones Lucide) */
+[id$="__how_it_works"] .multicolumn-list__item.center:nth-of-type(2) .multicolumn-card__info h3::before {
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H4a1 1 0 0 1-1-1v-6Z'/><path d='M21 14h-3a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2a1 1 0 0 0 1-1v-6Z'/><path d='M3 14a9 9 0 0 1 18 0'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H4a1 1 0 0 1-1-1v-6Z'/><path d='M21 14h-3a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2a1 1 0 0 0 1-1v-6Z'/><path d='M3 14a9 9 0 0 1 18 0'/></svg>");
+}
+
+/* 3 — Dormez enfin : croissant de lune (moon Lucide) */
+[id$="__how_it_works"] .multicolumn-list__item.center:nth-of-type(3) .multicolumn-card__info h3::before {
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z'/></svg>");
+}
+
+/* Animation discrète au survol de la carte */
+[id$="__how_it_works"] .multicolumn-list__item.center:hover .multicolumn-card__info h3::before {
+  transform: translateY(-3px) scale(1.06);
+}
+
+/* Mobile : icônes plus petites */
+@media (max-width: 749px) {
+  [id$="__how_it_works"] .multicolumn-list__item.center .multicolumn-card__info h3::before {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 10px;
+  }
+}
+
+/* ============================================================================
+   MULTICOLUMN sur fond navy (variante "Pourquoi Zymlux change vos nuits")
+   Mêmes accents or que la version crème, adaptés contraste sombre
+   ============================================================================ */
+.multicolumn.color-scheme-6 {
+  padding-top: clamp(56px, 6vw, 96px);
+  padding-bottom: clamp(56px, 6vw, 96px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Cocon radial discret */
+.multicolumn.color-scheme-6::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(120% 80% at 50% 0%, rgba(45, 65, 112, 0.55) 0%, rgba(22, 36, 63, 0) 65%);
+  z-index: 0;
+}
+.multicolumn.color-scheme-6 > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Titre H2 — filet doré + losange */
+.multicolumn.color-scheme-6 .multicolumn__title {
+  position: relative;
+  text-align: center;
+  margin-bottom: clamp(28px, 3vw, 44px);
+}
+.multicolumn.color-scheme-6 .multicolumn__title::before {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 2px;
+  margin: 0 auto 18px;
+  background: linear-gradient(90deg, transparent, var(--zlx-gold), transparent);
+}
+.multicolumn.color-scheme-6 .multicolumn__title .title {
+  color: var(--zlx-navy-text);
+}
+.multicolumn.color-scheme-6 .multicolumn__title::after {
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin: 18px auto 0;
+  transform: rotate(45deg);
+  background: var(--zlx-gold);
+  box-shadow: 0 0 0 4px rgba(var(--zlx-gold-rgb), 0.18);
+}
+
+/* Cartes — glassy navy, filet or hairline, bordure or fine */
+.multicolumn.color-scheme-6 .multicolumn-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(var(--zlx-gold-rgb), 0.28);
+  border-radius: var(--zlx-radius-card);
+  padding: clamp(24px, 2.6vw, 36px) clamp(20px, 2.2vw, 30px);
+  box-shadow: var(--zlx-shadow-card-navy);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.multicolumn.color-scheme-6 .multicolumn-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--zlx-gold) 50%, transparent);
+}
+.multicolumn.color-scheme-6 .multicolumn-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(var(--zlx-gold-rgb), 0.55);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.32);
+}
+
+/* H3 cartes — titre OR avec SVG icône injectée via ::before */
+.multicolumn.color-scheme-6 .multicolumn-card__info h3 {
+  color: var(--zlx-gold);
+  position: relative;
+  margin-bottom: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Slot icône (rempli par ::before via nth-of-type ci-dessous) */
+.multicolumn.color-scheme-6 .multicolumn-card__info h3::before {
+  content: "";
+  display: inline-block;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  vertical-align: middle;
+}
+
+/* Carte 1 — LUNE (Obscurité totale) */
+.multicolumn.color-scheme-6 .multicolumn-list__item:nth-of-type(1) .multicolumn-card__info h3::before {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='%23d4af6a' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'><path d='M20 13a8 8 0 1 1-9-9 6.3 6.3 0 0 0 9 9z'/><circle cx='17' cy='6' r='0.6' fill='%23d4af6a'/><circle cx='20' cy='9' r='0.5' fill='%23d4af6a'/></svg>");
+}
+
+/* Carte 2 — ONDES (Bluetooth) */
+.multicolumn.color-scheme-6 .multicolumn-list__item:nth-of-type(2) .multicolumn-card__info h3::before {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='%23d4af6a' stroke-width='1.4' stroke-linecap='round'><path d='M4 12c2-3 2.5-3 4 0s2.5 3 4 0 2.5-3 4 0 2-3 4 0'/><path d='M4 16c2-2 2.5-2 4 0s2.5 2 4 0 2.5-2 4 0 2-2 4 0' opacity='0.5'/></svg>");
+}
+
+/* Carte 3 — PLUME (Confort cocooning) */
+.multicolumn.color-scheme-6 .multicolumn-list__item:nth-of-type(3) .multicolumn-card__info h3::before {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='%23d4af6a' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'><path d='M11 3c-3 5-1 9 1 11s5 4 9 3c-2 3-6 4-9 3C7 18 4 13 6 8a8 8 0 0 1 5-5z' opacity='0.35'/><path d='M13 5c4 2 6 7 4 11'/><path d='M13 5c-1 4 0 8 4 11'/></svg>");
+}
+
+/* Centré : titre + icône centrés ensemble */
+.multicolumn.color-scheme-6 .multicolumn-list__item.center .multicolumn-card__info h3 {
+  justify-content: center;
+}
+
+/* Texte secondaire sur navy — cool grey-blue */
+.multicolumn.color-scheme-6 .multicolumn-card__info .rte {
+  color: var(--zlx-navy-text-soft);
+  line-height: 1.6;
+}
+
+/* ============================================================================
+   HOME — Section "Pourquoi Zymlux" : HERO CARDS (style Apple / Aesop / Hermès)
+   L'image devient le background plein de la carte. Titre + description sont
+   overlay en bas, par-dessus un gradient sombre vers le bleu nuit Zymlux
+   (#0d1626) garantissant la lisibilité sans masquer l'image.
+   Cible exclusivement la section `benefits` via son ID DOM stable.
+   ============================================================================ */
+
+/* Carte : flex column, image background absolue. Finition luxe :
+   - radius 32px (Apple Cards / Hermès editorial)
+   - ombre stratifiée (proche + profonde + lointaine) qui fait flotter la carte
+   - inset hairline blanc 4% pour dessiner l'edge premium sur fond navy
+   - transition cubic-bezier "luxury easing" (0.22, 1, 0.36, 1)
+*/
+[id$="__benefits"] .color-scheme-6 .multicolumn-card {
+  padding: 0 !important;
+  background: var(--zlx-navy-deep) !important;
+  border: none !important;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  border-radius: 36px !important;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.18),
+    0 14px 32px -8px rgba(0, 0, 0, 0.42),
+    0 28px 64px -22px rgba(0, 0, 0, 0.55),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Le filet doré au top de la carte (scheme-6 base) — masqué sur les hero cards */
+[id$="__benefits"] .color-scheme-6 .multicolumn-card::before {
+  display: none;
+}
+
+/* Wrapper image : background absolu plein écran de la carte */
+[id$="__benefits"] .color-scheme-6 .multicolumn-card__image-wrapper {
+  position: absolute !important;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  /* Annule le mask-image fade éventuel (commit précédent) */
+  -webkit-mask-image: none;
+          mask-image: none;
+}
+
+/* Annule le padding-bottom de .media--square qui forçait un aspect-ratio
+   carré sous l'image et créait une bande vide en bas de carte sur desktop */
+[id$="__benefits"] .color-scheme-6 .multicolumn-card .media {
+  padding-bottom: 0 !important;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  inset: 0;
+}
+
+/* Image : remplit la carte entière, zoom subtil en hover, easing luxe */
+[id$="__benefits"] .color-scheme-6 .multicolumn-card__image {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Hover desktop : lift de la carte + zoom plus marqué + halo or subtil + edge or */
+@media (hover: hover) and (min-width: 750px) {
+  [id$="__benefits"] .color-scheme-6 .multicolumn-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.22),
+      0 22px 48px -10px rgba(0, 0, 0, 0.52),
+      0 40px 90px -22px rgba(212, 175, 106, 0.22),
+      inset 0 0 0 1px rgba(212, 175, 106, 0.12);
+  }
+  [id$="__benefits"] .color-scheme-6 .multicolumn-card:hover .multicolumn-card__image {
+    transform: scale(1.05);
+  }
+}
+
+/* Gradient sombre overlay pour lisibilité du texte sans cacher l'image
+   (densifié en bas car hauteur de carte réduite — texte doit rester lisible) */
+[id$="__benefits"] .color-scheme-6 .multicolumn-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(13, 22, 38, 0.94) 0%,
+    rgba(13, 22, 38, 0.82) 22%,
+    rgba(13, 22, 38, 0.50) 50%,
+    rgba(13, 22, 38, 0.18) 78%,
+    rgba(13, 22, 38, 0) 100%
+  );
+}
+
+/* Bloc info : overlay en bas, par-dessus image + gradient. Padding genereux,
+   typographie editoriale (letter-spacing fin, ligne aérée) */
+[id$="__benefits"] .color-scheme-6 .multicolumn-card__info {
+  position: relative;
+  z-index: 2;
+  padding: 22px 26px 24px;
+  margin-top: 0;
+}
+
+/* Titre or — letter-spacing serré pour le côté éditorial luxe */
+[id$="__benefits"] .color-scheme-6 .multicolumn-card__info h3 {
+  letter-spacing: 0.005em;
+  margin-bottom: 8px;
+}
+
+/* Description : couleur crème chaude (au lieu du cool grey-blue) + line-height
+   généreux pour la lisibilité magazine. Plus chaleureux, plus "cocon". */
+[id$="__benefits"] .color-scheme-6 .multicolumn-card__info .rte {
+  color: var(--zlx-navy-text);
+  line-height: 1.6;
+  font-size: 14.5px;
+}
+
+/* Tablette (768-1023px) : passage à 2 colonnes pour aérer le scroll */
+@media (min-width: 750px) and (max-width: 1023px) {
+  [id$="__benefits"] .color-scheme-6 .multicolumn-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 20px;
+  }
+  [id$="__benefits"] .color-scheme-6 .multicolumn-list__item:nth-child(3) {
+    grid-column: 1 / -1;
+    max-width: calc(50% - 10px);
+    margin: 0 auto;
+  }
+}
+
+/* Mobile (<750px) : cartes compactes paysage, scroll fluide, gap réduit.
+   Ombres allégées (la profondeur 3D excessive est moche sur petit écran) */
+@media (max-width: 749px) {
+  [id$="__benefits"] .color-scheme-6 .multicolumn-card {
+    min-height: 250px;
+    border-radius: 30px !important;
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.18),
+      0 10px 24px -6px rgba(0, 0, 0, 0.38),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  }
+  [id$="__benefits"] .color-scheme-6 .multicolumn-card__info {
+    padding: 18px 20px 20px;
+  }
+  [id$="__benefits"] .color-scheme-6 .multicolumn-card__info h3 {
+    margin-bottom: 6px;
+  }
+  /* Gradient un peu plus dense en bas pour compenser la hauteur réduite */
+  [id$="__benefits"] .color-scheme-6 .multicolumn-card::after {
+    background: linear-gradient(
+      to top,
+      rgba(13, 22, 38, 0.96) 0%,
+      rgba(13, 22, 38, 0.85) 30%,
+      rgba(13, 22, 38, 0.50) 60%,
+      rgba(13, 22, 38, 0.18) 85%,
+      rgba(13, 22, 38, 0) 100%
+    );
+  }
+  /* Description : taille légèrement réduite pour tenir sans serrer */
+  [id$="__benefits"] .color-scheme-6 .multicolumn-card__info .rte {
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+  /* Gap inter-cartes plus serré (lecture magazine) */
+  [id$="__benefits"] .color-scheme-6 .multicolumn-list {
+    gap: 18px !important;
+  }
+}
+
+/* ============================================================================
+   PRODUCT — Featured product (home) + Main product (PDP)
+   Bouton ATC en or, prix mis en valeur, séparateurs or
+   ============================================================================ */
+
+/* CTA ATC (couvre featured-product home + main-product PDP) */
+.product .product-form__submit.button--primary,
+.featured-product .product-form__submit.button--primary,
+.product__info-wrapper .product-form__submit,
+.product__info-container .product-form__submit {
+  background: linear-gradient(135deg, var(--zlx-gold-light) 0%, var(--zlx-gold) 55%, var(--zlx-gold-dark) 100%);
+  color: var(--zlx-navy) !important;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(var(--zlx-gold-rgb), 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  border: 0;
+  padding: 16px 24px;
+  font-size: 16px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+.product .product-form__submit.button--primary::before,
+.product .product-form__submit.button--primary::after,
+.featured-product .product-form__submit.button--primary::before,
+.featured-product .product-form__submit.button--primary::after {
+  display: none !important;
+}
+.product .product-form__submit.button--primary:hover,
+.featured-product .product-form__submit.button--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(var(--zlx-gold-rgb), 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  filter: brightness(1.04);
+}
+
+/* Titre produit — couleur navy nette */
+.featured-product .product__title h2,
+.featured-product .product__title h1 {
+  color: var(--zlx-navy);
+}
+
+/* Bloc info featured-product — fond crème card */
+.featured-product.color-scheme-1 .product__info-container,
+.featured-product.color-scheme-2 .product__info-container {
+  background: var(--zlx-cream-2);
+  border: 1px solid var(--zlx-cream-border);
+  border-radius: var(--zlx-radius-card);
+  padding: clamp(22px, 2.5vw, 36px);
+  box-shadow: var(--zlx-shadow-soft);
+}
+
+/* Bloc info featured-product — variante navy (glassy or) */
+.featured-product.color-scheme-6 .product__info-container {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(var(--zlx-gold-rgb), 0.28);
+  border-radius: var(--zlx-radius-card);
+  padding: clamp(22px, 2.5vw, 36px);
+  box-shadow: var(--zlx-shadow-card-navy);
+}
+.featured-product.color-scheme-6 .product__title h2,
+.featured-product.color-scheme-6 .product__title h1 {
+  color: var(--zlx-navy-text);
+}
+.featured-product.color-scheme-6 .product__text,
+.featured-product.color-scheme-6 .product__description,
+.featured-product.color-scheme-6 .product__sku,
+.featured-product.color-scheme-6 .product__inventory,
+.featured-product.color-scheme-6 .product__tax {
+  color: var(--zlx-navy-text-soft);
+}
+.featured-product.color-scheme-6 .price__sale .price-item--regular,
+.featured-product.color-scheme-6 .price .price-item--regular {
+  color: rgba(195, 202, 216, 0.65);
+}
+.featured-product.color-scheme-6 .price__sale .price-item--sale,
+.featured-product.color-scheme-6 .price .price-item--sale,
+.featured-product.color-scheme-6 .price .price-item {
+  color: var(--zlx-navy-text);
+}
+
+/* ============================================================================
+   FAQ — collapsible-content premium sur crème
+   ============================================================================ */
+.color-scheme-1 .collapsible-content__heading,
+.color-scheme-2 .collapsible-content__heading {
+  color: var(--zlx-navy);
+  position: relative;
+  padding-top: 24px;
+  text-align: center;
+}
+.color-scheme-1 .collapsible-content__heading::before,
+.color-scheme-2 .collapsible-content__heading::before {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 2px;
+  margin: 0 auto 20px;
+  background: linear-gradient(90deg, transparent, var(--zlx-gold), transparent);
+}
+.color-scheme-1 .collapsible-content__header,
+.color-scheme-2 .collapsible-content__header {
+  margin-bottom: 32px;
+}
+
+/* Accordéons — chaque question = carte crème ombrée */
+.color-scheme-1 .accordion,
+.color-scheme-2 .accordion {
+  background: var(--zlx-cream-2);
+  border: 1px solid var(--zlx-cream-border);
+  border-radius: var(--zlx-radius-card);
+  margin-bottom: 14px;
+  overflow: hidden;
+  box-shadow: var(--zlx-shadow-soft);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.color-scheme-1 .accordion:hover,
+.color-scheme-2 .accordion:hover {
+  border-color: rgba(var(--zlx-gold-rgb), 0.45);
+  box-shadow: var(--zlx-shadow-card);
+}
+.color-scheme-1 .accordion summary,
+.color-scheme-2 .accordion summary {
+  padding: 18px 22px;
+}
+.color-scheme-1 .accordion__title,
+.color-scheme-2 .accordion__title {
+  color: var(--zlx-navy);
+  font-weight: 600;
+}
+.color-scheme-1 .accordion__content,
+.color-scheme-2 .accordion__content {
+  padding: 0 22px 20px;
+  color: var(--zlx-cream-text-soft);
+  line-height: 1.65;
+}
+.color-scheme-1 .accordion .summary__plus-icon,
+.color-scheme-2 .accordion .summary__plus-icon,
+.color-scheme-1 .accordion summary .icon-caret,
+.color-scheme-2 .accordion summary .icon-caret {
+  color: var(--zlx-gold);
+}
+
+/* ============================================================================
+   FAQ — collapsible-content sur navy (variante)
+   ============================================================================ */
+.color-scheme-6 .collapsible-content__heading {
+  color: var(--zlx-navy-text);
+  position: relative;
+  padding-top: 24px;
+  text-align: center;
+}
+.color-scheme-6 .collapsible-content__heading::before {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 2px;
+  margin: 0 auto 20px;
+  background: linear-gradient(90deg, transparent, var(--zlx-gold), transparent);
+}
+.color-scheme-6 .collapsible-content__header {
+  margin-bottom: 32px;
+}
+
+/* Accordéons navy — glassy or */
+.color-scheme-6 .accordion {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(var(--zlx-gold-rgb), 0.28);
+  border-radius: var(--zlx-radius-card);
+  margin-bottom: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.color-scheme-6 .accordion:hover {
+  border-color: rgba(var(--zlx-gold-rgb), 0.55);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.30);
+}
+.color-scheme-6 .accordion summary {
+  padding: 18px 22px;
+}
+.color-scheme-6 .accordion__title {
+  color: var(--zlx-navy-text);
+  font-weight: 600;
+}
+.color-scheme-6 .accordion__content {
+  padding: 0 22px 20px;
+  color: var(--zlx-navy-text-soft);
+  line-height: 1.65;
+}
+.color-scheme-6 .accordion .summary__plus-icon,
+.color-scheme-6 .accordion summary .icon-caret {
+  color: var(--zlx-gold);
+}
+
+/* ============================================================================
+   FAQ — icônes accordion (heart, truck, shield, washing, etc.) en OR
+   Couvre les 3 schemes pour cohérence
+   ============================================================================ */
+.accordion .svg-wrapper {
+  fill: #d4af6a;
+  color: #d4af6a;
+  width: 22px;
+  height: 22px;
+  margin-right: 14px;
+  align-self: center;
+  flex-shrink: 0;
+}
+
+/* Force les paths/shapes internes en or (les icônes Shopify utilisent fill) */
+.accordion .svg-wrapper svg,
+.accordion .svg-wrapper svg path,
+.accordion .svg-wrapper svg circle,
+.accordion .svg-wrapper svg rect,
+.accordion .svg-wrapper svg polygon {
+  fill: #d4af6a;
+}
+.accordion .svg-wrapper svg [stroke]:not([stroke="none"]) {
+  stroke: #d4af6a;
+}
+
+/* Sur fond crème, léger halo or pour faire ressortir */
+.color-scheme-1 .accordion .svg-wrapper,
+.color-scheme-2 .accordion .svg-wrapper {
+  filter: drop-shadow(0 1px 2px rgba(212, 175, 106, 0.25));
+}
+
+/* ============================================================================
+   SÉPARATEURS DE SECTION (trait or gauche + losange or + trait or droite)
+   Insérés automatiquement aux jonctions entre sections crème et navy
+   via :has() sur le sibling précédent.
+   Visible page d'accueil + partout où une transition cream↔navy existe.
+   ============================================================================ */
+
+/* Permet le positionnement absolu du séparateur */
+#MainContent > .shopify-section {
+  position: relative;
+}
+
+/* Pseudo-séparateur — visuel SVG (lignes dégradées + losange or)
+   Plus large et plus haut pour visibilité + fluidité de la transition.
+   Activé uniquement sur sections qui SUIVENT une section de couleur différente */
+#MainContent > .shopify-section:has(.color-scheme-6) + .shopify-section:has(.color-scheme-1)::before,
+#MainContent > .shopify-section:has(.color-scheme-6) + .shopify-section:has(.color-scheme-2)::before,
+#MainContent > .shopify-section:has(.color-scheme-1) + .shopify-section:has(.color-scheme-6)::before,
+#MainContent > .shopify-section:has(.color-scheme-2) + .shopify-section:has(.color-scheme-6)::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -12px;
+  left: 0;
+  right: 0;
+  height: 24px;
+  z-index: 5;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='24' viewBox='0 0 220 24'><defs><linearGradient id='gL' x1='0' x2='1' y1='0' y2='0'><stop offset='0%25' stop-color='%23d4af6a' stop-opacity='0'/><stop offset='100%25' stop-color='%23d4af6a' stop-opacity='1'/></linearGradient><linearGradient id='gR' x1='0' x2='1' y1='0' y2='0'><stop offset='0%25' stop-color='%23d4af6a' stop-opacity='1'/><stop offset='100%25' stop-color='%23d4af6a' stop-opacity='0'/></linearGradient></defs><rect x='0' y='10.5' width='90' height='3' fill='url(%23gL)'/><rect x='102' y='4' width='16' height='16' transform='rotate(45 110 12)' fill='%23d4af6a'/><rect x='130' y='10.5' width='90' height='3' fill='url(%23gR)'/></svg>");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 220px 24px;
+}
+
+/* ============================================================================
+   FLUIDITÉ — réduit le vide entre sections et adoucit les transitions
+   Diminue les paddings haut/bas, ajoute des fondus aux jonctions
+   ============================================================================ */
+
+/* Tous les sections avec scheme cream ou navy reçoivent un fade discret en bord */
+#MainContent > .shopify-section > .color-scheme-1,
+#MainContent > .shopify-section > .color-scheme-2,
+#MainContent > .shopify-section > .color-scheme-6,
+#MainContent > .shopify-section > .gradient.color-scheme-1,
+#MainContent > .shopify-section > .gradient.color-scheme-2,
+#MainContent > .shopify-section > .gradient.color-scheme-6 {
+  position: relative;
+}
+
+/* Voile fondu HAUT — adoucit l'arrivée sur une section après transition */
+#MainContent > .shopify-section:has(.color-scheme-6) + .shopify-section:has(> .color-scheme-1) > .color-scheme-1::after,
+#MainContent > .shopify-section:has(.color-scheme-6) + .shopify-section:has(> .color-scheme-2) > .color-scheme-2::after,
+#MainContent > .shopify-section:has(.color-scheme-1) + .shopify-section:has(> .color-scheme-6) > .color-scheme-6::after,
+#MainContent > .shopify-section:has(.color-scheme-2) + .shopify-section:has(> .color-scheme-6) > .color-scheme-6::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(212, 175, 106, 0.05) 0%, transparent 100%);
+  z-index: 1;
+}
+
+/* Réduction des paddings excessifs pour resserrer le rythme */
+.multicolumn.color-scheme-1,
+.multicolumn.color-scheme-2,
+.multicolumn.color-scheme-6 {
+  padding-top: clamp(40px, 4.5vw, 72px);
+  padding-bottom: clamp(40px, 4.5vw, 72px);
+}
+
+
+/* ============================================================================
+   PDP — main-product zone d'achat
+   Titre H1 net, prix en valeur, accordéons crème, fiche premium
+   ============================================================================ */
+
+/* Titre produit H1 — sobre, navy */
+.product:not(.featured-product) .product__title h1 {
+  color: var(--zlx-navy);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+/* Variant picker pills */
+.product:not(.featured-product) variant-radios input[type="radio"]:checked + label,
+.product:not(.featured-product) variant-radios .product-form__input label.active {
+  border-color: var(--zlx-gold);
+  background: rgba(var(--zlx-gold-rgb), 0.10);
+  color: var(--zlx-navy);
+}
+.product:not(.featured-product) variant-radios label.product-form__input-label,
+.product:not(.featured-product) .product-form__input-label {
+  color: var(--zlx-navy);
+}
+
+/* Accordéons sur PDP (Description, Spécifications, etc.) */
+.product:not(.featured-product) .product__accordion.accordion {
+  background: var(--zlx-cream-2);
+  border: 1px solid var(--zlx-cream-border);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  box-shadow: var(--zlx-shadow-soft);
+}
+.product:not(.featured-product) .product__accordion.accordion summary {
+  padding: 14px 18px;
+}
+.product:not(.featured-product) .product__accordion .summary__title h2,
+.product:not(.featured-product) .product__accordion .summary__title h3 {
+  color: var(--zlx-navy);
+  font-weight: 600;
+}
+
+/* Tax & livraison notes — texte secondaire taupe */
+.product:not(.featured-product) .product__tax,
+.product:not(.featured-product) .shopify-payment-button__more-options {
+  color: var(--zlx-cream-text-soft);
+}
+
+/* SKU & inventory caption — taupe */
+.product:not(.featured-product) .product__sku,
+.product:not(.featured-product) .product__inventory {
+  color: var(--zlx-cream-text-soft);
+  letter-spacing: 0.06em;
+}
+
+/* Prix PDP — sale en navy gras, regular barré en taupe */
+.product:not(.featured-product) .price__sale .price-item--regular,
+.product:not(.featured-product) .price .price-item--regular {
+  color: var(--zlx-cream-text-soft);
+  opacity: 0.85;
+}
+.product:not(.featured-product) .price__sale .price-item--sale,
+.product:not(.featured-product) .price .price-item--sale,
+.product:not(.featured-product) .price .price-item {
+  color: var(--zlx-navy);
+}
+.product:not(.featured-product) .price-large,
+.product:not(.featured-product) .price--large {
+  position: relative;
+  padding-top: 12px;
+}
+.product:not(.featured-product) .price--large::before {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 2px;
+  margin-bottom: 14px;
+  background: linear-gradient(90deg, transparent, var(--zlx-gold) 50%, transparent);
+}
+
+/* Quantity input — bordures or fines */
+.product:not(.featured-product) .product-form__quantity .quantity {
+  border-color: rgba(var(--zlx-gold-rgb), 0.45);
+  border-radius: 10px;
+}
+.product:not(.featured-product) .quantity__button {
+  color: var(--zlx-navy);
+}
+
+/* Pickup availability */
+.product:not(.featured-product) .product__pickup-availabilities {
+  margin-top: 18px;
+}
+
+/* Prix — léger fond crème + bordure or fine */
+.featured-product .price--large,
+.featured-product .price {
+  padding: 12px 0;
+  position: relative;
+}
+.featured-product .price--large .price__sale .price-item--regular,
+.featured-product .price .price__sale .price-item--regular {
+  color: var(--zlx-cream-text-soft);
+  opacity: 0.8;
+}
+.featured-product .price--large .price-item--sale,
+.featured-product .price .price-item--sale {
+  color: var(--zlx-navy);
+  font-weight: 700;
+}
+
+/* ============================================================================
+   PDP — Description premium (card crème, eyebrow doré, bullets ✓, séparateur)
+   Habille le HTML structuré `.zlx-pdp-desc` rendu via product.descriptionHtml.
+   ============================================================================ */
+.product:not(.featured-product) .product__description {
+  margin-top: 20px;
+}
+
+.zlx-pdp-desc {
+  position: relative;
+  background: var(--zlx-cream-2);
+  border: 1px solid var(--zlx-cream-border);
+  border-radius: var(--zlx-radius-card);
+  padding: clamp(22px, 2.4vw, 30px);
+  box-shadow: var(--zlx-shadow-soft);
+  overflow: hidden;
+}
+
+.zlx-pdp-desc::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 18%;
+  right: 18%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--zlx-gold) 50%, transparent);
+}
+
+.zlx-pdp-desc__eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--zlx-gold-dark);
+  font-weight: 700;
+  margin-bottom: 14px;
+  position: relative;
+  padding-left: 32px;
+}
+
+.zlx-pdp-desc__eyebrow::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 1px;
+  background: var(--zlx-gold);
+}
+
+.zlx-pdp-desc__intro {
+  color: var(--zlx-navy);
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0 0 6px;
+}
+
+.zlx-pdp-desc__intro strong {
+  color: var(--zlx-navy);
+  font-weight: 600;
+}
+
+.zlx-pdp-desc__bullets {
+  list-style: none;
+  padding: 0;
+  margin: 18px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.zlx-pdp-desc__bullets li {
+  position: relative;
+  padding-left: 32px;
+  color: var(--zlx-cream-text-soft);
+  line-height: 1.55;
+  font-size: 14.5px;
+}
+
+.zlx-pdp-desc__bullets li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 22px;
+  height: 22px;
+  background-color: rgba(var(--zlx-gold-rgb), 0.12);
+  border: 1px solid rgba(var(--zlx-gold-rgb), 0.45);
+  border-radius: 50%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23b9924a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12l5 5L20 7'/></svg>");
+  background-repeat: no-repeat;
+  background-position: center;
+  box-sizing: border-box;
+}
+
+.zlx-pdp-desc__bullets li strong {
+  color: var(--zlx-navy);
+  font-weight: 600;
+}
+
+.zlx-pdp-desc__divider {
+  position: relative;
+  width: 90px;
+  height: 1px;
+  margin: 22px auto 18px;
+  background: linear-gradient(90deg, transparent, var(--zlx-gold), transparent);
+}
+
+.zlx-pdp-desc__divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  background: var(--zlx-gold);
+  transform: translate(-50%, -50%) rotate(45deg);
+  box-shadow: 0 0 0 3px rgba(var(--zlx-gold-rgb), 0.18);
+}
+
+.zlx-pdp-desc__footer {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--zlx-cream-text-soft);
+  text-align: center;
+  margin: 0;
+}
+
+.zlx-pdp-desc__footer strong {
+  color: var(--zlx-navy);
+  font-weight: 600;
+}
+
+.zlx-pdp-desc__footer a {
+  color: var(--zlx-gold-dark);
+  text-decoration: underline;
+  text-decoration-color: rgba(var(--zlx-gold-rgb), 0.55);
+  text-underline-offset: 3px;
+  font-weight: 500;
+}
+
+.zlx-pdp-desc__footer a:hover {
+  color: var(--zlx-navy);
+  text-decoration-color: var(--zlx-gold);
+}
+
+/* Mobile */
+@media (max-width: 559px) {
+  .zlx-pdp-desc {
+    padding: 22px 20px;
+  }
+  .zlx-pdp-desc__eyebrow {
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    padding-left: 28px;
+  }
+  .zlx-pdp-desc__intro {
+    font-size: 14.5px;
+  }
+  .zlx-pdp-desc__bullets li {
+    font-size: 14px;
+  }
+  .zlx-pdp-desc__footer {
+    font-size: 12.5px;
+  }
+}
+
+/* ============================================================================
+   PDP — Galerie produit layout luxe (thumbnails verticales à gauche desktop)
+   Style "Aesop / Bottega" : grande image principale + colonne de miniatures
+   à gauche sur desktop, swipe horizontal sous l'image sur mobile.
+   S'applique uniquement à la PDP, pas à featured-product home.
+   ============================================================================ */
+
+/* === IMAGE PRINCIPALE — slider horizontal sur TOUS les viewports ===
+   Override Craft natif qui masque les items inactifs sur >= 750px
+   (sinon impossible de scroller, et autoplay JS ne marche pas). */
+.product:not(.featured-product) .product__media-wrapper .product__media-list {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scroll-snap-type: x mandatory !important;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  gap: 0;
+  scrollbar-width: none;
+}
+.product:not(.featured-product) .product__media-wrapper .product__media-list::-webkit-scrollbar {
+  display: none;
+}
+
+.product:not(.featured-product) .product__media-wrapper .product__media-list > .product__media-item,
+.product:not(.featured-product) .product__media-wrapper .product__media-list .product__media-item:not(.is-active) {
+  display: block !important;
+  flex: 0 0 100% !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  scroll-snap-align: start !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* === LAYOUT 2 COLONNES FORCÉ desktop (≥ 990px) ===
+   Override fort : photo gauche 45% + zone d'achat droite 55% en flex côte-à-côte.
+   Bypass tout conflit éventuel avec d'autres CSS ou sticky behaviors. */
+@media (min-width: 990px) {
+  .product:not(.featured-product) {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: flex-start !important;
+    gap: var(--grid-desktop-horizontal-spacing, 32px) !important;
+  }
+  .product:not(.featured-product) > .product__media-wrapper {
+    flex: 0 0 45% !important;
+    max-width: 45% !important;
+    width: 45% !important;
+    margin: 0 !important;
+  }
+  .product:not(.featured-product) > .product__info-wrapper {
+    flex: 0 0 calc(55% - var(--grid-desktop-horizontal-spacing, 32px)) !important;
+    max-width: calc(55% - var(--grid-desktop-horizontal-spacing, 32px)) !important;
+    width: calc(55% - var(--grid-desktop-horizontal-spacing, 32px)) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+/* ============================================================================
+   FEATURED PRODUCT (home) — lien "Afficher tous les détails" transformé
+   en bouton outline or premium visible (au lieu d'un petit lien gris perdu)
+   ============================================================================ */
+.featured-product .product__view-details {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  padding: 12px 24px;
+  border: 1px solid rgba(var(--zlx-gold-rgb), 0.65);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--zlx-gold);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.25s ease, border-color 0.25s ease, gap 0.25s ease, color 0.25s ease;
+}
+.featured-product.color-scheme-1 .product__view-details,
+.featured-product.color-scheme-2 .product__view-details {
+  color: var(--zlx-gold-dark);
+  border-color: rgba(var(--zlx-gold-rgb), 0.55);
+}
+.featured-product .product__view-details:hover {
+  background: rgba(var(--zlx-gold-rgb), 0.10);
+  border-color: var(--zlx-gold);
+  gap: 14px;
+}
+.featured-product .product__view-details svg,
+.featured-product .product__view-details .icon-arrow {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.25s ease;
+}
+.featured-product .product__view-details:hover svg,
+.featured-product .product__view-details:hover .icon-arrow {
+  transform: translateX(3px);
+}
+
+/* Override : si le texte par défaut "Afficher tous les détails" reste, on le remplace */
+.featured-product .product__view-details .icon-arrow + svg,
+.featured-product .product__view-details > svg + * {
+  /* visual hint only */
+}
+
+/* ============================================================================
+   PDP CTA enhancements — pulse, feedback ajouté, sticky mobile, garantie line
+   Travaille avec assets/zympro-cta-enhance.js
+   ============================================================================ */
+
+/* Séparateur · doré dans le bouton ATC (prix injecté) */
+.product:not(.featured-product) .product-form__submit .zlx-atc-sep,
+.product:not(.featured-product) [name="add"] .zlx-atc-sep {
+  display: inline-block;
+  margin: 0 8px;
+  color: var(--zlx-navy);
+  opacity: 0.55;
+  font-weight: 400;
+}
+
+/* État "Ajouté ✓" — bouton temporairement navy avec check or */
+.product:not(.featured-product) .product-form__submit.zlx-atc--added,
+.product:not(.featured-product) [name="add"].zlx-atc--added {
+  background: linear-gradient(135deg, var(--zlx-navy-soft) 0%, var(--zlx-navy) 100%) !important;
+  color: var(--zlx-gold) !important;
+  box-shadow: 0 10px 26px rgba(13, 22, 38, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.product:not(.featured-product) .product-form__submit.zlx-atc--added .zlx-atc-check,
+.product:not(.featured-product) [name="add"].zlx-atc--added .zlx-atc-check {
+  display: inline-block;
+  margin-right: 6px;
+  color: var(--zlx-gold);
+  font-weight: 700;
+  animation: zlxCheckPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes zlxCheckPop {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.4); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Pulse doré 2× au reveal — anneau or qui s'estompe */
+.product:not(.featured-product) .product-form__submit.zlx-atc--pulse,
+.product:not(.featured-product) [name="add"].zlx-atc--pulse {
+  position: relative;
+  animation: zlxAtcPulse 1.3s ease-out 2;
+}
+@keyframes zlxAtcPulse {
+  0%   { box-shadow: 0 8px 22px rgba(var(--zlx-gold-rgb), 0.32), 0 0 0 0 rgba(var(--zlx-gold-rgb), 0.55); }
+  70%  { box-shadow: 0 8px 22px rgba(var(--zlx-gold-rgb), 0.32), 0 0 0 16px rgba(var(--zlx-gold-rgb), 0); }
+  100% { box-shadow: 0 8px 22px rgba(var(--zlx-gold-rgb), 0.32), 0 0 0 0 rgba(var(--zlx-gold-rgb), 0); }
+}
+
+
+
+/* Bouton ATC mobile XL */
+@media (max-width: 749px) {
+  .product:not(.featured-product) .product-form__submit,
+  .product:not(.featured-product) [name="add"] {
+    min-height: 58px !important;
+    font-size: 16.5px !important;
+    letter-spacing: 0.04em !important;
+    padding: 18px 22px !important;
+  }
+}
+
+/* ============================================================================
+   STICKY ATC MOBILE BAR
+   Apparaît en bas de l'écran quand le bouton ATC original sort du viewport
+   ============================================================================ */
+.zlx-sticky-atc {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9989;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: saturate(180%) blur(10px);
+  -webkit-backdrop-filter: saturate(180%) blur(10px);
+  border-top: 1px solid rgba(var(--zlx-gold-rgb), 0.45);
+  box-shadow: 0 -8px 24px rgba(13, 22, 38, 0.12);
+  transform: translateY(110%);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0));
+  display: none;
+}
+
+@media (max-width: 749px) {
+  .zlx-sticky-atc {
+    display: block;
+  }
+}
+
+.zlx-sticky-atc--visible {
+  transform: translateY(0);
+}
+
+.zlx-sticky-atc__inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.zlx-sticky-atc__img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--zlx-cream-border);
+  flex-shrink: 0;
+  background: var(--zlx-cream-2);
+}
+
+.zlx-sticky-atc__meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.zlx-sticky-atc__title {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--zlx-navy);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+
+.zlx-sticky-atc__price {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--zlx-navy);
+  letter-spacing: -0.01em;
+}
+
+.zlx-sticky-atc__btn {
+  flex-shrink: 0;
+  padding: 14px 22px;
+  background: linear-gradient(135deg, var(--zlx-gold-light) 0%, var(--zlx-gold) 55%, var(--zlx-gold-dark) 100%);
+  color: var(--zlx-navy);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 0;
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(var(--zlx-gold-rgb), 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  white-space: nowrap;
+}
+
+.zlx-sticky-atc__btn:active {
+  transform: scale(0.97);
+  filter: brightness(0.95);
+}
+
+/* Évite que la bulle FAQ flottante soit cachée par la sticky bar */
+@media (max-width: 749px) {
+  .zlx-sticky-atc--visible ~ .zympro-faq,
+  body:has(.zlx-sticky-atc--visible) .zympro-faq {
+    bottom: 80px !important;
+    transition: bottom 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+/* ============================================================================
+   CART DRAWER — habillage premium Zymlux (luxe cocon)
+   Override du style Craft natif : header serif, bouton checkout or gradient,
+   bordures or fines, fond cream/navy selon scheme paramétré.
+   ============================================================================ */
+cart-drawer.drawer {
+  box-shadow: -20px 0 40px rgba(13, 22, 38, 0.18);
+}
+
+cart-drawer .drawer__inner {
+  border-left: 1px solid rgba(var(--zlx-gold-rgb), 0.25);
+}
+
+/* Header drawer — h2 navy serif + filet doré au-dessus */
+cart-drawer .drawer__header {
+  position: relative;
+  padding: 28px 28px 22px;
+  border-bottom: 1px solid var(--zlx-cream-border);
+}
+cart-drawer .drawer__header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 24%;
+  right: 24%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--zlx-gold) 50%, transparent);
+}
+cart-drawer .drawer__heading {
+  font-family: var(--font-heading-family, inherit);
+  color: var(--zlx-navy);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  margin: 0;
+  font-size: 1.6rem;
+  text-transform: uppercase;
+}
+cart-drawer .drawer__close {
+  color: var(--zlx-navy);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+cart-drawer .drawer__close:hover {
+  color: var(--zlx-gold);
+  transform: rotate(90deg);
+}
+
+/* Items panier */
+cart-drawer .cart-items {
+  border: none;
+}
+cart-drawer .cart-item {
+  border-bottom: 1px solid var(--zlx-cream-border);
+  padding: 18px 0;
+}
+cart-drawer .cart-item:last-child {
+  border-bottom: none;
+}
+cart-drawer .cart-item__name {
+  color: var(--zlx-navy);
+  font-weight: 600;
+  font-size: 14.5px;
+  letter-spacing: 0;
+}
+cart-drawer .cart-item__media .cart-item__image {
+  border-radius: 10px;
+  border: 1px solid var(--zlx-cream-border);
+}
+cart-drawer .product-option,
+cart-drawer .cart-item__details > * {
+  color: var(--zlx-cream-text-soft);
+  font-size: 13px;
+}
+cart-drawer .price__sale .price-item--regular,
+cart-drawer .price-item--regular {
+  color: var(--zlx-cream-text-soft);
+  opacity: 0.7;
+  text-decoration: line-through;
+  font-size: 12.5px;
+}
+cart-drawer .price-item--sale,
+cart-drawer .price-item--last {
+  color: var(--zlx-navy);
+  font-weight: 600;
+  font-size: 14.5px;
+}
+
+/* Quantité — pills bordure or */
+cart-drawer .cart-item__quantity .quantity {
+  border: 1px solid rgba(var(--zlx-gold-rgb), 0.4);
+  border-radius: 999px;
+}
+cart-drawer .quantity__button {
+  color: var(--zlx-navy);
+}
+cart-drawer .quantity__button:hover {
+  color: var(--zlx-gold);
+}
+
+/* Footer drawer — total + checkout */
+cart-drawer .drawer__footer {
+  background: var(--zlx-cream-2);
+  border-top: 1px solid var(--zlx-cream-border);
+  padding: 22px 28px 26px;
+}
+cart-drawer .totals {
+  margin-bottom: 16px;
+}
+cart-drawer .totals__total,
+cart-drawer .totals__subtotal {
+  color: var(--zlx-navy);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 13px;
+}
+cart-drawer .totals__total-value,
+cart-drawer .totals__subtotal-value {
+  color: var(--zlx-navy);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+}
+
+/* Bouton checkout principal — or gradient signature */
+cart-drawer #CartDrawer-Checkout,
+cart-drawer button[name="checkout"],
+cart-drawer .cart__checkout-button {
+  background: linear-gradient(135deg, var(--zlx-gold-light) 0%, var(--zlx-gold) 55%, var(--zlx-gold-dark) 100%) !important;
+  color: var(--zlx-navy) !important;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border-radius: 12px;
+  border: 0;
+  padding: 18px 28px;
+  font-size: 15px;
+  text-transform: uppercase;
+  box-shadow: 0 8px 22px rgba(var(--zlx-gold-rgb), 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+cart-drawer #CartDrawer-Checkout::before,
+cart-drawer #CartDrawer-Checkout::after,
+cart-drawer button[name="checkout"]::before,
+cart-drawer button[name="checkout"]::after {
+  display: none !important;
+}
+cart-drawer #CartDrawer-Checkout:hover,
+cart-drawer button[name="checkout"]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(var(--zlx-gold-rgb), 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  filter: brightness(1.04);
+}
+
+
+
+/* Empty state */
+cart-drawer .cart__empty-text {
+  color: var(--zlx-navy);
+  font-family: var(--font-heading-family, inherit);
+  font-weight: 500;
+}
+cart-drawer .drawer__inner-empty .button {
+  background: linear-gradient(135deg, var(--zlx-gold-light) 0%, var(--zlx-gold) 55%, var(--zlx-gold-dark) 100%) !important;
+  color: var(--zlx-navy) !important;
+  font-weight: 700;
+  border-radius: 12px;
+  border: 0;
+  letter-spacing: 0.04em;
+}
+cart-drawer .drawer__inner-empty .button::before,
+cart-drawer .drawer__inner-empty .button::after {
+  display: none !important;
+}
+
+/* === DESKTOP (>= 990px) — thumbnails verticales latérales === */
+@media (min-width: 990px) {
+  .product:not(.featured-product) .product__media-wrapper media-gallery {
+    display: grid;
+    grid-template-columns: 88px 1fr;
+    grid-template-rows: auto;
+    gap: 16px;
+    align-items: start;
+    position: relative;
+  }
+
+  /* Thumbnails (col 1) — passe à GAUCHE en colonne verticale */
+  .product:not(.featured-product) .product__media-wrapper media-gallery > slider-component[id^="GalleryThumbnails-"] {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    max-height: 560px;
+    width: 88px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .product:not(.featured-product) .product__media-wrapper .thumbnail-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    max-height: 560px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-snap-type: y mandatory;
+    padding: 4px 0;
+    margin: 0;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--zlx-gold-rgb), 0.35) transparent;
+  }
+
+  .product:not(.featured-product) .product__media-wrapper .thumbnail-list::-webkit-scrollbar {
+    width: 3px;
+  }
+  .product:not(.featured-product) .product__media-wrapper .thumbnail-list::-webkit-scrollbar-thumb {
+    background: rgba(var(--zlx-gold-rgb), 0.35);
+    border-radius: 999px;
+  }
+
+  .product:not(.featured-product) .product__media-wrapper .thumbnail-list__item {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: 88px !important;
+    scroll-snap-align: start;
+  }
+
+  .product:not(.featured-product) .product__media-wrapper .thumbnail {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+    border: 1px solid var(--zlx-cream-border);
+    overflow: hidden;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .product:not(.featured-product) .product__media-wrapper .thumbnail-list__item button[aria-current="true"] .thumbnail,
+  .product:not(.featured-product) .product__media-wrapper .thumbnail-list__item.is-active .thumbnail,
+  .product:not(.featured-product) .product__media-wrapper .thumbnail:hover {
+    border-color: var(--zlx-gold);
+    box-shadow: 0 0 0 2px rgba(var(--zlx-gold-rgb), 0.15);
+  }
+
+  /* Cache les boutons prev/next thumbnails sur desktop (scroll naturel) */
+  .product:not(.featured-product) .product__media-wrapper slider-component[id^="GalleryThumbnails-"] > .slider-button {
+    display: none !important;
+  }
+
+  /* Image principale (col 2) — large à droite */
+  .product:not(.featured-product) .product__media-wrapper media-gallery > slider-component[id^="GalleryViewer-"] {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .product:not(.featured-product) .product__media-wrapper .product__media-list {
+    width: 100%;
+  }
+}
+
+/* === MOBILE & TABLET (< 990px) — layout natif (image + thumbnails dessous) === */
+@media (max-width: 989px) {
+  .product:not(.featured-product) .product__media-wrapper media-gallery {
+    display: block;
+  }
+
+  .product:not(.featured-product) .product__media-wrapper .thumbnail-list {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    padding: 8px 0 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .product:not(.featured-product) .product__media-wrapper .thumbnail-list__item {
+    flex: 0 0 64px;
+    scroll-snap-align: start;
+  }
+
+  .product:not(.featured-product) .product__media-wrapper .thumbnail {
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    border: 1px solid var(--zlx-cream-border);
+    overflow: hidden;
+  }
+
+  .product:not(.featured-product) .product__media-wrapper .thumbnail-list__item button[aria-current="true"] .thumbnail {
+    border-color: var(--zlx-gold);
+    box-shadow: 0 0 0 2px rgba(var(--zlx-gold-rgb), 0.20);
+  }
+}
+
+/* Indicateur dots mobile (en plus des thumbnails) — sur slider image principale */
+.product:not(.featured-product) .product__media-wrapper .slider-counter {
+  background: rgba(13, 22, 38, 0.85);
+  color: var(--zlx-navy-text);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(var(--zlx-gold-rgb), 0.45);
+}
+
+.product:not(.featured-product) .product__media-wrapper .slider-buttons {
+  gap: 14px;
+  margin-top: 12px;
+}
+
+/* Boutons prev/next image principale — style or premium */
+.product:not(.featured-product) .product__media-wrapper .slider-button {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(var(--zlx-gold-rgb), 0.55);
+  color: var(--zlx-navy);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.product:not(.featured-product) .product__media-wrapper .slider-button:hover {
+  background: rgba(var(--zlx-gold-rgb), 0.12);
+  border-color: var(--zlx-gold);
+}
+.product:not(.featured-product) .product__media-wrapper .slider-button svg {
+  color: var(--zlx-navy);
+}
+
+
+/* ============================================================================
+   HOME — "Le rituel bien-être Zymlux" : cartes PHOTO plein cadre, texte fondu
+   dans l'image (overlay dégradé navy), rectangle à coins très arrondis.
+   Ciblé sur la section how_it_works via son ID DOM stable. Spécificité montée
+   à (0,4,x) pour surcharger .multicolumn.color-scheme-6 .multicolumn-card.
+   ============================================================================ */
+[id$="__how_it_works"] .multicolumn.color-scheme-6 .multicolumn-card {
+  position: relative;
+  overflow: hidden;
+  border: none;
+  border-radius: 26px;
+  padding: 0;
+  min-height: clamp(360px, 32vw, 460px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: var(--zlx-navy);
+  box-shadow: var(--zlx-shadow-card);
+  isolation: isolate;
+}
+[id$="__how_it_works"] .multicolumn.color-scheme-6 .multicolumn-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Image en fond, plein cadre */
+[id$="__how_it_works"] .multicolumn.color-scheme-6 .multicolumn-card__image-wrapper {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  border-radius: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+[id$="__how_it_works"] .multicolumn.color-scheme-6 .multicolumn-card__image-wrapper .media {
+  width: 100%;
+  height: 100%;
+  padding-bottom: 0 !important;
+}
+[id$="__how_it_works"] .multicolumn.color-scheme-6 .multicolumn-card__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[id$="__how_it_works"] .multicolumn.color-scheme-6 .multicolumn-card:hover .multicolumn-card__image {
+  transform: scale(1.05);
+}
+
+/* Dégradé pour fondre le texte dans la photo */
+[id$="__how_it_works"] .multicolumn.color-scheme-6 .multicolumn-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(13, 22, 38, 0) 28%,
+    rgba(13, 22, 38, 0.45) 58%,
+    rgba(13, 22, 38, 0.9) 100%
+  );
+}
+
+/* Texte par-dessus, ancré en bas */
+[id$="__how_it_works"] .multicolumn.color-scheme-6 .multicolumn-card__info {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: clamp(22px, 2.6vw, 36px);
+  text-align: center;
+}
+[id$="__how_it_works"] .multicolumn.color-scheme-6 .multicolumn-card__info h3 {
+  color: #fff;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.35);
+}
+[id$="__how_it_works"] .multicolumn.color-scheme-6 .multicolumn-card__info .rte {
+  color: rgba(255, 255, 255, 0.92);
+}
+[id$="__how_it_works"] .multicolumn.color-scheme-6 .multicolumn-card__info .rte strong {
+  color: var(--zlx-gold);
+}
+
+@media (max-width: 749px) {
+  [id$="__how_it_works"] .multicolumn.color-scheme-6 .multicolumn-card {
+    min-height: 300px;
+    border-radius: 22px;
+  }
+}
+
+/* ============================================================================
+   HOME — Vitrines produit (featured-product) : traitement éditorial luxe.
+   Photo = écrin arrondi + filet or + ombre ; titre sérif + filet or ;
+   prix agrandi ; sous-titre raffiné. Ciblé sur .featured-product (home only).
+   ============================================================================ */
+
+/* — Photo en écrin encadré — */
+.featured-product .product__media,
+.featured-product .product__media > .media {
+  border-radius: 20px;
+  overflow: hidden;
+}
+.featured-product .product__media {
+  border: 1px solid rgba(var(--zlx-gold-rgb), 0.32);
+  background: var(--zlx-cream-2);
+  box-shadow: 0 26px 60px rgba(13, 22, 38, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.featured-product.color-scheme-6 .product__media {
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.4);
+}
+.featured-product .product__media:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 32px 72px rgba(13, 22, 38, 0.26);
+}
+.featured-product .product__media img {
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.featured-product .product__media:hover img {
+  transform: scale(1.04);
+}
+
+/* — Titre sérif + filet or — */
+.featured-product .product__title h1,
+.featured-product .product__title h2 {
+  font-family: "Trirong", "Times New Roman", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(1.7rem, 2.7vw, 2.45rem);
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+}
+.featured-product .product__title::before {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 2px;
+  margin: 0 0 16px;
+  background: linear-gradient(90deg, var(--zlx-gold), transparent);
+}
+
+/* — Prix mis en avant — */
+.featured-product .price {
+  margin-top: 4px;
+}
+.featured-product .price .price-item {
+  font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.featured-product .price .price-item--regular {
+  opacity: 0.7;
+}
+.featured-product .price--on-sale .price-item--sale {
+  color: var(--zlx-gold-dark);
+}
+.featured-product.color-scheme-6 .price--on-sale .price-item--sale {
+  color: var(--zlx-gold-light);
+}
+
+/* — Sous-titre / ligne descriptive raffinée — */
+.featured-product .product__text {
+  font-size: 1.04rem;
+  line-height: 1.7;
+  margin-top: 6px;
+  max-width: 46ch;
+}
+
+/* — Sélecteur d'offre : pastilles un peu plus généreuses — */
+.featured-product .product-form__buttons {
+  margin-top: 6px;
+}
+
+@media (max-width: 749px) {
+  .featured-product .product__media,
+  .featured-product .product__media > .media {
+    border-radius: 16px;
+  }
+  .featured-product .product__title::before {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ============================================================================
+   HOME — Vitrines produit : mini-carrousel swipe (.zlx-vitrine)
+   Photos en cover (plus de "vide" autour), écrin or, points de navigation.
+   + alignement vertical centré pour supprimer le grand vide desktop.
+   ============================================================================ */
+.featured-product .product {
+  align-items: center;
+  column-gap: clamp(28px, 4vw, 64px);
+}
+.featured-product .product__info-container {
+  max-width: 540px;
+}
+
+.zlx-vitrine {
+  position: relative;
+  /* Taille responsive : grand sur PC (lisible), adapté sur mobile.
+     Monter/baisser la borne max (560px) pour agrandir/réduire sur desktop. */
+  width: 100%;
+  max-width: clamp(340px, 42vw, 560px);
+  margin-inline: auto;
+}
+.zlx-vitrine__track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  border-radius: 20px;
+  border: 1px solid rgba(var(--zlx-gold-rgb), 0.32);
+  box-shadow: 0 26px 60px rgba(13, 22, 38, 0.2);
+  background: var(--zlx-cream-2);
+}
+.featured-product.color-scheme-6 .zlx-vitrine__track {
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.4);
+  background: var(--zlx-navy-soft);
+}
+.zlx-vitrine__track::-webkit-scrollbar {
+  display: none;
+}
+.zlx-vitrine__slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  aspect-ratio: 3 / 4;
+}
+.zlx-vitrine__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.zlx-vitrine__dots {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 16px;
+}
+/* Mobile : espace garanti sous les points pour ne pas chevaucher le titre */
+@media (max-width: 749px) {
+  .zlx-vitrine__dots {
+    margin-bottom: 28px;
+  }
+}
+.zlx-vitrine__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  background: rgba(var(--zlx-gold-rgb), 0.3);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.zlx-vitrine__dot.is-active {
+  background: var(--zlx-gold);
+  transform: scale(1.3);
+}
+
+/* Vitrine Purificateur (scheme-6) — photo 3 : ancrer le cadrage en haut
+   pour garder le logo (haut de la photo) visible. */
+.featured-product.color-scheme-6 .zlx-vitrine__slide:nth-child(3) .zlx-vitrine__img {
+  object-position: top center;
+}
+
+/* ============================================================================
+   HOME — Vitrines : badge remise (sur la photo) + liseré "Best-seller"/"Coup
+   de cœur" (au-dessus du titre). Le filet titre est remplacé par le liseré.
+   ============================================================================ */
+.featured-product .product__title::before {
+  display: none;
+}
+
+/* Étiquette encadrée or, compacte, lisible — au-dessus du titre */
+.zlx-vitrine-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 18px;
+  padding: 9px 18px;
+  border: 1.5px solid rgba(var(--zlx-gold-rgb), 0.65);
+  border-radius: var(--zlx-radius-pill);
+  background: rgba(var(--zlx-gold-rgb), 0.1);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--zlx-navy);
+}
+.zlx-vitrine-eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  transform: rotate(45deg);
+  background: var(--zlx-gold);
+  box-shadow: 0 0 0 3px rgba(var(--zlx-gold-rgb), 0.18);
+}
+.featured-product.color-scheme-6 .zlx-vitrine-eyebrow {
+  color: var(--zlx-navy-text);
+  border-color: rgba(var(--zlx-gold-rgb), 0.75);
+  background: rgba(var(--zlx-gold-rgb), 0.14);
+}
+
+/* Badge remise en coin de la photo — agrandi */
+.zlx-vitrine__badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  padding: 11px 18px;
+  border-radius: var(--zlx-radius-pill);
+  background: linear-gradient(135deg, var(--zlx-gold-light) 0%, var(--zlx-gold) 55%, var(--zlx-gold-dark) 100%);
+  color: var(--zlx-navy);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  box-shadow: 0 8px 20px rgba(var(--zlx-gold-rgb), 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}

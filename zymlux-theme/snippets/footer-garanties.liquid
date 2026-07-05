@@ -1,0 +1,72 @@
+{%- comment -%}
+  Trust strip at the top of the footer.
+  Rendered via {% render 'footer-garanties' %} in sections/footer.liquid.
+  Colors: global --zlx-* tokens with inline fallbacks; adapts to the footer scheme.
+{%- endcomment -%}
+<div class="zlx-foot-garanties" role="list" aria-label="Our guarantees">
+  <div class="zlx-foot-garanties__item" role="listitem">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M1 8h13v8H1z"/>
+      <path d="M14 11h4l3 3v2h-7"/>
+      <circle cx="6" cy="18" r="1.6"/>
+      <circle cx="17" cy="18" r="1.6"/>
+    </svg>
+    <span>Free U.S. shipping</span>
+  </div>
+  <span class="zlx-foot-garanties__sep" aria-hidden="true"></span>
+  <div class="zlx-foot-garanties__item" role="listitem">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/>
+      <path d="M9 12l2 2 4-4"/>
+    </svg>
+    <span>Secure checkout</span>
+  </div>
+  <span class="zlx-foot-garanties__sep" aria-hidden="true"></span>
+  <div class="zlx-foot-garanties__item" role="listitem">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+    </svg>
+    <span>60-night trial</span>
+  </div>
+</div>
+
+<style>
+  .zlx-foot-garanties {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 14px 22px;
+    padding: 20px 24px;
+    margin: 0 auto;
+    border-bottom: 1px solid rgba(var(--zlx-gold-rgb, 212, 175, 106), 0.30);
+  }
+  .zlx-foot-garanties__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .zlx-foot-garanties__item svg {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    fill: none;
+    stroke: var(--zlx-gold, #d4af6a);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .zlx-foot-garanties__sep {
+    width: 1px;
+    height: 18px;
+    background: rgba(var(--zlx-gold-rgb, 212, 175, 106), 0.40);
+  }
+  @media (max-width: 600px) {
+    .zlx-foot-garanties { gap: 10px 16px; padding: 16px 18px; }
+    .zlx-foot-garanties__item { font-size: 12px; }
+    .zlx-foot-garanties__sep { display: none; }
+  }
+</style>
