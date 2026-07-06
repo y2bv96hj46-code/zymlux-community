@@ -353,45 +353,48 @@
       }
 
       /* Zymlux — mobile menu drawer: deep-green panel, gold accents,
-         eased slide-in and staggered link reveal */
+         eased slide-in and staggered link reveal.
+         !important throughout: the theme's component CSS loads after this
+         block and was overriding the panel background, leaving cream text
+         on a cream panel (invisible links). Forcing BOTH background and
+         text colors guarantees a readable pairing. */
+      .menu-drawer,
+      .menu-drawer__inner-container,
+      .menu-drawer__navigation-container,
+      .menu-drawer__navigation,
+      .menu-drawer__submenu {
+        background: #1F2723 !important;
+      }
       .menu-drawer {
-        background: #1F2723;
         transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1),
                     visibility 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
       }
-      .menu-drawer__inner-container,
-      .menu-drawer__navigation-container,
-      .menu-drawer__navigation {
-        background: transparent;
-      }
-      .menu-drawer__menu-item {
-        color: #F4EFE7;
-      }
-      .menu-drawer__menu-item:hover,
-      .menu-drawer summary.menu-drawer__menu-item:hover {
-        color: #C2A06A;
-        background: rgba(194, 160, 106, 0.06);
-      }
+      .menu-drawer__menu-item,
       .menu-drawer summary.menu-drawer__menu-item,
       .menu-drawer__close-button,
       .menu-drawer__account,
       .menu-drawer .link {
-        color: #F4EFE7;
+        color: #F4EFE7 !important;
+      }
+      .menu-drawer__menu-item:hover,
+      .menu-drawer summary.menu-drawer__menu-item:hover {
+        color: #C2A06A !important;
+        background: rgba(194, 160, 106, 0.06) !important;
       }
       .menu-drawer .svg-wrapper,
       .menu-drawer .icon-arrow,
       .menu-drawer .icon-caret {
-        color: #C2A06A;
+        color: #C2A06A !important;
       }
       .menu-drawer__menu > li {
         border-bottom: 1px solid rgba(194, 160, 106, 0.14);
       }
       .menu-drawer__utility-links {
-        background: #181F1B;
+        background: #181F1B !important;
         border-top: 1px solid rgba(194, 160, 106, 0.22);
       }
       .menu-drawer .list-social__link {
-        color: #C2A06A;
+        color: #C2A06A !important;
       }
       /* Staggered link reveal — transition-based failsafe: the hidden state
          only exists while the drawer is CLOSED, so links can never be stuck
