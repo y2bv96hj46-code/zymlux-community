@@ -332,6 +332,26 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+
+    <style>
+      /* Zymlux — touch feedback for the mobile menu drawer (mirrors the desktop
+         gold hover, which has no equivalent on touch screens) */
+      .menu-drawer__menu-item,
+      .menu-drawer__navigation .list-menu__item {
+        transition: color 0.25s ease, background-color 0.25s ease, padding-left 0.25s ease;
+      }
+      .menu-drawer__menu-item:active,
+      .menu-drawer__navigation .list-menu__item:active {
+        color: #C2A06A !important;
+        background-color: rgba(194, 160, 106, 0.08);
+        padding-left: 2.2rem;
+      }
+      @media (hover: none) {
+        .menu-drawer__menu-item {
+          -webkit-tap-highlight-color: rgba(194, 160, 106, 0.15);
+        }
+      }
+    </style>
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
