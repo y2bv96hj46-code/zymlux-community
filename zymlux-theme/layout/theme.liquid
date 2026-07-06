@@ -393,23 +393,31 @@
       .menu-drawer .list-social__link {
         color: #C2A06A;
       }
-      @keyframes zxMenuItemIn {
-        from { opacity: 0; transform: translateX(-16px); }
-        to   { opacity: 1; transform: none; }
+      /* Staggered link reveal — transition-based failsafe: the hidden state
+         only exists while the drawer is CLOSED, so links can never be stuck
+         invisible. Worst case (selector mismatch): no animation, links shown. */
+      .menu-drawer__menu > li {
+        transition: opacity 0.4s cubic-bezier(0.22, 0.61, 0.36, 1),
+                    transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
       }
-      .js details[open].menu-opening .menu-drawer__menu > li {
-        animation: zxMenuItemIn 0.45s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+      .js details:not([open]) > .menu-drawer .menu-drawer__menu > li {
+        opacity: 0;
+        transform: translateX(-16px);
+        transition: none;
       }
-      .js details[open].menu-opening .menu-drawer__menu > li:nth-child(1) { animation-delay: 0.10s; }
-      .js details[open].menu-opening .menu-drawer__menu > li:nth-child(2) { animation-delay: 0.16s; }
-      .js details[open].menu-opening .menu-drawer__menu > li:nth-child(3) { animation-delay: 0.22s; }
-      .js details[open].menu-opening .menu-drawer__menu > li:nth-child(4) { animation-delay: 0.28s; }
-      .js details[open].menu-opening .menu-drawer__menu > li:nth-child(5) { animation-delay: 0.34s; }
-      .js details[open].menu-opening .menu-drawer__menu > li:nth-child(6) { animation-delay: 0.40s; }
-      .js details[open].menu-opening .menu-drawer__menu > li:nth-child(7) { animation-delay: 0.46s; }
-      .js details[open].menu-opening .menu-drawer__menu > li:nth-child(8) { animation-delay: 0.52s; }
+      .js details[open] > .menu-drawer .menu-drawer__menu > li:nth-child(1) { transition-delay: 0.08s; }
+      .js details[open] > .menu-drawer .menu-drawer__menu > li:nth-child(2) { transition-delay: 0.15s; }
+      .js details[open] > .menu-drawer .menu-drawer__menu > li:nth-child(3) { transition-delay: 0.22s; }
+      .js details[open] > .menu-drawer .menu-drawer__menu > li:nth-child(4) { transition-delay: 0.29s; }
+      .js details[open] > .menu-drawer .menu-drawer__menu > li:nth-child(5) { transition-delay: 0.36s; }
+      .js details[open] > .menu-drawer .menu-drawer__menu > li:nth-child(6) { transition-delay: 0.43s; }
+      .js details[open] > .menu-drawer .menu-drawer__menu > li:nth-child(7) { transition-delay: 0.50s; }
+      .js details[open] > .menu-drawer .menu-drawer__menu > li:nth-child(8) { transition-delay: 0.57s; }
       @media (prefers-reduced-motion: reduce) {
-        .js details[open].menu-opening .menu-drawer__menu > li { animation: none; }
+        .js details:not([open]) > .menu-drawer .menu-drawer__menu > li {
+          opacity: 1;
+          transform: none;
+        }
       }
     </style>
   </head>
