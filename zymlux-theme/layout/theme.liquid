@@ -351,6 +351,66 @@
           -webkit-tap-highlight-color: rgba(194, 160, 106, 0.15);
         }
       }
+
+      /* Zymlux — mobile menu drawer: deep-green panel, gold accents,
+         eased slide-in and staggered link reveal */
+      .menu-drawer {
+        background: #1F2723;
+        transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1),
+                    visibility 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+      }
+      .menu-drawer__inner-container,
+      .menu-drawer__navigation-container,
+      .menu-drawer__navigation {
+        background: transparent;
+      }
+      .menu-drawer__menu-item {
+        color: #F4EFE7;
+      }
+      .menu-drawer__menu-item:hover,
+      .menu-drawer summary.menu-drawer__menu-item:hover {
+        color: #C2A06A;
+        background: rgba(194, 160, 106, 0.06);
+      }
+      .menu-drawer summary.menu-drawer__menu-item,
+      .menu-drawer__close-button,
+      .menu-drawer__account,
+      .menu-drawer .link {
+        color: #F4EFE7;
+      }
+      .menu-drawer .svg-wrapper,
+      .menu-drawer .icon-arrow,
+      .menu-drawer .icon-caret {
+        color: #C2A06A;
+      }
+      .menu-drawer__menu > li {
+        border-bottom: 1px solid rgba(194, 160, 106, 0.14);
+      }
+      .menu-drawer__utility-links {
+        background: #181F1B;
+        border-top: 1px solid rgba(194, 160, 106, 0.22);
+      }
+      .menu-drawer .list-social__link {
+        color: #C2A06A;
+      }
+      @keyframes zxMenuItemIn {
+        from { opacity: 0; transform: translateX(-16px); }
+        to   { opacity: 1; transform: none; }
+      }
+      .js details[open].menu-opening .menu-drawer__menu > li {
+        animation: zxMenuItemIn 0.45s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+      }
+      .js details[open].menu-opening .menu-drawer__menu > li:nth-child(1) { animation-delay: 0.10s; }
+      .js details[open].menu-opening .menu-drawer__menu > li:nth-child(2) { animation-delay: 0.16s; }
+      .js details[open].menu-opening .menu-drawer__menu > li:nth-child(3) { animation-delay: 0.22s; }
+      .js details[open].menu-opening .menu-drawer__menu > li:nth-child(4) { animation-delay: 0.28s; }
+      .js details[open].menu-opening .menu-drawer__menu > li:nth-child(5) { animation-delay: 0.34s; }
+      .js details[open].menu-opening .menu-drawer__menu > li:nth-child(6) { animation-delay: 0.40s; }
+      .js details[open].menu-opening .menu-drawer__menu > li:nth-child(7) { animation-delay: 0.46s; }
+      .js details[open].menu-opening .menu-drawer__menu > li:nth-child(8) { animation-delay: 0.52s; }
+      @media (prefers-reduced-motion: reduce) {
+        .js details[open].menu-opening .menu-drawer__menu > li { animation: none; }
+      }
     </style>
   </head>
 
