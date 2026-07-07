@@ -85,12 +85,19 @@
           "settings": {
             "custom_liquid": "<style>\n#zx-pbar{position:fixed;left:0;right:0;bottom:0;z-index:45;background:rgba(244,239,231,.96);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid rgba(43,52,46,.14);transform:translateY(105%);transition:transform .4s cubic-bezier(.2,.7,.2,1)}\n#zx-pbar.show{transform:none}\n#zx-pbar .in{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px clamp(16px,4vw,32px) calc(11px + env(safe-area-inset-bottom))}\n#zx-pbar .nm{font-family:'Fraunces',Georgia,serif;font-size:1.02rem;color:#36423C}\n#zx-pbar .pr{font:500 .9rem/1 'Inter',sans-serif;color:#5A645E;margin-left:10px}\n#zx-pbar button{display:inline-flex;align-items:center;background:#1F2723;color:#FBF3E8;border:0;border-radius:2px;cursor:pointer;font:500 .8rem/1 'Inter',sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:15px 26px;white-space:nowrap;transition:background .3s}\n#zx-pbar button:hover{background:#0E1310}\n#zx-pbar .lt{display:flex;align-items:baseline;flex-wrap:wrap;min-width:0}\n@media(max-width:520px){#zx-pbar .nm{display:none}}\n</style>\n<div id=\"zx-pbar\" aria-hidden=\"true\">\n  <div class=\"in\">\n    <div class=\"lt\"><span class=\"nm\">Serenity Acupressure Set</span><span class=\"pr\" id=\"zx-pbar-price\">$49.99</span></div>\n    <button type=\"button\" id=\"zx-pbar-btn\">Add to cart</button>\n  </div>\n</div>\n<script>\n(function(){\n  var SID='{{ section.id }}';\n  var bar=document.getElementById('zx-pbar');if(!bar)return;\n  function form(){return document.getElementById('product-form-'+SID)||document.querySelector('form[action*=\"/cart/add\"]');}\n  var f=form();if(!f)return;\n  document.getElementById('zx-pbar-btn').addEventListener('click',function(){\n    if(window.zxApplyQty)window.zxApplyQty();\n    var ff=form();var s=ff&&ff.querySelector('.product-form__submit');\n    if(s){s.click();}else if(ff&&ff.requestSubmit){ff.requestSubmit();}\n  });\n  if('IntersectionObserver' in window){\n    var io=new IntersectionObserver(function(es){es.forEach(function(e){\n      var show=!e.isIntersecting&&e.boundingClientRect.top<0;\n      bar.classList.toggle('show',show);\n      bar.setAttribute('aria-hidden',show?'false':'true');\n    });},{threshold:0});\n    io.observe(f);\n  }\n})();\n</script>"
           }
+        },
+        "trust_chips": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<style>\n.zxchips{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 10px}\n.zxchips span{display:inline-flex;align-items:center;gap:6px;font:600 11.5px/1 'Inter',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#4A554F;background:#FFFFFF;border:1px solid rgba(43,52,46,.16);border-radius:999px;padding:8px 12px}\n.zxchips svg{width:13px;height:13px;flex:none;fill:none;stroke:#7D6130;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}\n</style>\n<div class=\"zxchips\" aria-label=\"Guarantees\">\n<span><svg viewBox=\"0 0 24 24\"><path d=\"M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z\"/></svg>60-night trial</span>\n<span><svg viewBox=\"0 0 24 24\"><path d=\"M1 8h13v8H1z\"/><path d=\"M14 11h4l3 3v2h-7\"/><circle cx=\"6\" cy=\"18\" r=\"1.6\"/><circle cx=\"17\" cy=\"18\" r=\"1.6\"/></svg>Free U.S. shipping</span>\n<span><svg viewBox=\"0 0 24 24\"><path d=\"M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z\"/><path d=\"M9 12l2 2 4-4\"/></svg>Secure checkout</span>\n</div>"
+          }
         }
       },
       "block_order": [
         "zx_style",
         "hero_badges",
         "title",
+        "trust_chips",
         "zx_rating",
         "zx_benefits",
         "price",

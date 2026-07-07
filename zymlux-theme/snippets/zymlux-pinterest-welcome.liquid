@@ -1,0 +1,51 @@
+{%- comment -%}
+  Welcome bar for visitors arriving from Pinterest (utm_source=Pinterest or
+  pinterest referrer). Auto-applies the WELCOME10 discount via the
+  /discount/ endpoint, then shows a dismissible cream-on-ink banner.
+  Rendered from layout/theme.liquid.
+{%- endcomment -%}
+<script>
+(function () {
+  try {
+    var qs = window.location.search.toLowerCase();
+    var ref = (document.referrer || '').toLowerCase();
+    var fromPinterest = qs.indexOf('utm_source=pinterest') > -1 || ref.indexOf('pinterest.') > -1;
+    if (!fromPinterest) return;
+    if (sessionStorage.getItem('zxPinBarClosed') === '1') return;
+
+    /* apply the discount silently so checkout already has it */
+    if (sessionStorage.getItem('zxPinDiscount') !== '1') {
+      fetch('/discount/WELCOME10', { credentials: 'same-origin' })
+        .then(function () { sessionStorage.setItem('zxPinDiscount', '1'); })
+        .catch(function () {});
+    }
+
+    var bar = document.createElement('div');
+    bar.id = 'zx-pinbar';
+    bar.innerHTML =
+      '<div class="zx-pinbar__inner">' +
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>' +
+      '<span>Welcome from Pinterest — <b>10% off</b> is applied at checkout with code <b>WELCOME10</b></span>' +
+      '<button type="button" aria-label="Close">&times;</button>' +
+      '</div>';
+    var style = document.createElement('style');
+    style.textContent =
+      '#zx-pinbar{background:#1F2723;color:#F4EFE7;font:500 13px/1.4 "Inter",-apple-system,sans-serif;position:relative;z-index:60;}' +
+      '#zx-pinbar .zx-pinbar__inner{max-width:1200px;margin:0 auto;padding:9px 14px;display:flex;align-items:center;justify-content:center;gap:10px;text-align:center;}' +
+      '#zx-pinbar svg{width:15px;height:15px;flex:none;fill:none;stroke:#C2A06A;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}' +
+      '#zx-pinbar b{color:#E3CBA0;font-weight:700;}' +
+      '#zx-pinbar button{background:none;border:0;color:#F4EFE7;font-size:20px;line-height:1;cursor:pointer;padding:0 4px;flex:none;opacity:.7;}' +
+      '#zx-pinbar button:hover{opacity:1;}';
+    document.head.appendChild(style);
+
+    function mount() {
+      document.body.insertBefore(bar, document.body.firstChild);
+      bar.querySelector('button').addEventListener('click', function () {
+        bar.remove();
+        sessionStorage.setItem('zxPinBarClosed', '1');
+      });
+    }
+    if (document.body) { mount(); } else { document.addEventListener('DOMContentLoaded', mount); }
+  } catch (e) { /* never break the page for a banner */ }
+})();
+</script>
