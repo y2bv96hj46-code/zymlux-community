@@ -35,3 +35,15 @@
 </div>
 {%- endif -%}
 {%- endif -%}
+
+{%- comment -%} Trust row — always visible in the drawer footer {%- endcomment -%}
+<div class="zx-cart-trust" role="list" aria-label="Guarantees">
+  <span role="listitem"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>60-night trial</span>
+  <span role="listitem"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 8h13v8H1z"/><path d="M14 11h4l3 3v2h-7"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>Free U.S. shipping</span>
+  <span role="listitem"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>Secure checkout</span>
+</div>
+<style>
+.zx-cart-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:7px 14px;margin:10px 0 2px;padding-top:10px;border-top:1px solid rgba(43,52,46,.10)}
+.zx-cart-trust span{display:inline-flex;align-items:center;gap:5px;font:600 10.5px/1 'Inter',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#6B746E}
+.zx-cart-trust svg{width:12px;height:12px;flex:none;fill:none;stroke:#7D6130;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+</style>
