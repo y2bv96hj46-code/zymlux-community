@@ -389,6 +389,57 @@
       .menu-drawer__menu > li {
         border-bottom: 1px solid rgba(194, 160, 106, 0.14);
       }
+
+      /* Editorial upgrade: serif links, gold numbering, brand header
+         and a closing tagline — pure CSS, degrades harmlessly */
+      .menu-drawer__navigation::before {
+        content: 'Z Y M L U X';
+        display: block;
+        text-align: center;
+        font-family: var(--font-body-family, sans-serif);
+        font-size: 1.15rem;
+        letter-spacing: 0.38em;
+        color: #C2A06A;
+        padding: 2.6rem 0 1.1rem;
+        border-bottom: 1px solid rgba(194, 160, 106, 0.22);
+        margin: 0 3rem 1rem;
+      }
+      .menu-drawer__menu {
+        counter-reset: zxmenu;
+      }
+      .menu-drawer__menu > li {
+        counter-increment: zxmenu;
+      }
+      .menu-drawer__menu > li > .menu-drawer__menu-item {
+        font-family: var(--font-heading-family, Georgia, serif);
+        font-size: 2.6rem;
+        line-height: 1.15;
+        display: flex;
+        align-items: baseline;
+        gap: 1.5rem;
+        padding-top: 1.9rem;
+        padding-bottom: 1.9rem;
+      }
+      .menu-drawer__menu > li > .menu-drawer__menu-item::before {
+        content: counter(zxmenu, decimal-leading-zero);
+        font-family: var(--font-body-family, sans-serif);
+        font-size: 1.1rem;
+        letter-spacing: 0.16em;
+        color: #C2A06A;
+        opacity: 0.85;
+        flex: none;
+      }
+      .menu-drawer__utility-links::before {
+        content: 'The last hour of your day deserves a ritual.';
+        display: block;
+        font-family: var(--font-heading-family, Georgia, serif);
+        font-style: italic;
+        font-size: 1.5rem;
+        line-height: 1.4;
+        color: #C2A06A;
+        padding: 0 0 1.4rem;
+        opacity: 0.9;
+      }
       .menu-drawer__utility-links {
         background: #181F1B !important;
         border-top: 1px solid rgba(194, 160, 106, 0.22);
