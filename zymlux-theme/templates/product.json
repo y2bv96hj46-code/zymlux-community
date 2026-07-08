@@ -155,12 +155,42 @@
         "padding_top": 0,
         "padding_bottom": 0
       }
+    },
+    "zx_value": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<style>\n#zxmath{background:#1F2723;padding:clamp(3.5rem,7vw,6rem) clamp(1.4rem,4vw,4rem);font-family:'Inter',sans-serif;text-align:center}\n#zxmath .eb{font:500 11.5px/1 'Inter',sans-serif;text-transform:uppercase;letter-spacing:.3em;color:#C2A06A;margin:0 0 14px}\n#zxmath h2{font-family:'Fraunces',Georgia,serif;font-weight:300;letter-spacing:-.02em;color:#F4EFE7;font-size:clamp(26px,4vw,40px);margin:0}\n#zxmath .row{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:940px;margin:clamp(2.2rem,5vw,3.4rem) auto 0}\n#zxmath .c{padding:26px 14px;border:1px solid rgba(244,239,231,.14);border-radius:14px}\n#zxmath .c.hl{background:#F4EFE7;border-color:#F4EFE7}\n#zxmath .n{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(30px,4.6vw,46px);color:#F4EFE7;line-height:1}\n#zxmath .c.hl .n{color:#1F2723}\n#zxmath .t{margin:12px auto 0;max-width:24ch;font-size:13px;line-height:1.6;color:rgba(244,239,231,.75)}\n#zxmath .c.hl .t{color:#4A554F}\n#zxmath .c.hl .tag{display:inline-block;margin:0 0 12px;background:#1F2723;color:#E3CBA0;font:700 10px/1 'Inter',sans-serif;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;border-radius:999px}\n#zxmath .ft{margin:26px 0 0;font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:300;font-size:16px;color:#C2A06A}\n@media(max-width:680px){#zxmath .row{grid-template-columns:1fr}}\n</style>\n<div id=\"zxmath\">\n<p class=\"eb\">Do the math</p>\n<h2>What does unwinding cost you?</h2>\n<div class=\"row\">\n<div class=\"c\"><p class=\"n\">$100</p><p class=\"t\">One deep-tissue massage. Sixty minutes, one appointment, gone by Friday.</p></div>\n<div class=\"c\"><p class=\"n\">$400<span style=\"font-size:.4em\">+</span></p><p class=\"t\">A month of weekly massages &mdash; if you can find the time to book them.</p></div>\n<div class=\"c hl\"><span class=\"tag\">The Serenity Set</span><p class=\"n\">$49.99</p><p class=\"t\">Once. Twenty minutes a night, every night, in your own bedroom &mdash; for years.</p></div>\n</div>\n<p class=\"ft\">Sixty nights to decide &mdash; love it, or your money back.</p>\n</div>",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "zx_madefor": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<style>\n#zxwho{background:#F4EFE7;padding:clamp(3.5rem,7vw,6rem) clamp(1.4rem,4vw,4rem);font-family:'Inter',sans-serif}\n#zxwho .in{max-width:1060px;margin:0 auto}\n#zxwho .hd{text-align:center;margin-bottom:clamp(2rem,5vw,3rem)}\n#zxwho .eb{font:500 11.5px/1 'Inter',sans-serif;text-transform:uppercase;letter-spacing:.3em;color:#7D6130;margin:0 0 14px}\n#zxwho h2{font-family:'Fraunces',Georgia,serif;font-weight:300;letter-spacing:-.02em;color:#36423C;font-size:clamp(26px,4vw,40px);margin:0}\n#zxwho .sub{margin:14px auto 0;max-width:46ch;font-size:14.5px;color:#5A645E;text-align:center}\n#zxwho .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}\n#zxwho .card{background:#FBF9F4;border:1px solid rgba(43,52,46,.12);border-radius:14px;padding:28px 26px}\n#zxwho .num{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:300;font-size:15px;color:#9E4F2E;margin:0 0 10px}\n#zxwho h3{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:20px;color:#36423C;margin:0 0 10px}\n#zxwho p.tx{margin:0;font-size:13.5px;line-height:1.7;color:#4A554F}\n@media(max-width:680px){#zxwho .grid{grid-template-columns:1fr}}\n</style>\n<div id=\"zxwho\"><div class=\"in\">\n<div class=\"hd\">\n<p class=\"eb\">Who it&rsquo;s for</p>\n<h2>Made for the ones who carry too much.</h2>\n<p class=\"sub\">Body or mind &mdash; this is where you put it down.</p>\n</div>\n<div class=\"grid\">\n<div class=\"card\"><p class=\"num\">01</p><h3>The desk marathon</h3><p class=\"tx\">Eight hours over a keyboard, shoulders creeping toward your ears. Twenty minutes on the mat undoes what the chair did &mdash; lying down, doing nothing.</p></div>\n<div class=\"card\"><p class=\"num\">02</p><h3>The mind that won&rsquo;t clock out</h3><p class=\"tx\">The to-do list follows you to bed. The prickle-then-warmth of 6,000 points gives your attention one simple thing to feel &mdash; and the spiral quietly runs out of fuel.</p></div>\n<div class=\"card\"><p class=\"num\">03</p><h3>On your feet all day</h3><p class=\"tx\">Teachers, nurses, moms &mdash; the ones everyone else leans on. This is the evening version of finally putting the weight down.</p></div>\n<div class=\"card\"><p class=\"num\">04</p><h3>The 9pm collapse</h3><p class=\"tx\">No energy left for a 90-minute routine? Good &mdash; this isn&rsquo;t one. Lie down, breathe, get up lighter. That&rsquo;s the whole ritual.</p></div>\n</div>\n</div></div>",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "zx_compare": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<style>\n#zxcmp{background:#FBF9F4;padding:clamp(3.5rem,7vw,6rem) clamp(1.4rem,4vw,4rem);font-family:'Inter',sans-serif}\n#zxcmp .in{max-width:820px;margin:0 auto}\n#zxcmp .hd{text-align:center;margin-bottom:clamp(2rem,5vw,3rem)}\n#zxcmp .eb{font:500 11.5px/1 'Inter',sans-serif;text-transform:uppercase;letter-spacing:.3em;color:#7D6130;margin:0 0 14px}\n#zxcmp h2{font-family:'Fraunces',Georgia,serif;font-weight:300;letter-spacing:-.02em;color:#36423C;font-size:clamp(26px,4vw,40px);margin:0}\n#zxcmp table{width:100%;border-collapse:collapse}\n#zxcmp th{font:600 11px/1.3 'Inter',sans-serif;letter-spacing:.14em;text-transform:uppercase;padding:0 10px 14px;text-align:center}\n#zxcmp th:first-child{text-align:left;color:#8a938d}\n#zxcmp th.z{color:#36423C}\n#zxcmp th.o{color:#8a938d;font-weight:500}\n#zxcmp td{border-top:1px solid rgba(43,52,46,.12);padding:15px 10px;font-size:13.5px;line-height:1.5;color:#4A554F}\n#zxcmp td+td{text-align:center;width:120px}\n#zxcmp .y svg{width:16px;height:16px;fill:none;stroke:#9E4F2E;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}\n#zxcmp .n2{color:#b9c0ba;font-size:15px}\n#zxcmp .zc{background:#F4EFE7}\n#zxcmp .fn{margin:18px 2px 0;font-size:11px;color:#8a938d;text-align:center}\n@media(max-width:560px){#zxcmp td+td{width:76px}#zxcmp td{font-size:12.5px;padding:13px 6px}}\n</style>\n<div id=\"zxcmp\"><div class=\"in\">\n<div class=\"hd\">\n<p class=\"eb\">Compare</p>\n<h2>Why this set &mdash; not just any mat.</h2>\n</div>\n<table>\n<thead><tr><th></th><th class=\"z zc\">Serenity Set</th><th class=\"o\">Basic mat</th></tr></thead>\n<tbody>\n<tr><td>Cylindrical neck pillow for cervical release</td><td class=\"y zc\"><svg viewBox=\"0 0 24 24\"><path d=\"M20 6L9 17l-5-5\"/></svg></td><td class=\"n2\">&mdash;</td></tr>\n<tr><td>6,000+ lotus-shaped acupressure points</td><td class=\"y zc\"><svg viewBox=\"0 0 24 24\"><path d=\"M20 6L9 17l-5-5\"/></svg></td><td class=\"n2\">varies</td></tr>\n<tr><td>Removable, washable linen-look cover</td><td class=\"y zc\"><svg viewBox=\"0 0 24 24\"><path d=\"M20 6L9 17l-5-5\"/></svg></td><td class=\"n2\">&mdash;</td></tr>\n<tr><td>Carry bag for travel &amp; storage</td><td class=\"y zc\"><svg viewBox=\"0 0 24 24\"><path d=\"M20 6L9 17l-5-5\"/></svg></td><td class=\"n2\">&mdash;</td></tr>\n<tr><td>60-night sleep-on-it trial</td><td class=\"y zc\"><svg viewBox=\"0 0 24 24\"><path d=\"M20 6L9 17l-5-5\"/></svg></td><td class=\"n2\">rarely</td></tr>\n<tr><td>Free tracked U.S. shipping &amp; human support</td><td class=\"y zc\"><svg viewBox=\"0 0 24 24\"><path d=\"M20 6L9 17l-5-5\"/></svg></td><td class=\"n2\">varies</td></tr>\n</tbody>\n</table>\n<p class=\"fn\">Compared with typical entry-level acupressure mats sold online.</p>\n</div></div>",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
     }
   },
   "order": [
     "main",
-    "reviews",
     "sensation",
+    "zx_madefor",
+    "zx_compare",
+    "zx_value",
+    "reviews",
     "story",
     "final_cta"
   ]
