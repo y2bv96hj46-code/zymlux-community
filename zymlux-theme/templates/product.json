@@ -173,12 +173,22 @@
         "padding_top": 0,
         "padding_bottom": 0
       }
+    },
+    "zx_lifestyle": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<style>\n#zxlife{background:#FBF9F4;padding:clamp(3.5rem,7vw,6rem) clamp(1.2rem,4vw,3rem);font-family:'Inter',sans-serif}\n#zxlife .hd{text-align:center;margin-bottom:clamp(2rem,4vw,3rem)}\n#zxlife .eb{font:500 11px/1 'Inter',sans-serif;text-transform:uppercase;letter-spacing:.3em;color:#7D6130;margin:0 0 14px}\n#zxlife h2{font-family:'Fraunces',Georgia,serif;font-weight:300;letter-spacing:-.02em;color:#36423C;font-size:clamp(25px,4vw,38px);margin:0}\n#zxlife h2 em{font-style:italic;color:#C0683F}\n#zxlife .sub{margin:14px auto 0;max-width:44ch;font-size:14px;color:#5A645E}\n#zxlife .g{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.8rem,1.6vw,1.3rem)}\n#zxlife figure{position:relative;margin:0;overflow:hidden;border-radius:3px}\n#zxlife .pw{position:relative;aspect-ratio:3/4;overflow:hidden;background:#EBE3D5}\n#zxlife img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}\n#zxlife figure:hover img{transform:scale(1.06)}\n#zxlife figcaption{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:26px 20px 18px;color:#F4EFE7;background:linear-gradient(transparent,rgba(14,16,13,.72));font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:1.25rem;line-height:1.2}\n#zxlife figcaption span{display:block;font:500 .6rem/1 'Inter',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#E3CBA0;margin-bottom:8px}\n@media(max-width:760px){#zxlife .g{grid-template-columns:1fr;max-width:420px}}\n</style>\n<section id=\"zxlife\">\n<div class=\"hd\"><p class=\"eb\">The Quiet Hour, at home</p><h2>A ritual that looks like <em>yours</em></h2><p class=\"sub\">On the bed, on the floor, by candlelight &mdash; wherever the day finally lets go.</p></div>\n<div class=\"g\">\n<figure><div class=\"pw\"><img src=\"https://cdn.shopify.com/s/files/1/1012/8821/4857/files/home-g-bed.jpg?v=1783627297\" alt=\"The Serenity acupressure set laid out on a bed\" loading=\"lazy\" width=\"900\" height=\"1200\"></div><figcaption><span>Bedside</span>Before the light goes out</figcaption></figure>\n<figure><div class=\"pw\"><img src=\"https://cdn.shopify.com/s/files/1/1012/8821/4857/files/home-g-floor.jpg?v=1783627296\" alt=\"The Serenity set on a cozy living room floor by candlelight\" loading=\"lazy\" width=\"900\" height=\"1200\"></div><figcaption><span>Living room</span>Twenty minutes to yourself</figcaption></figure>\n<figure><div class=\"pw\"><img src=\"https://cdn.shopify.com/s/files/1/1012/8821/4857/files/home-g-rug.jpg?v=1783627296\" alt=\"The Serenity mat unrolled on a warm patterned rug\" loading=\"lazy\" width=\"900\" height=\"1200\"></div><figcaption><span>Anywhere calm</span>Right where you rest</figcaption></figure>\n</div>\n</section>",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
     }
   },
   "order": [
     "main",
     "reviews",
     "sensation",
+    "zx_lifestyle",
     "zx_madefor",
     "zx_value",
     "story",
