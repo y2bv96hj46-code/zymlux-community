@@ -283,6 +283,18 @@ body.zx-lock{overflow:hidden}
   #zx .hero-bg,#zx .pimg{transform:none!important}
   #zx .marq .track{animation:none!important}
 }
+
+/* lookbook */
+#zx .look{background:var(--paper)}
+#zx .look-grid{max-width:var(--wide);margin:clamp(2.5rem,5vw,4rem) auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1rem,2vw,1.6rem)}
+#zx .look-fig{position:relative;overflow:hidden}
+#zx .look-fig .pwrap2{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--cream2)}
+#zx .look-fig img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.5s cubic-bezier(.2,.7,.2,1)}
+#zx .look-fig:hover img{transform:scale(1.06)}
+#zx .look-fig figcaption{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:30px 24px 22px;color:var(--cream);
+  background:linear-gradient(transparent,rgba(14,16,13,.74));font-family:var(--serif);font-weight:300;font-size:1.4rem;line-height:1.2}
+#zx .look-fig figcaption span{display:block;font:500 .62rem/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--gold-2);margin-bottom:10px}
+@media(max-width:820px){#zx .look-grid{grid-template-columns:1fr;max-width:440px}}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -409,7 +421,7 @@ body.zx-lock{overflow:hidden}
 
   <!-- CINEMATIC -->
   <section class="cine">
-    <img class="pimg" data-px="70" src="{{ img }}blackgold-hero.png?v=1782855518" alt="The Serenity acupressure mat and pillow set in a calm candlelit bedroom" width="704" height="1339" loading="lazy" decoding="async">
+    <img class="pimg" data-px="70" src="{{ img }}home-cine-candle.jpg?v=1783627296" alt="Candlelight and warm tea beside the Serenity acupressure set at night" width="1600" height="1040" loading="lazy" decoding="async">
     <div class="bc reveal">
       <span class="eyebrow center">Made for the last hour of the day</span>
       <h2>Trade the late-night scroll for stillness</h2>
@@ -426,6 +438,16 @@ body.zx-lock{overflow:hidden}
       <h2>Texture your skin actually wants.</h2>
       <p class="lead">A soft, breathable cover over a dense, supportive core &#8212; shaped to feel calming, never punishing.</p>
       <p class="body">Thousands of lotus-shaped contact points, evenly spaced for steady pressure. A contoured neck pillow and carry bag, included &#8212; built to live by your bed for years.</p>
+    </div>
+  </section>
+
+  <!-- LOOKBOOK -->
+  <section class="sec look">
+    <div class="section-head reveal"><span class="eyebrow center">The Quiet Hour, at home</span><h2>A ritual that looks like <span class="em">yours</span></h2><p class="lead">On the bed, on the floor, by candlelight &#8212; wherever the day finally lets go.</p></div>
+    <div class="look-grid">
+      <figure class="look-fig reveal"><div class="pwrap2"><img src="{{ img }}home-g-bed.jpg?v=1783627297" alt="The Serenity acupressure set laid out on a bed" width="900" height="1200" loading="lazy" decoding="async"></div><figcaption><span>Bedside</span>Before the light goes out</figcaption></figure>
+      <figure class="look-fig reveal d1"><div class="pwrap2"><img src="{{ img }}home-g-floor.jpg?v=1783627296" alt="The Serenity set on a cozy living room floor by candlelight" width="900" height="1200" loading="lazy" decoding="async"></div><figcaption><span>Living room</span>Twenty minutes to yourself</figcaption></figure>
+      <figure class="look-fig reveal d2"><div class="pwrap2"><img src="{{ img }}home-g-rug.jpg?v=1783627296" alt="The Serenity mat unrolled on a warm patterned rug" width="900" height="1200" loading="lazy" decoding="async"></div><figcaption><span>Anywhere calm</span>Right where you rest</figcaption></figure>
     </div>
   </section>
 
