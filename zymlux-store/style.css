@@ -192,6 +192,47 @@ footer ul{list-style:none;display:grid;gap:11px}footer ul a{font-size:.92rem;col
 .pagehead{padding:70px 0 10px;text-align:center}
 .pagehead h1{font-size:clamp(2.2rem,4.4vw,3.2rem);font-weight:300}
 .pagehead p{max-width:56ch;margin:18px auto 0}
+/* button polish */
+.btn{box-shadow:0 10px 22px -12px rgba(184,92,52,.6)}
+.btn.ghost,.btn.gold{box-shadow:none}
+/* comparison */
+.compare table{width:100%;border-collapse:collapse;margin-top:44px;background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.compare th,.compare td{padding:18px 18px;text-align:center;border-bottom:1px solid var(--line-2);font-size:.98rem}
+.compare thead th{font:600 .74rem/1.3 var(--sans);text-transform:uppercase;letter-spacing:.1em;color:var(--soft);background:var(--paper)}
+.compare thead th.us{color:var(--ink);background:var(--sand)}
+.compare tbody th{text-align:left;font-weight:600;color:var(--ink2);font-family:var(--sans)}
+.compare td.us{background:color-mix(in srgb,var(--gold) 12%,transparent);font-weight:600;color:var(--on-ground)}
+.compare .yes{color:var(--clay);font-weight:700}.compare .no{color:var(--soft)}
+.compare tr:last-child th,.compare tr:last-child td{border-bottom:0}
+/* sticky buy bar */
+.stickybar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:color-mix(in srgb,var(--ground) 96%,transparent);backdrop-filter:blur(12px);border-top:1px solid var(--line);transform:translateY(120%);transition:transform .35s ease;padding:12px 0}
+.stickybar.show{transform:none}
+.stickybar .in{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:16px}
+.stickybar .nm{font:600 .92rem/1.2 var(--sans);color:var(--on-ground);flex:1;min-width:0}
+.stickybar .nm span{display:block;font-weight:500;color:var(--soft);font-size:.8rem}
+.stickybar .pp{font-family:var(--serif);font-size:1.2rem;color:var(--on-ground);white-space:nowrap}
+.stickybar .pp s{color:var(--soft);font-size:.85rem;margin-left:6px}
+.stickybar .btn{padding:14px 26px}
+/* cart drawer */
+.overlay{position:fixed;inset:0;background:rgba(14,17,13,.5);opacity:0;visibility:hidden;transition:.3s;z-index:60}
+.overlay.open{opacity:1;visibility:visible}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(400px,92vw);background:var(--ground);z-index:61;transform:translateX(100%);transition:transform .38s cubic-bezier(.4,0,.1,1);display:flex;flex-direction:column;box-shadow:-20px 0 50px -20px rgba(14,17,13,.4)}
+.drawer.open{transform:none}
+.drawer .dh{display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1px solid var(--line)}
+.drawer .dh h3{font-size:1.2rem}.drawer .x{background:none;border:0;font-size:1.5rem;color:var(--muted);cursor:pointer;line-height:1}
+.drawer .body{padding:24px;flex:1;overflow:auto}
+.ditem{display:grid;grid-template-columns:74px 1fr;gap:14px;align-items:center}
+.ditem .im{aspect-ratio:1;background:var(--sand);border-radius:6px;overflow:hidden;border:1px solid var(--line-2)}
+.ditem .im img{width:100%;height:100%;object-fit:cover}
+.ditem b{color:var(--on-ground);font:600 .95rem/1.3 var(--sans)}
+.ditem .mt{color:var(--soft);font-size:.82rem;margin-top:3px}
+.ditem .pr{color:var(--on-ground);font-family:var(--serif);margin-top:6px}
+.dperk{margin-top:22px;padding:16px;background:var(--paper);border:1px dashed var(--gold);border-radius:6px;font-size:.86rem;color:var(--ink2)}
+.dperk b{color:var(--clay)}
+.drawer .df{padding:22px 24px;border-top:1px solid var(--line)}
+.drawer .tot{display:flex;justify-content:space-between;font:600 1rem/1 var(--sans);color:var(--on-ground);margin-bottom:6px}
+.drawer .ship{font-size:.82rem;color:var(--soft);margin-bottom:16px}
+.drawer .pay2{display:flex;gap:8px;justify-content:center;margin-top:12px;font:500 .74rem/1 var(--sans);color:var(--soft);align-items:center}
 .rv{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s}.rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}.dots i,.quiet img,.marq .track{animation:none}}
 @media(max-width:900px){
