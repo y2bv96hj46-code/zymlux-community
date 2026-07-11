@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://y2bv96hj46-code.github.io/zymlux-community/zymlux-store/sitemap.xml
