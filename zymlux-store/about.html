@@ -76,5 +76,18 @@ document.querySelectorAll('[data-add]').forEach(function(b){b.addEventListener('
 // sticky buy bar
 var sb=document.getElementById('stickybar'),anchor=document.querySelector('.pinfo .buy');
 if(sb&&anchor){var so=new IntersectionObserver(function(es){es.forEach(function(x){sb.classList.toggle('show',!x.isIntersecting&&x.boundingClientRect.top<0);});},{threshold:0});so.observe(anchor);}
+var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+// animated counters
+document.querySelectorAll('[data-count]').forEach(function(el){
+ var end=+el.getAttribute('data-count'),suf=el.getAttribute('data-suffix')||'';
+ if(reduce){el.textContent=end.toLocaleString('en-US')+suf;return;}
+ var co=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){
+   var t0=null,dur=1500;function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1),v=Math.floor((1-Math.pow(1-p,3))*end);
+     el.textContent=v.toLocaleString('en-US')+suf;if(p<1)requestAnimationFrame(step);}
+   requestAnimationFrame(step);co.unobserve(el);}});},{threshold:.6});co.observe(el);});
+// hero parallax
+var hm=document.querySelector('.hero-media img');
+if(hm&&!reduce){var tick=false;window.addEventListener('scroll',function(){if(tick)return;tick=true;
+ requestAnimationFrame(function(){var y=window.scrollY;if(y<900)hm.style.transform='translateY('+(y*0.08)+'px) scale(1.12)';tick=false;});},{passive:true});hm.style.transform='scale(1.12)';}
 })();
 </script></body></html>

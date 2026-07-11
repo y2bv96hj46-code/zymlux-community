@@ -11,7 +11,7 @@
 <meta name="twitter:description" content="Browse the Zymlux collection of drug-free calm and recovery rituals — starting with the Serenity acupressure set. Sleep masks, heat and home scents coming soon."><meta name="twitter:image" content="https://y2bv96hj46-code.github.io/zymlux-community/zymlux-store/assets/og.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231C231F'/%3E%3Ccircle cx='16' cy='16' r='6' fill='none' stroke='%23C2A06A' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%23C2A06A'/%3E%3C/svg%3E">
 <link rel="preload" as="style" href="style.css"><link rel="stylesheet" href="style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://y2bv96hj46-code.github.io/zymlux-community/zymlux-store/index.html"},{"@type":"ListItem","position":2,"name":"Shop","item":"https://y2bv96hj46-code.github.io/zymlux-community/zymlux-store/shop.html"},{"@type":"ListItem","position":3,"name":"Shop","item":"https://y2bv96hj46-code.github.io/zymlux-community/zymlux-store/shop.html"}]}</script></head><body><div id="promo"><span>Free U.S. shipping over $40 &nbsp;·&nbsp; <b>60-night money-back trial</b> &nbsp;·&nbsp; A gift with every order</span></div><header id="top"><nav class="nav" aria-label="Primary">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Zymlux Collection","itemListElement":[{"@type":"ListItem","position":1,"url":"https://y2bv96hj46-code.github.io/zymlux-community/zymlux-store/product.html","name":"Serenity Acupressure Mat & Neck Pillow Set"}]}</script></head><body><div id="promo"><span>Free U.S. shipping over $40 &nbsp;·&nbsp; <b>60-night money-back trial</b> &nbsp;·&nbsp; A gift with every order</span></div><header id="top"><nav class="nav" aria-label="Primary">
 <div class="links"><a href="shop.html" aria-current="page">Shop</a><a href="product.html">The Set</a><a href="about.html">Our Story</a></div>
 <a class="brand" href="index.html" aria-label="Zymlux home">ZYMLUX</a>
 <div class="right"><a href="about.html">Account</a><a class="cart" href="product.html"><span class="bag"></span> Cart (0)</a>
@@ -73,5 +73,18 @@ document.querySelectorAll('[data-add]').forEach(function(b){b.addEventListener('
 // sticky buy bar
 var sb=document.getElementById('stickybar'),anchor=document.querySelector('.pinfo .buy');
 if(sb&&anchor){var so=new IntersectionObserver(function(es){es.forEach(function(x){sb.classList.toggle('show',!x.isIntersecting&&x.boundingClientRect.top<0);});},{threshold:0});so.observe(anchor);}
+var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+// animated counters
+document.querySelectorAll('[data-count]').forEach(function(el){
+ var end=+el.getAttribute('data-count'),suf=el.getAttribute('data-suffix')||'';
+ if(reduce){el.textContent=end.toLocaleString('en-US')+suf;return;}
+ var co=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){
+   var t0=null,dur=1500;function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1),v=Math.floor((1-Math.pow(1-p,3))*end);
+     el.textContent=v.toLocaleString('en-US')+suf;if(p<1)requestAnimationFrame(step);}
+   requestAnimationFrame(step);co.unobserve(el);}});},{threshold:.6});co.observe(el);});
+// hero parallax
+var hm=document.querySelector('.hero-media img');
+if(hm&&!reduce){var tick=false;window.addEventListener('scroll',function(){if(tick)return;tick=true;
+ requestAnimationFrame(function(){var y=window.scrollY;if(y<900)hm.style.transform='translateY('+(y*0.08)+'px) scale(1.12)';tick=false;});},{passive:true});hm.style.transform='scale(1.12)';}
 })();
 </script></body></html>

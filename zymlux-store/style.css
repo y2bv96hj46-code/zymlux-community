@@ -233,7 +233,42 @@ footer ul{list-style:none;display:grid;gap:11px}footer ul a{font-size:.92rem;col
 .drawer .tot{display:flex;justify-content:space-between;font:600 1rem/1 var(--sans);color:var(--on-ground);margin-bottom:6px}
 .drawer .ship{font-size:.82rem;color:var(--soft);margin-bottom:16px}
 .drawer .pay2{display:flex;gap:8px;justify-content:center;margin-top:12px;font:500 .74rem/1 var(--sans);color:var(--soft);align-items:center}
+/* stat band */
+.stats{background:var(--ink);color:#EFE7D8;padding:64px 0}
+.stats .row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+.stats .n{font-family:var(--serif);font-size:clamp(2.3rem,4.6vw,3.4rem);color:var(--gold-soft);line-height:1;font-weight:300;font-variant-numeric:tabular-nums}
+.stats .l{margin-top:12px;font:600 .70rem/1.4 var(--sans);text-transform:uppercase;letter-spacing:.13em;color:rgba(239,231,216,.62)}
+/* offer box */
+.offerbox{border:1px solid var(--gold);border-radius:12px;padding:24px 26px;background:linear-gradient(180deg,color-mix(in srgb,var(--gold) 9%,transparent),transparent);margin-top:26px}
+.offerbox h3{font:700 .72rem/1 var(--sans);text-transform:uppercase;letter-spacing:.14em;color:var(--clay);margin-bottom:16px}
+.offerbox ul{list-style:none;display:grid;gap:11px}
+.offerbox li{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:baseline;font-size:.98rem;color:var(--ink2)}
+.offerbox li .ck{color:var(--gold);font-weight:700}
+.offerbox li .v{color:var(--soft);font-size:.82rem;white-space:nowrap}
+.offerbox li.free .v{color:var(--clay);font-weight:700}
+.offerbox .tot{display:flex;justify-content:space-between;align-items:baseline;margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);font:600 .86rem/1 var(--sans);color:var(--soft);text-transform:uppercase;letter-spacing:.08em}
+.offerbox .tot b{font-family:var(--serif);font-size:1.6rem;color:var(--on-ground);font-weight:400}
+.offerbox .tot s{color:var(--soft);font-size:.9rem;margin-left:8px;font-family:var(--sans)}
+/* founder */
+.founder{background:var(--paper);border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2)}
+.founder .grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:center}
+.founder .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:40px;text-align:center}
+.founder .av{width:76px;height:76px;border-radius:50%;margin:0 auto 18px;background:radial-gradient(circle at 40% 35%,var(--gold-soft),var(--clay));display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.7rem;color:#fff}
+.founder blockquote{font-family:var(--serif);font-size:clamp(1.35rem,2.4vw,1.9rem);font-weight:300;line-height:1.42;color:var(--on-ground)}
+.founder .sig{margin-top:22px;font:600 .84rem/1.4 var(--sans);color:var(--muted)}.founder .sig span{display:block;font-weight:500;color:var(--soft)}
+/* hover lifts */
+.col,.vcard{transition:transform .35s ease,box-shadow .35s ease}
+.col:hover,.vcard:hover{transform:translateY(-4px)}
+.vcard:hover{box-shadow:0 20px 40px -24px rgba(28,35,31,.3)}
+.gthumbs button{transition:transform .25s,border-color .25s}.gthumbs button:hover{transform:translateY(-2px)}
+/* hero load-in */
+.hero-panel .inner>*{opacity:0;transform:translateY(16px);animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}
+.hero-panel .inner>*:nth-child(1){animation-delay:.05s}.hero-panel .inner>*:nth-child(2){animation-delay:.14s}.hero-panel .inner>*:nth-child(3){animation-delay:.23s}.hero-panel .inner>*:nth-child(4){animation-delay:.32s}.hero-panel .inner>*:nth-child(5){animation-delay:.41s}.hero-panel .inner>*:nth-child(6){animation-delay:.5s}
+@keyframes rise{to{opacity:1;transform:none}}
+.hero-media img{will-change:transform}
+@media(prefers-reduced-motion:reduce){.hero-panel .inner>*{opacity:1;transform:none;animation:none}}
 .rv{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s}.rv.in{opacity:1;transform:none}
+.rv[data-d="1"]{transition-delay:.08s}.rv[data-d="2"]{transition-delay:.16s}.rv[data-d="3"]{transition-delay:.24s}
 @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}.dots i,.quiet img,.marq .track{animation:none}}
 @media(max-width:900px){
  .hero{grid-template-columns:1fr}.hero-media{order:-1;min-height:360px}.hero-media::after{background:linear-gradient(to top,var(--ground),transparent 30%)}

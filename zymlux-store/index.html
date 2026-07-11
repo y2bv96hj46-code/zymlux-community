@@ -25,6 +25,11 @@
 <div class="hero-trust"><span>60-night trial</span><span>Free U.S. shipping</span><span>Drug-free</span></div>
 </div></div><div class="hero-media"><img src="assets/hero.jpg" width="1500" height="1000" alt="Woman relaxing on the Zymlux acupressure mat on a cosy floor at home" fetchpriority="high"></div></section>
 <div class="marq"><div class="track"><span>Drug-free relief</span><span class="d">&#10022;</span><span>6,000 pressure points</span><span class="d">&#10022;</span><span>60-night trial</span><span class="d">&#10022;</span><span>Free U.S. shipping</span><span class="d">&#10022;</span><span>A nightly ritual</span><span class="d">&#10022;</span><span>Drug-free relief</span><span class="d">&#10022;</span><span>6,000 pressure points</span><span class="d">&#10022;</span><span>60-night trial</span><span class="d">&#10022;</span><span>Free U.S. shipping</span><span class="d">&#10022;</span><span>A nightly ritual</span><span class="d">&#10022;</span></div></div>
+<section class="stats"><div class="wrap"><div class="row">
+<div><div class="n" data-count="6000">0</div><div class="l">Lotus pressure points</div></div>
+<div><div class="n" data-count="20" data-suffix=" min">0</div><div class="l">To full-body calm</div></div>
+<div><div class="n" data-count="60" data-suffix="-night">0</div><div class="l">Money-back trial</div></div>
+<div><div class="n" data-count="100" data-suffix="%">0</div><div class="l">Drug-free, always</div></div></div></div></section>
 <section class="empathy"><div class="wrap"><div class="grid"><div class="rv">
 <span class="eyebrow">Made for the overloaded</span><h2>You hold it all together. Who holds you?</h2>
 <p>The mental load. The to-do list that never ends. The shoulders that climb toward your ears by 3pm. You give all day &#8212; and by night your body still won&#8217;t switch off.</p>
@@ -64,6 +69,12 @@
 <div class="p rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg><h3>60-night trial</h3><p>Sleep on it for two months. If it&#8217;s not part of your evenings, send it back for a full refund.</p></div>
 <div class="p rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 10h18M8 15h4"/></svg><h3>Stripe &amp; PayPal checkout</h3><p>Pay how you like, protected end-to-end. Your details are never stored on our servers.</p></div>
 <div class="p rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3v7M12 21v-4M5 7l3 3M19 7l-3 3M4 14h4M16 14h4"/><circle cx="12" cy="13" r="3"/></svg><h3>A gift, every order</h3><p>Each set ships with our free Deep Sleep Ritual guide &#8212; small ways to wind the day down.</p></div></div></div></section>
+<section class="founder"><div class="wrap"><div class="grid">
+<div class="rv card"><div class="av">Z</div><p style="margin:0;color:var(--clay);text-transform:uppercase;letter-spacing:.12em;font-size:.68rem;font-weight:700">Founder-made</p>
+<p style="margin-top:10px;font-family:var(--serif);font-size:1.15rem;color:var(--on-ground)">A one-person brand,<br>built with care.</p></div>
+<div class="rv"><span class="eyebrow">From the founder</span>
+<blockquote>&#8220;I built Zymlux after watching the people I love give everything to everyone &#8212; and keep nothing for themselves. I couldn&#8217;t fix their schedules. But I could make one honest, affordable thing that gives them twenty minutes back.&#8221;</blockquote>
+<p class="sig">&#8212; The founder, Zymlux<span>No fake reviews, no pressure. Just calm that works &#8212; or your money back.</span></p></div></div></div></section>
 <section id="story" class="mission"><div class="wrap"><span class="eyebrow c">Why we exist</span>
 <p class="q">&#8220;To give overloaded people twenty honest minutes to come back to themselves &#8212; at a price that respects them.&#8221;</p>
 <p class="sig">The Zymlux promise<span>No fake urgency. No fake reviews. Just calm that works.</span></p></div></section>
@@ -113,5 +124,18 @@ document.querySelectorAll('[data-add]').forEach(function(b){b.addEventListener('
 // sticky buy bar
 var sb=document.getElementById('stickybar'),anchor=document.querySelector('.pinfo .buy');
 if(sb&&anchor){var so=new IntersectionObserver(function(es){es.forEach(function(x){sb.classList.toggle('show',!x.isIntersecting&&x.boundingClientRect.top<0);});},{threshold:0});so.observe(anchor);}
+var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+// animated counters
+document.querySelectorAll('[data-count]').forEach(function(el){
+ var end=+el.getAttribute('data-count'),suf=el.getAttribute('data-suffix')||'';
+ if(reduce){el.textContent=end.toLocaleString('en-US')+suf;return;}
+ var co=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){
+   var t0=null,dur=1500;function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1),v=Math.floor((1-Math.pow(1-p,3))*end);
+     el.textContent=v.toLocaleString('en-US')+suf;if(p<1)requestAnimationFrame(step);}
+   requestAnimationFrame(step);co.unobserve(el);}});},{threshold:.6});co.observe(el);});
+// hero parallax
+var hm=document.querySelector('.hero-media img');
+if(hm&&!reduce){var tick=false;window.addEventListener('scroll',function(){if(tick)return;tick=true;
+ requestAnimationFrame(function(){var y=window.scrollY;if(y<900)hm.style.transform='translateY('+(y*0.08)+'px) scale(1.12)';tick=false;});},{passive:true});hm.style.transform='scale(1.12)';}
 })();
 </script></body></html>
