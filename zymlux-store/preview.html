@@ -38,13 +38,22 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;color:var(--ink);line-height:1
 @keyframes heroIn{from{opacity:0}to{opacity:1}}
 .hero::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(130% 105% at 50% 34%,transparent 48%,rgba(0,0,0,.36))}
 .hero::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.06;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.hero .hcontent{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:0 32px 8vh;color:#F6F1E8;text-shadow:0 1px 20px rgba(0,0,0,.45)}
-.hero .hcontent .eyebrow{color:rgba(246,241,232,.85)}.hero .hcontent .eyebrow::before{background:rgba(246,241,232,.85)}
-.hero h1{color:#F8F3EA;font-weight:300;font-size:clamp(2.8rem,7vw,5.2rem);margin-top:18px;max-width:16ch}
+.hero .hcontent{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:24vh 32px 7vh;color:#F6F1E8;text-shadow:0 1px 22px rgba(0,0,0,.55);background:linear-gradient(to top,rgba(10,9,7,.78),rgba(10,9,7,.2) 52%,transparent)}
+.hero .hcontent .eyebrow{color:rgba(246,241,232,.9)}.hero .hcontent .eyebrow::before{background:#EAC98E}
+.hero h1{color:#F8F3EA;font-weight:300;font-size:clamp(2.7rem,6.6vw,4.9rem);margin-top:16px;max-width:14ch}
 .hero h1 em{font-style:italic;color:#EAC98E}
-.hero .hrow{margin-top:30px;display:flex;flex-wrap:wrap;align-items:center;gap:18px 26px}
-.hero .price{color:#F6F1E8;font:400 1.1rem/1 var(--serif);opacity:.9}
-.hero .price s{opacity:.6;margin-left:6px}
+.hero .hsub{margin-top:16px;max-width:34ch;font-size:1.04rem;line-height:1.55;color:rgba(246,241,232,.92)}
+.hero .hoffer{margin-top:24px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 16px}
+.hero .price{color:#F8F3EA;font:400 1.5rem/1 var(--serif)}
+.hero .price s{opacity:.55;font-size:.95rem;margin-left:7px}
+.hero .save{font:600 .6rem/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:#1F1608;background:#EAC98E;padding:7px 9px;border-radius:3px}
+.hero .hcta{margin-top:8px;width:100%}
+.hero .htrust{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px 16px;font:500 .64rem/1.4 var(--sans);text-transform:uppercase;letter-spacing:.1em;color:rgba(246,241,232,.82)}
+.hero .htrust span{display:inline-flex;align-items:center;gap:7px}.hero .htrust span::before{content:"";width:4px;height:4px;border-radius:50%;background:#EAC98E}
+.hero .paybadges{margin-top:18px}
+/* real payment badges */
+.paybadges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pb{display:inline-flex;height:26px}.pb svg{height:26px;width:auto;display:block;border-radius:4px}
 .scrollcue{position:absolute;z-index:2;left:50%;bottom:26px;transform:translateX(-50%);color:#F6F1E8;font:500 .6rem/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;text-align:center;animation:bob 2.6s ease-in-out infinite;opacity:.85}
 .scrollcue .a{display:block;margin-top:6px;font-size:1rem}
 @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,7px)}}
@@ -162,14 +171,24 @@ footer ul{list-style:none;display:grid;gap:10px}footer ul a{font-size:.9rem;colo
 
 <div class="hd" id="hd"><button class="menu" aria-label="Menu"><span></span><span></span></button><div class="wm">ZYMLUX</div><button class="cart" id="openc">Cart&nbsp;(0)</button></div>
 
-<a class="hero" href="#offer" aria-label="Discover the ritual">
+<section class="hero">
  <img src="assets/floor.jpg" alt="The Zymlux acupressure ritual at home">
  <div class="hcontent">
-   <span class="eyebrow">The evening ritual</span>
+   <span class="eyebrow">The evening ritual · Drug-free</span>
    <h1>Let the day <em>dissolve</em>.</h1>
-   <div class="hrow"><span class="btn" style="pointer-events:none">Shop the set</span><span class="price">$49.99 <s>$99.99</s></span></div>
+   <p class="hsub">A drug-free acupressure ritual that melts neck &amp; shoulder tension &#8212; and helps you fall asleep, naturally. Twenty minutes, that&#8217;s all.</p>
+   <div class="hoffer"><span class="price">$49.99<s>$99.99</s></span><span class="save">Save 50%</span></div>
+   <button class="btn block hcta" data-add>Shop the set &#8212; $49.99</button>
+   <div class="htrust"><span>60-night trial</span><span>Free U.S. shipping</span><span>Ships in 24h</span></div>
+   <div class="paybadges">
+     <span class="pb" title="Visa"><svg viewBox="0 0 40 27"><rect width="40" height="27" rx="4" fill="#fff" stroke="#E4E0D6"/><text x="20" y="18" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="800" font-style="italic" fill="#1A1F71">VISA</text></svg></span>
+     <span class="pb" title="Mastercard"><svg viewBox="0 0 40 27"><rect width="40" height="27" rx="4" fill="#fff" stroke="#E4E0D6"/><circle cx="16.7" cy="13.5" r="7" fill="#EB001B"/><circle cx="23.3" cy="13.5" r="7" fill="#F79E1B"/><path d="M20 8.5a7 7 0 000 10 7 7 0 000-10z" fill="#FF5F00"/></svg></span>
+     <span class="pb" title="American Express"><svg viewBox="0 0 40 27"><rect width="40" height="27" rx="4" fill="#1F72CD"/><text x="20" y="17" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.6" font-weight="800" letter-spacing=".4" fill="#fff">AMEX</text></svg></span>
+     <span class="pb" title="PayPal"><svg viewBox="0 0 40 27"><rect width="40" height="27" rx="4" fill="#fff" stroke="#E4E0D6"/><text x="20" y="17.6" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="8.6" font-weight="800"><tspan fill="#003087">Pay</tspan><tspan fill="#009CDE">Pal</tspan></text></svg></span>
+     <span class="pb" title="Apple Pay"><svg viewBox="0 0 40 27"><rect width="40" height="27" rx="4" fill="#000"/><path d="M15.7 10.3c-.26.3-.67.53-1.07.5-.05-.42.15-.86.37-1.12.26-.32.7-.55 1.05-.57.05.44-.12.87-.35 1.19zM16.3 11.4c-.6 0-1.09.34-1.35.34-.28 0-.71-.32-1.17-.31-.6.01-1.15.35-1.46.89-.62 1.07-.16 2.66.45 3.53.3.43.65.9 1.11.88.44-.02.6-.28 1.13-.28.53 0 .68.28 1.14.28.47-.01.77-.44 1.06-.87.19-.27.33-.55.41-.84-1.09-.42-1.26-1.96-.18-2.53-.33-.42-.81-.66-1.28-.65z" fill="#fff"/><text x="24" y="17.2" font-family="Arial,Helvetica,sans-serif" font-size="8" font-weight="700" fill="#fff">Pay</text></svg></span>
+   </div>
  </div>
-</a>
+</section>
 
 <div class="trust"><div class="t"><span>Drug-free relief</span><span class="d">&#10022;</span><span>6,000 pressure points</span><span class="d">&#10022;</span><span>60-night trial</span><span class="d">&#10022;</span><span>Free U.S. shipping</span><span class="d">&#10022;</span><span>Drug-free relief</span><span class="d">&#10022;</span><span>6,000 pressure points</span><span class="d">&#10022;</span><span>60-night trial</span><span class="d">&#10022;</span><span>Free U.S. shipping</span><span class="d">&#10022;</span></div></div>
 
@@ -205,7 +224,7 @@ footer ul{list-style:none;display:grid;gap:10px}footer ul a{font-size:.9rem;colo
 <section class="full ir" style="padding:0"><img src="assets/candle.jpg" alt="The quiet hour"><div class="cap"><span class="eyebrow">The quiet hour</span><h2>The day is loud.<br>Your evening isn&#8217;t.</h2></div></section>
 
 <section class="founder"><div class="wrap"><div class="g">
- <div class="card rv"><div class="av">Z</div><p class="lab" style="color:var(--clay)">Founder-made</p><p style="font-family:var(--serif);font-size:1.15rem;margin-top:10px">A one-person brand,<br>built with care.</p></div>
+ <div class="card rv"><span class="eyebrow" style="justify-content:center">Founder-made</span><p style="font-family:var(--serif);font-size:1.6rem;line-height:1.28;margin-top:20px;color:var(--ink)">A one-person brand,<br>built with care.</p><p style="color:var(--muted);margin-top:16px;font-size:.9rem;letter-spacing:.02em">Independent &#183; honest &#183; here for the long run</p></div>
  <div class="rv d1"><span class="eyebrow">From the founder</span>
    <blockquote style="margin-top:22px">&#8220;I built Zymlux after watching the people I love give everything to everyone — and keep nothing for themselves. I couldn&#8217;t fix their schedules. But I could make one honest, affordable thing that gives them twenty minutes back.&#8221;</blockquote>
    <p class="sig">&#8212; The founder, Zymlux<span>No fake reviews, no pressure. Just calm that works — or your money back.</span></p></div>
@@ -253,7 +272,13 @@ footer ul{list-style:none;display:grid;gap:10px}footer ul a{font-size:.9rem;colo
  <div><h4>Help</h4><ul><li><a href="#faq">60-night trial</a></li><li><a href="#faq">Shipping</a></li><li><a href="#">Contact</a></li></ul></div>
  <div><h4>Brand</h4><ul><li><a href="#">Our story</a></li><li><a href="#">Journal</a></li></ul></div>
 </div><div class="fbar"><span>&copy; 2026 Zymlux — made for the quiet hour</span>
- <div class="pays"><span class="pill">VISA</span><span class="pill">MASTERCARD</span><span class="pill">AMEX</span><span class="pill">PayPal</span><span class="pill">Apple&nbsp;Pay</span></div></div></div></footer>
+ <div class="paybadges">
+   <span class="pb" title="Visa"><svg viewBox="0 0 40 27"><rect width="40" height="27" rx="4" fill="#fff" stroke="#E4E0D6"/><text x="20" y="18" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="800" font-style="italic" fill="#1A1F71">VISA</text></svg></span>
+   <span class="pb" title="Mastercard"><svg viewBox="0 0 40 27"><rect width="40" height="27" rx="4" fill="#fff" stroke="#E4E0D6"/><circle cx="16.7" cy="13.5" r="7" fill="#EB001B"/><circle cx="23.3" cy="13.5" r="7" fill="#F79E1B"/><path d="M20 8.5a7 7 0 000 10 7 7 0 000-10z" fill="#FF5F00"/></svg></span>
+   <span class="pb" title="American Express"><svg viewBox="0 0 40 27"><rect width="40" height="27" rx="4" fill="#1F72CD"/><text x="20" y="17" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.6" font-weight="800" letter-spacing=".4" fill="#fff">AMEX</text></svg></span>
+   <span class="pb" title="PayPal"><svg viewBox="0 0 40 27"><rect width="40" height="27" rx="4" fill="#fff" stroke="#E4E0D6"/><text x="20" y="17.6" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="8.6" font-weight="800"><tspan fill="#003087">Pay</tspan><tspan fill="#009CDE">Pal</tspan></text></svg></span>
+   <span class="pb" title="Apple Pay"><svg viewBox="0 0 40 27"><rect width="40" height="27" rx="4" fill="#000"/><path d="M15.7 10.3c-.26.3-.67.53-1.07.5-.05-.42.15-.86.37-1.12.26-.32.7-.55 1.05-.57.05.44-.12.87-.35 1.19zM16.3 11.4c-.6 0-1.09.34-1.35.34-.28 0-.71-.32-1.17-.31-.6.01-1.15.35-1.46.89-.62 1.07-.16 2.66.45 3.53.3.43.65.9 1.11.88.44-.02.6-.28 1.13-.28.53 0 .68.28 1.14.28.47-.01.77-.44 1.06-.87.19-.27.33-.55.41-.84-1.09-.42-1.26-1.96-.18-2.53-.33-.42-.81-.66-1.28-.65z" fill="#fff"/><text x="24" y="17.2" font-family="Arial,Helvetica,sans-serif" font-size="8" font-weight="700" fill="#fff">Pay</text></svg></span>
+ </div></div></div></footer>
 
 <div class="sbar" id="sbar"><div class="in"><div class="nm">Serenity Acupressure Set<span>Charcoal · 60-night trial</span></div><div class="pp">$49.99<s>$99.99</s></div><button class="btn" data-add>Add to cart</button></div></div>
 
