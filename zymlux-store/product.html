@@ -38,6 +38,36 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;color:var(--ink);line-height:1
 .gthumbs button:hover{transform:translateY(-2px)}
 .gthumbs button[aria-current="true"]{border-color:var(--gold);outline:1px solid var(--gold)}
 .gthumbs img{width:100%;height:100%;object-fit:cover}
+/* carousel */
+.carousel{display:grid;gap:14px;position:sticky;top:92px}
+.cviewport{position:relative;border-radius:6px;overflow:hidden;background:var(--paper);border:1px solid var(--line2);aspect-ratio:3/4}
+.ctrack{display:flex;height:100%;transition:transform .55s cubic-bezier(.16,1,.3,1)}
+.cslide{flex:0 0 100%;height:100%}
+.cslide img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.carr{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(247,243,235,.82);backdrop-filter:blur(6px);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:1.5rem;line-height:1;color:var(--ink);cursor:pointer;transition:background .3s,transform .3s;z-index:2;padding-bottom:3px}
+.carr:hover{background:#fff;transform:translateY(-50%) scale(1.06)}
+.carr.prev{left:14px}.carr.next{right:14px}
+.cdots{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:2}
+.cdots button{width:7px;height:7px;border-radius:50%;background:rgba(20,18,15,.28);border:0;cursor:pointer;transition:.35s cubic-bezier(.16,1,.3,1);padding:0}
+.cdots button[aria-current="true"]{background:var(--ink);width:22px;border-radius:4px}
+.cthumbs{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.cthumbs button{padding:0;border:1px solid var(--line);border-radius:5px;overflow:hidden;background:var(--paper);aspect-ratio:3/4;cursor:pointer;transition:.3s;opacity:.55}
+.cthumbs button:hover{opacity:.85}
+.cthumbs button[aria-current="true"]{border-color:var(--gold);outline:1px solid var(--gold);opacity:1}
+.cthumbs img{width:100%;height:100%;object-fit:cover}
+/* bundle */
+.bundle{display:grid;gap:10px;margin-top:28px}
+.bundle .blab{font:500 .62rem/1 var(--sans);text-transform:uppercase;letter-spacing:.16em;color:var(--soft);margin-bottom:2px}
+.bopt{position:relative;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 20px;border:1.5px solid var(--line);border-radius:11px;background:var(--paper);cursor:pointer;text-align:left;transition:border-color .3s,box-shadow .3s,transform .3s}
+.bopt:hover{border-color:var(--soft)}
+.bopt[aria-current="true"]{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 16px 32px -20px rgba(185,143,82,.7)}
+.bopt .bl b{font:500 1.05rem/1 var(--sans);color:var(--ink)}
+.bopt .bl span{display:block;color:var(--soft);font-size:.82rem;margin-top:4px}
+.bopt .bp{font:400 1.3rem/1 var(--serif);color:var(--ink);white-space:nowrap;text-align:right}
+.bopt .bp s{color:var(--soft);font-size:.8rem;margin-left:6px}
+.bopt .bp em{display:block;font:500 .6rem/1.4 var(--sans);font-style:normal;text-transform:uppercase;letter-spacing:.1em;color:var(--sage);margin-top:3px}
+.bbadge{position:absolute;top:-9px;left:16px;font:600 .56rem/1 var(--sans);text-transform:uppercase;letter-spacing:.1em;color:var(--paper);background:var(--clay);padding:5px 8px;border-radius:20px}
+.bbadge.best{background:var(--sage)}
 .pinfo .tag{display:inline-flex;align-items:center;gap:9px;font:600 .62rem/1 var(--sans);text-transform:uppercase;letter-spacing:.14em;color:var(--ink);background:#EAD9B4;padding:8px 12px;border-radius:20px}
 .pinfo h1{font-weight:300;font-size:clamp(2rem,4vw,2.9rem);margin-top:18px;line-height:1.08}
 .pinfo .pr{display:flex;align-items:baseline;gap:13px;margin-top:18px}
@@ -150,13 +180,27 @@ footer ul{list-style:none;display:grid;gap:10px}footer ul a{font-size:.9rem;colo
 <div class="bc"><div class="wrap"><div class="in"><a href="preview.html">Home</a><span class="sep">/</span><a href="preview.html">Shop</a><span class="sep">/</span>Serenity Set</div></div></div>
 
 <section class="pdp"><div class="wrap"><div class="g">
- <div class="gallery">
-   <div class="gmain ir"><img id="gmain" src="assets/product.png" alt="Zymlux Serenity acupressure mat and neck pillow set"></div>
-   <div class="gthumbs">
-     <button aria-current="true" aria-label="Full set"><img src="assets/product.png" alt="The full set"></button>
-     <button aria-label="Lotus points"><img src="assets/macro.jpg" alt="Close-up of the 6,000 lotus points"></button>
-     <button aria-label="In use at home"><img src="assets/floor.jpg" alt="The set in use at home"></button>
-     <button aria-label="Styled on a rug"><img src="assets/rug.jpg" alt="Styled on a rug"></button>
+ <div class="carousel">
+   <div class="cviewport ir">
+     <div class="ctrack" id="ctrack">
+       <div class="cslide"><img src="https://cdn.shopify.com/s/files/1/1012/8821/4857/files/zx-what-20-min-does-34.png?v=1783635508" alt="What 20 minutes does"></div>
+       <div class="cslide"><img src="https://cdn.shopify.com/s/files/1/1012/8821/4857/files/serenity-infographic-34.jpg?v=1783258103" alt="How the acupressure set works"></div>
+       <div class="cslide"><img src="https://cdn.shopify.com/s/files/1/1012/8821/4857/files/zx-three-steps-34.png?v=1783635508" alt="Your 20-minute ritual in three steps"></div>
+       <div class="cslide"><img src="https://cdn.shopify.com/s/files/1/1012/8821/4857/files/blackgold-inuse_c86e55d1-61d8-4bc0-b8c4-a0137e32dbf1.png?v=1783258223" alt="The set in use"></div>
+       <div class="cslide"><img src="https://cdn.shopify.com/s/files/1/1012/8821/4857/files/blackwhite-floor-v2_98c27be9-9908-4368-9fc9-b78a8f27d2cf.png?v=1783258223" alt="The set on the floor"></div>
+       <div class="cslide"><img src="https://cdn.shopify.com/s/files/1/1012/8821/4857/files/zx-whats-in-box-34.png?v=1783635506" alt="What is in the box"></div>
+     </div>
+     <button class="carr prev" id="cprev" aria-label="Previous image">&#8249;</button>
+     <button class="carr next" id="cnext" aria-label="Next image">&#8250;</button>
+     <div class="cdots" id="cdots"></div>
+   </div>
+   <div class="cthumbs" id="cthumbs">
+     <button aria-current="true"><img src="https://cdn.shopify.com/s/files/1/1012/8821/4857/files/zx-what-20-min-does-34.png?v=1783635508" alt=""></button>
+     <button><img src="https://cdn.shopify.com/s/files/1/1012/8821/4857/files/serenity-infographic-34.jpg?v=1783258103" alt=""></button>
+     <button><img src="https://cdn.shopify.com/s/files/1/1012/8821/4857/files/zx-three-steps-34.png?v=1783635508" alt=""></button>
+     <button><img src="https://cdn.shopify.com/s/files/1/1012/8821/4857/files/blackgold-inuse_c86e55d1-61d8-4bc0-b8c4-a0137e32dbf1.png?v=1783258223" alt=""></button>
+     <button><img src="https://cdn.shopify.com/s/files/1/1012/8821/4857/files/blackwhite-floor-v2_98c27be9-9908-4368-9fc9-b78a8f27d2cf.png?v=1783258223" alt=""></button>
+     <button><img src="https://cdn.shopify.com/s/files/1/1012/8821/4857/files/zx-whats-in-box-34.png?v=1783635506" alt=""></button>
    </div>
  </div>
  <div class="pinfo">
@@ -169,6 +213,12 @@ footer ul{list-style:none;display:grid;gap:10px}footer ul a{font-size:.9rem;colo
      <button class="swatch" style="background:#7C8B7A" aria-label="Sage" data-c="Sage"></button>
      <button class="swatch" style="background:#C7B8A4" aria-label="Sand" data-c="Sand"></button>
    </div><div class="swname" id="swname">Colour — Charcoal</div></div>
+   <div class="bundle" role="radiogroup" aria-label="Choose your bundle">
+     <div class="blab">Choose your bundle</div>
+     <button class="bopt" role="radio" aria-current="false" data-qty="1" data-price="49.99"><div class="bl"><b>1 Set</b><span>Your evening ritual</span></div><div class="bp">$49.99</div></button>
+     <button class="bopt" role="radio" aria-current="true" data-qty="2" data-price="84.99"><span class="bbadge">Most popular</span><div class="bl"><b>2 Sets</b><span>Keep one, gift one</span></div><div class="bp">$84.99<s>$99.98</s><em>Save 15% &#183; $42.50 each</em></div></button>
+     <button class="bopt" role="radio" aria-current="false" data-qty="3" data-price="112.49"><span class="bbadge best">Best value</span><div class="bl"><b>3 Sets</b><span>The whole household</span></div><div class="bp">$112.49<s>$149.97</s><em>Save 25% &#183; $37.50 each</em></div></button>
+   </div>
    <div class="offerbox">
      <h3>Everything you get</h3>
      <ul>
@@ -292,8 +342,36 @@ footer ul{list-style:none;display:grid;gap:10px}footer ul a{font-size:.9rem;colo
 <script>
 var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{threshold:.16});
 document.querySelectorAll('.rv,.ir').forEach(function(n){io.observe(n);});
-var gm=document.getElementById('gmain');
-document.querySelectorAll('.gthumbs button').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.gthumbs button').forEach(function(x){x.setAttribute('aria-current','false');});b.setAttribute('aria-current','true');var im=b.querySelector('img');gm.src=im.src;gm.alt=im.alt;});});
+// carousel
+(function(){
+ var track=document.getElementById('ctrack');if(!track)return;
+ var n=track.children.length,idx=0,dots=document.getElementById('cdots'),thumbs=document.querySelectorAll('#cthumbs button');
+ for(var i=0;i<n;i++){var d=document.createElement('button');d.setAttribute('aria-label','Go to image '+(i+1));dots.appendChild(d);}
+ var dotEls=dots.children;
+ function go(k){idx=(k+n)%n;track.style.transform='translateX('+(-idx*100)+'%)';for(var i=0;i<n;i++){dotEls[i].setAttribute('aria-current',i===idx?'true':'false');thumbs[i].setAttribute('aria-current',i===idx?'true':'false');}}
+ document.getElementById('cprev').onclick=function(){go(idx-1);};
+ document.getElementById('cnext').onclick=function(){go(idx+1);};
+ for(var i=0;i<dotEls.length;i++)(function(i){dotEls[i].onclick=function(){go(i);};})(i);
+ thumbs.forEach(function(t,i){t.onclick=function(){go(i);};});
+ var x0=null;track.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
+ track.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)go(idx+(dx<0?1:-1));x0=null;});
+ go(0);
+})();
+// bundle
+(function(){
+ var opts=document.querySelectorAll('.bopt');if(!opts.length)return;
+ function money(p){return '$'+p.toFixed(2);}
+ function set(o){opts.forEach(function(x){x.setAttribute('aria-current','false');});o.setAttribute('aria-current','true');
+   var price=parseFloat(o.getAttribute('data-price')),qty=o.getAttribute('data-qty');
+   document.querySelectorAll('[data-add]').forEach(function(b){if(b.textContent.indexOf('Add to cart')>-1&&b.closest('.pcta'))b.textContent='Add to cart — '+money(price);});
+   var tb=document.querySelector('.offerbox .tot b');if(tb)tb.textContent=money(price);
+   var pp=document.querySelector('.sbar .pp');if(pp)pp.innerHTML=money(price);
+   var ds=document.querySelector('.drawer .tot span:last-child');if(ds)ds.textContent=money(price);
+   var dc=document.getElementById('drawerc');if(dc)dc.textContent=(document.querySelector('.swatch[aria-current="true"]').getAttribute('data-c'))+' · Qty '+qty;
+ }
+ opts.forEach(function(o){o.addEventListener('click',function(){set(o);});});
+ set(document.querySelector('.bopt[aria-current="true"]'));
+})();
 document.querySelectorAll('.swatch').forEach(function(s){s.addEventListener('click',function(){document.querySelectorAll('.swatch').forEach(function(x){x.setAttribute('aria-current','false');});s.setAttribute('aria-current','true');var c=s.getAttribute('data-c');document.getElementById('swname').textContent='Colour — '+c;document.getElementById('sbarc').textContent=c+' · 60-night trial';document.getElementById('drawerc').textContent=c+' · Qty 1';});});
 var sb=document.getElementById('sbar'),anchor=document.querySelector('.pcta');
 if(anchor){new IntersectionObserver(function(e){e.forEach(function(x){sb.classList.toggle('show',!x.isIntersecting&&x.boundingClientRect.top<0);});},{threshold:0}).observe(anchor);}
