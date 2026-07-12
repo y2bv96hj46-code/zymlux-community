@@ -43,11 +43,12 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;color:var(--ink);line-height:1
 .hero h1{color:#F8F3EA;font-weight:300;font-size:clamp(2.7rem,6.6vw,4.9rem);margin-top:16px;max-width:14ch}
 .hero h1 em{font-style:italic;color:#EAC98E}
 .hero .hsub{margin-top:16px;max-width:34ch;font-size:1.04rem;line-height:1.55;color:rgba(246,241,232,.92)}
-.hero .hoffer{margin-top:24px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 16px}
+.hero .hoffer{margin-top:22px;display:flex;align-items:baseline;gap:14px}
+.hero .price{display:inline-flex;align-items:baseline;gap:9px}
 .hero .price{color:#F8F3EA;font:400 1.5rem/1 var(--serif)}
 .hero .price s{opacity:.55;font-size:.95rem;margin-left:7px}
 .hero .save{font:600 .6rem/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:#1F1608;background:#EAC98E;padding:7px 9px;border-radius:3px}
-.hero .hcta{margin-top:8px;width:100%}
+.hero .hcta{margin-top:10px}
 .hero .htrust{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px 16px;font:500 .64rem/1.4 var(--sans);text-transform:uppercase;letter-spacing:.1em;color:rgba(246,241,232,.82)}
 .hero .htrust span{display:inline-flex;align-items:center;gap:7px}.hero .htrust span::before{content:"";width:4px;height:4px;border-radius:50%;background:#EAC98E}
 .hero .paybadges{margin-top:18px}
@@ -176,17 +177,10 @@ footer ul{list-style:none;display:grid;gap:10px}footer ul a{font-size:.9rem;colo
  <div class="hcontent">
    <span class="eyebrow">The evening ritual · Drug-free</span>
    <h1>Let the day <em>dissolve</em>.</h1>
-   <p class="hsub">A drug-free acupressure ritual that melts neck &amp; shoulder tension &#8212; and helps you fall asleep, naturally. Twenty minutes, that&#8217;s all.</p>
+   <p class="hsub">Drug-free acupressure that melts the day&#8217;s tension &#8212; and carries you into sleep. Twenty minutes.</p>
    <div class="hoffer"><span class="price">$49.99<s>$99.99</s></span><span class="save">Save 50%</span></div>
-   <button class="btn block hcta" data-add>Shop the set &#8212; $49.99</button>
-   <div class="htrust"><span>60-night trial</span><span>Free U.S. shipping</span><span>Ships in 24h</span></div>
-   <div class="paybadges">
-     <span class="pb" title="Visa"><svg viewBox="0 0 40 27"><rect width="40" height="27" rx="4" fill="#fff" stroke="#E4E0D6"/><text x="20" y="18" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="800" font-style="italic" fill="#1A1F71">VISA</text></svg></span>
-     <span class="pb" title="Mastercard"><svg viewBox="0 0 40 27"><rect width="40" height="27" rx="4" fill="#fff" stroke="#E4E0D6"/><circle cx="16.7" cy="13.5" r="7" fill="#EB001B"/><circle cx="23.3" cy="13.5" r="7" fill="#F79E1B"/><path d="M20 8.5a7 7 0 000 10 7 7 0 000-10z" fill="#FF5F00"/></svg></span>
-     <span class="pb" title="American Express"><svg viewBox="0 0 40 27"><rect width="40" height="27" rx="4" fill="#1F72CD"/><text x="20" y="17" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="7.6" font-weight="800" letter-spacing=".4" fill="#fff">AMEX</text></svg></span>
-     <span class="pb" title="PayPal"><svg viewBox="0 0 40 27"><rect width="40" height="27" rx="4" fill="#fff" stroke="#E4E0D6"/><text x="20" y="17.6" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="8.6" font-weight="800"><tspan fill="#003087">Pay</tspan><tspan fill="#009CDE">Pal</tspan></text></svg></span>
-     <span class="pb" title="Apple Pay"><svg viewBox="0 0 40 27"><rect width="40" height="27" rx="4" fill="#000"/><path d="M15.7 10.3c-.26.3-.67.53-1.07.5-.05-.42.15-.86.37-1.12.26-.32.7-.55 1.05-.57.05.44-.12.87-.35 1.19zM16.3 11.4c-.6 0-1.09.34-1.35.34-.28 0-.71-.32-1.17-.31-.6.01-1.15.35-1.46.89-.62 1.07-.16 2.66.45 3.53.3.43.65.9 1.11.88.44-.02.6-.28 1.13-.28.53 0 .68.28 1.14.28.47-.01.77-.44 1.06-.87.19-.27.33-.55.41-.84-1.09-.42-1.26-1.96-.18-2.53-.33-.42-.81-.66-1.28-.65z" fill="#fff"/><text x="24" y="17.2" font-family="Arial,Helvetica,sans-serif" font-size="8" font-weight="700" fill="#fff">Pay</text></svg></span>
-   </div>
+   <button class="btn hcta" data-add>Shop the set &#8594;</button>
+   <div class="htrust"><span>60-night trial</span><span>Free U.S. shipping</span></div>
  </div>
 </section>
 
