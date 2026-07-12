@@ -47,6 +47,9 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;color:var(--ink);line-height:1
 .carr{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(247,243,235,.82);backdrop-filter:blur(6px);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:1.5rem;line-height:1;color:var(--ink);cursor:pointer;transition:background .3s,transform .3s;z-index:2;padding-bottom:3px}
 .carr:hover{background:#fff;transform:translateY(-50%) scale(1.06)}
 .carr.prev{left:14px}.carr.next{right:14px}
+.ccount{position:absolute;top:14px;right:16px;z-index:2;font:500 .68rem/1 var(--sans);letter-spacing:.12em;color:#F6F1E8;background:rgba(20,18,15,.5);backdrop-filter:blur(6px);padding:8px 12px;border-radius:20px}
+.ccount span{font-variant-numeric:tabular-nums}
+.ccap{text-align:center;font:500 .66rem/1 var(--sans);text-transform:uppercase;letter-spacing:.2em;color:var(--soft);transition:opacity .4s}
 .cdots{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:2}
 .cdots button{width:7px;height:7px;border-radius:50%;background:rgba(20,18,15,.28);border:0;cursor:pointer;transition:.35s cubic-bezier(.16,1,.3,1);padding:0}
 .cdots button[aria-current="true"]{background:var(--ink);width:22px;border-radius:4px}
@@ -171,7 +174,7 @@ footer ul{list-style:none;display:grid;gap:10px}footer ul a{font-size:.9rem;colo
 .rv{opacity:0;transform:translateY(28px);transition:opacity 1.1s cubic-bezier(.16,1,.3,1),transform 1.1s cubic-bezier(.16,1,.3,1)}.rv.in{opacity:1;transform:none}
 .rv.d1{transition-delay:.12s}.rv.d2{transition-delay:.24s}
 @media(prefers-reduced-motion:reduce){.ir{clip-path:none}.ir img{transform:none}.rv{opacity:1;transform:none}}
-@media(max-width:860px){.pdp .g{grid-template-columns:1fr;gap:36px}.gallery{position:static}.brow,.rev .rgrid,.promise .row{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr}section.blk{padding:11vh 0}.full{height:64vh}}
+@media(max-width:860px){.pdp .g{grid-template-columns:1fr;gap:36px}.gallery,.carousel{position:static}.brow,.rev .rgrid,.promise .row{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr}section.blk{padding:11vh 0}.full{height:64vh}}
 @media(max-width:520px){.fgrid{grid-template-columns:1fr}}
 </style></head><body>
 
@@ -192,8 +195,10 @@ footer ul{list-style:none;display:grid;gap:10px}footer ul a{font-size:.9rem;colo
      </div>
      <button class="carr prev" id="cprev" aria-label="Previous image">&#8249;</button>
      <button class="carr next" id="cnext" aria-label="Next image">&#8250;</button>
+     <div class="ccount"><span id="ccur">1</span>&nbsp;/&nbsp;<span id="ctot">6</span></div>
      <div class="cdots" id="cdots"></div>
    </div>
+   <div class="ccap" id="ccap">What 20 minutes does</div>
    <div class="cthumbs" id="cthumbs">
      <button aria-current="true"><img src="https://cdn.shopify.com/s/files/1/1012/8821/4857/files/zx-what-20-min-does-34.png?v=1783635508" alt=""></button>
      <button><img src="https://cdn.shopify.com/s/files/1/1012/8821/4857/files/serenity-infographic-34.jpg?v=1783258103" alt=""></button>
@@ -345,17 +350,24 @@ document.querySelectorAll('.rv,.ir').forEach(function(n){io.observe(n);});
 // carousel
 (function(){
  var track=document.getElementById('ctrack');if(!track)return;
+ var caps=['What 20 minutes does','How it works','Your 3-step ritual','In use at home','On the floor','What’s in the box'];
  var n=track.children.length,idx=0,dots=document.getElementById('cdots'),thumbs=document.querySelectorAll('#cthumbs button');
+ var cur=document.getElementById('ccur'),cap=document.getElementById('ccap');document.getElementById('ctot').textContent=n;
  for(var i=0;i<n;i++){var d=document.createElement('button');d.setAttribute('aria-label','Go to image '+(i+1));dots.appendChild(d);}
- var dotEls=dots.children;
- function go(k){idx=(k+n)%n;track.style.transform='translateX('+(-idx*100)+'%)';for(var i=0;i<n;i++){dotEls[i].setAttribute('aria-current',i===idx?'true':'false');thumbs[i].setAttribute('aria-current',i===idx?'true':'false');}}
- document.getElementById('cprev').onclick=function(){go(idx-1);};
- document.getElementById('cnext').onclick=function(){go(idx+1);};
- for(var i=0;i<dotEls.length;i++)(function(i){dotEls[i].onclick=function(){go(i);};})(i);
- thumbs.forEach(function(t,i){t.onclick=function(){go(i);};});
- var x0=null;track.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
- track.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)go(idx+(dx<0?1:-1));x0=null;});
- go(0);
+ var dotEls=dots.children,timer;
+ function go(k){idx=(k+n)%n;track.style.transform='translateX('+(-idx*100)+'%)';
+  for(var i=0;i<n;i++){dotEls[i].setAttribute('aria-current',i===idx?'true':'false');thumbs[i].setAttribute('aria-current',i===idx?'true':'false');}
+  cur.textContent=idx+1;if(cap){cap.style.opacity=0;setTimeout(function(){cap.textContent=caps[idx]||'';cap.style.opacity=1;},190);}}
+ function stop(){clearInterval(timer);}
+ function auto(){stop();if(!matchMedia('(prefers-reduced-motion:reduce)').matches)timer=setInterval(function(){go(idx+1);},5000);}
+ function jump(k){go(k);auto();}
+ document.getElementById('cprev').onclick=function(){jump(idx-1);};
+ document.getElementById('cnext').onclick=function(){jump(idx+1);};
+ for(var i=0;i<dotEls.length;i++)(function(i){dotEls[i].onclick=function(){jump(i);};})(i);
+ thumbs.forEach(function(t,i){t.onclick=function(){jump(i);};});
+ var x0=null;track.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;stop();},{passive:true});
+ track.addEventListener('touchend',function(e){if(x0!==null){var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)go(idx+(dx<0?1:-1));x0=null;}auto();});
+ go(0);auto();
 })();
 // bundle
 (function(){
