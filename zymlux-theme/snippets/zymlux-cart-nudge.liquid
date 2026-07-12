@@ -1,0 +1,49 @@
+{%- comment -%} Zymlux — Buy 2 Get 1 Free nudge inside the cart drawer footer {%- endcomment -%}
+{%- liquid
+  assign zx_units = 0
+  for item in cart.items
+    if item.product.handle == 'acupressure-mat-neck-pillow-set'
+      assign zx_units = zx_units | plus: item.quantity
+    endif
+  endfor
+  assign zx_missing = 3 | minus: zx_units
+-%}
+{%- if zx_units > 0 -%}
+<style>
+.zx-bundle-nudge{margin:0 0 12px;padding:13px 15px;background:#FBF9F4;border:1px solid rgba(43,52,46,.15);border-radius:10px;font-family:'Inter',sans-serif}
+.zx-bundle-nudge.ok{border-color:rgba(122,143,120,.55);background:#F0F3EF}
+.zx-bn-t{margin:0;font:700 10.5px/1 'Inter',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#9E4F2E}
+.zx-bundle-nudge.ok .zx-bn-t{color:#5B6E59}
+.zx-bn-s{margin:6px 0 0;font-size:12.5px;line-height:1.5;color:#4A554F}
+.zx-bn-a{display:inline-block;margin-top:7px;font:600 12px/1 'Inter',sans-serif;color:#1F2723;text-decoration:underline;text-underline-offset:3px}
+.zx-bn-bar{margin-top:9px;height:4px;border-radius:99px;background:rgba(43,52,46,.12);overflow:hidden}
+.zx-bn-fill{height:100%;background:#B58F4F;border-radius:99px;transition:width .4s ease}
+.zx-bundle-nudge.ok .zx-bn-fill{background:#7A8F78}
+</style>
+{%- if zx_units < 3 -%}
+<div class="zx-bundle-nudge">
+  <p class="zx-bn-t">Buy 2, get 1 free</p>
+  <p class="zx-bn-s">Add {{ zx_missing }} more set{% if zx_missing > 1 %}s{% endif %} and your 3rd is <strong>free</strong> &mdash; $49.99 off at checkout.</p>
+  <a class="zx-bn-a" href="/products/acupressure-mat-neck-pillow-set">Choose {% if zx_missing > 1 %}your colors{% else %}a color{% endif %} &rarr;</a>
+  <div class="zx-bn-bar" aria-hidden="true"><div class="zx-bn-fill" style="width:{{ zx_units | times: 100 | divided_by: 3 }}%"></div></div>
+</div>
+{%- else -%}
+<div class="zx-bundle-nudge ok">
+  <p class="zx-bn-t">Free set unlocked</p>
+  <p class="zx-bn-s">Buy 2, Get 1 Free is applied automatically at checkout.</p>
+  <div class="zx-bn-bar" aria-hidden="true"><div class="zx-bn-fill" style="width:100%"></div></div>
+</div>
+{%- endif -%}
+{%- endif -%}
+
+{%- comment -%} Trust row — always visible in the drawer footer {%- endcomment -%}
+<div class="zx-cart-trust" role="list" aria-label="Guarantees">
+  <span role="listitem"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>60-night trial</span>
+  <span role="listitem"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 8h13v8H1z"/><path d="M14 11h4l3 3v2h-7"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>Free U.S. shipping</span>
+  <span role="listitem"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>Secure checkout</span>
+</div>
+<style>
+.zx-cart-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:7px 14px;margin:10px 0 2px;padding-top:10px;border-top:1px solid rgba(43,52,46,.10)}
+.zx-cart-trust span{display:inline-flex;align-items:center;gap:5px;font:600 10.5px/1 'Inter',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#6B746E}
+.zx-cart-trust svg{width:12px;height:12px;flex:none;fill:none;stroke:#7D6130;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+</style>
