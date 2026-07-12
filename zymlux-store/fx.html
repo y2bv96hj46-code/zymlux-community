@@ -69,11 +69,56 @@ img{display:block;max-width:100%}
 /* 12 magnetic button */
 .mbtn{display:inline-block;margin-top:6px;padding:20px 40px;border-radius:8px;background:linear-gradient(135deg,var(--gold),#C7A263);color:#1A1206;font:600 .78rem/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s,filter .4s;box-shadow:0 12px 30px -12px rgba(216,184,122,.5)}
 .mbtn:hover,.mbtn:active{transform:translateY(-4px) scale(1.03);box-shadow:0 22px 44px -14px rgba(216,184,122,.7);filter:brightness(1.06)}
+/* 13 3D tilt */
+.tilt{perspective:900px}
+.tilt .in3d{border-radius:12px;overflow:hidden;transition:transform .25s ease;will-change:transform;aspect-ratio:4/3}
+.tilt .in3d img{width:100%;height:100%;object-fit:cover}
+/* 14 spotlight */
+.spot{position:relative;height:44vh;border-radius:12px;overflow:hidden;background:#100D0A;border:1px solid var(--line)}
+.spot .s{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(216,184,122,.55),transparent 68%);left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none}
+.spot .st{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--serif);font-size:1.6rem;z-index:2}
+/* 15 scroll progress */
+#prog{position:fixed;top:0;left:0;height:3px;background:var(--gold);width:0;z-index:60}
+/* 16 shimmer text */
+.shim{font-family:var(--serif);font-size:clamp(2rem,9vw,3.4rem);background:linear-gradient(100deg,#8a8172,#EDE6D6 25%,#D8B87A 45%,#EDE6D6 65%,#8a8172 90%);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shim 4.5s linear infinite}
+@keyframes shim{to{background-position:220% center}}
+/* 17 curtain wipe */
+.curt{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:4/3}
+.curt img{width:100%;height:100%;object-fit:cover}
+.curt::after{content:"";position:absolute;inset:0;background:var(--gold);transform-origin:right;transition:transform 1.2s cubic-bezier(.7,0,.2,1)}
+.in .curt::after{transform:scaleX(0)}
+/* 18 floating */
+.float img{animation:flt 5s ease-in-out infinite}
+@keyframes flt{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+/* 19 duotone */
+.duo img{filter:grayscale(1) contrast(1.05) sepia(.35) hue-rotate(-8deg);transition:filter 1s ease}
+.duo:active img,.duo:hover img{filter:none}
+/* 20 stacked cards */
+.stack .sc{position:sticky;top:16vh;background:var(--pan);border:1px solid var(--line);border-radius:16px;padding:30px;margin-bottom:16px;box-shadow:0 -12px 30px -22px #000}
+.stack .sc b{color:var(--gold);font-family:var(--serif);font-size:1.4rem;font-weight:400}
+/* 21 zoom-through */
+.zt{height:78vh;overflow:hidden;border-radius:10px}
+.zt img{width:100%;height:100%;object-fit:cover;will-change:transform}
+/* 22 ripple */
+.rip{position:relative;height:40vh;border-radius:12px;overflow:hidden;background:var(--pan);display:flex;align-items:center;justify-content:center;color:var(--mut)}
+.rip .r{position:absolute;border-radius:50%;background:rgba(216,184,122,.4);transform:translate(-50%,-50%) scale(0);animation:rip 1s ease-out forwards;pointer-events:none}
+@keyframes rip{to{transform:translate(-50%,-50%) scale(20);opacity:0}}
+/* 23 before/after */
+.ba{position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;touch-action:none;cursor:ew-resize}
+.ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ba .top{clip-path:inset(0 50% 0 0)}
+.ba .bar{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--gold);transform:translateX(-50%)}
+.ba .bar::after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;background:var(--gold)}
+/* 24 horizontal scroll */
+.hs{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px}
+.hs .hi{flex:0 0 72%;scroll-snap-align:center;aspect-ratio:3/4;border-radius:10px;overflow:hidden;background:var(--pan)}
+.hs .hi img{width:100%;height:100%;object-fit:cover}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.fu,.words span{opacity:1;transform:none}.mask{clip-path:none}.blur img{filter:none}}
 .foot{padding:70px 26px 90px;text-align:center;color:var(--mut)}
 .foot b{color:var(--gold)}
 </style></head><body>
 
+<div id="prog"></div>
 <div class="intro"><h1>The effects menu</h1><p>Scroll slowly. Each one is a real, live effect. Tell me the numbers you want for Zymlux.</p><div class="hint">Scroll &#8595;</div></div>
 
 <section class="fx" id="s1"><div class="num">01</div><div class="name">Fade up</div><p class="desc">Text and blocks rise and fade in as they enter the screen.</p>
@@ -113,6 +158,47 @@ img{display:block;max-width:100%}
 <section class="fx" id="s12"><div class="num">12</div><div class="name">Magnetic button</div><p class="desc">The button lifts and glows when you touch it.</p>
 <div class="stage"><a class="mbtn">Add to cart</a></div></section>
 
+<div class="intro" style="border-top:1px solid var(--line)"><h1 style="font-size:1.8rem">More effects &#8212; advanced</h1><p>The futuristic / interactive ones.</p></div>
+
+<section class="fx" id="s13"><div class="num">13</div><div class="name">3D tilt</div><p class="desc">The card tilts in 3D as you move your finger over it.</p>
+<div class="stage tilt"><div class="in3d"><img src="assets/rug.jpg" alt=""></div><div class="tapnote">&#9757; Move your finger across it</div></div></section>
+
+<section class="fx" id="s14"><div class="num">14</div><div class="name">Light follows your finger</div><p class="desc">A glow trails wherever you touch. Interactive, alive.</p>
+<div class="stage"><div class="spot" id="spot"><div class="s"></div><div class="st">Touch me</div></div></div></section>
+
+<section class="fx" id="s15"><div class="num">15</div><div class="name">Scroll progress bar</div><p class="desc">Look at the very top of the screen &#8212; a gold line fills as you scroll the whole page.</p>
+<div class="stage"><div class="card">The thin gold bar at the top of your screen is tracking your scroll right now. &#8593;</div></div></section>
+
+<section class="fx" id="s16"><div class="num">16</div><div class="name">Shimmer text</div><p class="desc">A wave of light sweeps endlessly through the letters.</p>
+<div class="stage"><div class="shim">Zymlux</div></div></section>
+
+<section class="fx" id="s17"><div class="num">17</div><div class="name">Curtain wipe reveal</div><p class="desc">A gold panel slides away to unveil the image.</p>
+<div class="stage"><div class="curt"><img src="assets/bed.jpg" alt=""></div></div></section>
+
+<section class="fx" id="s18"><div class="num">18</div><div class="name">Floating product</div><p class="desc">The product levitates and bobs gently, forever.</p>
+<div class="stage float" style="display:flex;justify-content:center"><img src="assets/product.png" style="max-height:340px;width:auto" alt=""></div></section>
+
+<section class="fx" id="s19"><div class="num">19</div><div class="name">Duotone &#8594; colour on touch</div><p class="desc">The image is tinted, then bursts into full colour when you touch it.</p>
+<div class="stage"><div class="imgbox duo"><img src="assets/floor.jpg" alt=""></div><div class="tapnote">&#9757; Tap &amp; hold</div></div></section>
+
+<section class="fx" id="s20"><div class="num">20</div><div class="name">Stacking cards</div><p class="desc">Cards stack on top of each other as you scroll. Very modern.</p>
+<div class="stage stack">
+<div class="sc"><b>01</b><p style="margin-top:8px;color:var(--mut)">Unroll it on the bed or floor.</p></div>
+<div class="sc"><b>02</b><p style="margin-top:8px;color:var(--mut)">Lie back &#8212; sharp, then warm.</p></div>
+<div class="sc"><b>03</b><p style="margin-top:8px;color:var(--mut)">Twenty minutes. Drift off.</p></div></div></section>
+
+<section class="fx" id="s21"><div class="num">21</div><div class="name">Zoom-through</div><p class="desc">The image scales up dramatically as you scroll past it.</p>
+<div class="stage"><div class="zt"><img class="ztimg" src="assets/candle.jpg" alt=""></div></div></section>
+
+<section class="fx" id="s22"><div class="num">22</div><div class="name">Ripple on touch</div><p class="desc">Touch anywhere &#8212; a ripple spreads out like water.</p>
+<div class="stage"><div class="rip" id="rip">Tap anywhere in here</div></div></section>
+
+<section class="fx" id="s23"><div class="num">23</div><div class="name">Before / after slider</div><p class="desc">Drag the handle left and right to compare two images.</p>
+<div class="stage"><div class="ba" id="ba"><img src="assets/bed.jpg" alt=""><img class="top" src="assets/rug.jpg" alt=""><div class="bar"></div></div><div class="tapnote">&#9757; Drag left / right</div></div></section>
+
+<section class="fx" id="s24"><div class="num">24</div><div class="name">Swipe gallery</div><p class="desc">Swipe sideways through images that snap into place.</p>
+<div class="stage"><div class="hs"><div class="hi"><img src="assets/floor.jpg" alt=""></div><div class="hi"><img src="assets/rug.jpg" alt=""></div><div class="hi"><img src="assets/bed.jpg" alt=""></div><div class="hi"><img src="assets/candle.jpg" alt=""></div></div></div></section>
+
 <div class="foot">That&#8217;s the menu. Text me the numbers you love &#8212; e.g. <b>&#8220;03, 05, 08, 11&#8221;</b> &#8212; and I&#8217;ll build Zymlux with exactly those.</div>
 
 <script>
@@ -126,4 +212,26 @@ if(px&&!matchMedia('(prefers-reduced-motion:reduce)').matches){window.addEventLi
 // counter
 var cel=document.querySelector('[data-count]');
 if(cel){var co=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){var end=+cel.getAttribute('data-count'),t0=null;function st(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/1500,1);cel.textContent=Math.floor((1-Math.pow(1-p,3))*end).toLocaleString('en-US');if(p<1)requestAnimationFrame(st);}requestAnimationFrame(st);co.unobserve(cel);}});},{threshold:.6});co.observe(cel);}
+var RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+// 13 3D tilt
+var t3=document.querySelector('.tilt .in3d');
+if(t3){var tp=t3.parentElement;function tilt(e){var t=e.touches?e.touches[0]:e,r=tp.getBoundingClientRect(),x=(t.clientX-r.left)/r.width-.5,y=(t.clientY-r.top)/r.height-.5;t3.style.transform='rotateY('+(x*16)+'deg) rotateX('+(-y*16)+'deg) scale(1.02)';}
+tp.addEventListener('pointermove',tilt);tp.addEventListener('touchmove',tilt,{passive:true});tp.addEventListener('pointerleave',function(){t3.style.transform='';});}
+// 14 spotlight
+var sp=document.getElementById('spot');
+if(sp){var sd=sp.querySelector('.s');function mv(e){var t=e.touches?e.touches[0]:e,r=sp.getBoundingClientRect();sd.style.left=(t.clientX-r.left)+'px';sd.style.top=(t.clientY-r.top)+'px';sd.style.transform='translate(-50%,-50%)';}
+sp.addEventListener('pointermove',mv);sp.addEventListener('touchmove',mv,{passive:true});}
+// 15 scroll progress
+var pb=document.getElementById('prog');
+if(pb)window.addEventListener('scroll',function(){var h=document.documentElement,sc=h.scrollTop/(h.scrollHeight-h.clientHeight);pb.style.width=(sc*100)+'%';},{passive:true});
+// 21 zoom-through
+var zt=document.querySelector('.ztimg');
+if(zt&&!RM)window.addEventListener('scroll',function(){var r=zt.getBoundingClientRect(),p=1-(r.top+r.height/2)/innerHeight;zt.style.transform='scale('+Math.max(1,Math.min(1.6,1+p*0.7))+')';},{passive:true});
+// 22 ripple
+var rp=document.getElementById('rip');
+if(rp)rp.addEventListener('pointerdown',function(e){var r=rp.getBoundingClientRect(),d=document.createElement('span');d.className='r';d.style.left=(e.clientX-r.left)+'px';d.style.top=(e.clientY-r.top)+'px';d.style.width=d.style.height='20px';rp.appendChild(d);setTimeout(function(){d.remove();},1000);});
+// 23 before/after
+var ba=document.getElementById('ba');
+if(ba){var top=ba.querySelector('.top'),bar=ba.querySelector('.bar');function set(x){var r=ba.getBoundingClientRect(),p=Math.max(0,Math.min(1,(x-r.left)/r.width));top.style.clipPath='inset(0 '+((1-p)*100)+'% 0 0)';bar.style.left=(p*100)+'%';}
+var drag=false;ba.addEventListener('pointerdown',function(e){drag=true;set(e.clientX);});window.addEventListener('pointermove',function(e){if(drag)set(e.clientX);});window.addEventListener('pointerup',function(){drag=false;});}
 </script></body></html>
